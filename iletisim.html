@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İletişim | Meriç Baskı - Teklif ve Servis Talebi</title>
+  <meta name="description" content="Meriç Baskı iletişim bilgileri: adres, telefon, e-posta ve teklif formu. Dijital baskı makinesi ve teknik servis talepleriniz için bize ulaşın.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Üst Bar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-contact">
+        <span>Tel: <a href="tel:+902165550142">+90 216 555 01 42</a></span>
+        <span>E-posta: <a href="mailto:info@mericbaski.com">info@mericbaski.com</a></span>
+      </div>
+      <div class="topbar-hours">Çalışma Saatleri: Hafta içi 08:30 – 18:00 | Cumartesi 09:00 – 14:00</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">MB</span>
+        <span class="logo-text">
+          <strong>Meriç Baskı</strong>
+          <span>Dijital Baskı Teknolojileri</span>
+        </span>
+      </a>
+      <button class="nav-toggle" aria-label="Menüyü aç/kapat" aria-expanded="false">&#9776;</button>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">Anasayfa</a></li>
+          <li><a href="urunler.html">Ürünler</a></li>
+          <li><a href="teknik-servis.html">Teknik Servis</a></li>
+          <li><a href="kurumsal.html">Kurumsal</a></li>
+          <li><a href="iletisim.html" class="active">İletişim</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sayfa Başlığı -->
+  <section class="page-head">
+    <div class="container">
+      <h1>İletişim</h1>
+      <div class="breadcrumb"><a href="index.html">Anasayfa</a> / <span>İletişim</span></div>
+    </div>
+  </section>
+
+  <!-- İletişim Bilgileri -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-4">
+        <div class="contact-card">
+          <h4>Adres</h4>
+          <p>
+            Sanayi Mah. Matbaacılar Cad.<br>
+            No: 42/A<br>
+            Ümraniye / İstanbul
+          </p>
+        </div>
+        <div class="contact-card">
+          <h4>Telefon</h4>
+          <p>
+            Santral: <a href="tel:+902165550142">+90 216 555 01 42</a><br>
+            GSM / Acil Servis:<br>
+            <a href="tel:+905325550142">+90 532 555 01 42</a>
+          </p>
+        </div>
+        <div class="contact-card">
+          <h4>E-posta</h4>
+          <p>
+            Genel: <a href="mailto:info@mericbaski.com">info@mericbaski.com</a><br>
+            Satış: <a href="mailto:satis@mericbaski.com">satis@mericbaski.com</a><br>
+            Servis: <a href="mailto:servis@mericbaski.com">servis@mericbaski.com</a>
+          </p>
+        </div>
+        <div class="contact-card">
+          <h4>Çalışma Saatleri</h4>
+          <p>
+            Hafta içi: 08:30 – 18:00<br>
+            Cumartesi: 09:00 – 14:00<br>
+            Pazar: Kapalı<br>
+            <strong>Acil servis hattı 7/24 açıktır.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="split">
+        <div>
+          <div class="section-head">
+            <span class="kicker">Bize Yazın</span>
+            <h2>Teklif ve Servis Talep Formu</h2>
+            <p>
+              Formu doldurun; satış veya teknik servis ekibimiz en geç bir iş günü
+              içinde sizinle iletişime geçsin.
+            </p>
+          </div>
+          <form class="form-grid" action="mailto:info@mericbaski.com" method="post" enctype="text/plain">
+            <div class="form-field">
+              <label for="name">Ad Soyad *</label>
+              <input type="text" id="name" name="ad_soyad" required>
+            </div>
+            <div class="form-field">
+              <label for="company">Firma Adı</label>
+              <input type="text" id="company" name="firma">
+            </div>
+            <div class="form-field">
+              <label for="phone">Telefon *</label>
+              <input type="tel" id="phone" name="telefon" required>
+            </div>
+            <div class="form-field">
+              <label for="email">E-posta *</label>
+              <input type="email" id="email" name="eposta" required>
+            </div>
+            <div class="form-field full">
+              <label for="subject">Konu *</label>
+              <select id="subject" name="konu" required>
+                <option value="">Seçiniz…</option>
+                <option value="makine-teklif">Makine Fiyat Teklifi</option>
+                <option value="servis">Teknik Servis Talebi</option>
+                <option value="sarf">Boya / Sarf Malzeme</option>
+                <option value="yedek-parca">Yedek Parça</option>
+                <option value="ikinci-el">İkinci El / Takas</option>
+                <option value="diger">Diğer</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="message">Mesajınız *</label>
+              <textarea id="message" name="mesaj" required placeholder="İlgilendiğiniz makine modeli, mevcut makineniz veya arıza tanımı gibi detayları paylaşabilirsiniz."></textarea>
+            </div>
+            <div class="form-field full">
+              <button type="submit" class="btn btn-primary">Gönder</button>
+              <p class="form-note">* işaretli alanların doldurulması zorunludur. Bilgileriniz yalnızca talebinize dönüş yapmak amacıyla kullanılır.</p>
+            </div>
+          </form>
+        </div>
+        <div>
+          <div class="info-box">
+            <h4>Showroom Ziyareti</h4>
+            <p>
+              Ümraniye'deki showroomumuzda UV flatbed, rulodan ruloya ve eko solvent
+              makinelerimizi çalışır hâlde inceleyebilir, kendi dosyalarınızla demo
+              baskı alabilirsiniz. Ziyaret öncesi randevu almanızı öneririz.
+            </p>
+          </div>
+          <div class="info-box">
+            <h4>Servis Talebi İçin</h4>
+            <p>
+              Arıza kaydı oluştururken makinenizin marka/modelini, arıza belirtisini
+              ve varsa ekran hata kodunu belirtmeniz müdahale süresini kısaltır.
+            </p>
+          </div>
+          <div class="info-box">
+            <h4>Banka ve Fatura Bilgileri</h4>
+            <p>
+              Cari hesap ve fatura bilgileri için muhasebe birimimizle
+              <a href="mailto:muhasebe@mericbaski.com">muhasebe@mericbaski.com</a>
+              adresinden iletişime geçebilirsiniz.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Harita -->
+      <div class="map-placeholder">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=29.08%2C41.00%2C29.16%2C41.05&amp;layer=mapnik"
+          title="Meriç Baskı Konum Haritası"
+          loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <h4>Meriç Baskı</h4>
+          <p>
+            Dijital baskı makineleri, kesim sistemleri, sarf malzemeleri ve teknik
+            servis hizmetlerinde 20 yılı aşkın deneyimiyle Türkiye'nin dört bir
+            yanındaki üreticilerin çözüm ortağı.
+          </p>
+        </div>
+        <div>
+          <h4>Hızlı Erişim</h4>
+          <ul>
+            <li><a href="index.html">Anasayfa</a></li>
+            <li><a href="urunler.html">Ürünler</a></li>
+            <li><a href="teknik-servis.html">Teknik Servis</a></li>
+            <li><a href="kurumsal.html">Kurumsal</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ürün Grupları</h4>
+          <ul>
+            <li><a href="urunler.html#uv-flatbed">UV Flatbed Makineler</a></li>
+            <li><a href="urunler.html#rulo">Rulodan Ruloya UV</a></li>
+            <li><a href="urunler.html#eko-solvent">Eko Solvent Makineler</a></li>
+            <li><a href="urunler.html#kesim">Kesim Sistemleri</a></li>
+            <li><a href="urunler.html#sarf">Boya &amp; Sarf Malzeme</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>İletişim</h4>
+          <ul>
+            <li>Sanayi Mah. Matbaacılar Cad. No: 42/A<br>Ümraniye / İstanbul</li>
+            <li>Tel: <a href="tel:+902165550142">+90 216 555 01 42</a></li>
+            <li>GSM: <a href="tel:+905325550142">+90 532 555 01 42</a></li>
+            <li><a href="mailto:info@mericbaski.com">info@mericbaski.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <span>© 2026 Meriç Baskı Dijital Baskı Teknolojileri. Tüm hakları saklıdır.</span>
+        <span>Dijital Baskı Makineleri &bull; Kesim Sistemleri &bull; Teknik Servis</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
