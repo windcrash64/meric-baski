@@ -194,11 +194,30 @@ export function num(value: number, locale: Locale, opts: Intl.NumberFormatOption
   return new Intl.NumberFormat(locale === 'tr' ? 'tr-TR' : 'en-GB', opts).format(value);
 }
 
-/** Render a scalar or a [min, max] range with a locale-correct separator. */
-export function range(value: number | [number, number], locale: Locale): string {
+/**
+ * Units that are written WITHOUT a thousands separator in this trade.
+ *
+ * Turkish groups thousands with a full stop, so a 3200 mm print width formats
+ * as "3.200 mm" — grammatically correct, and wrong here twice over: every real
+ * spec sheet in the industry writes "3200 mm" and "1440 dpi", and a reader used
+ * to a decimal point can read "3.200 mm" as 3.2 mm. Dimensions and resolutions
+ * are identifiers as much as quantities; masses and areas are not, and keep
+ * their separator.
+ */
+const UNGROUPED_UNITS =
+  /^(mm|cm|dpi|npi|nm|pl|µm|um|mikron|px|rpm|hz|khz)(\s*\/\s*(s|sn|dk|min|h|sa))?$/i;
+
+/** Render a scalar or a [min, max] range with locale-correct separators. */
+export function range(
+  value: number | [number, number],
+  locale: Locale,
+  unit?: string,
+): string {
+  const opts: Intl.NumberFormatOptions =
+    unit && UNGROUPED_UNITS.test(unit.trim()) ? { useGrouping: false } : {};
   return Array.isArray(value)
-    ? `${num(value[0], locale)}–${num(value[1], locale)}`
-    : num(value, locale);
+    ? `${num(value[0], locale, opts)}–${num(value[1], locale, opts)}`
+    : num(value, locale, opts);
 }
 
 /** File size for a download link: "PDF · 2,4 MB". */

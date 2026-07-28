@@ -94,7 +94,8 @@ function sizeOf(machine: CollectionEntry<'machines'>): string {
     | Measure | string | number | boolean | undefined;
   if (raw === undefined) return '';
   if (typeof raw === 'object' && raw !== null && 'value' in raw) {
-    return `${range(raw.value, locale)} ${raw.unit ?? 'mm'}`.trim();
+    const unit = raw.unit ?? 'mm';
+    return `${range(raw.value, locale, unit)} ${unit}`.trim();
   }
   return String(raw);
 }

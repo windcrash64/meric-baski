@@ -40,7 +40,7 @@ function render(key: string, v: Value): { text: string; note?: string } {
   if (isMeasure(v)) {
     const unit = v.unit ?? def?.unit?.[locale] ?? '';
     return {
-      text: `${range(v.value, locale)}${unit ? ` ${unit}` : ''}`,
+      text: `${range(v.value, locale, unit)}${unit ? ` ${unit}` : ''}`,
       note: v.note?.[locale],
     };
   }

@@ -187,8 +187,9 @@ function cardSpecs(machine: CollectionEntry<'machines'>) {
     const raw = d.specs[key];
     if (raw === undefined) return;
     const def = SPECS[key];
+    const unit = (raw as { unit?: string }).unit ?? def.unit?.[locale] ?? '';
     const value = typeof raw === 'object' && raw !== null && 'value' in raw
-      ? `${range((raw as { value: number | [number, number] }).value, locale)} ${(raw as { unit?: string }).unit ?? def.unit?.[locale] ?? ''}`.trim()
+      ? `${range((raw as { value: number | [number, number] }).value, locale, unit)} ${unit}`.trim()
       : String(raw);
     out.push({ label: def[locale], value });
   };

@@ -51,7 +51,8 @@ const metric = (key: string) => {
   const def = SPECS[key as SpecKey];
   if (raw === undefined || !def) return null;
   if (typeof raw === 'object' && raw !== null && 'value' in raw) {
-    return { label: def[locale], value: range(raw.value, locale), unit: raw.unit ?? def.unit?.[locale] ?? '' };
+    const unit = raw.unit ?? def.unit?.[locale] ?? '';
+    return { label: def[locale], value: range(raw.value, locale, unit), unit };
   }
   if (typeof raw === 'boolean') {
     return { label: def[locale], value: raw ? (tr ? 'var' : 'yes') : (tr ? 'yok' : 'no'), unit: '' };
@@ -114,7 +115,8 @@ const productSchema = {
       '@type': 'PropertyValue',
       name: SPECS[key as SpecKey][locale],
       value: typeof value === 'object' && value !== null && 'value' in value
-        ? range((value as Measure).value, locale)
+        ? range((value as Measure).value, locale, (value as Measure).unit
+            ?? SPECS[key as SpecKey].unit?.[locale])
         : String(value),
     })),
 };
@@ -333,7 +335,13 @@ const productSchema = {
           <div>
             <dt>{tr ? 'Paket ölçüsü' : 'Crated size'}</dt>
             <dd class="mono">
-              {num(d.installation.cratedDimensions.w, locale)} × {num(d.installation.cratedDimensions.d, locale)} × {num(d.installation.cratedDimensions.h, locale)} mm
+              {/* Millimetres are written without a thousands separator in this
+                  trade — see the note on UNGROUPED_UNITS in i18n/ui.ts. */}
+              {[d.installation.cratedDimensions.w,
+                d.installation.cratedDimensions.d,
+                d.installation.cratedDimensions.h]
+                .map((v) => num(v, locale, { useGrouping: false }))
+                .join(' × ')} {d.installation.cratedDimensions.unit}
             </dd>
           </div>
           <div>
