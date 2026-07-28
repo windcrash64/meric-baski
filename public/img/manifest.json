@@ -1,12 +1,26 @@
 {
-  "machines/dtf/cutout/dtf-hero": {
+  "machines/dtf/cutout/dark/dtf-hero": {
     "intrinsic": {
-      "w": 984,
-      "h": 641
+      "w": 1731,
+      "h": 1118
     },
     "widths": [
       480,
-      768
+      768,
+      1200,
+      1800
+    ]
+  },
+  "machines/dtf/cutout/light/dtf-hero": {
+    "intrinsic": {
+      "w": 1795,
+      "h": 1118
+    },
+    "widths": [
+      480,
+      768,
+      1200,
+      1800
     ]
   },
   "machines/dtf/dtf-hero": {
@@ -19,14 +33,28 @@
       768
     ]
   },
-  "machines/eco-solvent/cutout/eco-solvent-hero": {
+  "machines/eco-solvent/cutout/dark/eco-solvent-hero": {
     "intrinsic": {
-      "w": 997,
-      "h": 620
+      "w": 1731,
+      "h": 1079
     },
     "widths": [
       480,
-      768
+      768,
+      1200,
+      1800
+    ]
+  },
+  "machines/eco-solvent/cutout/light/eco-solvent-hero": {
+    "intrinsic": {
+      "w": 1829,
+      "h": 1079
+    },
+    "widths": [
+      480,
+      768,
+      1200,
+      1800
     ]
   },
   "machines/eco-solvent/eco-solvent-hero": {
@@ -39,14 +67,28 @@
       768
     ]
   },
-  "machines/flatbed-uv/cutout/flatbed-uv-hero": {
+  "machines/flatbed-uv/cutout/dark/flatbed-uv-hero": {
     "intrinsic": {
-      "w": 1031,
-      "h": 573
+      "w": 1799,
+      "h": 993
     },
     "widths": [
       480,
-      768
+      768,
+      1200,
+      1800
+    ]
+  },
+  "machines/flatbed-uv/cutout/light/flatbed-uv-hero": {
+    "intrinsic": {
+      "w": 1871,
+      "h": 993
+    },
+    "widths": [
+      480,
+      768,
+      1200,
+      1800
     ]
   },
   "machines/flatbed-uv/flatbed-uv-hero": {
@@ -59,14 +101,28 @@
       768
     ]
   },
-  "machines/roll-uv/cutout/roll-uv-hero": {
+  "machines/roll-uv/cutout/dark/roll-uv-hero": {
     "intrinsic": {
-      "w": 997,
-      "h": 523
+      "w": 1767,
+      "h": 851
     },
     "widths": [
       480,
-      768
+      768,
+      1200,
+      1800
+    ]
+  },
+  "machines/roll-uv/cutout/light/roll-uv-hero": {
+    "intrinsic": {
+      "w": 1821,
+      "h": 903
+    },
+    "widths": [
+      480,
+      768,
+      1200,
+      1800
     ]
   },
   "machines/roll-uv/roll-uv-hero": {

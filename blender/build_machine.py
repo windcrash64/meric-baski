@@ -98,7 +98,10 @@ def main() -> None:
 
     out_dir = OUT_RENDER / spec["key"]
     if args.cutout:
-        out_dir = out_dir / "cutout"
+        # The look is part of the path: a cutout lit for a white card and one lit
+        # for the ink hero are different images of the same machine, and writing
+        # both to "cutout/" silently replaces one with the other.
+        out_dir = out_dir / "cutout" / args.look
     for shot in wanted:
         if shot not in shots:
             print(f"[warn] no such shot {shot!r}; have {sorted(shots)}")

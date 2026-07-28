@@ -351,7 +351,10 @@ def machine_kit(accent_hex: str = CYAN) -> dict:
     GLB stays small and the renders stay consistent between machines."""
     return {
         "body": painted_metal("BodyInk", INK, roughness=0.36, coat=0.30),
-        "body_light": painted_metal("BodyLight", "#D8DBDE", roughness=0.38, coat=0.32),
+        # Light body panels are a matte warm grey, not a glossy near-white:
+        # at #D8DBDE with a clearcoat they read as moulded white plastic on the
+        # dark hero ground, which is exactly what a machine cover is not.
+        "body_light": painted_metal("BodyLight", "#B4B7BA", roughness=0.52, coat=0.10),
         "accent": painted_metal("Accent", accent_hex, roughness=0.28, coat=0.45),
         "frame": painted_metal("FrameGraphite", GRAPHITE, roughness=0.45, coat=0.12),
         "alu": brushed_aluminium(),

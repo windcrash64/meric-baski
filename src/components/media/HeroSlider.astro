@@ -1,0 +1,307 @@
+---
+/**
+ * Homepage hero slider.
+ *
+ * Structure follows the reference site: one machine per slide, its model name,
+ * one descriptive sentence carrying the real figures, and a link to the product.
+ *
+ * The page's <h1> is rendered ONCE, outside the slides. A slider whose slides
+ * each contain an <h1> gives the document six of them; the reference site
+ * solves this by having no <h1> at all, which is worse. Model names are <h2>.
+ *
+ * It autoplays, because the client asked for a sliding hero — so it also ships
+ * a visible pause control. WCAG 2.2.2 requires one for anything that moves for
+ * more than five seconds, and prefers-reduced-motion alone does not satisfy it.
+ */
+import type { Locale } from '../../config/site';
+import { t } from '../../i18n/ui';
+import Picture from './Picture.astro';
+
+export interface HeroSlide {
+  /** Manifest key for the machine render. */
+  image: string;
+  eyebrow: string;
+  model: string;
+  body: string;
+  href: string;
+  alt: string;
+}
+
+export interface Props {
+  slides: HeroSlide[];
+  locale: Locale;
+  heading: string;
+  intro: string;
+}
+
+const { slides, locale, heading, intro } = Astro.props;
+const tr = locale === 'tr';
+---
+
+<section class="hero" data-ground="ink" data-accent="cyan" aria-labelledby="hero-title">
+  <div class="shell hero__grid">
+    <div class="hero__copy">
+      <h1 id="hero-title" class="hero__h1">{heading}</h1>
+      <p class="hero__intro muted">{intro}</p>
+
+      <div class="hero__slides" data-hero>
+        {slides.map((slide, i) => (
+          <article
+            class="hero__slide"
+            data-hero-slide
+            data-active={i === 0 ? 'true' : 'false'}
+            aria-hidden={i === 0 ? undefined : 'true'}
+            inert={i === 0 ? undefined : ''}
+          >
+            <p class="eyebrow">{slide.eyebrow}</p>
+            <h2 class="hero__model model" lang="en">
+              {slide.model.split(' ').map((w, n) => <>{n > 0 ? ' ' : ''}<span>{w}</span></>)}
+            </h2>
+            <p class="hero__body">{slide.body}</p>
+            <a class="btn btn--outline" href={slide.href}>
+              {tr ? 'Ürünü İncele' : 'View product'}
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <div class="hero__controls">
+        <div class="hero__dots" role="tablist" aria-label={t('carousel', locale)}>
+          {slides.map((slide, i) => (
+            <button
+              type="button"
+              role="tab"
+              data-hero-dot
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-label={slide.model}
+            ><span class="visually-hidden">{slide.model}</span></button>
+          ))}
+        </div>
+
+        <div class="hero__nav">
+          <span class="hero__count mono" data-hero-count aria-live="off">
+            01 / {String(slides.length).padStart(2, '0')}
+          </span>
+          <button type="button" class="hero__btn" data-hero-pause aria-pressed="false">
+            <span class="visually-hidden" data-hero-pause-label>{t('pause', locale)}</span>
+            <span aria-hidden="true" data-hero-pause-icon>❚❚</span>
+          </button>
+          <button type="button" class="hero__btn" data-hero-prev>
+            <span class="visually-hidden">{t('previous', locale)}</span>
+            <span aria-hidden="true">←</span>
+          </button>
+          <button type="button" class="hero__btn" data-hero-next>
+            <span class="visually-hidden">{t('next', locale)}</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__media">
+      {slides.map((slide, i) => (
+        <div class="hero__frame" data-hero-frame data-active={i === 0 ? 'true' : 'false'}>
+          <Picture
+            src={slide.image}
+            alt={slide.alt}
+            ratio="none"
+            graded={false}
+            priority={i === 0}
+            sizes="(min-width: 1024px) 56vw, 100vw"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(var(--sp-7), 7vh, var(--sp-10)) 0;
+    overflow: hidden;
+  }
+
+  .hero__grid {
+    display: grid;
+    gap: var(--sp-6);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__grid {
+      grid-template-columns: 44fr 56fr;
+      gap: var(--sp-8);
+      min-height: 62vh;
+    }
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: var(--sp-5);
+    align-content: center;
+    padding-block-end: var(--sp-8);
+  }
+
+  /* The page title is deliberately quiet: the model name is the loud element,
+     and a slider that shouts two headings at once reads as a template. */
+  .hero__h1 {
+    font-size: var(--step-1);
+    font-weight: 400;
+    font-variation-settings: 'wdth' 100;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+    max-width: 34ch;
+  }
+
+  .hero__intro {
+    font-size: var(--step--1);
+    max-width: 48ch;
+    padding-block-end: var(--sp-4);
+    border-bottom: var(--border) solid var(--rule-dark);
+  }
+
+  /* Slides stack in one grid cell so the block never changes height mid-rotation. */
+  .hero__slides {
+    display: grid;
+    min-height: 16rem;
+  }
+
+  .hero__slide {
+    grid-area: 1 / 1;
+    display: grid;
+    gap: var(--sp-4);
+    align-content: start;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--d-slow) var(--e-out), transform var(--d-slow) var(--e-out);
+    pointer-events: none;
+  }
+
+  .hero__slide[data-active='true'] {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .hero__model {
+    font-size: var(--step-3);
+    font-weight: 600;
+    font-variation-settings: 'wdth' 86;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+  }
+
+  .hero__body {
+    font-size: var(--step-0);
+    color: var(--muted-dark);
+    max-width: 46ch;
+  }
+
+  .hero__slide .btn {
+    justify-self: start;
+  }
+
+  .hero__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding-block-start: var(--sp-5);
+    border-top: var(--border) solid var(--rule-dark);
+  }
+
+  .hero__dots {
+    display: flex;
+    gap: var(--sp-2);
+  }
+
+  .hero__dots button {
+    position: relative;
+    width: 28px;
+    height: 2px;
+    background: var(--rule-dark);
+    transition: background-color var(--d-base) var(--e-out);
+  }
+
+  /* 2 px mark, 44 px target. */
+  .hero__dots button::after {
+    content: '';
+    position: absolute;
+    inset: -21px 0;
+  }
+
+  .hero__dots button[aria-selected='true'] {
+    background: var(--accent);
+  }
+
+  .hero__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .hero__count {
+    font-size: var(--step--2);
+    color: var(--muted-dark);
+    letter-spacing: 0.1em;
+    margin-inline-end: var(--sp-2);
+  }
+
+  .hero__btn {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: var(--border) solid var(--rule-dark);
+    color: var(--paper);
+    font-size: var(--step--1);
+    transition: border-color var(--d-base) var(--e-out);
+  }
+
+  .hero__btn:hover,
+  .hero__btn:focus-visible {
+    border-color: var(--paper);
+  }
+
+  /* --- media --- */
+  .hero__media {
+    display: grid;
+    position: relative;
+    /* Runs off the right edge: the machine reads as an object in the room
+       rather than a photograph pasted into a box. */
+    margin-inline-end: calc(var(--page-margin) * -1);
+  }
+
+  .hero__frame {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity var(--d-slower) var(--e-out), transform var(--d-slower) var(--e-out);
+  }
+
+  .hero__frame[data-active='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1023px) {
+    .hero__media {
+      margin-inline: calc(var(--page-margin) * -1);
+      order: -1;
+    }
+
+    .hero__slides {
+      min-height: 18rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__slide,
+    .hero__frame {
+      transition: opacity 200ms linear;
+      transform: none;
+    }
+  }
+</style>

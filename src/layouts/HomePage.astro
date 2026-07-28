@@ -2,11 +2,11 @@
 import { getCollection } from 'astro:content';
 
 import { SITE, type Locale } from '../config/site';
-import { FAMILY_ROUTE, INK_FAMILY_ROUTE, path } from '../i18n/routes';
+import { FAMILY_ROUTE, INK_FAMILY_ROUTE, path, ROUTES } from '../i18n/routes';
 import { t } from '../i18n/ui';
 import { CHANNELS, type ChannelCode } from '../i18n/specs';
 import Base from './Base.astro';
-import Picture from '../components/media/Picture.astro';
+import HeroSlider from '../components/media/HeroSlider.astro';
 
 export interface Props {
   locale: Locale;
@@ -75,6 +75,72 @@ const INK_FAMILIES = [
   { key: 'textile-pigment', tr: 'Tekstil Pigment Mürekkebi', en: 'Textile Pigment Inks' },
 ] as const;
 
+/**
+ * Hero slides — one per machine that has its own render.
+ *
+ * Written the way the trade writes a spec line: the model, the real figures,
+ * the materials it takes, and what it does with them. No adjectives about the
+ * company, no promises, nothing that could not be checked on the product page.
+ */
+const HERO_SLIDES = [
+  {
+    image: 'machines/flatbed-uv/cutout/dark/flatbed-uv-hero',
+    eyebrow: tr ? 'UV Flatbed Baskı Makineleri' : 'UV Flatbed Printers',
+    model: 'Maven MF-2513 R8',
+    href: path('machines', locale, [
+      ROUTES['machines.uvFlatbed'][locale], 'mf-2513-r8',
+    ]),
+    body: tr
+      ? '2500 × 1300 mm vakumlu tabla, 2–12 Ricoh Gen6 baskı kafası. Cam, ahşap, alüminyum kompozit ve 100 mm kalınlığa kadar levhaya doğrudan UV baskı; 4 geçişte 50–60 m²/sa.'
+      : 'A 2500 × 1300 mm vacuum bed with 2–12 Ricoh Gen6 printheads. Prints directly onto glass, wood, aluminium composite and sheet up to 100 mm thick; 50–60 m²/h at four passes.',
+    alt: tr
+      ? 'Maven MF-2513 R8 UV flatbed baskı makinesi'
+      : 'Maven MF-2513 R8 UV flatbed printer',
+  },
+  {
+    image: 'machines/roll-uv/cutout/dark/roll-uv-hero',
+    eyebrow: tr ? 'UV Hibrit Baskı Makineleri' : 'UV Hybrid Printers',
+    model: 'Maven MH-3200 R12',
+    href: path('machines', locale, [
+      ROUTES['machines.uvHybrid'][locale], 'mh-3200-r12',
+    ]),
+    body: tr
+      ? '3200 mm baskı genişliği, 2–20 Ricoh Gen6 kafa. Rulo ve levha aynı şasede çalışır; branda, folyo ve duvar kağıdında 4 geçişte 92–111 m²/sa.'
+      : '3200 mm print width with 2–20 Ricoh Gen6 heads. Roll and rigid on one chassis; 92–111 m²/h at four passes on banner, vinyl and wallcovering.',
+    alt: tr
+      ? 'Maven MH-3200 R12 UV hibrit rulodan ruloya baskı makinesi'
+      : 'Maven MH-3200 R12 UV hybrid roll-to-roll printer',
+  },
+  {
+    image: 'machines/eco-solvent/cutout/dark/eco-solvent-hero',
+    eyebrow: tr ? 'Eko Solvent Baskı Makineleri' : 'Eco-Solvent Printers',
+    model: 'Maven MS-1802 E4',
+    href: path('machines', locale, [
+      ROUTES['machines.ecoSolvent'][locale], 'ms-1802-e4',
+    ]),
+    body: tr
+      ? '1800 mm rulo genişliği, 4 × Epson i3200-E1 kafa ve üç kademeli ısıtıcı. Folyo, branda ve araç giydirme malzemelerinde üretim modunda 79 m²/sa.'
+      : '1800 mm roll width, 4 × Epson i3200-E1 heads and three-stage heaters. 79 m²/h in production mode on vinyl, banner and vehicle wrap media.',
+    alt: tr
+      ? 'Maven MS-1802 E4 eko solvent rulo baskı makinesi'
+      : 'Maven MS-1802 E4 eco-solvent roll printer',
+  },
+  {
+    image: 'machines/dtf/cutout/dark/dtf-hero',
+    eyebrow: tr ? 'DTF Baskı Sistemleri' : 'DTF Printing Systems',
+    model: 'Maven MD-600 A4',
+    href: path('machines', locale, [
+      ROUTES['machines.dtf'][locale], 'md-600-a4',
+    ]),
+    body: tr
+      ? '600 mm film genişliği, 4 × Epson i3200-A1 kafa; toz serpme ve fırın ünitesi dahil. Pamuk, polyester ve karışımlara kumaş rengi fark etmeden transfer.'
+      : '600 mm film width with 4 × Epson i3200-A1 heads, powder shaker and oven included. Transfers onto cotton, polyester and blends regardless of fabric colour.',
+    alt: tr
+      ? 'Maven MD-600 A4 DTF baskı sistemi ve toz serpme ünitesi'
+      : 'Maven MD-600 A4 DTF printing system with powder shaker',
+  },
+];
+
 const CHANNEL_SET: ChannelCode[] = ['C', 'M', 'Y', 'K', 'Lc', 'Lm', 'Or', 'Gr', 'W', 'Cl'];
 
 const APPLICATIONS = [
@@ -128,54 +194,17 @@ const description = tr
     publisher: { '@id': `${SITE.url}/#organization` },
   }]}
 >
-  <!-- 1 — HERO ------------------------------------------------------------ -->
-  <section class="hero" data-ground="paper" data-accent="cyan">
-    <div class="shell hero__inner">
-      <div class="hero__copy">
-        <h1 class="hero-statement">
-          <span class="stagger-line"><span>{tr ? 'Dijital baskı makineleri,' : 'Digital printing machines,'}</span></span>
-          <span class="stagger-line"><span>{tr ? 'mürekkep ve teknik servis —' : 'inks and technical service —'}</span></span>
-          <span class="stagger-line"><span>{tr ? 'tek adresten.' : 'from one place.'}</span></span>
-        </h1>
-
-        <!-- The only place all three process colours touch on this page. -->
-        <div class="hero__pixels reveal" aria-hidden="true">
-          <span style="background:var(--cyan)"></span>
-          <span style="background:var(--magenta)"></span>
-          <span style="background:var(--yellow)"></span>
-        </div>
-
-        <p class="lead reveal">
-          {tr
-            ? 'Yedi makine ailesi, sekiz mürekkep serisi ve on iki şehirde yerinde teknik servis. Makine, sarf malzemesi ve servis aynı yerden yürütülür.'
-            : 'Seven machine families, eight ink series and on-site service in twelve cities. Machine, consumables and service are handled from one place.'}
-        </p>
-
-        <div class="cluster reveal">
-          <a class="btn" href={path('quote', locale)}>
-            {t('getQuote', locale)}
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="link link--accent hero__secondary" href={path('machines', locale)}>
-            {t('exploreMachines', locale)} <span class="arrow" aria-hidden="true">›</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="hero__media reveal-media">
-        <Picture
-          src="machines/flatbed-uv/flatbed-uv-hero"
-          alt={tr
-            ? 'Maven MF-2513 R8 endüstriyel UV flatbed baskı makinesi'
-            : 'Maven MF-2513 R8 industrial UV flatbed printer'}
-          ratio="none"
-          sizes="(min-width: 1024px) 52vw, 100vw"
-          priority
-          graded={false}
-        />
-      </div>
-    </div>
-  </section>
+  <!-- 1 — HERO SLIDER ------------------------------------------------------ -->
+  <HeroSlider
+    locale={locale}
+    heading={tr
+      ? 'Dijital baskı makineleri, mürekkepleri ve teknik servis.'
+      : 'Digital printing machines, inks and technical service.'}
+    intro={tr
+      ? 'Yedi makine ailesi, sekiz mürekkep serisi, on iki şehirde yerinde servis.'
+      : 'Seven machine families, eight ink series, on-site service in twelve cities.'}
+    slides={HERO_SLIDES}
+  />
 
   <!-- 2 — PROOF STRIP ------------------------------------------------------ -->
   <section class="proof" data-ground="paper">
@@ -209,14 +238,12 @@ const description = tr
       </div>
       <div class="section__body">
         <h2 class="reveal">
-          {tr
-            ? 'Makineler, baskı yöntemine göre yedi aileye ayrılır.'
-            : 'Machines are grouped into seven families by printing process.'}
+          {tr ? 'Makineler' : 'Machines'}
         </h2>
         <p class="lead muted reveal">
           {tr
-            ? 'Hangi ailenin uygun olduğunu bastığınız malzeme ve günlük hacim belirler. Her aile sayfasında o ailenin çalışma biçimi ve fiyatı belirleyen kalemler anlatılır.'
-            : 'Which family applies is decided by the material and the daily volume. Each family page explains how that process works and which items form its price.'}
+            ? 'Katalog yedi makine ailesine ayrılır. Her aile farklı bir baskı yöntemi kullanır; kullanılan mürekkep, basılabilen malzeme ve kurulum gereksinimleri buna göre değişir.'
+            : 'The catalogue is divided into seven machine families. Each uses a different printing process, and the ink, the printable material and the installation requirements follow from it.'}
         </p>
 
         <ul class="cards reveal" role="list" data-stagger>
@@ -252,9 +279,7 @@ const description = tr
       </div>
       <div class="section__body">
         <h2 class="reveal">
-          {tr
-            ? 'Mürekkep ve sarf malzemeleri, sekiz kimya ailesinde.'
-            : 'Inks and consumables, across eight chemistry families.'}
+          {tr ? 'Mürekkep ve Sarf Malzemeleri' : 'Inks and Consumables'}
         </h2>
 
         <!-- The channel strip: the site's signature component. Real swatches,
@@ -278,8 +303,8 @@ const description = tr
 
         <p class="lead reveal">
           {tr
-            ? 'Sattığımız her kimyasal ürün için Türkçe Güvenlik Bilgi Formu sağlıyoruz.'
-            : 'Every chemical product we sell ships with a Turkish safety data sheet.'}
+            ? 'Güvenlik Bilgi Formları'
+            : 'Safety Data Sheets'}
           {' '}
           <a class="link link--inline" href={path('documents', locale)}>
             {tr ? 'Belgeler' : 'Documents'} <span class="arrow" aria-hidden="true">›</span>
@@ -305,9 +330,7 @@ const description = tr
       </div>
       <div class="section__body">
         <h3 class="reveal">
-          {tr
-            ? '"Bu mürekkep benim Konica 1024i kafamda çalışır mı?" — tek tıkla.'
-            : '"Will this ink run in my Konica 1024i?" — one click.'}
+          {tr ? 'Makine – Mürekkep Uyumluluğu' : 'Machine – Ink Compatibility'}
         </h3>
         <div class="table-wrap reveal">
           <table class="spec-table compat">
@@ -352,7 +375,7 @@ const description = tr
         <p class="eyebrow">04 — {tr ? 'UYGULAMALAR' : 'APPLICATIONS'}</p>
       </div>
       <div class="section__body">
-        <h2 class="reveal">{tr ? 'Ne bastığınıza göre.' : 'By what you print.'}</h2>
+        <h2 class="reveal">{tr ? 'Kullanım Alanları' : 'Applications'}</h2>
         <ul class="tiles reveal" role="list" data-stagger>
           {APPLICATIONS.map((a) => (
             <li class="tile">
@@ -375,7 +398,7 @@ const description = tr
       </div>
       <div class="section__body">
         <h2 class="reveal">
-          {tr ? 'Teknik servis kapsamı.' : 'What technical service covers.'}
+          {tr ? 'Teknik Servis' : 'Technical Service'}
         </h2>
         <ol class="commitments reveal" role="list" data-stagger>
           {COMMITMENTS.map((c) => (
@@ -400,7 +423,7 @@ const description = tr
   <section class="cta" data-ground="ink" data-accent="cyan">
     <div class="shell">
       <h2 class="cta__h">
-        {tr ? 'Teklif ve teknik bilgi.' : 'Quotes and technical information.'}
+        {tr ? 'Teklif ve Teknik Bilgi' : 'Quotes and Technical Information'}
       </h2>
       <p class="lead muted">
         {tr
@@ -426,61 +449,6 @@ const description = tr
 </Base>
 
 <style>
-  /* --- hero --- */
-  .hero {
-    padding-block: clamp(var(--sp-8), 9vh, var(--sp-11)) 0;
-  }
-
-  .hero__inner {
-    display: grid;
-    gap: var(--sp-8);
-    align-items: end;
-  }
-
-  @media (min-width: 1024px) {
-    .hero__inner {
-      grid-template-columns: 48fr 52fr;
-      gap: var(--sp-9);
-    }
-  }
-
-  .hero__copy {
-    display: grid;
-    gap: var(--sp-6);
-    align-content: start;
-  }
-
-  .hero h1 {
-    margin: 0;
-  }
-
-  .hero__pixels {
-    display: flex;
-    gap: 6px;
-  }
-
-  .hero__pixels span {
-    width: 14px;
-    height: 14px;
-  }
-
-  .hero__secondary {
-    font-weight: 500;
-    font-size: var(--step--1);
-  }
-
-  .hero__media {
-    /* Bleeds to the right edge on desktop: the machine runs off the page,
-       which reads as scale rather than as a photo pasted in a box. */
-    margin-inline-end: calc(var(--page-margin) * -1);
-  }
-
-  @media (max-width: 1023px) {
-    .hero__media {
-      margin-inline: calc(var(--page-margin) * -1);
-    }
-  }
-
   /* --- proof strip --- */
   .proof {
     padding-block: var(--sp-7);

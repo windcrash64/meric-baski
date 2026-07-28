@@ -37,16 +37,24 @@ export function toKey(src: string): string {
 }
 
 /**
- * The render for a machine, on a transparent ground (`cutout`) or on the studio
- * sweep. Returns null when that machine has no model yet.
+ * The render for a machine.
+ *
+ * `cutout` gives the transparent-background version, which comes in two lighting
+ * looks: `light` for cards and product pages on paper, `dark` for the hero on
+ * ink. They are different renders of the same machine, not the same file tinted.
+ * Falling back to the studio sweep when a cutout is missing.
  */
-export function renderFor(sku: string, cutout = true): string | null {
+export function renderFor(
+  sku: string,
+  cutout = true,
+  look: 'light' | 'dark' = 'light',
+): string | null {
   const family = RENDER_KEYS[sku];
   if (!family) return null;
-  const key = cutout
-    ? `machines/${family}/cutout/${family}-hero`
-    : `machines/${family}/${family}-hero`;
-  return KNOWN.has(key) ? key : null;
+  const candidates = cutout
+    ? [`machines/${family}/cutout/${look}/${family}-hero`, `machines/${family}/${family}-hero`]
+    : [`machines/${family}/${family}-hero`];
+  return candidates.find((key) => KNOWN.has(key)) ?? null;
 }
 
 /** Every image key that resolves, in order, with the render as a guaranteed first. */

@@ -272,6 +272,111 @@ function galleries(): Cleanup {
 }
 
 /* -------------------------------------------------------------------------
+   Hero slider.
+
+   Autoplays because the design calls for a rotating hero, which makes the
+   visible pause control mandatory rather than optional (WCAG 2.2.2). It also
+   stops on hover, on keyboard focus inside the hero, when the tab is hidden,
+   and permanently the moment the user touches any control — once someone has
+   taken over, moving the content under them is hostile.
+   ------------------------------------------------------------------------- */
+function heroSlider(): Cleanup {
+  const root = document.querySelector<HTMLElement>('[data-hero]');
+  const hero = root?.closest('.hero');
+  if (!root || !hero) return () => {};
+
+  const slides = [...root.querySelectorAll<HTMLElement>('[data-hero-slide]')];
+  const frames = [...hero.querySelectorAll<HTMLElement>('[data-hero-frame]')];
+  const dots = [...hero.querySelectorAll<HTMLButtonElement>('[data-hero-dot]')];
+  const count = hero.querySelector<HTMLElement>('[data-hero-count]');
+  const pause = hero.querySelector<HTMLButtonElement>('[data-hero-pause]');
+  const pauseIcon = hero.querySelector<HTMLElement>('[data-hero-pause-icon]');
+  const pauseLabel = hero.querySelector<HTMLElement>('[data-hero-pause-label]');
+  if (slides.length < 2) return () => {};
+
+  const INTERVAL = 6500;
+  let index = 0;
+  let timer: number | undefined;
+  let stopped = reduced();
+
+  const show = (next: number) => {
+    index = (next + slides.length) % slides.length;
+    slides.forEach((el, i) => {
+      const on = i === index;
+      el.dataset.active = String(on);
+      el.toggleAttribute('inert', !on);
+      if (on) el.removeAttribute('aria-hidden');
+      else el.setAttribute('aria-hidden', 'true');
+    });
+    frames.forEach((el, i) => { el.dataset.active = String(i === index); });
+    dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === index)));
+    if (count) {
+      count.textContent =
+        `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    }
+  };
+
+  const stop = () => {
+    window.clearInterval(timer);
+    timer = undefined;
+  };
+
+  const start = () => {
+    stop();
+    if (stopped) return;
+    timer = window.setInterval(() => show(index + 1), INTERVAL);
+  };
+
+  const setPaused = (value: boolean) => {
+    stopped = value;
+    pause?.setAttribute('aria-pressed', String(value));
+    if (pauseIcon) pauseIcon.textContent = value ? '▶' : '❚❚';
+    if (pauseLabel) {
+      pauseLabel.textContent = value
+        ? (document.documentElement.lang === 'tr' ? 'Oynat' : 'Play')
+        : (document.documentElement.lang === 'tr' ? 'Duraklat' : 'Pause');
+    }
+    if (value) stop();
+    else start();
+  };
+
+  const onPause = () => setPaused(!stopped);
+  const onPrev = () => { setPaused(true); show(index - 1); };
+  const onNext = () => { setPaused(true); show(index + 1); };
+  const onEnter = () => stop();
+  const onLeave = () => { if (!stopped) start(); };
+  const onVisibility = () => (document.hidden ? stop() : onLeave());
+  const onMotion = (e: MediaQueryListEvent) => setPaused(e.matches);
+
+  pause?.addEventListener('click', onPause);
+  hero.querySelector('[data-hero-prev]')?.addEventListener('click', onPrev);
+  hero.querySelector('[data-hero-next]')?.addEventListener('click', onNext);
+  dots.forEach((d, i) => d.addEventListener('click', () => { setPaused(true); show(i); }));
+  hero.addEventListener('mouseenter', onEnter);
+  hero.addEventListener('mouseleave', onLeave);
+  hero.addEventListener('focusin', onEnter);
+  hero.addEventListener('focusout', onLeave);
+  document.addEventListener('visibilitychange', onVisibility);
+
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  motion.addEventListener('change', onMotion);
+
+  show(0);
+  setPaused(stopped);
+
+  return () => {
+    stop();
+    pause?.removeEventListener('click', onPause);
+    hero.removeEventListener('mouseenter', onEnter);
+    hero.removeEventListener('mouseleave', onLeave);
+    hero.removeEventListener('focusin', onEnter);
+    hero.removeEventListener('focusout', onLeave);
+    document.removeEventListener('visibilitychange', onVisibility);
+    motion.removeEventListener('change', onMotion);
+  };
+}
+
+/* -------------------------------------------------------------------------
    Marquee pause. Ships regardless of prefers-reduced-motion: WCAG 2.2.2 wants
    a control the user can actually see and press.
    ------------------------------------------------------------------------- */
@@ -294,7 +399,10 @@ function marquees(): Cleanup {
 /* ------------------------------------------------------------------------- */
 function boot() {
   cleanups.forEach((c) => c());
-  cleanups = [reveals(), header(), mobileNav(), counters(), galleries(), marquees()];
+  cleanups = [
+    reveals(), header(), mobileNav(), counters(),
+    galleries(), marquees(), heroSlider(),
+  ];
 }
 
 document.addEventListener('astro:page-load', boot);
