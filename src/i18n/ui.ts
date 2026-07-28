@@ -32,6 +32,7 @@ export const UI = {
   navService: { tr: 'Teknik Servis', en: 'Service' },
   navAbout: { tr: 'Kurumsal', en: 'Company' },
   navContact: { tr: 'İletişim', en: 'Contact' },
+  navDocuments: { tr: 'Belgeler ve GBF', en: 'Documents & SDS' },
 
   /* --- actions --------------------------------------------------------- */
   getQuote: { tr: 'Teklif Al', en: 'Request a Quote' },
@@ -95,6 +96,17 @@ export const UI = {
   switchAndSwap: { tr: 'Yıkama gerekir', en: 'Switch & Swap' },
   switchAndMatch: { tr: 'Profil gerekir', en: 'Switch & Match' },
 
+  /* --- applications ------------------------------------------------------ */
+  machinesForThis: { tr: 'Bu işi yapan makineler', en: 'Machines that do this work' },
+  inksUsed: { tr: 'Kullanılan mürekkepler', en: 'Inks used' },
+  substratesApplied: { tr: 'Uygulanan malzemeler', en: 'Materials printed' },
+  machineMatrix: {
+    tr: 'Sektör – makine ailesi eşleşme tablosu',
+    en: 'Sector – machine family matrix',
+  },
+  suitable: { tr: 'uygun', en: 'suitable' },
+  notSuitable: { tr: 'uygun değil', en: 'not suitable' },
+
   /* --- forms ------------------------------------------------------------ */
   formName: { tr: 'Ad Soyad', en: 'Full name' },
   formCompany: { tr: 'Firma', en: 'Company' },
@@ -107,8 +119,15 @@ export const UI = {
   formSerial: { tr: 'Seri No', en: 'Serial number' },
   formFault: { tr: 'Arıza Açıklaması', en: 'Fault description' },
   formAddress: { tr: 'Adres', en: 'Address' },
+  formContactPerson: { tr: 'Yetkili Kişi', en: 'Contact person' },
+  formSubjectArea: { tr: 'Konu', en: 'Subject' },
+  formInterest: { tr: 'Hangi makine veya mürekkep', en: 'Which machine or ink' },
+  formSubstrate: { tr: 'Basılacak malzeme', en: 'Material to be printed' },
   formSelect: { tr: 'Seçiniz', en: 'Select' },
+  formOther: { tr: 'Diğer', en: 'Other' },
   formRequired: { tr: 'zorunlu alan', en: 'required' },
+  /** The phrase inside `formKvkkConsent` that becomes the link to the notice. */
+  formKvkkLink: { tr: 'KVKK Aydınlatma Metni', en: 'privacy notice' },
   formKvkkConsent: {
     tr: 'KVKK Aydınlatma Metni’ni okudum ve kişisel verilerimin işlenmesini onaylıyorum.',
     en: 'I have read the privacy notice and consent to the processing of my personal data.',
@@ -130,6 +149,18 @@ export const UI = {
   next: { tr: 'Sonraki', en: 'Next' },
   pause: { tr: 'Duraklat', en: 'Pause' },
   play: { tr: 'Oynat', en: 'Play' },
+
+  /* --- service & company ------------------------------------------------- */
+  serviceCoverage: { tr: 'Yerinde Servis Kapsamı', en: 'On-Site Service Coverage' },
+  installTraining: { tr: 'Kurulum ve Eğitim', en: 'Installation & Training' },
+  warrantyTerms: { tr: 'Garanti Koşulları', en: 'Warranty Terms' },
+  brandsSupply: { tr: 'Markalar ve Tedarik', en: 'Brands & Supply' },
+
+  /* --- legal ------------------------------------------------------------ */
+  lastUpdated: { tr: 'Son güncelleme', en: 'Last updated' },
+  privacyNotice: { tr: 'KVKK Aydınlatma Metni', en: 'Privacy Notice' },
+  cookiePolicy: { tr: 'Çerez Politikası', en: 'Cookie Policy' },
+  termsOfUse: { tr: 'Kullanım Koşulları', en: 'Terms of Use' },
 
   /* --- misc ------------------------------------------------------------- */
   notFoundTitle: { tr: 'Sayfa bulunamadı', en: 'Page not found' },

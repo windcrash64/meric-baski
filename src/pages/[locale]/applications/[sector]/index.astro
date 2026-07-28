@@ -1,0 +1,22 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import ApplicationIndex from '../../../../layouts/ApplicationIndex.astro';
+import { NON_DEFAULT_LOCALES, ROUTES } from '../../../../i18n/routes';
+import type { Locale } from '../../../../config/site';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('applications');
+
+  return NON_DEFAULT_LOCALES.flatMap((locale) =>
+    apps.map((app) => ({
+      params: { locale, sector: ROUTES[`applications.${app.data.key}`][locale] },
+      props: { app, locale },
+    })),
+  );
+}
+
+const { app, locale } = Astro.props as { app: CollectionEntry<'applications'>; locale: Locale };
+---
+
+<ApplicationIndex locale={locale} app={app} />

@@ -1,0 +1,314 @@
+---
+/**
+ * Legal document template — KVKK aydınlatma metni, çerez politikası,
+ * kullanım koşulları.
+ *
+ * One column at the reading measure, one revision date hanging in the label
+ * column, numbered sections, nothing else. A legal text is read for what it
+ * says; every ornament on the page competes with that.
+ *
+ * These three documents sit outside the cyan/magenta/yellow wayfinding
+ * rotation (machines/inks/service), so they all carry one accent — cyan — and
+ * on the light ground it is only ever a rule, never a word.
+ */
+import { SITE, type Locale } from '../config/site';
+import { path } from '../i18n/routes';
+import { t, type UIKey } from '../i18n/ui';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+
+/** The three documents this template renders — and cross-links between. */
+export type LegalKey = 'privacy' | 'cookies' | 'terms';
+
+export interface Props {
+  locale: Locale;
+  routeKey: LegalKey;
+  /** The H1, and the stem of the <title>. */
+  title: string;
+  /** ISO date of the last revision, YYYY-MM-DD. */
+  updated: string;
+  description: string;
+  /** One paragraph under the H1, before the numbered sections. */
+  lede?: string;
+}
+
+const { locale, routeKey, title, updated, description, lede } = Astro.props;
+const tr = locale === 'tr';
+
+const DOCUMENTS: Array<{ key: LegalKey; label: UIKey }> = [
+  { key: 'privacy', label: 'privacyNotice' },
+  { key: 'cookies', label: 'cookiePolicy' },
+  { key: 'terms', label: 'termsOfUse' },
+];
+
+// Fixed to UTC so the printed revision date cannot drift with the build host.
+const revised = new Intl.DateTimeFormat(tr ? 'tr-TR' : 'en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(`${updated}T00:00:00Z`));
+---
+
+<Base
+  locale={locale}
+  title={`${title} | ${SITE.brand.name}`}
+  description={description}
+  routeKey={routeKey}
+  ogType="article"
+>
+  <div data-ground="paper" data-accent="cyan">
+    <div class="shell legal__crumbs">
+      <Breadcrumb locale={locale} crumbs={[{ label: title }]} />
+    </div>
+
+    <div class="shell grid legal">
+      <div class="section__label">
+        <p class="eyebrow">{tr ? 'YASAL' : 'LEGAL'}</p>
+        <p class="legal__revision mono">
+          <span>{t('lastUpdated', locale)}</span>
+          <time datetime={updated}>{revised}</time>
+        </p>
+      </div>
+
+      <div class="section__body legal__doc">
+        <h1>{title}</h1>
+        <div class="rule rule--accent legal__mark reveal" aria-hidden="true"></div>
+        {lede && <p class="lead">{lede}</p>}
+        <div class="prose"><slot /></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section section--tight" data-ground="ink" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">{tr ? 'İLETİŞİM' : 'CONTACT'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="legal__foot-h">
+          {tr
+            ? 'Bu metinle ilgili bir sorunuz varsa yazın; aynı iş günü içinde dönüyoruz.'
+            : 'If you have a question about this document, write to us — we answer the same business day.'}
+        </h2>
+        <div class="cluster legal__contact">
+          <a class="link link--accent" href={`mailto:${SITE.contact.email.general}`}>
+            {SITE.contact.email.general}
+          </a>
+          <a class="link link--accent" href={`tel:${SITE.contact.phone.e164}`}>
+            {SITE.contact.phone.display[locale]}
+          </a>
+        </div>
+        <ul class="legal__siblings" role="list">
+          {DOCUMENTS.filter((d) => d.key !== routeKey).map((d) => (
+            <li>
+              <a class="link" href={path(d.key, locale)}>
+                {t(d.label, locale)} <span class="arrow" aria-hidden="true">›</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal__crumbs {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .legal {
+    padding-block-end: var(--section-pad);
+  }
+
+  .legal__revision {
+    display: grid;
+    gap: var(--sp-1);
+    margin-block-start: var(--sp-5);
+    font-size: var(--step--2);
+    line-height: 1.4;
+    color: var(--on-ground-muted);
+  }
+
+  .legal__revision span {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .legal__revision time {
+    color: var(--on-ground);
+  }
+
+  .legal__doc h1 {
+    max-width: 20ch;
+  }
+
+  /* The single accent on a light ground: 64 px of cyan, drawn in on reveal. */
+  .legal__mark {
+    width: 64px;
+    margin-block: var(--sp-6);
+  }
+
+  .legal__doc .lead {
+    max-width: var(--measure);
+    color: var(--on-ground-muted);
+  }
+
+  /* --------------------------------------------------------------------
+     Prose. The content is slotted in from the page, so it carries the
+     page's scope hash and not this component's — every selector below has
+     to be :global() to reach it.
+     -------------------------------------------------------------------- */
+
+  .prose {
+    max-width: var(--measure);
+    margin-block-start: var(--sp-8);
+    counter-reset: legal-section;
+  }
+
+  .prose > :global(* + *) {
+    margin-block-start: var(--sp-4);
+  }
+
+  .prose :global(p) {
+    line-height: 1.7;
+  }
+
+  /* Sections number themselves: renumbering a legal text by hand is how a
+     cross-reference ends up pointing at the wrong clause. */
+  .prose > :global(h2) {
+    margin-block-start: var(--sp-9);
+    padding-block-start: var(--sp-5);
+    border-top: var(--border) solid var(--hairline);
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  .prose > :global(h2)::before {
+    counter-increment: legal-section;
+    content: counter(legal-section, decimal-leading-zero);
+    display: block;
+    margin-block-end: var(--sp-4);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--on-ground-muted);
+  }
+
+  .prose > :global(h3) {
+    margin-block-start: var(--sp-7);
+    font-size: var(--step-0);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .prose :global(strong) {
+    font-weight: 600;
+  }
+
+  .prose :global(ul) {
+    display: grid;
+    gap: var(--sp-3);
+    margin-block-start: var(--sp-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .prose :global(li) {
+    position: relative;
+    padding-inline-start: var(--sp-6);
+    line-height: 1.7;
+  }
+
+  .prose :global(ul li)::before {
+    content: '—';
+    position: absolute;
+    inset-inline-start: 0;
+    font-family: var(--font-mono);
+    color: var(--on-ground-muted);
+  }
+
+  /* A list whose markers are written into the markup. KVKK m.11 is lettered
+     a–ğ in the Turkish alphabet, which no CSS counter style can produce. */
+  .prose :global(ul.keyed li) {
+    padding-inline-start: var(--sp-7);
+  }
+
+  .prose :global(ul.keyed li)::before {
+    content: none;
+  }
+
+  .prose :global(ul.keyed li > .mono:first-child) {
+    position: absolute;
+    inset-inline-start: 0;
+    font-size: var(--step--1);
+    color: var(--on-ground-muted);
+  }
+
+  /* Term/value pairs — identity data, purpose-to-legal-basis mapping,
+     retention periods. A table would overflow the measure on a phone. */
+  .prose :global(dl) {
+    display: grid;
+    margin-block-start: var(--sp-6);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .prose :global(dl > div) {
+    display: grid;
+    gap: var(--sp-2) var(--gutter);
+    padding-block: var(--sp-4);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  @media (min-width: 720px) {
+    .prose :global(dl > div) {
+      grid-template-columns: 42% 1fr;
+      align-items: baseline;
+    }
+  }
+
+  .prose :global(dt) {
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .prose :global(dd) {
+    margin: 0;
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--on-ground-muted);
+  }
+
+  /* --------------------------------------------------------------------
+     Closing band
+     -------------------------------------------------------------------- */
+
+  .legal__foot-h {
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    max-width: 30ch;
+  }
+
+  .legal__contact {
+    margin-block-start: var(--sp-6);
+    --cluster-gap: var(--sp-6);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  .legal__siblings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-6);
+    margin-block-start: var(--sp-8);
+    padding-block-start: var(--sp-5);
+    border-top: var(--border) solid var(--hairline);
+    font-size: var(--step--1);
+    color: var(--on-ground-muted);
+  }
+</style>

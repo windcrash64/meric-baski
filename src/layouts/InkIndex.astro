@@ -28,14 +28,62 @@ const FAMILY_ORDER = [
   'sublimation', 'dtf', 'textile-pigment', 'auxiliary',
 ] as const;
 
+/** One factual line per family: the chemistry and where it applies. */
+const FAMILY_ROLE: Record<string, Record<Locale, string>> = {
+  uv: {
+    tr: 'Cıva buharlı UV lamba ile kürlenir. Endüstriyel flatbed makinelerde, rijit malzemede kullanılır.',
+    en: 'Cured by mercury-vapour UV lamp. Used on industrial flatbeds, on rigid material.',
+  },
+  'uv-led': {
+    tr: '395 nm LED ile kürlenir; daha düşük lamba sıcaklığı sayesinde ince ve ısıya duyarlı malzemede çalışır.',
+    en: 'Cured by 395 nm LED. The lower lamp temperature allows thin and heat-sensitive material.',
+  },
+  'uv-dtf': {
+    tr: 'A film üzerine basılır, B film ile lamine edilir. Isı veya pres gerektirmeden yüzeye yapışır.',
+    en: 'Printed onto an A film and laminated with a B film. Adheres with no heat and no press.',
+  },
+  'eco-solvent': {
+    tr: 'Düşük koku, ısıtıcı ile kurutma. Folyo, branda ve araç giydirme malzemelerinde kullanılır.',
+    en: 'Low odour, dried by heaters. Used on vinyl, banner and vehicle wrap media.',
+  },
+  solvent: {
+    tr: 'Gerçek solvent; en düşük m² maliyeti ve en yüksek dış mekân dayanımı. Havalandırma zorunludur.',
+    en: 'True solvent: the lowest cost per m² and the highest outdoor durability. Ventilation is mandatory.',
+  },
+  sublimation: {
+    tr: 'Transfer kağıdına basılır, kalenderde ısı ve basınçla polyester life geçer.',
+    en: 'Printed onto transfer paper, then moved into polyester fibre by heat and pressure in a calender.',
+  },
+  dtf: {
+    tr: 'Su bazlı pigment; PET filme basılır, sıcak eriyik toz ile fırınlanır, preste kumaşa aktarılır.',
+    en: 'Water-based pigment: printed to PET film, cured with hot-melt powder, pressed onto fabric.',
+  },
+  'textile-pigment': {
+    tr: 'Doğrudan tekstile baskı. Ön işlem sıvısı gerektirir, fiksaj ısı ile yapılır.',
+    en: 'Printed directly onto textile. Requires pre-treatment liquid; fixation is by heat.',
+  },
+  auxiliary: {
+    tr: 'Temizleme sıvısı, yapışma artırıcı primer, DTF tozu ve transfer filmi.',
+    en: 'Cleaning fluid, adhesion primer, DTF powder and transfer film.',
+  },
+};
+
+// Grouped by chemistry rather than one flat list: a buyer arrives knowing his
+// process, and the family is what decides whether a product can run at all.
+const groups = family
+  ? [{ key: family, inks }]
+  : FAMILY_ORDER
+      .map((key) => ({ key, inks: all.filter((i) => i.data.family === key) }))
+      .filter((g) => g.inks.length > 0);
+
 const INTRO: Record<Locale, string[]> = {
   tr: [
-    'Bir baskı makinesi bir kez satılır; mürekkebi her ay alınır. Bu yüzden mürekkep, bizim için makinenin yanına iliştirilen bir kalem değil, kataloğun yarısıdır.',
-    'Her ürün, hangi baskı kafasında çalıştığı ve hangi makinelerde doğrulandığı ile birlikte listelenir. Marka değiştirirken sistemi yıkamanız gerekip gerekmediğini de sayfanın en üstünde, tek bir etiketle söylüyoruz.',
+    'Mürekkepler kimya ailesine göre gruplanır: UV, UV LED, UV DTF, eko solvent, solvent, süblimasyon, DTF pigment ve tekstil pigment. Her ailenin kürleme yöntemi, uygulanabilir yüzeyleri ve raf ömrü farklıdır.',
+    'Her ürün, çalıştığı baskı kafaları ve doğrulandığı makinelerle birlikte listelenir. Ürün adının yanındaki geçiş etiketi, mevcut mürekkepten geçerken sistemin yıkanması veya renk profilinin yeniden çıkarılması gerekip gerekmediğini gösterir.',
   ],
   en: [
-    'A press is bought once; its ink is bought every month. That is why ink is half this catalogue rather than a line item bolted onto the machine.',
-    'Every product is listed with the printheads it runs in and the machines it has been validated on. Whether changing to it requires flushing the system is stated at the top of the page, in one label.',
+    'Inks are grouped by chemistry: UV, UV-LED, UV DTF, eco-solvent, solvent, dye-sublimation, DTF pigment and textile pigment. Each family differs in curing method, suitable surfaces and shelf life.',
+    'Every product is listed with the printheads it runs in and the machines it has been validated on. The changeover label beside each name states whether switching from the current ink requires flushing the system or rebuilding colour profiles.',
   ],
 };
 
@@ -107,12 +155,25 @@ const description = tr
     )}
 
     <section class="shell ink-idx__list">
+      {groups.map((group) => (
+        <div class="fam">
+          {!family && (
+            <div class="fam__head">
+              <h2 class="fam__title">
+                <a class="link" href={path(INK_FAMILY_ROUTE[group.key as keyof typeof INK_FAMILY_ROUTE], locale)}>
+                  {inkFamilyName(group.key, locale)}
+                </a>
+              </h2>
+              <p class="fam__role muted">{FAMILY_ROLE[group.key]?.[locale] ?? ''}</p>
+              <span class="fam__count mono">{group.inks.length}</span>
+            </div>
+          )}
+
       <ul role="list" class="ink-rows" data-stagger>
-        {inks.map((ink) => (
+        {group.inks.map((ink) => (
           <li class="ink-row reveal">
             <a href={inkHref(ink, locale)}>
               <span class="ink-row__main">
-                <span class="eyebrow">{inkFamilyName(ink.data.family, locale)}</span>
                 <span class="ink-row__series code" lang="en">{ink.data.series}</span>
                 <span class="ink-row__role muted">{ink.data.i18n[locale].role}</span>
               </span>
@@ -145,6 +206,8 @@ const description = tr
           </li>
         ))}
       </ul>
+        </div>
+      ))}
     </section>
   </div>
 
@@ -159,8 +222,8 @@ const description = tr
         </h2>
         <p class="lead reveal">
           {tr
-            ? 'GBF, ithal ürünlerde çoğu zaman yalnızca İngilizce verilir. Türkçe olmayan bir güvenlik formu, iş güvenliği denetiminde işinize yaramaz ve operatörünüz de okumaz.'
-            : 'Safety data sheets for imported products usually arrive in English only. A sheet your operator cannot read is no use in an inspection, and no use to your operator.'}
+            ? 'Güvenlik Bilgi Formu, ürünün tehlike sınıfını, depolama ve taşıma koşullarını, kişisel koruyucu donanım gereksinimini ve ilk yardım bilgilerini içerir. İthal ürünlerde form çoğunlukla yalnızca İngilizce düzenlenir; Türkçe nüsha iş sağlığı ve güvenliği mevzuatı kapsamında istenir.'
+            : 'A safety data sheet states the hazard class, storage and handling conditions, required personal protective equipment and first-aid information. For imported products it is usually issued in English only; Turkish occupational safety regulation requires a Turkish copy.'}
         </p>
         <a class="link link--accent reveal" href={path('documents', locale)}>
           {tr ? 'Belgeler ve GBF' : 'Documents and safety sheets'} <span class="arrow" aria-hidden="true">›</span>
@@ -196,6 +259,43 @@ const description = tr
   .fam-nav__n { font-size: var(--step--2); color: var(--muted); }
 
   .ink-idx__list { padding-block-end: var(--section-pad); }
+
+  .fam + .fam { margin-block-start: var(--sp-10); }
+
+  .fam__head {
+    display: grid;
+    gap: var(--sp-2);
+    padding-block-end: var(--sp-5);
+    border-bottom: var(--border) solid var(--ink);
+  }
+
+  @media (min-width: 1024px) {
+    .fam__head {
+      grid-template-columns: minmax(0, 24ch) minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: var(--gutter);
+    }
+  }
+
+  .fam__title {
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .fam__title a { color: inherit; }
+
+  .fam__role {
+    font-size: var(--step--1);
+    max-width: 64ch;
+  }
+
+  .fam__count {
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+
+  .fam .ink-rows { border-top: 0; }
 
   .ink-rows {
     display: grid;

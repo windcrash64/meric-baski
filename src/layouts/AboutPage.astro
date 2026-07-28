@@ -1,0 +1,544 @@
+---
+/**
+ * Company page — /kurumsal/.
+ *
+ * Every Turkish B2B "kurumsal" page in this trade opens with the same sentence
+ * ("sektörün lider çözüm ortağı") and closes with three stock photographs of
+ * people in a meeting. Neither tells a buyer anything, and both are the tell
+ * that the site was assembled from a template. So this page answers three
+ * literal questions instead: what do you import, what do you actually hold in
+ * stock, and who fixes it when it breaks.
+ *
+ * The numbers band is the only place the page raises its voice, and the brands
+ * section is deliberately worded down: we never write "yetkili distribütör"
+ * without a signed agreement behind it, because that single phrase is the most
+ * common lie in this market and the easiest one for a buyer to check.
+ *
+ * No team section: there is no real photography, and stock people captioned as
+ * staff is worse than no section at all.
+ */
+import { getCollection } from 'astro:content';
+
+import { SITE, type Locale } from '../config/site';
+import { path } from '../i18n/routes';
+import { num, t } from '../i18n/ui';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = locale === 'tr';
+
+const C = SITE.commitments;
+
+const machines = (await getCollection('machines')).filter((m) => m.data.status !== 'discontinued');
+const inkSeries = (await getCollection('inks')).filter((i) => i.data.type === 'ink');
+const machineFamilies = new Set(machines.map((m) => m.data.family)).size;
+
+const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
+  encodeURIComponent(SITE.contact.whatsapp.prefill[locale])
+}`;
+
+/* --- 2. what we actually do --------------------------------------------- */
+const WHAT_WE_DO: string[] = tr
+  ? [
+      `İthal ettiğimiz makineleri kendimiz seçiyoruz. Bir modeli kataloğa almadan önce Türkiye’de bulunabilen malzemeyle test ediyor, baskı kafasının tedarik geçmişini ve yedek parça sürelerini kontrol ediyoruz. Bugün ${machineFamilies} makine ailesinde ${num(machines.length, locale)} model satıyoruz: UV flatbed, UV hibrit, eko solvent, DTF, süblimasyon, UV DTF ve dijital kesim. Baktığımız ama kataloğa almadığımız makine sayısı bundan çok daha fazla — bir makineyi listeden çıkarmanın sebebi genellikle fiyatı değil, üç yıl sonra parçasını bulamayacak olmamız.`,
+      `Mürekkebi stokluyoruz, çünkü makine bir kez, mürekkep her ay satılır. ${num(inkSeries.length, locale)} mürekkep serisi ve kritik sarf malzemesi İstanbul deposunda duruyor; bir litrelik siparişi de iki yüz litreliği de aynı hafta gönderiyoruz. Sattığımız her kimyasal ürünün Türkçe Güvenlik Bilgi Formu ve üreticinin teknik veri sayfası, kayıt istemeden indirilebilir şekilde sitede duruyor. Bunu talep etmeniz gerekmiyor; talep edilmesi gereken bir şey olmamalı.`,
+      `Servisi taşerona vermiyoruz. Makineyi kuran teknisyen, iki yıl sonra arızasına da bakan teknisyendir. ${num(C.installationsCount, locale)}’den fazla kurulumun seri numarası, kurulum tarihi, değişen parçaları ve son bakım tarihi kayıtlı; ${C.onSiteCities.length} şehirde kendi ekibimizle sahaya çıkıyoruz. Bir arıza kaydı açıldığında sayaç başlar ve ${C.responseHours} saat içinde uzaktan bağlanırız.`,
+    ]
+  : [
+      `We choose the machines we import ourselves. Before a model enters the catalogue we test it on material that is actually available in Turkey, and check the printhead's supply history and spare-part lead times. Today we sell ${num(machines.length, locale)} models across ${machineFamilies} families: UV flatbed, UV hybrid, eco-solvent, DTF, dye-sublimation, UV DTF and digital cutting. The number of machines we looked at and did not list is far larger — and the usual reason for rejecting one is not its price but the certainty that parts will be hard to find in three years.`,
+      `We hold ink in stock, because a machine sells once and its ink sells every month. ${num(inkSeries.length, locale)} ink series and the critical consumables sit in the Istanbul warehouse; a one-litre order and a two-hundred-litre order both ship the same week. Every chemical product we sell has a Turkish safety data sheet and the manufacturer's technical data sheet on this site, downloadable without registration. You do not have to ask for them — they should never be something you have to ask for.`,
+      `We do not subcontract service. The engineer who installs the machine is the engineer who returns to it two years later. Serial number, installation date, replaced parts and last service visit are on file for more than ${num(C.installationsCount, locale)} installations, and our own team travels to ${C.onSiteCities.length} cities. When a fault is logged the clock starts, and we connect remotely within ${C.responseHours} hours.`,
+    ];
+
+/* --- 3. the numbers band ------------------------------------------------- */
+const FIGURES = [
+  {
+    value: C.yearsInBusiness,
+    suffix: '',
+    label: tr ? 'Sektörde yıl' : 'Years in the trade',
+  },
+  {
+    value: C.installationsCount,
+    suffix: '+',
+    label: tr ? 'Tamamlanan kurulum' : 'Installations completed',
+  },
+  {
+    value: inkSeries.length,
+    suffix: '',
+    label: tr ? 'Stoklanan mürekkep serisi' : 'Ink series held in stock',
+  },
+  {
+    value: C.onSiteCities.length,
+    suffix: '',
+    label: tr ? 'Yerinde servis şehri' : 'Cities with on-site service',
+  },
+];
+
+/* --- 4. commitments ------------------------------------------------------ */
+const COMMITMENTS = tr
+  ? [
+      {
+        h: 'Stok',
+        b: `${num(inkSeries.length, locale)} mürekkep serisi ve üretimi durduran yedek parçalar İstanbul deposunda tutulur. Stoktaki kalem aynı iş günü kargoya verilir; stokta olmayanın tedarik tarihi tahmin olarak değil, tarih olarak yazılır.`,
+      },
+      {
+        h: 'Servis',
+        b: `Arıza kaydı açıldıktan sonra ${C.responseHours} saat içinde uzaktan bağlanırız. Garanti ikiye ayrılır: elektronik ${C.warrantyElectronicMonths} ay, mekanik ${C.warrantyMechanicalMonths} ay. Baskı kafasının sarf malzemesi olduğunu teklifin içinde yazarız.`,
+      },
+      {
+        h: 'Güvenlik Bilgi Formu',
+        b: 'Sattığımız her kimyasal ürünün Türkçe GBF’si ve üreticinin teknik veri sayfası sitede, ücretsiz ve kayıt istemeden indirilebilir. Sürüm numarası ve tarihi her belgenin üzerinde yazar.',
+      },
+      {
+        h: 'Eğitim',
+        b: 'Operatör eğitimi ekibiniz makineyi tek başına çalıştırana kadar sürer, saatle sınırlı değildir. Personel değiştiğinde eğitimin tekrarı ücretsizdir.',
+      },
+    ]
+  : [
+      {
+        h: 'Stock',
+        b: `${num(inkSeries.length, locale)} ink series and the spare parts that stop production are held in Istanbul. Stocked items ship the same working day; for anything not in stock you get a date, not an estimate.`,
+      },
+      {
+        h: 'Service',
+        b: `We connect remotely within ${C.responseHours} hours of a fault being logged. The warranty is split: electronics ${C.warrantyElectronicMonths} months, mechanical ${C.warrantyMechanicalMonths} months. That a printhead is a consumable is written into the quote.`,
+      },
+      {
+        h: 'Safety data sheets',
+        b: 'Every chemical product we sell has a Turkish SDS and the manufacturer technical data sheet on this site, free and without registration. Version number and date are printed on each document.',
+      },
+      {
+        h: 'Training',
+        b: 'Operator training runs until your team can work the machine unaided; it is not capped in hours. When staff change, the repeat is free.',
+      },
+    ];
+
+/* --- 5. brands and supply ------------------------------------------------ */
+const SUPPLY = tr
+  ? [
+      {
+        k: 'Makineler',
+        v: 'Üretici fabrikalardan doğrudan ithal ediyoruz; ara ithalatçı yok.',
+        s: 'İthal ediyoruz',
+      },
+      {
+        k: 'Baskı kafaları',
+        v: 'Ricoh, Konica Minolta, Epson ve Kyocera endüstriyel serileri, orijinal ambalajında.',
+        s: 'Stoklarımızda bulunur',
+      },
+      {
+        k: 'Maven MI serisi mürekkepler',
+        v: 'Kendi markamız, sözleşmeli üretim. Her parti için viskozite, yüzey gerilimi ve renk raporu tutulur.',
+        s: 'Kendi markamız',
+      },
+      {
+        k: 'DTF filmi, toz, süblimasyon kağıdı',
+        v: 'Üretici seçimini kendi test baskılarımıza göre yapıyoruz; marka değişirse önceden haber veriyoruz.',
+        s: 'Tedarik ediyoruz',
+      },
+      {
+        k: 'Yedek parça ve sarf',
+        v: 'Damper, mürekkep pompası, encoder şerit, kayış, filtre seti, UV LED modülü ve sürücü kartı.',
+        s: 'Stoklarımızda bulunur',
+      },
+    ]
+  : [
+      {
+        k: 'Machines',
+        v: 'Imported directly from the manufacturing plants — no intermediate importer.',
+        s: 'We import',
+      },
+      {
+        k: 'Printheads',
+        v: 'Ricoh, Konica Minolta, Epson and Kyocera industrial series, in original packaging.',
+        s: 'Held in stock',
+      },
+      {
+        k: 'Maven MI series inks',
+        v: 'Our own brand, produced under contract. Viscosity, surface tension and colour are recorded per batch.',
+        s: 'Our own brand',
+      },
+      {
+        k: 'DTF film, powder, sublimation paper',
+        v: 'We pick the producer from our own test prints, and tell you in advance if the brand changes.',
+        s: 'We supply',
+      },
+      {
+        k: 'Spare parts and consumables',
+        v: 'Dampers, ink pumps, encoder strips, belts, filter sets, UV LED modules and driver boards.',
+        s: 'Held in stock',
+      },
+    ];
+
+const title = tr
+  ? 'Kurumsal — Ne İthal Ediyor, Ne Stokluyor, Neyi Servis Ediyoruz | Maven'
+  : 'Company — What We Import, Stock and Service | Maven';
+const description = tr
+  ? `${SITE.brand.foundedYear}’ten beri dijital baskı makinesi ithal ediyor, mürekkebini stokluyor ve servisini kendi ekibimizle veriyoruz. ${num(C.installationsCount, locale)}+ kurulum, ${C.onSiteCities.length} şehirde yerinde servis.`
+  : `Since ${SITE.brand.foundedYear} we have imported digital printing machines, stocked their inks and serviced them with our own engineers. ${num(C.installationsCount, locale)}+ installations, on-site service in ${C.onSiteCities.length} cities.`;
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey="about"
+  schema={[{
+    '@type': 'AboutPage',
+    name: tr ? 'Kurumsal' : 'Company',
+    url: `${SITE.url}${path('about', locale)}`,
+    inLanguage: locale,
+    mainEntity: { '@id': `${SITE.url}/#organization` },
+  }]}
+>
+  <!-- 1 — HEADER ------------------------------------------------------------ -->
+  <div data-ground="paper" data-accent="cyan">
+    <div class="shell abt__crumbs">
+      <Breadcrumb locale={locale} crumbs={[{ label: t('navAbout', locale) }]} />
+    </div>
+
+    <header class="shell abt__head">
+      <h1>{tr ? 'Kurumsal' : 'Company'}</h1>
+      <p class="lead">
+        {tr
+          ? `${SITE.brand.foundedYear}’ten beri dijital baskı makinesi ithal ediyor, mürekkebini stokluyor ve servisini kendi ekibimizle veriyoruz. Üçünü birden yapan firma sayısı, bu piyasada sandığınızdan az.`
+          : `Since ${SITE.brand.foundedYear} we have imported digital printing machines, stocked their inks and serviced them with our own engineers. Fewer companies in this market do all three than you would expect.`}
+      </p>
+    </header>
+  </div>
+
+  <!-- 2 — WHAT WE DO --------------------------------------------------------- -->
+  <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">01 — {tr ? 'NE YAPIYORUZ' : 'WHAT WE DO'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Makineyi getiriyoruz, mürekkebini stokluyoruz, arızasına biz bakıyoruz.'
+            : 'We bring in the machine, we stock its ink, and we fix it ourselves.'}
+        </h2>
+        <div class="abt__prose" data-stagger>
+          {WHAT_WE_DO.map((p) => <p class="reveal">{p}</p>)}
+        </div>
+
+        <div class="cluster abt__links">
+          <a class="link link--accent" href={path('machines', locale)}>
+            {t('navMachines', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+          <a class="link link--accent" href={path('inks', locale)}>
+            {t('navInks', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+          <a class="link link--accent" href={path('service', locale)}>
+            {t('navService', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — MAVEN IN NUMBERS ---------------------------------------------------- -->
+  <section class="section" data-ground="ink" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">02 — {tr ? 'SAYILARLA' : 'IN NUMBERS'}</p>
+      </div>
+      <div class="section__body section__body--wide">
+        <h2 class="reveal">{tr ? 'Sayılarla Maven' : 'Maven in numbers'}</h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Dördü de doğrulanabilir. Kurulum listesini, stok kalemlerini ve servis kayıtlarını isteyen bir müşteriye gösteriyoruz.'
+            : 'All four are checkable. We show the installation list, the stock items and the service records to any customer who asks.'}
+        </p>
+
+        <dl class="figures reveal" data-stagger>
+          {FIGURES.map((f) => (
+            <div class="figure reveal">
+              <dt class="eyebrow">{f.label}</dt>
+              <dd class="figure__v">
+                <span class="counter" data-count-to={f.value}>0</span>
+                {f.suffix && <span class="figure__suffix">{f.suffix}</span>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — COMMITMENTS ---------------------------------------------------------- -->
+  <section class="section" data-ground="bone" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">03 — {tr ? 'TAAHHÜT' : 'COMMITMENTS'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr ? 'Neyi taahhüt ediyoruz' : 'What we commit to'}
+        </h2>
+
+        <ul class="pledges reveal" role="list" data-stagger>
+          {COMMITMENTS.map((c) => (
+            <li class="pledge reveal">
+              <h3 class="pledge__h">{c.h}</h3>
+              <p class="muted">{c.b}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — BRANDS AND SUPPLY ------------------------------------------------------ -->
+  <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">04 — {tr ? 'TEDARİK' : 'SUPPLY'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">{t('brandsSupply', locale)}</h2>
+        <p class="lead reveal">
+          {tr
+            ? 'Bu sayfada hiçbir marka için “yetkili distribütör” yazmıyoruz. Yazılı bir distribütörlük sözleşmemiz olduğunda markanın adını ve sözleşme tarihini buraya ekleriz; o zamana kadar “tedarik ediyoruz” veya “stoklarımızda bulunur” diyoruz.'
+            : 'We do not write "authorised distributor" for any brand on this page. When we hold a written distribution agreement we will name the brand and the date here; until then we say "we supply" or "held in stock".'}
+        </p>
+        <p class="muted reveal">
+          {tr
+            ? 'Aradaki fark, garantinin kimin üzerinde olduğunu sorduğunuzda ortaya çıkar — ve bunu satın almadan önce bilmek sizin hakkınız.'
+            : 'The difference shows up the moment you ask whose warranty it is — and you are entitled to know that before you buy, not after.'}
+        </p>
+
+        <dl class="supply reveal" data-stagger>
+          {SUPPLY.map((row) => (
+            <div class="supply__row reveal">
+              <dt class="supply__k">{row.k}</dt>
+              <dd class="supply__v">
+                <span class="supply__note muted">{row.v}</span>
+                <span class="supply__status mono">{row.s}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — CTA ---------------------------------------------------------------------- -->
+  <section class="abt__cta" data-ground="ink" data-accent="cyan">
+    <div class="shell">
+      <h2 class="abt__cta-h">
+        {tr ? 'Önce ne bastığınızı konuşalım.' : 'Let us start with what you print.'}
+      </h2>
+      <p class="lead muted">
+        {tr
+          ? 'Günlük hacminizi ve malzemenizi söyleyin; hangi makinenin gerçekten gerektiğini — ve hangisinin gereksiz olduğunu — kalem kalem yazalım.'
+          : 'Tell us your daily volume and your material, and we will set out, item by item, which machine you actually need and which you do not.'}
+      </p>
+      <div class="cluster">
+        <a class="btn btn--outline" href={path('quote', locale)}>
+          {t('getQuote', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="link link--accent" href={path('contact', locale)}>
+          {t('navContact', locale)} <span class="arrow" aria-hidden="true">›</span>
+        </a>
+        <a class="link link--accent" href={wa} target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* --- 1. header --- */
+  .abt__crumbs {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .abt__head {
+    display: grid;
+    gap: var(--sp-5);
+    padding-block-end: var(--section-pad);
+    max-width: 74ch;
+  }
+
+  .abt__head .lead {
+    color: var(--muted);
+  }
+
+  /* --- 2. prose --- */
+  .abt__prose {
+    display: grid;
+    gap: var(--sp-6);
+    margin-block-start: var(--sp-7);
+  }
+
+  .abt__prose p {
+    max-width: 68ch;
+    color: var(--on-ground-muted);
+  }
+
+  .abt__links {
+    margin-block-start: var(--sp-8);
+    --cluster-gap: var(--sp-6);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  /* --- 3. numbers --- */
+  .figures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-8) var(--gutter);
+    margin: var(--sp-9) 0 0;
+    padding-block-start: var(--sp-7);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  @media (min-width: 900px) {
+    .figures {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .figure dt {
+    margin-block-end: var(--sp-3);
+  }
+
+  .figure__v {
+    display: flex;
+    align-items: baseline;
+    gap: 0.06em;
+    margin: 0;
+    /* The counter renders in mono (base.css), so it is tracked, not condensed —
+       a width axis here would do nothing and a tight letter-spacing would
+       break the tabular alignment the count-up depends on. */
+    font-size: var(--step-4);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  /* On ink the accent is allowed to be a word — the suffix is the only one. */
+  .figure__suffix {
+    color: var(--accent-text);
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+  }
+
+  /* --- 4. pledges --- */
+  .pledges {
+    display: grid;
+    gap: 0;
+    margin-block-start: var(--sp-8);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  @media (min-width: 900px) {
+    .pledges {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--sp-8);
+    }
+  }
+
+  .pledge {
+    position: relative;
+    padding-block: var(--sp-6);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  /* Accent as a rule, never as text: a 28 px cyan segment on the hairline. */
+  .pledge::before {
+    content: '';
+    position: absolute;
+    bottom: calc(var(--border) * -1);
+    left: 0;
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .pledge__h {
+    font-size: var(--step-1);
+    font-weight: 500;
+    margin-block-end: var(--sp-3);
+  }
+
+  .pledge p {
+    font-size: var(--step--1);
+    max-width: 58ch;
+  }
+
+  /* --- 5. supply --- */
+  .supply {
+    margin: var(--sp-8) 0 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .supply__row {
+    display: grid;
+    gap: var(--sp-2) var(--sp-6);
+    padding-block: var(--sp-5);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  @media (min-width: 900px) {
+    .supply__row {
+      grid-template-columns: minmax(0, 26ch) minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .supply__k {
+    font-size: var(--step-0);
+    font-weight: 500;
+  }
+
+  .supply__v {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3) var(--sp-6);
+    margin: 0;
+  }
+
+  .supply__note {
+    font-size: var(--step--1);
+    max-width: 58ch;
+  }
+
+  /* Deliberately reads as a status field, not a badge: no pill, no colour,
+     because the wording is the honesty and a coloured chip would oversell it. */
+  .supply__status {
+    flex: none;
+    font-size: var(--step--2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--on-ground);
+    border-bottom: 2px solid var(--accent);
+    padding-block-end: 2px;
+  }
+
+  /* --- 6. cta --- */
+  .abt__cta {
+    padding-block: var(--section-pad) var(--sp-9);
+  }
+
+  .abt__cta-h {
+    font-size: var(--step-4);
+    font-variation-settings: 'wdth' 84;
+    max-width: 18ch;
+    margin-block-end: var(--sp-5);
+  }
+
+  .abt__cta .lead {
+    margin-block-end: var(--sp-7);
+    max-width: 56ch;
+  }
+</style>

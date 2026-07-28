@@ -1,0 +1,946 @@
+---
+/**
+ * The contact funnel: /iletisim/, /teklif-al/ and /tesekkurler/.
+ *
+ * One template, one prop — the same shape MachineIndex uses for the machines
+ * index and its category pages. The three pages share their channel block,
+ * their working hours and their legal footer identity; splitting them into
+ * three layouts would mean writing the same Turkish copy twice per locale and
+ * letting the two copies drift.
+ */
+import { SITE, type Locale } from '../config/site';
+import { FAMILY_ROUTE, path, type RouteKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { machineFamilyName } from '../lib/product';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import ContactForm from '../components/form/ContactForm.astro';
+
+export interface Props {
+  locale: Locale;
+  variant: 'contact' | 'quote' | 'thanks';
+}
+
+const { locale, variant } = Astro.props;
+const tr = locale === 'tr';
+
+const hours = SITE.contact.hours;
+const openHours = hours.filter((h) => h.open);
+const hourValue = (h: (typeof hours)[number]) =>
+  h.open ? `${h.open} – ${h.close}` : t('closed', locale);
+
+const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
+  encodeURIComponent(SITE.contact.whatsapp.prefill[locale])
+}`;
+
+/**
+ * E-mail addresses are emitted as numeric character references. A browser
+ * decodes them before it ever paints or follows the link; a harvester running a
+ * regex over the HTML source finds nothing. It has to go through `set:html`
+ * because Astro escapes `&` inside attribute values, which would otherwise turn
+ * the entities into visible text. No JavaScript is involved, so the address is
+ * still a working mailto with scripting off.
+ */
+const enc = (value: string) =>
+  [...value].map((char) => `&#${char.codePointAt(0)};`).join('');
+const mailAnchor = (address: string) =>
+  `<a class="link" href="mailto:${enc(address)}">${enc(address)}</a>`;
+
+const address = SITE.contact.address;
+const cityLine = `${address.district} / ${address.city}`;
+
+/* --- channel grid — telephone first, always ------------------------------ */
+const CHANNELS = [
+  {
+    label: tr ? 'TELEFON' : 'TELEPHONE',
+    value: SITE.contact.phone.display[locale],
+    note: tr
+      ? `${hours[0].days.tr} ${hourValue(hours[0])} · ${hours[1].days.tr} ${hourValue(hours[1])}`
+      : `${hours[0].days.en} ${hourValue(hours[0])} · ${hours[1].days.en} ${hourValue(hours[1])}`,
+    cta: t('callUs', locale),
+    href: `tel:${SITE.contact.phone.e164}`,
+    external: false,
+  },
+  {
+    label: 'WHATSAPP',
+    value: SITE.contact.mobile.display[locale],
+    note: tr
+      ? 'Arıza fotoğrafı ve kısa video gönderin — telefonda tarif etmekten hızlıdır.'
+      : 'Send a photo or a short video of the fault — faster than describing it.',
+    cta: t('askWhatsApp', locale),
+    href: wa,
+    external: true,
+  },
+  {
+    label: tr ? 'E-POSTA' : 'E-MAIL',
+    value: null,
+    note: tr
+      ? 'Teklif ve sipariş yazışmaları. Dosya ekleyebilirsiniz.'
+      : 'Quotes and orders. Attachments welcome.',
+    cta: null,
+    href: null,
+    external: false,
+  },
+  {
+    label: tr ? 'ADRES' : 'ADDRESS',
+    value: address.street,
+    note: `${cityLine} · ${address.postalCode}`,
+    cta: t('getDirections', locale),
+    href: address.mapsUrl,
+    external: true,
+  },
+];
+
+const DEPARTMENTS = [
+  {
+    role: tr ? 'Satış' : 'Sales',
+    mail: SITE.contact.email.sales,
+    note: tr
+      ? 'Makine seçimi, fiyat teklifi, demo randevusu, ikinci el takas.'
+      : 'Machine selection, pricing, demo appointments, trade-ins.',
+  },
+  {
+    role: tr ? 'Teknik Servis' : 'Technical Service',
+    mail: SITE.contact.email.service,
+    note: tr
+      ? `Arıza kaydı, periyodik bakım, yedek parça. Kayıt açıldıktan sonra en geç ${SITE.commitments.responseHours} saat içinde müdahale.`
+      : `Faults, scheduled maintenance, spare parts. We respond within ${SITE.commitments.responseHours} hours of a logged fault.`,
+  },
+  {
+    role: tr ? 'Sarf Sipariş' : 'Supplies',
+    mail: SITE.contact.email.supplies,
+    note: tr
+      ? 'Mürekkep, transfer filmi, sıcak eriyik toz, temizlik kimyasalları ve Türkçe GBF talepleri.'
+      : 'Ink, transfer film, hot-melt powder, cleaning chemicals and Turkish safety data sheets.',
+  },
+  {
+    role: tr ? 'Muhasebe' : 'Accounts',
+    mail: SITE.contact.email.accounting,
+    note: tr
+      ? 'Fatura, cari hesap, ödeme planı.'
+      : 'Invoices, statements, payment plans.',
+  },
+];
+
+/* --- quote page: what the quote itemises --------------------------------- */
+const QUOTE_LINES = tr
+  ? [
+      {
+        n: '01',
+        h: 'Makine ve yapılandırma',
+        b: 'Kafa markası ve sayısı, baskı genişliği veya tabla ölçüsü, mürekkep sistemi. Aynı model iki farklı yapılandırmada iki farklı fiyattır — bu yüzden sayfada tek bir rakam yayınlamıyoruz.',
+      },
+      {
+        n: '02',
+        h: 'Mürekkep başlangıç seti',
+        b: 'Litre ve renk kanalı bazında ayrı satır. Beyaz ve lak kanalı varsa ayrıca gösterilir.',
+      },
+      {
+        n: '03',
+        h: 'Kurulum, devreye alma ve eğitim',
+        b: 'Teklif fiyatına dahildir. Operatör eğitiminde süre sınırı yoktur; personel değişiminde tekrarı ücretsizdir.',
+      },
+      {
+        n: '04',
+        h: 'Nakliye ve saha hazırlığı',
+        b: 'Nakliye, forklift veya vinç, elektrik altyapısı ve havalandırma ayrı kalemlerdir. Her sahada farklıdır, tahmini bedelle yazılır ve kurulum öncesi keşifte kesinleşir.',
+      },
+      {
+        n: '05',
+        h: 'Garanti ve teslim süresi',
+        b: `Elektronik aksam ${SITE.commitments.warrantyElectronicMonths} ay, mekanik aksam ${SITE.commitments.warrantyMechanicalMonths} ay. Stoktaki modellerde 1–2 hafta, sipariş üzerine yapılandırılan makinelerde 6–10 hafta.`,
+      },
+    ]
+  : [
+      {
+        n: '01',
+        h: 'Machine and configuration',
+        b: 'Printhead brand and count, print width or bed size, ink system. The same model in two configurations is two different prices — which is why no single figure is published on the site.',
+      },
+      {
+        n: '02',
+        h: 'Starter ink set',
+        b: 'Itemised by litre and colour channel. White and varnish channels are shown separately.',
+      },
+      {
+        n: '03',
+        h: 'Installation, commissioning and training',
+        b: 'Included in the quoted price. Operator training has no time limit, and repeats after staff changes are free.',
+      },
+      {
+        n: '04',
+        h: 'Freight and site preparation',
+        b: 'Freight, forklift or crane, electrical infrastructure and ventilation are separate lines. They differ on every site, are estimated in the quote and fixed at the pre-installation survey.',
+      },
+      {
+        n: '05',
+        h: 'Warranty and lead time',
+        b: `Electronics ${SITE.commitments.warrantyElectronicMonths} months, mechanical parts ${SITE.commitments.warrantyMechanicalMonths} months. One to two weeks for stocked models, six to ten weeks for a configured build.`,
+      },
+    ];
+
+/* --- thank-you page ------------------------------------------------------- */
+const NEXT_STEPS = tr
+  ? [
+      { n: '01', b: 'Talebiniz satış ve servis kutusuna aynı anda düşer; ikisinden hangisi ilgiliyse o ekip alır.' },
+      { n: '02', b: '1 iş günü içinde bir satış mühendisi telefonla arar. Aramadan önce yazdığınız hacim ve malzeme bilgisine göre ön çalışma yapılır.' },
+      { n: '03', b: 'Teklif e-posta ile kalem kalem ayrılmış olarak gelir. Makineyi çalışırken görmek isterseniz showroom randevusu aynı görüşmede planlanır.' },
+    ]
+  : [
+      { n: '01', b: 'Your message lands in the sales and service inboxes at the same time; whichever team it belongs to picks it up.' },
+      { n: '02', b: 'A sales engineer calls you within one business day, having already worked through the volume and material you described.' },
+      { n: '03', b: 'The quote arrives by e-mail, itemised line by line. If you want to see the machine running, the showroom appointment is booked in the same call.' },
+    ];
+
+const FAMILY_KEYS = Object.keys(FAMILY_ROUTE) as Array<keyof typeof FAMILY_ROUTE>;
+
+const ELSEWHERE: Array<{ key: RouteKey; label: string }> = tr
+  ? [
+      { key: 'compatibility', label: 'Makine – mürekkep uyumluluk tablosu' },
+      { key: 'inks', label: 'Mürekkep ve sarf malzemeleri' },
+      { key: 'service', label: 'Teknik servis taahhütleri' },
+      { key: 'documents', label: 'Belgeler ve Türkçe GBF' },
+      { key: 'finance', label: 'Ödeme ve finansman' },
+      { key: 'used', label: 'İkinci el makineler' },
+    ]
+  : [
+      { key: 'compatibility', label: 'Machine – ink compatibility matrix' },
+      { key: 'inks', label: 'Inks and consumables' },
+      { key: 'service', label: 'Service commitments' },
+      { key: 'documents', label: 'Documents and safety data sheets' },
+      { key: 'finance', label: 'Payment and financing' },
+      { key: 'used', label: 'Used machines' },
+    ];
+
+/* --- head ----------------------------------------------------------------- */
+const META = {
+  contact: {
+    routeKey: 'contact' as RouteKey,
+    title: tr
+      ? 'İletişim — Telefon, WhatsApp, Adres | Maven'
+      : 'Contact — Phone, WhatsApp, Address | Maven',
+    description: tr
+      ? 'Maven satış ve teknik servis iletişim bilgileri: telefon, WhatsApp, departman e-postaları, İstanbul adresi ve çalışma saatleri. Mesajlara aynı iş günü içinde dönüş.'
+      : 'Maven sales and service contacts: telephone, WhatsApp, departmental e-mail, the Istanbul address and working hours. We reply the same business day.',
+  },
+  quote: {
+    routeKey: 'quote' as RouteKey,
+    title: tr
+      ? 'Teklif Al — Dijital Baskı Makinesi Fiyat Teklifi | Maven'
+      : 'Request a Quote — Digital Printing Machine Pricing | Maven',
+    description: tr
+      ? 'Makine, mürekkep başlangıç seti, kurulum ve eğitim ayrı satırlarda: 1 iş günü içinde kalem kalem ayrılmış teklif. Ne bastığınızı yazın, doğru makineyi birlikte seçelim.'
+      : 'Machine, starter ink set, installation and training on separate lines — an itemised quote within one business day. Tell us what you print and we will choose the machine with you.',
+  },
+  thanks: {
+    routeKey: 'thanks' as RouteKey,
+    title: tr ? 'Talebiniz alındı | Maven' : 'We have your request | Maven',
+    description: tr
+      ? 'Talebiniz bize ulaştı. 1 iş günü içinde bir satış mühendisimiz sizi arar.'
+      : 'Your request has reached us. A sales engineer will call you within one business day.',
+  },
+}[variant];
+
+/* --- structured data ------------------------------------------------------
+   Organization already ships from Base on every page, so this contributes the
+   LocalBusiness node that carries the coordinates and the opening hours and
+   points back at it, rather than declaring a second, competing company. */
+const DAY_SETS = [
+  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+  ['Saturday'],
+  ['Sunday'],
+];
+
+const schema = variant === 'contact'
+  ? [
+      {
+        '@type': 'LocalBusiness',
+        '@id': `${SITE.url}/#localbusiness`,
+        name: SITE.brand.name,
+        legalName: SITE.legal.tradeName,
+        parentOrganization: { '@id': `${SITE.url}/#organization` },
+        url: SITE.url,
+        telephone: SITE.contact.phone.e164,
+        email: SITE.contact.email.general,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: address.street,
+          addressLocality: address.district,
+          addressRegion: address.city,
+          postalCode: address.postalCode,
+          addressCountry: 'TR',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: address.geo.lat,
+          longitude: address.geo.lng,
+        },
+        hasMap: address.mapsUrl,
+        openingHoursSpecification: hours.flatMap((h, i) =>
+          h.open
+            ? [{
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: DAY_SETS[i],
+                opens: h.open,
+                closes: h.close,
+              }]
+            : [],
+        ),
+        areaServed: SITE.commitments.onSiteCities.map((city) => ({ '@type': 'City', name: city })),
+      },
+      {
+        '@type': 'ContactPage',
+        '@id': `${SITE.url}${path('contact', locale)}#webpage`,
+        url: `${SITE.url}${path('contact', locale)}`,
+        name: META.title,
+        inLanguage: locale,
+        about: { '@id': `${SITE.url}/#organization` },
+      },
+    ]
+  : [];
+---
+
+<Base
+  locale={locale}
+  title={META.title}
+  description={META.description}
+  routeKey={META.routeKey}
+  schema={schema}
+  noindex={variant === 'thanks'}
+>
+  {variant === 'contact' && (
+    <>
+      <!-- 1 — HEADER + CHANNEL GRID ------------------------------------- -->
+      <section class="section section--head" data-ground="paper" data-accent="cyan">
+        <div class="shell">
+          <Breadcrumb locale={locale} crumbs={[{ label: t('navContact', locale) }]} />
+
+          <header class="head">
+            <h1>{t('navContact', locale)}</h1>
+            <p class="lead">
+              {tr
+                ? 'Mesajınıza aynı iş günü içinde dönüyoruz. Telefonu tercih ediyorsanız çalışma saatleri içinde doğrudan bir satış mühendisine bağlanırsınız; makine duruyorsa WhatsApp en hızlı kanaldır.'
+                : 'We reply the same business day. Call during working hours and you reach a sales engineer directly; if a machine is down, WhatsApp is the fastest channel.'}
+            </p>
+          </header>
+
+          <ul class="cards channels" role="list" data-stagger>
+            {CHANNELS.map((channel) => (
+              <li class="card chan" data-accent="cyan">
+                <p class="eyebrow">{channel.label}</p>
+
+                {channel.value
+                  ? <p class="chan__value mono">{channel.value}</p>
+                  : (
+                    <p
+                      class="chan__value chan__value--mail mono"
+                      set:html={mailAnchor(SITE.contact.email.general)}
+                    />
+                  )}
+
+                <p class="chan__note muted">{channel.note}</p>
+
+                {channel.href && channel.cta && (
+                  <p class="chan__cta">
+                    <a
+                      class="link link--accent"
+                      href={channel.href}
+                      target={channel.external ? '_blank' : undefined}
+                      rel={channel.external ? 'noopener' : undefined}
+                    >
+                      {channel.cta} <span class="arrow" aria-hidden="true">›</span>
+                    </a>
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- 2 — DEPARTMENT ROUTING ---------------------------------------- -->
+      <section class="section" data-ground="bone" data-accent="magenta">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'DEPARTMANLAR' : 'DEPARTMENTS'}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">
+              {tr ? 'Doğru kişiye doğrudan yazın.' : 'Write straight to the right desk.'}
+            </h2>
+            <p class="lead muted reveal">
+              {tr
+                ? 'Beş kişisel adres yerine dört departman kutusu: yazdığınız adrese bakan bir ekip var, kimse izinde değil.'
+                : 'Four departmental inboxes instead of five personal ones: a team reads each of them, and nobody is on holiday.'}
+            </p>
+
+            <ul class="depts reveal" role="list">
+              {DEPARTMENTS.map((dept) => (
+                <li class="dept">
+                  <span class="dept__role">{dept.role}</span>
+                  <span class="dept__mail mono" set:html={mailAnchor(dept.mail)} />
+                  <span class="dept__note muted">{dept.note}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 — GENERAL FORM ----------------------------------------------- -->
+      <section class="section" data-ground="paper" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'FORM' : 'FORM'}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{tr ? 'Mesajınızı bırakın.' : 'Leave us a message.'}</h2>
+            <p class="lead muted reveal">
+              {tr
+                ? 'Telefonunuzu yazmanız yeterli — e-posta zorunlu değil. Konuyu seçtiğinizde mesaj doğrudan ilgili departmana düşer.'
+                : 'A phone number is enough — the e-mail field is optional. Picking a subject routes the message straight to that department.'}
+            </p>
+            <div class="form-wrap reveal">
+              <ContactForm locale={locale} variant="general" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 — LOCATION AND HOURS (dark punctuation) ----------------------- -->
+      <section class="section" data-ground="ink" data-accent="yellow">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'KONUM' : 'LOCATION'}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">
+              {tr ? 'Showroom ve depo, tek adreste.' : 'Showroom and warehouse, one address.'}
+            </h2>
+
+            <div class="loc reveal">
+              <div class="loc__block">
+                <address class="loc__address">
+                  <span>{SITE.legal.tradeName}</span>
+                  <span>{address.street}</span>
+                  <span>{cityLine}</span>
+                  <span>{address.postalCode} {tr ? 'İstanbul, Türkiye' : 'Istanbul, Türkiye'}</span>
+                </address>
+                <p class="loc__geo mono">{address.geo.lat}, {address.geo.lng}</p>
+                <p class="loc__note muted">
+                  {tr
+                    ? 'Gelmeden önce arayın: showroomdaki makinelerde kendi dosyanızla demo baskı almak için randevu gerekir. Malzemenizi getirirseniz test kendi işiniz üzerinde yapılır.'
+                    : 'Call before you come: a demo print with your own file needs an appointment. Bring your material and the test runs on your actual job.'}
+                </p>
+                <p>
+                  <a class="btn btn--outline" href={address.mapsUrl} target="_blank" rel="noopener">
+                    {t('getDirections', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+                  </a>
+                </p>
+              </div>
+
+              <div class="loc__hours">
+                <p class="eyebrow loc__hours-label">{t('workingHours', locale)}</p>
+                <table class="spec-table hours">
+                  <caption class="visually-hidden">{t('workingHours', locale)}</caption>
+                  <tbody>
+                    {hours.map((h) => (
+                      <tr>
+                        <th scope="row">{h.days[locale]}</th>
+                        <td>{hourValue(h)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p class="loc__note muted">
+                  {tr
+                    ? `Servis kaydı saat fark etmeksizin açılabilir; ${SITE.commitments.responseHours} saatlik müdahale süresi kaydın açıldığı andan işler.`
+                    : `A service ticket can be logged at any hour; the ${SITE.commitments.responseHours}-hour response window starts when it is logged.`}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 — TTK m.39/2 IDENTITY ---------------------------------------- -->
+      <section class="section section--tight" data-ground="paper">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'TİCARİ BİLGİLER' : 'COMPANY DETAILS'}</p></div>
+          <div class="section__body">
+            <h2 class="ttk__h">{tr ? 'Ticari kimlik' : 'Registered identity'}</h2>
+            <dl class="ttk">
+              <div>
+                <dt>{tr ? 'Ticaret unvanı' : 'Registered trade name'}</dt>
+                <dd class="mono">{SITE.legal.tradeName}</dd>
+              </div>
+              <div>
+                <dt>{tr ? 'İşletme merkezi' : 'Registered office'}</dt>
+                <dd class="mono">{address.street}, {cityLine} {address.postalCode}</dd>
+              </div>
+              <div>
+                <dt>MERSİS</dt>
+                <dd class="mono">{SITE.legal.mersis}</dd>
+              </div>
+              <div>
+                <dt>{tr ? 'Ticaret sicil no' : 'Trade registry no'}</dt>
+                <dd class="mono">{SITE.legal.tradeRegistryNo}</dd>
+              </div>
+              <div>
+                <dt>{tr ? 'Vergi dairesi' : 'Tax office'}</dt>
+                <dd class="mono">{SITE.legal.taxOffice}</dd>
+              </div>
+              <div>
+                <dt>{tr ? 'Vergi kimlik no' : 'Tax number'}</dt>
+                <dd class="mono">{SITE.legal.taxNumber}</dd>
+              </div>
+            </dl>
+            <p class="ttk__note muted">
+              {tr
+                ? 'Bu bilgiler 6102 sayılı Türk Ticaret Kanunu m.39/2 uyarınca yayımlanmaktadır.'
+                : 'Published in accordance with article 39/2 of the Turkish Commercial Code no. 6102.'}
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {variant === 'quote' && (
+    <>
+      <!-- 1 — HEADER ------------------------------------------------------ -->
+      <section class="section section--head" data-ground="paper" data-accent="cyan">
+        <div class="shell">
+          <Breadcrumb locale={locale} crumbs={[{ label: t('getQuote', locale) }]} />
+
+          <header class="head">
+            <h1>{t('getQuote', locale)}</h1>
+            <p class="lead">
+              {tr
+                ? 'Ne bastığınızı ve günlük hacminizi yazın; 1 iş günü içinde kalem kalem ayrılmış bir teklif gönderiyoruz. Toplamda tek bir rakam görmezsiniz — makine, mürekkep, kurulum ve nakliye ayrı satırlardadır.'
+                : 'Tell us what you print and how much of it. Within one business day you get an itemised quote — machine, ink, installation and freight on separate lines, never a single lump sum.'}
+            </p>
+            <p class="lead muted">
+              {tr
+                ? 'Model adını bilmeniz gerekmiyor. “Günde 40 m² folyo basıyorum, araç giydirme yapıyorum” cümlesi doğru makineyi önermemiz için yeterlidir.'
+                : 'You do not need to know a model name. “I print 40 m² of vinyl a day for vehicle wraps” is enough for us to recommend the right machine.'}
+            </p>
+          </header>
+        </div>
+      </section>
+
+      <!-- 2 — THE FORM ---------------------------------------------------- -->
+      <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'TALEP' : 'REQUEST'}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{tr ? 'İşinizi anlatın.' : 'Describe the work.'}</h2>
+            <div class="form-wrap reveal">
+              <ContactForm locale={locale} variant="quote" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 — WHAT THE QUOTE CONTAINS (dark punctuation) ------------------ -->
+      <section class="section" data-ground="ink" data-accent="yellow">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'TEKLİFTE NE VAR' : 'IN THE QUOTE'}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">
+              {tr ? 'Beş kalem, beş ayrı satır.' : 'Five items, five separate lines.'}
+            </h2>
+            <ol class="steps reveal" role="list" data-stagger>
+              {QUOTE_LINES.map((line) => (
+                <li class="step">
+                  <span class="step__n mono">{line.n}</span>
+                  <div>
+                    <h3 class="step__h">{line.h}</h3>
+                    <p class="muted">{line.b}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 — TALK INSTEAD ------------------------------------------------ -->
+      <section class="section section--tight" data-ground="bone" data-accent="magenta">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'ALTERNATİF' : 'INSTEAD'}</p></div>
+          <div class="section__body">
+            <h3 class="reveal">
+              {tr ? 'Form doldurmak istemiyorsanız.' : 'If you would rather not fill in a form.'}
+            </h3>
+            <p class="lead muted reveal">
+              {tr
+                ? `${hours[0].days.tr} ${hourValue(hours[0])} arasında telefonda doğrudan satış mühendisine bağlanırsınız.`
+                : `${hours[0].days.en} ${hourValue(hours[0])}, the phone reaches a sales engineer directly.`}
+            </p>
+            <div class="cluster reveal">
+              <a class="link link--accent mono" href={`tel:${SITE.contact.phone.e164}`}>
+                {SITE.contact.phone.display[locale]}
+              </a>
+              <a class="link link--accent" href={wa} target="_blank" rel="noopener">
+                {t('askWhatsApp', locale)} <span class="arrow" aria-hidden="true">›</span>
+              </a>
+              <span class="mono alt__mail" set:html={mailAnchor(SITE.contact.email.sales)} />
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {variant === 'thanks' && (
+    <>
+      <!-- 1 — CONFIRMATION ------------------------------------------------ -->
+      <section class="section" data-ground="ink" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'ALINDI' : 'RECEIVED'}</p></div>
+          <div class="section__body">
+            <h1 class="thanks__h">
+              {tr ? 'Talebiniz bize ulaştı.' : 'Your request has reached us.'}
+            </h1>
+            <p class="lead">
+              {tr
+                ? '1 iş günü içinde bir satış mühendisimiz sizi arar. Duran bir makine söz konusuysa beklemeyin — WhatsApp hattı en hızlı kanaldır.'
+                : 'A sales engineer will call you within one business day. If a machine is down, do not wait — WhatsApp is the fastest channel.'}
+            </p>
+
+            <ol class="steps" role="list">
+              {NEXT_STEPS.map((step) => (
+                <li class="step">
+                  <span class="step__n mono">{step.n}</span>
+                  <div><p class="muted">{step.b}</p></div>
+                </li>
+              ))}
+            </ol>
+
+            <div class="cluster">
+              <a class="btn btn--outline" href={wa} target="_blank" rel="noopener">
+                {t('askWhatsApp', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="link link--accent mono" href={`tel:${SITE.contact.phone.e164}`}>
+                {SITE.contact.phone.display[locale]}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 — BACK INTO THE CATALOGUE ------------------------------------ -->
+      <section class="section" data-ground="paper" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{tr ? 'BEKLERKEN' : 'MEANWHILE'}</p></div>
+          <div class="section__body">
+            <h2>{tr ? 'Katalogda gezinmeye devam edin.' : 'Carry on through the catalogue.'}</h2>
+
+            <ul class="tiles" role="list">
+              {FAMILY_KEYS.map((family) => (
+                <li class="tile">
+                  <a href={path(FAMILY_ROUTE[family], locale)}>
+                    <span>{machineFamilyName(family, locale)}</span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <ul class="elsewhere" role="list">
+              {ELSEWHERE.map((item) => (
+                <li><a class="link" href={path(item.key, locale)}>{item.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+</Base>
+
+<style>
+  /* --- shared page head --- */
+  .section--head {
+    padding-block-start: var(--sp-7);
+  }
+
+  .head {
+    display: grid;
+    gap: var(--sp-5);
+    max-width: 72ch;
+    padding-block: var(--sp-7) var(--sp-8);
+  }
+
+  /* --- channel grid --- */
+  .channels {
+    padding: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .channels {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .chan {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-6);
+  }
+
+  .chan > * {
+    flex: none;
+    max-width: none;
+  }
+
+  .chan__value {
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .chan__value--mail {
+    font-size: var(--step-0);
+    word-break: break-word;
+  }
+
+  .chan__note {
+    font-size: var(--step--1);
+    line-height: 1.45;
+  }
+
+  .chan__cta {
+    margin-block-start: auto;
+    padding-block-start: var(--sp-4);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  /* --- departments --- */
+  .depts {
+    margin-block-start: var(--sp-8);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .dept {
+    display: grid;
+    gap: var(--sp-2) var(--gutter);
+    padding-block: var(--sp-5);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  @media (min-width: 768px) {
+    .dept {
+      grid-template-columns: 12rem 18rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .dept__role {
+    font-size: var(--step-0);
+    font-weight: 500;
+  }
+
+  .dept__mail {
+    font-size: var(--step--1);
+    word-break: break-word;
+  }
+
+  .dept__note {
+    font-size: var(--step--1);
+    line-height: 1.45;
+  }
+
+  /* --- form --- */
+  .form-wrap {
+    margin-block-start: var(--sp-8);
+    max-width: 62rem;
+  }
+
+  /* --- location --- */
+  .loc {
+    display: grid;
+    gap: var(--sp-8);
+    margin-block-start: var(--sp-8);
+  }
+
+  @media (min-width: 900px) {
+    .loc {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-9);
+    }
+  }
+
+  .loc__block {
+    display: grid;
+    gap: var(--sp-5);
+    align-content: start;
+  }
+
+  .loc__address {
+    display: grid;
+    gap: var(--sp-1);
+    font-style: normal;
+    font-size: var(--step-1);
+    line-height: 1.35;
+  }
+
+  .loc__geo {
+    font-size: var(--step--2);
+    letter-spacing: 0.08em;
+    color: var(--on-ground-muted);
+  }
+
+  .loc__note {
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+
+  .loc__hours-label {
+    margin-block-end: var(--sp-5);
+  }
+
+  .hours th {
+    width: 60%;
+  }
+
+  .hours td {
+    text-align: right;
+  }
+
+  .loc__hours .loc__note {
+    margin-block-start: var(--sp-5);
+  }
+
+  /* --- TTK identity --- */
+  .ttk__h {
+    font-size: var(--step-2);
+    margin-block-end: var(--sp-6);
+  }
+
+  .ttk {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .ttk > div {
+    display: grid;
+    gap: var(--sp-1) var(--gutter);
+    padding-block: var(--sp-4);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  @media (min-width: 640px) {
+    .ttk > div {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .ttk dt {
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .ttk dd {
+    margin: 0;
+    font-size: var(--step--1);
+    word-break: break-word;
+  }
+
+  .ttk__note {
+    margin-block-start: var(--sp-5);
+    font-size: var(--step--2);
+  }
+
+  /* --- numbered lists (quote lines, next steps) --- */
+  .steps {
+    display: grid;
+    gap: 0;
+    margin-block: var(--sp-8);
+    padding: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--sp-5);
+    padding-block: var(--sp-6);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .step:last-child {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .step__n {
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    padding-block-start: 0.4em;
+    color: var(--accent-text);
+  }
+
+  .step__h {
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-block-end: var(--sp-2);
+  }
+
+  .step p {
+    font-size: var(--step--1);
+    max-width: 62ch;
+  }
+
+  .alt__mail {
+    font-size: var(--step--1);
+  }
+
+  /* --- thank you --- */
+  .thanks__h {
+    max-width: 20ch;
+    margin-block-end: var(--sp-5);
+  }
+
+  .thanks__h + .lead {
+    max-width: 56ch;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: 0 var(--sp-8);
+    margin-block-start: var(--sp-7);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .tile a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-5) 0;
+    border-bottom: var(--border) solid var(--hairline);
+    color: inherit;
+    text-decoration: none;
+    font-size: var(--step-1);
+    font-weight: 500;
+    transition: padding-inline-start var(--d-base) var(--e-out);
+  }
+
+  .tile a:hover,
+  .tile a:focus-visible {
+    padding-inline-start: var(--sp-4);
+  }
+
+  .elsewhere {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: var(--sp-3) var(--gutter);
+    margin-block-start: var(--sp-7);
+    padding: 0;
+    font-size: var(--step--1);
+  }
+</style>

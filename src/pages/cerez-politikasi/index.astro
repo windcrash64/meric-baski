@@ -1,0 +1,119 @@
+---
+import LegalPage from '../../layouts/LegalPage.astro';
+import { SITE } from '../../config/site';
+import { path } from '../../i18n/routes';
+
+const UPDATED = '2026-07-28';
+---
+
+<!--
+  ============================================================================
+  HUKUKİ İNCELEME GEREKİYOR — YAYINDAN ÖNCE.
+  Bu metin, sitenin bugünkü teknik gerçeğini anlatır: hiçbir çerez yazılmıyor,
+  analitik/reklam izleyicisi yok, gömülü üçüncü taraf içerik yok, yerel
+  depolama kullanılmıyor (SITE.analytics === null). Metin bu gerçeğe bağlıdır:
+  siteye analitik, reklam pikseli, gömülü video/harita veya sohbet aracı
+  eklenirse BU SAYFA VE ONAY MEKANİZMASI DA DEĞİŞMEK ZORUNDADIR (Kurul’un
+  2022/1358 sayılı ilke kararı: zorunlu olmayan çerezler varsayılan kapalı ve
+  açık rızaya tabidir). Yayına almadan önce hukuk müşavirine onaylatın.
+  ============================================================================
+-->
+<LegalPage
+  locale="tr"
+  routeKey="cookies"
+  title="Çerez Politikası"
+  updated={UPDATED}
+  description="Bu sitede analitik, reklam veya profilleme çerezi kullanılmıyor; üçüncü taraf izleyici yok. Hangi teknolojilerin gerçekten kullanıldığı ve neden çerez onay penceresi görmediğiniz."
+  lede="Kısa cevap: bu site tarayıcınıza çerez yazmıyor. Uzun cevap aşağıda — hangi teknolojilerin gerçekten kullanıldığı, hangilerinin kullanılmadığı ve neden bir çerez onay penceresiyle karşılaşmadığınız."
+>
+  <h2>Bu sitede çerez kullanılmıyor</h2>
+  <p>
+    Bu internet sitesi ziyaretiniz sırasında tarayıcınıza <strong>hiçbir çerez yazmaz</strong>.
+    Google Analytics, Meta pikseli, reklam etiketi, ısı haritası, oturum kaydı, A/B testi aracı,
+    sohbet (chat) eklentisi ve benzeri hiçbir üçüncü taraf izleyici sitede bulunmaz. Yerel depolama
+    (<span class="mono" lang="en">localStorage</span> / <span class="mono" lang="en">sessionStorage</span>)
+    da kullanılmaz.
+  </p>
+  <p>
+    Bu bir eksiklik değil, bilinçli bir tercihtir: ziyaretçi davranışını ölçmemeyi seçtik. Bunun
+    karşılığında siz daha hızlı açılan bir site ve ekranınızı kapatan bir onay penceresinden
+    kurtulmuş olursunuz.
+  </p>
+
+  <h2>Çerez nedir</h2>
+  <p>
+    Çerez, ziyaret ettiğiniz sitenin tarayıcınıza kaydettiği küçük bir metin dosyasıdır. Kimi
+    çerezler sitenin çalışması için zorunludur (oturum açma, sepet, dil tercihi); kimileri ise
+    ziyaretçiyi ölçmek, tanımak veya reklam göstermek için kullanılır. İkinci gruptaki çerezler,
+    kişisel veri işleme sonucu doğurduğu için 6698 sayılı Kanun kapsamındadır.
+  </p>
+
+  <h2>Neden çerez onay penceresi göremiyorsunuz</h2>
+  <p>
+    Kişisel Verileri Koruma Kurulu’nun <strong>2022/1358 sayılı ilke kararı</strong> (23.12.2022),
+    zorunlu olmayan çerezler için açık rıza alınmasını ve bu çerezlerin rıza verilene kadar
+    varsayılan olarak kapalı tutulmasını zorunlu kılar. Bu sitede zorunlu olmayan hiçbir çerez
+    kullanılmadığı için alınacak bir rıza da yoktur; dolayısıyla bir onay penceresi
+    gösterilmemektedir.
+  </p>
+  <p>
+    İleride ölçümleme veya reklam aracı eklememiz hâlinde bu sayfa güncellenir ve zorunlu olmayan
+    çerezler için varsayılanı kapalı, gerçek bir onay yönetimi devreye alınır.
+  </p>
+
+  <h2>Sitede gerçekten kullanılan teknolojiler</h2>
+  <p>Aşağıdakiler çerez değildir; şeffaflık için listelenmiştir.</p>
+  <dl>
+    <div>
+      <dt>Yazı tipleri</dt>
+      <dd>Kendi sunucumuzda barındırılır. Google Fonts gibi bir üçüncü taraf font servisi kullanılmaz; tarayıcınız hiçbir dış sunucuya istek göndermez.</dd>
+    </div>
+    <div>
+      <dt>Görseller ve statik dosyalar</dt>
+      <dd>Sitenin kendi alan adı üzerinden sunulur ve tarayıcınızın önbelleğinde tutulur. Önbellek bir çerez değildir; tarayıcı ayarlarından temizlenebilir.</dd>
+    </div>
+    <div>
+      <dt>Sayfa geçişleri</dt>
+      <dd>Sayfalar arası geçiş efekti tamamen tarayıcı içinde çalışır; hiçbir veri kaydedilmez veya gönderilmez.</dd>
+    </div>
+    <div>
+      <dt>Form gönderimi</dt>
+      <dd>Yalnızca bir formu doldurup gönderdiğinizde çalışır. Yazdığınız bilgiler, kurumsal e-posta kutumuza iletilmek üzere form altyapısı sağlayıcımıza gönderilir; bu işlem tarayıcınıza çerez yazmaz.</dd>
+    </div>
+    <div>
+      <dt>Sunucu erişim kayıtları</dt>
+      <dd>Sitenin barındırıldığı altyapı, güvenlik ve hizmet sürekliliği amacıyla IP adresi ve talep zamanı gibi teknik kayıtlar tutabilir. Bu kayıtlar pazarlama amacıyla kullanılmaz ve en fazla 12 ay saklanır.</dd>
+    </div>
+  </dl>
+
+  <h2>Üçüncü taraf içerik ve bağlantılar</h2>
+  <p>
+    Sitede gömülü harita, gömülü video veya sosyal medya widget’ı bulunmaz — bunlar üçüncü taraf
+    çerezlerinin en yaygın kaynağıdır. Harita, WhatsApp ve benzeri hizmetlere yalnızca bağlantı
+    verilir. Böyle bir bağlantıya tıkladığınızda ilgili sitenin kendi çerez politikası ve gizlilik
+    uygulamaları geçerli olur; bu noktadan sonrası bizim kontrolümüzde değildir.
+  </p>
+
+  <h2>Tarayıcı ayarları</h2>
+  <p>
+    Bu sitede engellenecek bir çerez bulunmasa da, tüm siteler için çerezleri tarayıcınızın
+    ayarlarından yönetebilir, mevcut çerezleri ve önbelleği silebilirsiniz. Bu sitenin işlevleri
+    çerezlere bağlı olmadığı için, çerezleri tamamen kapatsanız bile site eksiksiz çalışır.
+  </p>
+
+  <h2>Kişisel verileriniz</h2>
+  <p>
+    Formlar aracılığıyla ilettiğiniz kişisel verileri hangi amaçla işlediğimiz, kimlere aktardığımız
+    ve ne kadar sakladığımız
+    <a class="link link--inline" href={path('privacy', 'tr')}>KVKK Aydınlatma Metni</a>’nde
+    açıklanmıştır. Bu politikayla ilgili sorularınızı
+    <a class="link link--inline" href={`mailto:${SITE.contact.email.general}`}>{SITE.contact.email.general}</a>
+    adresine iletebilirsiniz.
+  </p>
+
+  <h2>Bu politikadaki değişiklikler</h2>
+  <p>
+    Sitenin teknik yapısı değiştiğinde bu politika da güncellenir. Yürürlükteki sürüm her zaman bu
+    sayfada yayımlanır; sayfanın başındaki tarih son revizyon tarihidir.
+  </p>
+</LegalPage>

@@ -1,0 +1,250 @@
+---
+/**
+ * One form field: label, control, optional hint, optional error.
+ *
+ * The label is always a real <label> sitting above the control. A placeholder is
+ * never a label here: it disappears at the exact moment the user needs it, it is
+ * unreadable at 3.4:1 in every browser's default grey, and it leaves a screen
+ * reader announcing an unnamed edit box. The required marker is a mark, not a
+ * glyph in an accent colour — on a light ground the accent may be a rule or a
+ * mark, never a word.
+ */
+import type { Locale } from '../../config/site';
+import { t } from '../../i18n/ui';
+
+export interface Option {
+  value: string;
+  label: string;
+}
+
+export interface Props {
+  locale: Locale;
+  /** Submitted field name. Web3Forms prints it as the label in the e-mail. */
+  name: string;
+  label: string;
+  control?: 'text' | 'tel' | 'email' | 'textarea' | 'select';
+  required?: boolean;
+  /** A real autofill token — 'name', 'organization', 'tel', 'email', … */
+  autocomplete?: string;
+  inputmode?: 'text' | 'tel' | 'email' | 'numeric' | 'url';
+  /** `control="select"` only. */
+  options?: Option[];
+  value?: string;
+  hint?: string;
+  rows?: number;
+  maxlength?: number;
+  /** Column span inside `.form__grid`. */
+  span?: 'half' | 'full';
+}
+
+const {
+  locale,
+  name,
+  label,
+  control = 'text',
+  required = false,
+  autocomplete,
+  inputmode,
+  options = [],
+  value,
+  hint,
+  rows = 5,
+  maxlength,
+  span = 'half',
+} = Astro.props;
+
+const id = `f-${name}`;
+const hintId = hint ? `${id}-hint` : undefined;
+const hasError = Astro.slots.has('error');
+const errorId = hasError ? `${id}-error` : undefined;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined;
+---
+
+<div class="field" data-span={span}>
+  <label class="field__label" for={id}>
+    {label}
+    {required && (
+      <>
+        <span class="field__req" aria-hidden="true"></span>
+        <span class="visually-hidden">{t('formRequired', locale)}</span>
+      </>
+    )}
+  </label>
+
+  {hint && <p class="field__hint" id={hintId}>{hint}</p>}
+
+  <span class="field__control">
+    {control === 'textarea' && (
+      <textarea
+        class="field__input field__input--area"
+        id={id}
+        name={name}
+        rows={rows}
+        required={required}
+        autocomplete={autocomplete}
+        maxlength={maxlength}
+        aria-describedby={describedBy}
+        aria-invalid={hasError ? 'true' : undefined}
+      >{value}</textarea>
+    )}
+
+    {control === 'select' && (
+      <>
+        <select
+          class="field__input field__input--select"
+          id={id}
+          name={name}
+          required={required}
+          autocomplete={autocomplete}
+          aria-describedby={describedBy}
+          aria-invalid={hasError ? 'true' : undefined}
+        >
+          <option value="" selected={!value}>{t('formSelect', locale)}</option>
+          {options.map((option) => (
+            <option value={option.value} selected={option.value === value}>{option.label}</option>
+          ))}
+        </select>
+        <span class="field__chevron" aria-hidden="true">⌄</span>
+      </>
+    )}
+
+    {control !== 'textarea' && control !== 'select' && (
+      <input
+        class="field__input"
+        id={id}
+        type={control}
+        name={name}
+        value={value}
+        required={required}
+        autocomplete={autocomplete}
+        inputmode={inputmode}
+        maxlength={maxlength}
+        spellcheck={control === 'email' || control === 'tel' ? 'false' : undefined}
+        aria-describedby={describedBy}
+        aria-invalid={hasError ? 'true' : undefined}
+      />
+    )}
+  </span>
+
+  {hasError && (
+    <p class="field__error" id={errorId}><slot name="error" /></p>
+  )}
+</div>
+
+<style>
+  .field {
+    display: grid;
+    gap: var(--sp-2);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .field[data-span='full'] {
+    grid-column: 1 / -1;
+  }
+
+  /* Mono, uppercase, hanging above the control — the same instrument-panel
+     label the rest of the site uses for section eyebrows. */
+  .field__label {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--on-ground-muted);
+  }
+
+  /* The required marker: a 6 px accent square, not a red asterisk. Screen
+     readers get the words from the visually-hidden span next to it. */
+  .field__req {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-inline-start: 0.6em;
+    vertical-align: 0.05em;
+    background: var(--accent);
+  }
+
+  .field__hint {
+    font-size: var(--step--1);
+    line-height: 1.4;
+    color: var(--on-ground-muted);
+    max-width: none;
+  }
+
+  .field__control {
+    position: relative;
+    display: block;
+  }
+
+  /* Focus draws the section's accent along the bottom edge — a rule, which is
+     what an accent is allowed to be on a light ground. */
+  .field__control::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform var(--d-base) var(--e-out);
+  }
+
+  .field__control:focus-within::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .field__input {
+    display: block;
+    width: 100%;
+    min-height: 52px;
+    padding: var(--sp-3) var(--sp-4);
+    background: transparent;
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground);
+    /* --step-0 never falls below 16px, so iOS does not zoom the viewport on
+       focus — the single most common mobile form defect. */
+    font-size: var(--step-0);
+    line-height: 1.4;
+    transition: border-color var(--d-base) var(--e-out);
+  }
+
+  .field__input:hover {
+    border-color: var(--on-ground);
+  }
+
+  .field__input--area {
+    min-height: 0;
+    resize: vertical;
+  }
+
+  .field__input--select {
+    appearance: none;
+    padding-inline-end: var(--sp-8);
+    cursor: pointer;
+  }
+
+  .field__chevron {
+    position: absolute;
+    top: 50%;
+    inset-inline-end: var(--sp-4);
+    transform: translateY(-60%);
+    font-size: 1.2em;
+    line-height: 1;
+    color: var(--on-ground-muted);
+    pointer-events: none;
+  }
+
+  .field__error {
+    font-size: var(--step--1);
+    color: var(--danger);
+    max-width: none;
+  }
+
+  .field:has(.field__error) .field__input {
+    border-color: var(--danger);
+  }
+</style>

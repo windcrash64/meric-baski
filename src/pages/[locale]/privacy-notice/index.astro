@@ -1,0 +1,217 @@
+---
+import LegalPage from '../../../layouts/LegalPage.astro';
+import { SITE, type Locale } from '../../../config/site';
+import { NON_DEFAULT_LOCALES, path } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+
+const UPDATED = '2026-07-28';
+const domain = SITE.url.replace(/^https?:\/\//, '');
+const address = `${SITE.contact.address.street}, ${SITE.contact.address.district} / ${SITE.contact.address.city} ${SITE.contact.address.postalCode}`;
+---
+
+<!--
+  ============================================================================
+  REQUIRES LEGAL REVIEW BEFORE LAUNCH.
+  This is a translation of the Turkish KVKK aydınlatma metni, which is the
+  binding version: Turkish law governs, and the Turkish text is what a data
+  subject or the Authority will read. Both must be reviewed and approved by
+  the client's legal counsel before the site goes live, and the two must be
+  kept in step — an English page that says more than the Turkish one is itself
+  a compliance problem.
+  ============================================================================
+-->
+<LegalPage
+  locale={locale}
+  routeKey="privacy"
+  title="Privacy Notice"
+  updated={UPDATED}
+  description="What personal data we process through the forms on this site, on what legal basis, who we transfer it to, how long we keep it, and how to exercise your rights under article 11 of the Turkish data protection law."
+  lede="This notice is issued under article 10 of Turkish Law no. 6698 on the Protection of Personal Data (KVKK) and the Communiqué on the procedures and principles for fulfilling the duty to inform. The site sets no analytics or advertising cookies, so the only data described here is what you type into a form yourself."
+>
+  <h2>Identity of the data controller</h2>
+  <p>
+    Your personal data is processed under Law no. 6698 on the Protection of Personal Data (“KVKK”)
+    by the company identified below, acting as data controller.
+  </p>
+  <dl>
+    <div><dt>Trade name</dt><dd class="mono">{SITE.legal.tradeName}</dd></div>
+    <div><dt>MERSİS number</dt><dd class="mono">{SITE.legal.mersis}</dd></div>
+    <div><dt>Trade registry number</dt><dd class="mono">{SITE.legal.tradeRegistryNo}</dd></div>
+    <div><dt>Tax office / tax number</dt><dd class="mono">{SITE.legal.taxOffice} / {SITE.legal.taxNumber}</dd></div>
+    <div><dt>Registered office</dt><dd class="mono">{address}</dd></div>
+    <div><dt>E-mail</dt><dd class="mono">{SITE.contact.email.general}</dd></div>
+    <div><dt>Telephone</dt><dd class="mono">{SITE.contact.phone.display[locale]}</dd></div>
+    <div><dt>Website</dt><dd class="mono">{domain}</dd></div>
+  </dl>
+
+  <h2>The personal data we process</h2>
+  <p>
+    We process only what you type into a form yourself. Fields that are not marked as required may
+    be left empty; an empty field is never recorded.
+  </p>
+
+  <h3>Quote form</h3>
+  <p>Full name, company, telephone, e-mail, city, the product you are interested in, and whatever you write in the message field.</p>
+
+  <h3>Service request form</h3>
+  <p>Company, contact person’s full name, telephone, e-mail, machine model, serial number and fault description.</p>
+
+  <h3>Sample request form</h3>
+  <p>Full name, company, telephone, delivery address, the machine or ink you are interested in, and the material to be printed.</p>
+
+  <p>
+    Under the Authority’s data categories these fall under <strong>identity</strong>,
+    <strong>contact</strong> and <strong>customer transaction</strong> data. We do not ask for
+    special categories of personal data (health, biometric data, religion, membership and the
+    like); please do not enter anything of that nature into a form field.
+  </p>
+  <p>
+    Because the site uses no analytics, advertising or profiling cookies and no third-party
+    trackers, your browsing behaviour is not recorded by us and no visitor profile is built. The
+    infrastructure provider hosting the site may keep technical access logs (IP address, request
+    time, browser) for security and service continuity; those logs are never used for marketing.
+    See the <a class="link link--inline" href={path('cookies', locale)}>Cookie Policy</a> for detail.
+  </p>
+
+  <h2>Purposes of processing and their legal grounds</h2>
+  <dl>
+    <div>
+      <dt>Answering quote requests and providing product, specification and price information</dt>
+      <dd>KVKK art. 5/2-c — directly related to the conclusion or performance of a contract · art. 5/2-f — legitimate interest</dd>
+    </div>
+    <div>
+      <dt>Running after-sales service, warranty, installation and spare-part processes</dt>
+      <dd>KVKK art. 5/2-c · art. 5/2-ç — compliance with a legal obligation</dd>
+    </div>
+    <div>
+      <dt>Recording, following up and resolving requests, suggestions and complaints</dt>
+      <dd>KVKK art. 5/2-f — legitimate interest</dd>
+    </div>
+    <div>
+      <dt>Issuing and retaining invoices, delivery notes and commercial books</dt>
+      <dd>KVKK art. 5/2-ç — legal obligation (Tax Procedure Law, Turkish Commercial Code)</dd>
+    </div>
+    <div>
+      <dt>Contacting you on the basis of the consent you give when submitting a form</dt>
+      <dd>KVKK art. 5/1 — explicit consent</dd>
+    </div>
+  </dl>
+  <p>
+    We do not send commercial electronic messages — no bulk e-mail, SMS or marketing calls. Your
+    contact details are therefore not registered with the Turkish Message Management System (İYS)
+    and are not added to any marketing list; we contact you individually about your own enquiry and
+    nothing else.
+  </p>
+  <p>
+    Where processing rests on explicit consent you may withdraw that consent at any time.
+    Withdrawal does not invalidate processing already carried out on the basis of that consent.
+  </p>
+
+  <h2>How the data is collected</h2>
+  <p>
+    Personal data is collected through the forms on this site, by e-mail, telephone, WhatsApp and
+    in person, by partly automated and non-automated means. The forms deliver what you send
+    straight to our corporate mailbox through a form service; the site holds no customer database
+    and has no user accounts.
+  </p>
+
+  <h2>Transfers</h2>
+  <p>
+    We do not sell, rent or share your personal data for marketing purposes. Transfers occur only
+    in the following cases and only as far as the work requires:
+  </p>
+  <ul>
+    <li>to our form service provider and to the provider hosting the site, for the technical delivery of a form submission;</li>
+    <li>to courier and logistics companies where a sample or spare part is shipped — name, telephone and delivery address only;</li>
+    <li>to our accountants, external auditors and legal advisers, to the extent the relevant obligation requires;</li>
+    <li>to public authorities expressly empowered by law, upon a duly made request (KVKK art. 8/2-a).</li>
+  </ul>
+  <p>
+    Our form and hosting providers may operate servers outside Turkey. In that case the transfer is
+    made under article 9 of the KVKK, on the basis of an adequacy decision, appropriate safeguards
+    (including standard contractual clauses notified to the Authority) or another condition
+    provided by law.
+  </p>
+
+  <h2>Retention periods</h2>
+  <dl>
+    <div>
+      <dt>Quote and information requests that do not lead to a sale</dt>
+      <dd class="mono">2 years from the last correspondence</dd>
+    </div>
+    <div>
+      <dt>Records of transactions that do lead to a sale</dt>
+      <dd class="mono">10 years from the end of the relationship (Code of Obligations art. 146)</dd>
+    </div>
+    <div>
+      <dt>Invoices and commercial book records</dt>
+      <dd class="mono">10 years (Commercial Code art. 82) · 5 years for tax purposes (Tax Procedure Law art. 253)</dd>
+    </div>
+    <div>
+      <dt>Installation, training, service and warranty records</dt>
+      <dd class="mono">10 years from the end of the warranty period</dd>
+    </div>
+    <div>
+      <dt>Server access logs</dt>
+      <dd class="mono">12 months maximum</dd>
+    </div>
+  </dl>
+  <p>
+    Once the period expires the data is erased, destroyed or anonymised in the first periodic
+    destruction cycle, in accordance with the Regulation on the Erasure, Destruction or
+    Anonymisation of Personal Data.
+  </p>
+
+  <h2>Your rights under article 11 of the KVKK</h2>
+  <p>By applying to us as data controller, you may, in respect of yourself:</p>
+  <ul class="keyed">
+    <li><span class="mono">a)</span> learn whether your personal data is being processed,</li>
+    <li><span class="mono">b)</span> request information about it if it has been processed,</li>
+    <li><span class="mono">c)</span> learn the purpose of processing and whether the data is used in line with that purpose,</li>
+    <li><span class="mono">ç)</span> know the third parties, in Turkey or abroad, to whom your data has been transferred,</li>
+    <li><span class="mono">d)</span> request that incomplete or inaccurate data be corrected,</li>
+    <li><span class="mono">e)</span> request erasure or destruction of your data under the conditions of article 7,</li>
+    <li><span class="mono">f)</span> request that any action taken under (d) and (e) be notified to the third parties to whom the data was transferred,</li>
+    <li><span class="mono">g)</span> object to a result adverse to you arising from analysis of your data solely by automated systems,</li>
+    <li><span class="mono">ğ)</span> claim compensation for damage suffered because your data was processed unlawfully.</li>
+  </ul>
+
+  <h2>How to apply</h2>
+  <p>
+    Under the Communiqué on the procedures and principles of application to the data controller,
+    you may submit a request in any of the following ways:
+  </p>
+  <ul>
+    <li>by delivering a wet-signed letter to our registered office in person or through a notary;</li>
+    <li>by sending a request signed with a secure electronic signature or mobile signature by e-mail;</li>
+    <li>
+      by writing from the e-mail address you have previously notified to us and that is registered
+      in our systems to
+      <a class="link link--inline" href={`mailto:${SITE.contact.email.general}`}>{SITE.contact.email.general}</a>.
+    </li>
+  </ul>
+  <p>
+    Your application must state your name, your signature for written applications, your Turkish ID
+    number (for foreign nationals: nationality, passport or identity number), an address for
+    service, your telephone and e-mail if any, and the subject of your request. We answer as soon
+    as the nature of the request allows and in any event within <strong>30 days</strong>, free of
+    charge. Where the process incurs a cost, the fee set out in the Authority’s tariff may be
+    charged.
+  </p>
+  <p>
+    If your application is refused, our answer is inadequate, or we do not reply in time, you may
+    complain to the Personal Data Protection Board within 30 days of learning our answer and in any
+    event within 60 days of the application (KVKK art. 14).
+  </p>
+
+  <h2>Changes to this notice</h2>
+  <p>
+    We may revise this notice when the law or our own processes change. The version in force is
+    always published on this page, and the date at the top is the date of the last revision.
+  </p>
+</LegalPage>

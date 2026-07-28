@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+
+import ApplicationIndex from '../../../layouts/ApplicationIndex.astro';
+import { ROUTES } from '../../../i18n/routes';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('applications');
+  return apps.map((app) => ({
+    params: { sektor: ROUTES[`applications.${app.data.key}`].tr },
+    props: { app },
+  }));
+}
+
+const { app } = Astro.props;
+---
+
+<ApplicationIndex locale="tr" app={app} />

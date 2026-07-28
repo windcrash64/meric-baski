@@ -1,0 +1,121 @@
+---
+import LegalPage from '../../../layouts/LegalPage.astro';
+import { SITE, type Locale } from '../../../config/site';
+import { NON_DEFAULT_LOCALES, path } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const UPDATED = '2026-07-28';
+---
+
+<!--
+  ============================================================================
+  REQUIRES LEGAL REVIEW BEFORE LAUNCH.
+  This page states a technical fact about the site as built: no cookies at all,
+  no analytics or advertising trackers, no embedded third-party content, no
+  local storage (SITE.analytics === null). If analytics, an advertising pixel,
+  an embedded map/video or a chat widget is ever added, THIS PAGE AND A REAL
+  CONSENT MECHANISM MUST CHANGE WITH IT (Board principle decision 2022/1358:
+  non-essential cookies off by default, opt-in only). The Turkish version is
+  the binding one; both need the client's legal counsel to sign off.
+  ============================================================================
+-->
+<LegalPage
+  locale={locale}
+  routeKey="cookies"
+  title="Cookie Policy"
+  updated={UPDATED}
+  description="This site sets no analytics, advertising or profiling cookies and uses no third-party trackers. What is actually used, and why you are not shown a cookie consent banner."
+  lede="The short answer: this site writes no cookies to your browser. The long answer is below — what is actually used, what is not, and why you are not being asked to accept anything."
+>
+  <h2>This site sets no cookies</h2>
+  <p>
+    This website writes <strong>no cookies at all</strong> to your browser. There is no Google
+    Analytics, no Meta pixel, no advertising tag, no heatmap or session recorder, no A/B testing
+    tool and no chat widget anywhere on it. Local storage
+    (<span class="mono">localStorage</span> / <span class="mono">sessionStorage</span>) is not used
+    either.
+  </p>
+  <p>
+    That is a decision, not an oversight: we chose not to measure visitor behaviour. What you get in
+    return is a faster site and no consent dialogue covering the page you came to read.
+  </p>
+
+  <h2>What a cookie is</h2>
+  <p>
+    A cookie is a small text file that a site stores in your browser. Some cookies are strictly
+    necessary for a site to work — sign-in, basket, language preference. Others exist to measure,
+    recognise or advertise to the visitor. The second group amounts to processing personal data and
+    therefore falls under Turkish Law no. 6698.
+  </p>
+
+  <h2>Why there is no consent banner</h2>
+  <p>
+    Principle decision <strong>2022/1358</strong> of the Turkish Personal Data Protection Board
+    (23 December 2022) requires explicit consent for non-essential cookies, and requires them to be
+    off by default until that consent is given. This site uses no non-essential cookies, so there is
+    no consent to collect and no banner to show.
+  </p>
+  <p>
+    If we ever add a measurement or advertising tool, this page will be updated and a genuine
+    consent mechanism — defaulting to off — will ship with it.
+  </p>
+
+  <h2>What the site actually uses</h2>
+  <p>None of the following are cookies; they are listed for transparency.</p>
+  <dl>
+    <div>
+      <dt>Typefaces</dt>
+      <dd>Self-hosted. No third-party font service such as Google Fonts is used, so your browser makes no request to an outside server.</dd>
+    </div>
+    <div>
+      <dt>Images and static files</dt>
+      <dd>Served from this site’s own domain and held in your browser cache. A cache is not a cookie and can be cleared from your browser settings.</dd>
+    </div>
+    <div>
+      <dt>Page transitions</dt>
+      <dd>The transition between pages runs entirely inside your browser. Nothing is stored and nothing is sent.</dd>
+    </div>
+    <div>
+      <dt>Form submission</dt>
+      <dd>Runs only when you fill in and submit a form. What you typed is sent to our form service provider so that it reaches our corporate mailbox; this sets no cookie in your browser.</dd>
+    </div>
+    <div>
+      <dt>Server access logs</dt>
+      <dd>The hosting infrastructure may keep technical records such as IP address and request time for security and service continuity. They are never used for marketing and are kept for a maximum of 12 months.</dd>
+    </div>
+  </dl>
+
+  <h2>Third-party content and links</h2>
+  <p>
+    There is no embedded map, embedded video or social media widget on this site — those are the
+    most common source of third-party cookies. Maps, WhatsApp and similar services are linked to,
+    not embedded. Once you follow such a link, that site’s own cookie policy and privacy practices
+    apply, and what happens there is outside our control.
+  </p>
+
+  <h2>Browser settings</h2>
+  <p>
+    Although there is nothing here to block, you can manage cookies for all sites from your browser
+    settings and clear existing cookies and cache at any time. Nothing on this site depends on
+    cookies, so it works in full even with cookies disabled entirely.
+  </p>
+
+  <h2>Your personal data</h2>
+  <p>
+    How we process the personal data you send through the forms, who we transfer it to and how long
+    we keep it is set out in the
+    <a class="link link--inline" href={path('privacy', locale)}>Privacy Notice</a>. Questions about
+    this policy can go to
+    <a class="link link--inline" href={`mailto:${SITE.contact.email.general}`}>{SITE.contact.email.general}</a>.
+  </p>
+
+  <h2>Changes to this policy</h2>
+  <p>
+    This policy is updated whenever the technical make-up of the site changes. The version in force
+    is always published on this page, and the date at the top is the date of the last revision.
+  </p>
+</LegalPage>

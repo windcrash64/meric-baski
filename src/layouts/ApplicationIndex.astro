@@ -1,0 +1,964 @@
+---
+/**
+ * Applications hub and sector page — one template, one optional prop.
+ *
+ * The sector page is the entry point of the three-hop journey the whole site is
+ * built around: sector → machine → compatible ink. A buyer arrives searching for
+ * the work he sells ("cephe brandası", "kutu harf"), not for a printhead brand,
+ * so this page has to name the jobs first and the machines second.
+ *
+ * The hub's matrix is the payload: an application × machine-family grid, linked
+ * on both axes. It is the one place on the site where a visitor can see, in a
+ * single screen, that a hybrid does not do packaging and a DTF does not do glass.
+ */
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import { SITE, type Locale } from '../config/site';
+import { path, type RouteKey } from '../i18n/routes';
+import { range, t } from '../i18n/ui';
+import { SUBSTRATES, type SubstrateKey } from '../i18n/specs';
+import { inkFamilyName, inkHref, machineFamilyName, machineHref } from '../lib/product';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+
+type Application = CollectionEntry<'applications'>;
+type ApplicationKey = Application['data']['key'];
+
+export interface Props {
+  locale: Locale;
+  /** Omit for the applications hub. */
+  app?: Application;
+}
+
+const { locale, app } = Astro.props;
+const tr = locale === 'tr';
+
+/* The dotted route key is derivable from the collection key, so the mapping
+   lives nowhere — a new sector needs a slug in routes.ts and nothing else. */
+const appRoute = (key: ApplicationKey): RouteKey => `applications.${key}`;
+
+const apps = (await getCollection('applications')).sort((a, b) => a.data.order - b.data.order);
+const machines = (await getCollection('machines'))
+  .filter((m) => m.data.status !== 'discontinued')
+  .sort((a, b) => a.data.order - b.data.order);
+const inks = await getCollection('inks');
+
+/* Two different questions, two different sets.
+
+   `curated` is the editorial shortlist the sector page renders and the hub
+   counts — the machines we would actually put in front of that buyer.
+   `covering` also picks up machines that claim the sector themselves, which is
+   the honest answer to the matrix's question: does this FAMILY do this work at
+   all. Using one set for both would either shrink the matrix or inflate a count
+   the sector page then contradicts. */
+const curated = (entry: Application) =>
+  entry.data.machines
+    .map((sku) => machines.find((m) => m.data.sku === sku))
+    .filter((m): m is CollectionEntry<'machines'> => Boolean(m));
+
+const covering = (entry: Application) =>
+  machines.filter(
+    (m) => m.data.applications.includes(entry.data.key) || entry.data.machines.includes(m.data.sku),
+  );
+
+/* --- machine families, short form — the matrix header has to fit ---------- */
+const FAMILIES = [
+  'uv-flatbed', 'uv-hybrid', 'eco-solvent', 'dtf', 'sublimation', 'uv-dtf', 'cutting',
+] as const;
+
+const FAMILY_SHORT: Record<(typeof FAMILIES)[number], Record<Locale, string>> = {
+  'uv-flatbed': { tr: 'UV Flatbed', en: 'UV Flatbed' },
+  'uv-hybrid': { tr: 'UV Hibrit', en: 'UV Hybrid' },
+  'eco-solvent': { tr: 'Eko Solvent', en: 'Eco-Solvent' },
+  dtf: { tr: 'DTF', en: 'DTF' },
+  sublimation: { tr: 'Süblimasyon', en: 'Sublimation' },
+  'uv-dtf': { tr: 'UV DTF', en: 'UV DTF' },
+  cutting: { tr: 'Kesim', en: 'Cutting' },
+};
+
+const familyRouteKey = (family: (typeof FAMILIES)[number]): RouteKey => {
+  const KEYS: Record<(typeof FAMILIES)[number], RouteKey> = {
+    'uv-flatbed': 'machines.uvFlatbed',
+    'uv-hybrid': 'machines.uvHybrid',
+    'eco-solvent': 'machines.ecoSolvent',
+    dtf: 'machines.dtf',
+    sublimation: 'machines.sublimation',
+    'uv-dtf': 'machines.uvdtf',
+    cutting: 'machines.cutting',
+  };
+  return KEYS[family];
+};
+
+/* --- one mono fact per machine, so the list stays a list ------------------ */
+type Measure = { value: number | [number, number]; unit?: string };
+
+function sizeOf(machine: CollectionEntry<'machines'>): string {
+  const raw = (machine.data.specs.printArea ?? machine.data.specs.printWidth ?? machine.data.specs.cuttingArea) as
+    | Measure | string | number | boolean | undefined;
+  if (raw === undefined) return '';
+  if (typeof raw === 'object' && raw !== null && 'value' in raw) {
+    return `${range(raw.value, locale)} ${raw.unit ?? 'mm'}`.trim();
+  }
+  return String(raw);
+}
+
+function speedOf(machine: CollectionEntry<'machines'>): string {
+  const fastest = machine.data.speedModes[0];
+  return `${range(fastest.value, locale)} ${tr ? 'm²/sa' : 'm²/h'} @${fastest.pass}`;
+}
+
+/* --- hub copy ------------------------------------------------------------- */
+const HUB = {
+  tr: {
+    h1: 'Uygulamalar',
+    lead:
+      'Makine seçimi teknik özellikten değil, işten başlar. Altı sektör sayfasının her birinde o işin ' +
+      'gerçekte ne bastığını, hangi makine ailesinin o işi yaptığını, hangi mürekkeple çalışıldığını ve ' +
+      'hangi malzemeye basıldığını tek tek yazdık. Kataloğu değil, kendi iş listenizi okuyarak karar verirsiniz.',
+    sectorsLabel: '01 — SEKTÖRLER',
+    matrixLabel: '02 — EŞLEŞME',
+    matrixH: 'Hangi makine ailesi hangi işi yapar.',
+    matrixP:
+      'Satırlar sektör, sütunlar makine ailesi. İşaretli kutu, o ailede o işi fiilen yapan en az bir model ' +
+      'bulunduğunu gösterir; boş kutu ailenin o işe uygun olmadığını söyler. Her iki eksen de tıklanır: ' +
+      'satırdan sektöre, sütundan makine ailesine geçersiniz.',
+    hop:
+      'Sektör sayfasından makineye, makine sayfasından o makinede çalışan mürekkebe kadar üç adımda ' +
+      'gidebilirsiniz — üç adımın sonunda aylık sarf maliyetinizi de görmüş olursunuz.',
+    ctaH: 'İşinizi anlatın, makineyi biz daraltalım.',
+    ctaP:
+      'Ne bastığınızı, aylık kaç metrekare çıktığınızı ve malzemenizi yazın. Size hangi ailenin ' +
+      'gerektiğini — ve hangisinin gerekmediğini — 1 iş günü içinde yazılı olarak söyleyelim.',
+    machinesWord: 'makine',
+  },
+  en: {
+    h1: 'Applications',
+    lead:
+      'Choosing a machine starts with the work, not the spec sheet. Each of the six sector pages sets out ' +
+      'what that trade actually prints, which machine family does it, which ink runs in it and which ' +
+      'materials it goes onto. You decide by reading your own job list, not our catalogue.',
+    sectorsLabel: '01 — SECTORS',
+    matrixLabel: '02 — MATRIX',
+    matrixH: 'Which machine family does which job.',
+    matrixP:
+      'Rows are sectors, columns are machine families. A marked cell means at least one model in that ' +
+      'family genuinely does that work; an empty cell means the family is not the right tool for it. ' +
+      'Both axes are links: rows go to the sector, columns to the machine family.',
+    hop:
+      'From a sector page you reach the machine, and from the machine the ink that runs in it — three ' +
+      'steps, at the end of which you also know your monthly consumable cost.',
+    ctaH: 'Tell us the work; we will narrow the machine.',
+    ctaP:
+      'Send us what you print, how many square metres a month and on what material. We will tell you ' +
+      'which family you need — and which you do not — in writing within one business day.',
+    machinesWord: 'machines',
+  },
+} as const;
+
+const hub = HUB[locale];
+
+/* --- sector copy ---------------------------------------------------------- */
+const SECTOR = {
+  tr: {
+    machinesLabel: '01 — MAKİNELER',
+    machinesP: (n: number) =>
+      `Bu sektörde çalışan ${n} makine. Aşağıdaki her satır, o işin hangi tabla veya rulo genişliğinde ` +
+      've hangi üretim hızında döndüğünü gösterir; ayrıntı ve fiyat için makinenin sayfasına geçin.',
+    inksLabel: '02 — MÜREKKEP',
+    inksP:
+      'Makineyi bir kez alırsınız, mürekkebi her ay. Bu sektörde kullanılan seriler ve hangi kafada ' +
+      'çalıştıkları aşağıda. Sattığımız her kimyasal ürün Türkçe Güvenlik Bilgi Formu ile gelir.',
+    substratesLabel: '03 — MALZEME',
+    substratesP:
+      'Bu listedeki bir malzemeye ilk kez basılacaksa numune isteyin: yapışma ve dış mekân dayanımı ' +
+      'mürekkep ile yüzeyin birlikte davranışına bağlıdır, tek başına mürekkebe değil.',
+    jobsLabel: '04 — İŞ LİSTESİ',
+    jobsH: 'Bu sayfadaki makinelerle basılan işler.',
+    faqLabel: '05 — SORULAR',
+    ctaP:
+      'Aylık metrekarenizi ve malzemenizi yazın; bu sektör için doğru makine–mürekkep eşleşmesini ' +
+      'kalem kalem ayrılmış bir teklifle gönderelim.',
+  },
+  en: {
+    machinesLabel: '01 — MACHINES',
+    machinesP: (n: number) =>
+      `${n} machines work in this sector. Each row below gives the bed or roll width it runs and the ` +
+      'output it holds; go to the machine page for the detail and the quote.',
+    inksLabel: '02 — INK',
+    inksP:
+      'You buy the machine once and the ink every month. These are the series used in this sector and ' +
+      'the heads they run in. Every chemical product we sell ships with a Turkish safety data sheet.',
+    substratesLabel: '03 — MATERIAL',
+    substratesP:
+      'If a material on this list is new to you, ask for a sample print: adhesion and outdoor life ' +
+      'depend on how the ink and the surface behave together, not on the ink alone.',
+    jobsLabel: '04 — JOB LIST',
+    jobsH: 'What the machines on this page print.',
+    faqLabel: '05 — QUESTIONS',
+    ctaP:
+      'Send your monthly square metres and your material, and we will send the right machine–ink pairing ' +
+      'for this sector as an itemised quote.',
+  },
+} as const;
+
+const sector = SECTOR[locale];
+
+/* --- resolved sector data ------------------------------------------------- */
+const copy = app ? app.data.i18n[locale] : null;
+const intro = copy ? copy.intro.split(/\n+/).map((p) => p.trim()).filter(Boolean) : [];
+
+const appMachines = app ? curated(app) : [];
+
+const appInks = app
+  ? app.data.inks
+      .map((id) => inks.find((i) => i.id === id))
+      .filter((i): i is CollectionEntry<'inks'> => Boolean(i))
+  : [];
+
+const appSubstrates = app
+  ? app.data.substrates.filter((s): s is SubstrateKey => s in SUBSTRATES)
+  : [];
+
+const routeKey: RouteKey = app ? appRoute(app.data.key) : 'applications';
+const heading = copy ? copy.name : hub.h1;
+const accent = app ? app.data.accent : 'cyan';
+
+const selfUrl = new URL(path(routeKey, locale), SITE.url).href;
+const waText = app
+  ? (tr
+      ? `Merhaba, ${heading} işleri için makine ve mürekkep önerisi almak istiyorum. ${selfUrl}`
+      : `Hello, I would like a machine and ink recommendation for ${heading.toLowerCase()}. ${selfUrl}`)
+  : SITE.contact.whatsapp.prefill[locale];
+const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${encodeURIComponent(waText)}`;
+
+const title = app
+  ? (tr
+      ? `${heading} — Baskı Makineleri ve Mürekkepleri | Maven`
+      : `${heading} — Printers and Inks | Maven`)
+  : (tr
+      ? 'Uygulamalar — Hangi İş Hangi Makineyle Basılır | Maven'
+      : 'Applications — Which Machine Prints Which Job | Maven');
+
+const description = app
+  ? (tr
+      ? `${heading} işleri: ${appMachines.length} makine, ${appInks.length} mürekkep serisi, ${appSubstrates.length} malzeme. Hangi işin hangi makineyle basıldığı ve fiyat teklifi.`
+      : `${heading}: ${appMachines.length} machines, ${appInks.length} ink series, ${appSubstrates.length} materials. Which job runs on which machine, and pricing.`)
+  : (tr
+      ? 'Reklam ve tabela, ambalaj ve etiket, mobilya, cam ve metal, tekstil, araç giydirme. Altı sektör; her biri için makine, mürekkep ve malzeme eşleşmesi.'
+      : 'Signage, packaging and labels, furniture, glass and metal, textile, vehicle graphics. Six sectors, each matched to machines, inks and materials.');
+
+const schema = app
+  ? [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: t('navApplications', locale), item: `${SITE.url}${path('applications', locale)}` },
+          { '@type': 'ListItem', position: 2, name: heading },
+        ],
+      },
+      ...(copy && copy.faq.length
+        ? [{
+            '@type': 'FAQPage',
+            mainEntity: copy.faq.map((f) => ({
+              '@type': 'Question',
+              name: f.q,
+              acceptedAnswer: { '@type': 'Answer', text: f.a },
+            })),
+          }]
+        : []),
+    ]
+  : [
+      {
+        '@type': 'ItemList',
+        itemListElement: apps.map((a, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: a.data.i18n[locale].name,
+          url: `${SITE.url}${path(appRoute(a.data.key), locale)}`,
+        })),
+      },
+    ];
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey={routeKey}
+  schema={schema}
+>
+  {app ? (
+    <>
+      <!-- SECTOR — 1. HEADER ------------------------------------------------ -->
+      <div data-ground="paper" data-accent={accent}>
+        <div class="shell app__crumbs">
+          <Breadcrumb
+            locale={locale}
+            crumbs={[
+              { label: t('navApplications', locale), href: path('applications', locale) },
+              { label: heading },
+            ]}
+          />
+        </div>
+
+        <header class="shell app__head">
+          <p class="eyebrow">{copy!.kicker}</p>
+          <h1>{heading}</h1>
+          {intro.map((p) => <p class="lead muted">{p}</p>)}
+        </header>
+      </div>
+
+      <!-- SECTOR — 2. MACHINES ---------------------------------------------- -->
+      <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{sector.machinesLabel}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{t('machinesForThis', locale)}</h2>
+            <p class="lead muted reveal">{sector.machinesP(appMachines.length)}</p>
+
+            <ul class="mlist reveal" role="list" data-stagger>
+              {appMachines.map((m) => (
+                <li class="mlist__item">
+                  <a href={machineHref(m, locale)}>
+                    <span class="mlist__name">
+                      <span class="mlist__model code" lang="en">{m.data.model}</span>
+                      <span class="mlist__family">{machineFamilyName(m.data.family, locale)}</span>
+                    </span>
+                    <span class="mlist__note muted">{m.data.i18n[locale].tagline}</span>
+                    <span class="mlist__facts mono">
+                      <span>{sizeOf(m)}</span>
+                      <span>{speedOf(m)}</span>
+                    </span>
+                    <span class="arrow" aria-hidden="true">›</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <a class="link link--accent reveal" href={path('machines', locale)}>
+              {t('exploreMachines', locale)} <span class="arrow" aria-hidden="true">›</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTOR — 3. INKS --------------------------------------------------- -->
+      <section class="section" data-ground="bone" data-accent="magenta">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{sector.inksLabel}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{t('inksUsed', locale)}</h2>
+            <p class="lead muted reveal">{sector.inksP}</p>
+
+            <ul class="ilist reveal" role="list" data-stagger>
+              {appInks.map((ink) => (
+                <li class="ilist__item">
+                  <a href={inkHref(ink, locale)}>
+                    <span class="ilist__series code" lang="en">{ink.data.series}</span>
+                    <span class="ilist__role muted">{ink.data.i18n[locale].role}</span>
+                    <span class="ilist__family mono">{inkFamilyName(ink.data.family, locale)}</span>
+                    <span class="arrow" aria-hidden="true">›</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div class="cluster reveal app__inkcta">
+              <a class="link link--accent" href={path('compatibility', locale)}>
+                {t('openTable', locale)} <span class="arrow" aria-hidden="true">›</span>
+              </a>
+              <a class="link link--accent" href={path('documents', locale)}>
+                {t('documents', locale)} <span class="arrow" aria-hidden="true">›</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTOR — 4. SUBSTRATES --------------------------------------------- -->
+      <section class="section section--tight section--ruled" data-ground="bone" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{sector.substratesLabel}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{t('substratesApplied', locale)}</h2>
+            <ul class="chips reveal" role="list">
+              {appSubstrates.map((s) => <li class="chip mono">{SUBSTRATES[s][locale]}</li>)}
+            </ul>
+            <p class="muted reveal app__note">
+              {sector.substratesP}
+              {' '}
+              <a class="link link--inline" href={path('samples', locale)}>{t('requestSample', locale)}</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTOR — 5. JOB LIST (dark punctuation) ---------------------------- -->
+      <section class="section" data-ground="ink" data-accent="yellow">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{sector.jobsLabel}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{sector.jobsH}</h2>
+            <ol class="jobs reveal" role="list" data-stagger>
+              {copy!.jobs.map((job, i) => (
+                <li class="job">
+                  <span class="job__n mono">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="job__t">{job}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTOR — 6. FAQ ----------------------------------------------------- -->
+      <section class="section" data-ground="paper" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{sector.faqLabel}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{t('faq', locale)}</h2>
+            <div class="faq reveal">
+              {copy!.faq.map((item, i) => (
+                <details name="app-faq" open={i === 0}>
+                  <summary>
+                    <span>{item.q}</span>
+                    <span class="accordion__chevron" aria-hidden="true">⌄</span>
+                  </summary>
+                  <div class="accordion__panel"><div><p>{item.a}</p></div></div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  ) : (
+    <>
+      <!-- HUB — 1. HEADER ---------------------------------------------------- -->
+      <div data-ground="paper" data-accent="cyan">
+        <div class="shell app__crumbs">
+          <Breadcrumb locale={locale} crumbs={[{ label: heading }]} />
+        </div>
+        <header class="shell app__head">
+          <h1>{heading}</h1>
+          <p class="lead muted">{hub.lead}</p>
+        </header>
+      </div>
+
+      <!-- HUB — 2. SECTORS ---------------------------------------------------- -->
+      <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{hub.sectorsLabel}</p></div>
+          <div class="section__body">
+            <ul class="tiles" role="list" data-stagger>
+              {apps.map((a) => (
+                <li class="tile">
+                  <a href={path(appRoute(a.data.key), locale)}>
+                    <span class="tile__text">
+                      <span class="tile__label">{a.data.i18n[locale].name}</span>
+                      <span class="tile__kicker muted">{a.data.i18n[locale].kicker}</span>
+                    </span>
+                    <span class="tile__count mono">
+                      {curated(a).length} {hub.machinesWord}
+                    </span>
+                    <span class="arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- HUB — 3. MATRIX ----------------------------------------------------- -->
+      <section class="section" data-ground="bone" data-accent="cyan">
+        <div class="shell grid">
+          <div class="section__label"><p class="eyebrow">{hub.matrixLabel}</p></div>
+          <div class="section__body">
+            <h2 class="reveal">{hub.matrixH}</h2>
+            <p class="lead muted reveal">{hub.matrixP}</p>
+
+            <div class="table-wrap reveal">
+              <table class="spec-table matrix">
+                <caption class="visually-hidden">{t('machineMatrix', locale)}</caption>
+                <thead>
+                  <tr>
+                    <td class="matrix__corner"></td>
+                    {FAMILIES.map((f) => (
+                      <th scope="col">
+                        <a class="link" href={path(familyRouteKey(f), locale)}>{FAMILY_SHORT[f][locale]}</a>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {apps.map((a) => {
+                    const covered = covering(a);
+                    return (
+                      <tr>
+                        <th scope="row">
+                          <a class="link" href={path(appRoute(a.data.key), locale)}>
+                            {a.data.i18n[locale].name}
+                          </a>
+                        </th>
+                        {FAMILIES.map((f) => (
+                          covered.some((m) => m.data.family === f)
+                            ? (
+                              <td class="matrix__cell is-on">
+                                <span aria-hidden="true">✓</span>
+                                <span class="visually-hidden">{t('suitable', locale)}</span>
+                              </td>
+                            )
+                            : (
+                              <td class="matrix__cell">
+                                <span aria-hidden="true">·</span>
+                                <span class="visually-hidden">{t('notSuitable', locale)}</span>
+                              </td>
+                            )
+                        ))}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <p class="muted reveal app__note">{hub.hop}</p>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  <!-- CTA BAND — shared by both modes -------------------------------------- -->
+  <section class="cta" data-ground="ink" data-accent="cyan">
+    <div class="shell">
+      <h2 class="cta__h">{app ? copy!.kicker + '.' : hub.ctaH}</h2>
+      <p class="lead muted">{app ? sector.ctaP : hub.ctaP}</p>
+      <div class="cluster">
+        <a class="btn btn--outline" href={path('quote', locale)}>
+          {t('getQuote', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="link link--accent" href={`tel:${SITE.contact.phone.e164}`}>
+          {SITE.contact.phone.display[locale]}
+        </a>
+        <a class="link link--accent" href={wa} target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* --- shared head --- */
+  .app__crumbs {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .app__head {
+    display: grid;
+    gap: var(--sp-5);
+    padding-block-end: var(--section-pad);
+    max-width: 78ch;
+  }
+
+  .app__head .eyebrow {
+    color: var(--on-ground-muted);
+  }
+
+  .app__note {
+    margin-block-start: var(--sp-6);
+    font-size: var(--step--1);
+  }
+
+  /* --- hub tiles: the sector list, typographic --- */
+  .tiles {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .tile a {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: baseline;
+    gap: var(--sp-4) var(--sp-6);
+    padding: var(--sp-6) 0;
+    border-bottom: var(--border) solid var(--hairline);
+    color: inherit;
+    text-decoration: none;
+    transition: padding-inline-start var(--d-base) var(--e-out);
+  }
+
+  .tile a:hover,
+  .tile a:focus-visible {
+    padding-inline-start: var(--sp-4);
+  }
+
+  .tile a:hover .arrow,
+  .tile a:focus-visible .arrow {
+    transform: translateX(4px);
+  }
+
+  .tile__text {
+    display: grid;
+    gap: var(--sp-2);
+  }
+
+  .tile__label {
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .tile__kicker {
+    font-size: var(--step--1);
+  }
+
+  .tile__count {
+    font-size: var(--step--2);
+    color: var(--on-ground-muted);
+    white-space: nowrap;
+  }
+
+  /* The accent is a rule, never a word: it draws under the row on hover. */
+  .tile a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform var(--d-slow) var(--e-out);
+  }
+
+  .tile a:hover::after,
+  .tile a:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* --- hub matrix --- */
+  .matrix {
+    margin-block-start: var(--sp-8);
+    min-width: 720px;
+  }
+
+  .matrix th {
+    width: auto;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--on-ground);
+    white-space: nowrap;
+  }
+
+  .matrix thead th {
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .matrix tbody th {
+    font-family: var(--font-sans);
+    font-size: var(--step--1);
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: normal;
+    width: 26%;
+  }
+
+  .matrix__corner {
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .matrix__cell {
+    text-align: center;
+    font-family: var(--font-sans);
+    color: var(--on-ground-muted);
+  }
+
+  .matrix__cell.is-on {
+    color: var(--on-ground);
+    font-size: var(--step-0);
+  }
+
+  /* --- sector: machine list --- */
+  .mlist {
+    margin-block-start: var(--sp-8);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .mlist__item a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: var(--sp-3) var(--sp-6);
+    padding: var(--sp-6) 0;
+    border-bottom: var(--border) solid var(--hairline);
+    color: inherit;
+    text-decoration: none;
+    transition: padding-inline-start var(--d-base) var(--e-out);
+  }
+
+  .mlist__item a:hover,
+  .mlist__item a:focus-visible {
+    padding-inline-start: var(--sp-4);
+  }
+
+  .mlist__item a:hover .arrow,
+  .mlist__item a:focus-visible .arrow {
+    transform: translateX(4px);
+  }
+
+  .mlist__name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sp-2) var(--sp-4);
+  }
+
+  .mlist__model {
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .mlist__family {
+    font-size: var(--step--2);
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-ground-muted);
+  }
+
+  .mlist__note {
+    grid-column: 1;
+    font-size: var(--step--1);
+    max-width: 62ch;
+  }
+
+  .mlist__facts {
+    grid-column: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-5);
+    font-size: var(--step--2);
+    color: var(--on-ground-muted);
+  }
+
+  .mlist__item .arrow {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+  }
+
+  @media (min-width: 1024px) {
+    .mlist__item a {
+      grid-template-columns: 34% 1fr auto;
+      align-items: baseline;
+    }
+
+    .mlist__name {
+      display: grid;
+      gap: var(--sp-2);
+    }
+
+    .mlist__note {
+      grid-column: 2;
+    }
+
+    .mlist__facts {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .mlist__item .arrow {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: baseline;
+    }
+  }
+
+  /* --- sector: ink list --- */
+  .ilist {
+    margin-block-start: var(--sp-8);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .ilist__item a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--sp-2) var(--sp-6);
+    padding: var(--sp-5) 0;
+    border-bottom: var(--border) solid var(--hairline);
+    color: inherit;
+    text-decoration: none;
+    transition: padding-inline-start var(--d-base) var(--e-out);
+  }
+
+  .ilist__item a:hover,
+  .ilist__item a:focus-visible {
+    padding-inline-start: var(--sp-4);
+  }
+
+  .ilist__item a:hover .arrow,
+  .ilist__item a:focus-visible .arrow {
+    transform: translateX(4px);
+  }
+
+  .ilist__series {
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .ilist__role {
+    grid-column: 1;
+    font-size: var(--step--1);
+  }
+
+  .ilist__family {
+    grid-column: 1;
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-ground-muted);
+  }
+
+  .ilist__item .arrow {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+  }
+
+  @media (min-width: 1024px) {
+    .ilist__item a {
+      grid-template-columns: 34% 1fr auto;
+      align-items: baseline;
+    }
+
+    .ilist__role {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .ilist__family {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .ilist__item .arrow {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: baseline;
+    }
+  }
+
+  .app__inkcta {
+    margin-block-start: var(--sp-7);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  /* --- sector: substrate chips --- */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-6);
+    padding: 0;
+  }
+
+  .chips .chip {
+    font-size: var(--step--2);
+    padding: 6px 10px;
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground-muted);
+  }
+
+  /* --- sector: job list --- */
+  .jobs {
+    display: grid;
+    gap: 0;
+    margin-block: var(--sp-8) 0;
+    padding: 0;
+  }
+
+  .job {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--sp-5);
+    padding-block: var(--sp-5);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .job:last-child {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .job__n {
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-block-start: 0.35em;
+  }
+
+  .job__t {
+    font-size: var(--step-1);
+    letter-spacing: -0.01em;
+    max-width: 56ch;
+  }
+
+  /* --- sector: FAQ --- */
+  .faq {
+    margin-block-start: var(--sp-7);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .faq details {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-5);
+    padding-block: var(--sp-5);
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .faq p {
+    padding-block-end: var(--sp-6);
+    color: var(--muted);
+  }
+
+  .accordion__chevron {
+    font-size: 1.4em;
+    line-height: 1;
+    color: var(--muted);
+  }
+
+  /* --- closing CTA --- */
+  .cta {
+    padding-block: var(--section-pad) var(--sp-9);
+  }
+
+  .cta__h {
+    font-size: var(--step-4);
+    font-variation-settings: 'wdth' 84;
+    max-width: 18ch;
+    margin-block-end: var(--sp-5);
+  }
+
+  .cta .lead {
+    margin-block-end: var(--sp-7);
+    max-width: 56ch;
+  }
+</style>

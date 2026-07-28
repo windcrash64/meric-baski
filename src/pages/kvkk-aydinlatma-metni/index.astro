@@ -1,0 +1,217 @@
+---
+import LegalPage from '../../layouts/LegalPage.astro';
+import { SITE } from '../../config/site';
+import { path } from '../../i18n/routes';
+
+const UPDATED = '2026-07-28';
+const domain = SITE.url.replace(/^https?:\/\//, '');
+const address = `${SITE.contact.address.street}, ${SITE.contact.address.district} / ${SITE.contact.address.city} ${SITE.contact.address.postalCode}`;
+---
+
+<!--
+  ============================================================================
+  HUKUKİ İNCELEME GEREKİYOR — YAYINDAN ÖNCE.
+  Bu aydınlatma metni, sitenin gerçek veri işleme faaliyetine (yalnızca form
+  alanları, sıfır analitik çerez, üçüncü taraf izleyici yok) göre yazılmıştır
+  ve mevzuata uygun olacak şekilde hazırlanmıştır; ancak yayına alınmadan önce
+  müvekkilin hukuk müşaviri tarafından incelenmeli ve onaylanmalıdır.
+  Kontrol edilmesi gerekenler: şirketin gerçek VERBİS kayıt yükümlülüğü,
+  varsa KEP adresi (site config'e eklenmeli), kargo/muhasebe aktarım listesi,
+  saklama süreleri ve yurt dışı aktarım için imzalanmış standart sözleşme.
+  ============================================================================
+-->
+<LegalPage
+  locale="tr"
+  routeKey="privacy"
+  title="KVKK Aydınlatma Metni"
+  updated={UPDATED}
+  description="Sitemizdeki formlar aracılığıyla hangi kişisel verileri, hangi amaçla ve hangi hukuki sebeple işlediğimiz, kimlere aktardığımız, ne kadar sakladığımız ve KVKK m.11 haklarınızı nasıl kullanacağınız."
+  lede="Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu’nun 10. maddesi ile Aydınlatma Yükümlülüğünün Yerine Getirilmesinde Uyulacak Usul ve Esaslar Hakkında Tebliğ uyarınca hazırlanmıştır. Sitede analitik veya reklam amaçlı çerez kullanılmadığı için burada anlatılan tek veri kaynağı, formlara sizin yazdığınız bilgilerdir."
+>
+  <h2>Veri sorumlusunun kimliği</h2>
+  <p>
+    Kişisel verileriniz, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) kapsamında
+    veri sorumlusu sıfatıyla aşağıdaki şirket tarafından işlenmektedir.
+  </p>
+  <dl>
+    <div><dt>Ticaret unvanı</dt><dd class="mono">{SITE.legal.tradeName}</dd></div>
+    <div><dt>MERSİS numarası</dt><dd class="mono">{SITE.legal.mersis}</dd></div>
+    <div><dt>Ticaret sicil numarası</dt><dd class="mono">{SITE.legal.tradeRegistryNo}</dd></div>
+    <div><dt>Vergi dairesi / VKN</dt><dd class="mono">{SITE.legal.taxOffice} / {SITE.legal.taxNumber}</dd></div>
+    <div><dt>İşletme merkezi</dt><dd class="mono">{address}</dd></div>
+    <div><dt>E-posta</dt><dd class="mono">{SITE.contact.email.general}</dd></div>
+    <div><dt>Telefon</dt><dd class="mono">{SITE.contact.phone.display.tr}</dd></div>
+    <div><dt>İnternet sitesi</dt><dd class="mono">{domain}</dd></div>
+  </dl>
+
+  <h2>İşlediğimiz kişisel veriler</h2>
+  <p>
+    Yalnızca formlara kendi elinizle yazdığınız verileri işleriz. Zorunlu olarak işaretlenmemiş
+    alanları boş bırakabilirsiniz; boş bıraktığınız alan hiçbir şekilde kaydedilmez.
+  </p>
+
+  <h3>Teklif formu</h3>
+  <p>Ad soyad, firma adı, telefon, e-posta, şehir, ilgilendiğiniz ürün ve mesaj alanına yazdıklarınız.</p>
+
+  <h3>Servis talep formu</h3>
+  <p>
+    Firma adı, yetkili kişinin adı soyadı, telefon, e-posta, makine modeli, seri numarası ve
+    arıza açıklaması.
+  </p>
+
+  <h3>Numune talep formu</h3>
+  <p>
+    Ad soyad, firma adı, telefon, teslimat adresi, ilgilendiğiniz makine veya mürekkep ve
+    basılacak malzeme bilgisi.
+  </p>
+
+  <p>
+    Bu veriler, Kurul’un veri kategorileri sınıflandırmasında <strong>kimlik</strong>,
+    <strong>iletişim</strong> ve <strong>müşteri işlem</strong> kategorilerine girer. Özel nitelikli
+    kişisel veri (sağlık, biyometrik veri, din, üyelik bilgisi vb.) talep etmiyoruz; lütfen form
+    alanlarına bu nitelikte bilgi yazmayın.
+  </p>
+  <p>
+    Sitede analiz, reklam veya profilleme amaçlı çerez ya da üçüncü taraf izleyici kullanılmadığı
+    için gezinme davranışınız tarafımızca kaydedilmez, size ait bir ziyaretçi profili oluşturulmaz.
+    Sitenin barındırıldığı altyapı sağlayıcısı, güvenlik ve hizmet sürekliliği amacıyla teknik
+    erişim kayıtları (IP adresi, talep zamanı, tarayıcı bilgisi) tutabilir; bu kayıtlara pazarlama
+    amacıyla erişilmez. Ayrıntı için
+    <a class="link link--inline" href={path('cookies', 'tr')}>Çerez Politikası</a>.
+  </p>
+
+  <h2>İşleme amaçlarımız ve hukuki sebepleri</h2>
+  <dl>
+    <div>
+      <dt>Teklif taleplerinin karşılanması; ürün, teknik özellik ve fiyat bilgisi iletilmesi</dt>
+      <dd>KVKK m.5/2-c — sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması · m.5/2-f — meşru menfaat</dd>
+    </div>
+    <div>
+      <dt>Satış sonrası teknik servis, garanti, kurulum ve yedek parça süreçlerinin yürütülmesi</dt>
+      <dd>KVKK m.5/2-c · m.5/2-ç — hukuki yükümlülüğün yerine getirilmesi</dd>
+    </div>
+    <div>
+      <dt>Talep, öneri ve şikâyetlerin kaydı, takibi ve sonuçlandırılması</dt>
+      <dd>KVKK m.5/2-f — meşru menfaat</dd>
+    </div>
+    <div>
+      <dt>Fatura, irsaliye ve ticari defter kayıtlarının düzenlenmesi ve saklanması</dt>
+      <dd>KVKK m.5/2-ç — hukuki yükümlülük (VUK, TTK)</dd>
+    </div>
+    <div>
+      <dt>Formu gönderirken verdiğiniz onaya dayanarak sizinle iletişime geçilmesi</dt>
+      <dd>KVKK m.5/1 — açık rıza</dd>
+    </div>
+  </dl>
+  <p>
+    Ticari elektronik ileti (toplu e-posta, SMS veya arama) göndermiyoruz. Bu nedenle iletişim
+    bilgileriniz İleti Yönetim Sistemi’ne (İYS) kaydedilmez ve herhangi bir pazarlama listesine
+    eklenmez; yalnızca kendi talebinizle ilgili olarak sizinle birebir iletişim kurarız.
+  </p>
+  <p>
+    Açık rızaya dayanan işleme bakımından rızanızı dilediğiniz zaman geri alabilirsiniz. Geri
+    alma, o tarihe kadar rızaya dayalı olarak yapılmış işlemleri geçersiz kılmaz.
+  </p>
+
+  <h2>Kişisel verilerin toplanma yöntemi</h2>
+  <p>
+    Kişisel verileriniz; internet sitemizdeki formlar, e-posta, telefon, WhatsApp ve yüz yüze
+    görüşmeler yoluyla, kısmen otomatik ve otomatik olmayan yöntemlerle toplanır. Sitedeki formlar,
+    gönderdiğiniz veriyi doğrudan kurumsal e-posta kutumuza ileten bir form altyapısı üzerinden
+    çalışır; sitede ayrıca bir müşteri veri tabanı ya da üyelik sistemi bulunmaz.
+  </p>
+
+  <h2>Kişisel verilerin aktarılması</h2>
+  <p>
+    Kişisel verilerinizi satmaz, kiralamaz ve pazarlama amacıyla üçüncü kişilerle paylaşmayız.
+    Aktarım yalnızca aşağıdaki hâllerde ve işin gerektirdiği ölçüde yapılır:
+  </p>
+  <ul>
+    <li>form gönderiminin teknik olarak iletilmesi amacıyla form altyapısı sağlayıcımıza ve sitenin barındırıldığı sunucu sağlayıcısına;</li>
+    <li>numune veya yedek parça gönderimi hâlinde kargo ve lojistik firmalarına — yalnızca ad soyad, telefon ve teslimat adresi;</li>
+    <li>muhasebe, bağımsız denetim ve hukuki danışmanlık hizmeti aldığımız firmalara, ilgili yükümlülüğün gerektirdiği ölçüde;</li>
+    <li>kanunen açıkça yetkili kamu kurum ve kuruluşlarına, usulüne uygun talepleri hâlinde (KVKK m.8/2-a).</li>
+  </ul>
+  <p>
+    Form altyapısı ve sunucu sağlayıcımızın sunucuları yurt dışında bulunabilir. Bu durumda
+    aktarım, KVKK m.9 kapsamında yeterlilik kararı, uygun güvenceler (Kurul’a bildirilen standart
+    sözleşme dâhil) veya kanunda öngörülen diğer şartlardan birine dayanılarak gerçekleştirilir.
+  </p>
+
+  <h2>Saklama süreleri</h2>
+  <dl>
+    <div>
+      <dt>Satışla sonuçlanmayan teklif ve bilgi talepleri</dt>
+      <dd class="mono">Son yazışmadan itibaren 2 yıl</dd>
+    </div>
+    <div>
+      <dt>Satışla sonuçlanan işlere ilişkin kayıtlar</dt>
+      <dd class="mono">İlişkinin sona ermesinden itibaren 10 yıl (TBK m.146)</dd>
+    </div>
+    <div>
+      <dt>Fatura ve ticari defter kayıtları</dt>
+      <dd class="mono">10 yıl (TTK m.82) · vergi mevzuatı yönünden 5 yıl (VUK m.253)</dd>
+    </div>
+    <div>
+      <dt>Kurulum, eğitim, servis ve garanti kayıtları</dt>
+      <dd class="mono">Garanti süresinin bitiminden itibaren 10 yıl</dd>
+    </div>
+    <div>
+      <dt>Sunucu erişim kayıtları</dt>
+      <dd class="mono">En fazla 12 ay</dd>
+    </div>
+  </dl>
+  <p>
+    Süre dolduğunda kişisel verileriniz, Kişisel Verilerin Silinmesi, Yok Edilmesi veya Anonim Hâle
+    Getirilmesi Hakkında Yönetmelik uyarınca ilk periyodik imha döneminde silinir, yok edilir veya
+    anonim hâle getirilir.
+  </p>
+
+  <h2>KVKK m.11 kapsamındaki haklarınız</h2>
+  <p>Veri sorumlusu olarak bize başvurarak, kendinizle ilgili olarak aşağıdaki taleplerde bulunabilirsiniz:</p>
+  <ul class="keyed">
+    <li><span class="mono">a)</span> kişisel verilerinizin işlenip işlenmediğini öğrenme,</li>
+    <li><span class="mono">b)</span> kişisel verileriniz işlenmişse buna ilişkin bilgi talep etme,</li>
+    <li><span class="mono">c)</span> kişisel verilerinizin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme,</li>
+    <li><span class="mono">ç)</span> yurt içinde veya yurt dışında kişisel verilerinizin aktarıldığı üçüncü kişileri bilme,</li>
+    <li><span class="mono">d)</span> kişisel verilerinizin eksik veya yanlış işlenmiş olması hâlinde bunların düzeltilmesini isteme,</li>
+    <li><span class="mono">e)</span> KVKK m.7’de öngörülen şartlar çerçevesinde kişisel verilerinizin silinmesini veya yok edilmesini isteme,</li>
+    <li><span class="mono">f)</span> (d) ve (e) bentleri uyarınca yapılan işlemlerin, kişisel verilerinizin aktarıldığı üçüncü kişilere bildirilmesini isteme,</li>
+    <li><span class="mono">g)</span> işlenen verilerinizin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme,</li>
+    <li><span class="mono">ğ)</span> kişisel verilerinizin kanuna aykırı olarak işlenmesi sebebiyle zarara uğramanız hâlinde zararın giderilmesini talep etme.</li>
+  </ul>
+
+  <h2>Başvuru yöntemi</h2>
+  <p>
+    Taleplerinizi, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ uyarınca aşağıdaki
+    yollardan biriyle iletebilirsiniz:
+  </p>
+  <ul>
+    <li>ıslak imzalı dilekçenizi işletme merkezimize şahsen getirerek veya noter aracılığıyla göndererek;</li>
+    <li>güvenli elektronik imza ya da mobil imza ile imzalanmış başvurunuzu e-posta ile göndererek;</li>
+    <li>
+      daha önce bize bildirdiğiniz ve sistemimizde kayıtlı bulunan e-posta adresinizden
+      <a class="link link--inline" href={`mailto:${SITE.contact.email.general}`}>{SITE.contact.email.general}</a>
+      adresine yazarak.
+    </li>
+  </ul>
+  <p>
+    Başvurunuzda ad soyadınız, yazılı başvurularda imzanız, T.C. kimlik numaranız (yabancılar için
+    uyruk, pasaport numarası veya kimlik numarası), tebligata esas adresiniz, varsa telefon ve
+    e-posta adresiniz ile talebinizin konusu bulunmalıdır. Başvurunuzu, talebin niteliğine göre en
+    kısa sürede ve her hâlde en geç <strong>30 gün</strong> içinde ücretsiz olarak sonuçlandırırız.
+    İşlemin ayrıca bir maliyet gerektirmesi hâlinde Kurul’ca belirlenen tarifedeki ücret alınabilir.
+  </p>
+  <p>
+    Başvurunuzun reddedilmesi, verdiğimiz yanıtı yetersiz bulmanız veya süresinde yanıt verilmemesi
+    hâlinde; yanıtı öğrendiğiniz tarihten itibaren 30 gün ve her hâlde başvuru tarihinden itibaren
+    60 gün içinde Kişisel Verileri Koruma Kurulu’na şikâyette bulunabilirsiniz (KVKK m.14).
+  </p>
+
+  <h2>Bu metindeki değişiklikler</h2>
+  <p>
+    Mevzuattaki değişiklikler veya süreçlerimizdeki güncellemeler nedeniyle bu aydınlatma metnini
+    revize edebiliriz. Yürürlükteki sürüm her zaman bu sayfada yayımlanır; sayfanın başındaki tarih
+    son revizyon tarihidir.
+  </p>
+</LegalPage>

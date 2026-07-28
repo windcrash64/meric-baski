@@ -37,6 +37,52 @@ const machines = family ? all.filter((m) => m.data.family === family) : all;
 const routeKey: RouteKey = family ? machineFamilyRoute(family) : 'machines';
 const heading = family ? machineFamilyName(family, locale) : t('navMachines', locale);
 
+// The index lists products UNDER their category rather than in one flat grid:
+// a buyer arrives knowing the process he needs (flatbed, rulodan ruloya, DTF),
+// not the model, so the category is the entry point and the grid sits inside it.
+const FAMILY_SEQUENCE = [
+  'uv-flatbed', 'uv-hybrid', 'eco-solvent', 'dtf',
+  'sublimation', 'uv-dtf', 'cutting',
+] as const;
+
+const groups = family
+  ? [{ key: family, machines }]
+  : FAMILY_SEQUENCE
+      .map((key) => ({ key, machines: all.filter((m) => m.data.family === key) }))
+      .filter((g) => g.machines.length > 0);
+
+/** One factual line per family — what the process is, not why to buy it. */
+const FAMILY_ROLE: Record<string, Record<Locale, string>> = {
+  'uv-flatbed': {
+    tr: 'Sabit tablada rijit malzemeye doğrudan UV baskı. Cam, ahşap, kompozit, levha.',
+    en: 'Direct UV printing onto rigid material on a fixed bed: glass, wood, composite, sheet.',
+  },
+  'uv-hybrid': {
+    tr: 'Tek şasede hem rulo hem levha. Rijit tarafta baskı yüksekliği 10–50 mm ile sınırlıdır.',
+    en: 'Roll and rigid on one chassis. Print height on the rigid side is limited to 10–50 mm.',
+  },
+  'eco-solvent': {
+    tr: 'Rulo malzemeye eko solvent baskı; folyo, branda, araç giydirme. Baskı-kesim seçenekli.',
+    en: 'Eco-solvent printing onto roll media: vinyl, banner, vehicle wraps. Print-and-cut optional.',
+  },
+  dtf: {
+    tr: 'PET filme baskı, toz serpme ve fırınlama; preste kumaşa transfer. Kumaş rengi fark etmez.',
+    en: 'Print to PET film, powder and cure, then transfer to fabric under a press. Fabric colour is irrelevant.',
+  },
+  sublimation: {
+    tr: 'Transfer kağıdına baskı, kalenderde polyester life geçiş. Baskı lifin içindedir.',
+    en: 'Print to transfer paper, then calender the dye into polyester fibre. The image sits inside the fibre.',
+  },
+  'uv-dtf': {
+    tr: 'A/B film üzerine UV baskı ve laminasyon; ısı veya pres olmadan yapışan etiket.',
+    en: 'UV print and lamination on A/B film, producing a label that needs no heat or press.',
+  },
+  cutting: {
+    tr: 'Basılmış veya boş malzemede kontur, oluk ve delik kesimi. Vakumlu flatbed tabla.',
+    en: 'Contour, crease and perforation cutting of printed or blank material on a vacuum bed.',
+  },
+};
+
 /* --- editorial copy ----------------------------------------------------- */
 const INTROS: Record<string, Record<Locale, string[]>> = {
   'uv-flatbed': {
@@ -111,19 +157,22 @@ const INTROS: Record<string, Record<Locale, string[]>> = {
   },
 };
 
+// Descriptive, not persuasive: this section explains how the price is formed,
+// which is the question behind the "fiyat/fiyatları" search modifier. It is not
+// a place to sell.
 const PRICE_COPY: Record<Locale, { h: string; body: string[] }> = {
   tr: {
-    h: `${heading} fiyatları hakkında`,
+    h: `${heading} fiyatı nasıl belirlenir`,
     body: [
-      'Bu sınıfta tek bir liste fiyatı yoktur; makinenin fiyatını beş kalem belirler: kafa markası ve sayısı, baskı genişliği veya tabla ölçüsü, mürekkep sistemi (kartuş mu, toplu tank mı, beyaz sirkülasyon var mı), kurulum ve eğitimin dahil olup olmadığı, ve nakliye ile elektrik altyapısı.',
-      'Bu yüzden fiyatı sayfada yayınlamıyoruz — yayınlanan bir rakam, sizin konfigürasyonunuzla neredeyse hiçbir zaman aynı olmaz. Ne bastığınızı ve günlük hacminizi yazın; 1 iş günü içinde kalem kalem ayrılmış bir teklif gönderelim.',
+      'Bu sınıfta tek bir liste fiyatı yoktur. Fiyatı belirleyen beş kalem şudur: baskı kafası markası ve sayısı, baskı genişliği veya tabla ölçüsü, mürekkep sistemi (kartuş, toplu tank, beyaz sirkülasyonun bulunup bulunmadığı), kurulum ve eğitimin kapsama dahil olup olmadığı, nakliye ile elektrik altyapısı.',
+      'Aynı model, kafa sayısına göre iki katına varan fark gösterebilir. Teklif bu kalemler ayrı ayrı yazılarak hazırlanır; kurulum, eğitim ve garanti kapsamı da teklifte ayrıca belirtilir.',
     ],
   },
   en: {
-    h: `About ${heading.toLowerCase()} pricing`,
+    h: `How ${heading.toLowerCase()} are priced`,
     body: [
-      'There is no single list price in this class. Five things set it: printhead brand and count, print width or bed size, the ink system (cartridge, bulk tank, white circulation or not), whether installation and training are included, and freight plus electrical work.',
-      'That is why we do not publish a figure — a published number is almost never the one that matches your configuration. Tell us what you print and how much of it, and we will send an itemised quote within one business day.',
+      'There is no single list price in this class. Five items set it: printhead brand and count, print width or bed size, the ink system (cartridge, bulk tank, whether white circulation is fitted), whether installation and training are in scope, and freight plus electrical work.',
+      'The same model can differ by a factor of two on head count alone. A quote itemises each of these separately, and states the installation, training and warranty scope alongside them.',
     ],
   },
 };
@@ -259,46 +308,63 @@ const description = tr
     </header>
 
     <section class="shell cat__grid-wrap">
-      <ul class="cards cards--2" role="list" data-stagger>
-        {machines.map((m) => {
-          const render = renderFor(m.data.sku, true);
-          return (
-            <li class="card" data-accent="cyan">
-              <a class="pcard" href={machineHref(m, locale)}>
-                <span class="pcard__media">
-                  {render
-                    ? <Picture src={render} alt={m.data.gallery[0]?.alt[locale] ?? m.data.model}
-                               ratio="card" graded={false} sizes="(min-width: 1024px) 40vw, 92vw" />
-                    : (
-                      <span class="pcard__noimg">
-                        <span class="pcard__noimg-mark code" lang="en">{m.data.sku}</span>
-                        <span class="pcard__noimg-note mono">
-                          {tr ? 'görsel hazırlanıyor' : 'imagery in production'}
-                        </span>
+      {groups.map((group) => (
+        <div class="fam">
+          {!family && (
+            <div class="fam__head">
+              <h2 class="fam__title">
+                <a class="link" href={path(machineFamilyRoute(group.key), locale)}>
+                  {machineFamilyName(group.key, locale)}
+                </a>
+              </h2>
+              <p class="fam__role muted">{FAMILY_ROLE[group.key]?.[locale] ?? ''}</p>
+              <span class="fam__count mono">
+                {group.machines.length} {t('models', locale)}
+              </span>
+            </div>
+          )}
+
+          <ul class="cards cards--2" role="list" data-stagger>
+            {group.machines.map((m) => {
+              const render = renderFor(m.data.sku, true);
+              return (
+                <li class="card" data-accent="cyan">
+                  <a class="pcard" href={machineHref(m, locale)}>
+                    <span class="pcard__media">
+                      {render
+                        ? <Picture src={render} alt={m.data.gallery[0]?.alt[locale] ?? m.data.model}
+                                   ratio="card" graded={false} sizes="(min-width: 1024px) 40vw, 92vw" />
+                        : (
+                          <span class="pcard__noimg">
+                            <span class="pcard__noimg-mark code" lang="en">{m.data.sku}</span>
+                            <span class="pcard__noimg-note mono">
+                              {tr ? 'görsel hazırlanıyor' : 'imagery in production'}
+                            </span>
+                          </span>
+                        )}
+                    </span>
+                    <span class="pcard__body">
+                      <span class="pcard__model code" lang="en">{m.data.model}</span>
+                      <span class="pcard__tagline muted">{m.data.i18n[locale].tagline}</span>
+                      <span class="pcard__specs">
+                        {cardSpecs(m).map((s) => (
+                          <span class="pcard__spec">
+                            <span class="pcard__spec-l">{s.label}</span>
+                            <span class="pcard__spec-v mono">{s.value}</span>
+                          </span>
+                        ))}
                       </span>
-                    )}
-                </span>
-                <span class="pcard__body">
-                  <span class="eyebrow">{machineFamilyName(m.data.family, locale)}</span>
-                  <span class="pcard__model code" lang="en">{m.data.model}</span>
-                  <span class="pcard__tagline muted">{m.data.i18n[locale].tagline}</span>
-                  <span class="pcard__specs">
-                    {cardSpecs(m).map((s) => (
-                      <span class="pcard__spec">
-                        <span class="pcard__spec-l">{s.label}</span>
-                        <span class="pcard__spec-v mono">{s.value}</span>
+                      <span class="pcard__cta">
+                        {t('explore', locale)} <span class="arrow" aria-hidden="true">›</span>
                       </span>
-                    ))}
-                  </span>
-                  <span class="pcard__cta">
-                    {t('explore', locale)} <span class="arrow" aria-hidden="true">›</span>
-                  </span>
-                </span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
     </section>
   </div>
 
@@ -356,6 +422,47 @@ const description = tr
 
   .cat__grid-wrap {
     padding-block-end: var(--section-pad);
+  }
+
+  .fam + .fam {
+    margin-block-start: var(--sp-10);
+  }
+
+  .fam__head {
+    display: grid;
+    gap: var(--sp-2);
+    padding-block-end: var(--sp-6);
+    margin-block-end: var(--sp-6);
+    border-bottom: var(--border) solid var(--rule);
+  }
+
+  @media (min-width: 1024px) {
+    .fam__head {
+      grid-template-columns: minmax(0, 22ch) minmax(0, 1fr) auto;
+      align-items: baseline;
+      gap: var(--gutter);
+    }
+  }
+
+  .fam__title {
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .fam__title a {
+    color: inherit;
+  }
+
+  .fam__role {
+    font-size: var(--step--1);
+    max-width: 62ch;
+  }
+
+  .fam__count {
+    font-size: var(--step--2);
+    color: var(--muted);
+    white-space: nowrap;
   }
 
   .pcard {

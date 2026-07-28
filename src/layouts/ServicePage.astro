@@ -1,0 +1,770 @@
+---
+/**
+ * Technical service page — /teknik-servis/.
+ *
+ * The whole page is one argument: a Turkish printer chooses a supplier on what
+ * happens the morning the machine stops, and every competitor answers that with
+ * adjectives ("hızlı", "güvenilir", "7/24 destek" next to a phone nobody picks
+ * up). So nothing here is an adjective. Every commitment is a figure taken from
+ * SITE.commitments, and the FAQ is written as real diagnosis — a printer with a
+ * banding problem at 02:00 should be able to fix it from this page without us.
+ * That is also why the FAQ carries FAQPage JSON-LD: these are the queries.
+ *
+ * No map iframe: the coverage list is a mono grid. A Google Maps embed would be
+ * 300 KB, three third-party cookies and a KVKK problem, in exchange for less
+ * information than twelve city names.
+ */
+import { SITE, type Locale } from '../config/site';
+import { path } from '../i18n/routes';
+import { num, t } from '../i18n/ui';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = locale === 'tr';
+
+const C = SITE.commitments;
+const cityCount = C.onSiteCities.length;
+
+const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
+  encodeURIComponent(SITE.contact.whatsapp.prefill[locale])
+}`;
+
+/* --- 1. the numbered commitments ---------------------------------------- */
+interface Commitment { n: string; h: string; b: string }
+
+const COMMITMENTS: Commitment[] = tr
+  ? [
+      {
+        n: '01',
+        h: `${C.responseHours} saat içinde ilk teşhis`,
+        b: 'Sayaç, arıza kaydınızı aldığımız dakikada başlar. Uzaktan bağlanır, nozzle check ve hata kaydını birlikte okur, sorunun kafada mı kartta mı yazılımda mı olduğunu söyleriz. Hafta sonu ve resmî tatiller bu süreye dahildir.',
+      },
+      {
+        n: '02',
+        h: 'Uzaktan destek ücretsiz ve süresiz',
+        b: 'Telefon, WhatsApp ve masaüstü paylaşımı ile RIP’e ve makine servis menüsüne doğrudan bağlanırız. Uzaktan destek için ücret almıyoruz ve garanti bittiğinde kesilmiyor.',
+      },
+      {
+        n: '03',
+        h: `${cityCount} şehirde yerinde ekip`,
+        b: 'İstanbul içinde aynı iş günü, listedeki diğer şehirlerde 48 saat içinde teknisyen sahada olur. Liste dışı iller için 72 saat içinde plan ve yol maliyeti kalemlenmiş bir teklif gönderilir.',
+      },
+      {
+        n: '04',
+        h: `Garanti ikiye ayrılır: elektronik ${C.warrantyElectronicMonths} ay, mekanik ${C.warrantyMechanicalMonths} ay`,
+        b: 'Tek satırlık “1 yıl garanti” ifadesi hangi parçanın kapsandığını gizler. Baskı kafası sarf malzemesi sayılır ve hiçbir markada garanti kapsamında değildir; bunu satıştan sonra değil, teklifin içinde yazıyoruz.',
+      },
+      {
+        n: '05',
+        h: 'Kritik yedek parça aynı iş günü kargoda',
+        b: 'İstanbul deposunda tutulan kalemler: baskı kafası, damper, mürekkep pompası, encoder şerit, kayış, filtre seti, UV LED modülü ve sürücü kartı. Stokta olmayan parçanın süresini tahmin olarak değil, tarih olarak yazarız.',
+      },
+      {
+        n: '06',
+        h: `${num(C.installationsCount, locale)}+ kurulumun servis geçmişi kayıtlı`,
+        b: 'Her makinenin seri numarası, kurulum tarihi, değişen parçaları ve son bakımı kayıtlıdır. Aradığınızda konuşma “hangi makineydi” sorusuyla başlamaz.',
+      },
+    ]
+  : [
+      {
+        n: '01',
+        h: `First diagnosis within ${C.responseHours} hours`,
+        b: 'The clock starts the minute your fault is logged. We connect remotely, read the nozzle check and the error log with you, and tell you whether the problem is the head, the board or the software. Weekends and public holidays are inside that window.',
+      },
+      {
+        n: '02',
+        h: 'Remote support is free and unmetered',
+        b: 'Phone, WhatsApp and screen sharing straight into the RIP and the machine service menu. We do not bill remote support, and it does not stop when the warranty does.',
+      },
+      {
+        n: '03',
+        h: `Engineers on site in ${cityCount} cities`,
+        b: 'Same working day inside Istanbul, within 48 hours in the other cities listed. For provinces outside the list we send a plan within 72 hours with travel cost itemised separately.',
+      },
+      {
+        n: '04',
+        h: `The warranty is split: electronics ${C.warrantyElectronicMonths} months, mechanical ${C.warrantyMechanicalMonths} months`,
+        b: 'A one-line "one year warranty" hides which part is covered. A printhead is a consumable and is not covered by any manufacturer; we put that in the quote, not in a conversation after the sale.',
+      },
+      {
+        n: '05',
+        h: 'Critical spares ship the same working day',
+        b: 'Held in Istanbul: printheads, dampers, ink pumps, encoder strips, belts, filter sets, UV LED modules and driver boards. For anything not in stock we give you a date, not an estimate.',
+      },
+      {
+        n: '06',
+        h: `Service history on file for ${num(C.installationsCount, locale)}+ installations`,
+        b: 'Serial number, installation date, every replaced part and the last service visit are on file for each machine. The call does not start with us asking which machine you have.',
+      },
+    ];
+
+/* --- 2. the four service blocks ----------------------------------------- */
+interface Block { n: string; h: string; b: string; facts: string[] }
+
+const BLOCKS: Block[] = tr
+  ? [
+      {
+        n: 'A',
+        h: 'Ön Keşif ve Kurulum',
+        b: 'Makine yola çıkmadan önce sahayı biz ölçeriz: giriş kapısı genişliği, asansör ve zemin taşıma kapasitesi, pano gücü, kompresör debisi, havalandırma ve baca çıkışı. Bu liste sipariş formunun ekidir. Makinenin kapıdan girmemesi bizim hatamızdır, sizin değil.',
+        facts: [
+          '380 V / 3 faz + nötr + topraklama',
+          'Ortam 18–28 °C, bağıl nem %40–60',
+          'Kurulum ve devreye alma 2–4 gün',
+          'İlk ICC profili ve test baskısı dahil',
+        ],
+      },
+      {
+        n: 'B',
+        h: 'Operatör Eğitimi',
+        b: 'Eğitim sunumla değil, makine başında yapılır. RIP kurulumu, ICC profili çıkarma, günlük ve haftalık bakım rutini, nozzle check okuma ve arıza öncesi uyarı işaretleri anlatılır. Ekibiniz makineyi tek başına çalıştırana kadar devam eder.',
+        facts: [
+          'Yerinde 3 iş günü',
+          'En fazla 3 operatör',
+          'Türkçe bakım kartı ve kontrol listesi',
+          'Personel değişiminde tekrarı ücretsiz',
+        ],
+      },
+      {
+        n: 'C',
+        h: 'Periyodik Bakım',
+        b: 'Arızayı beklemek yerine takvime bağlıyoruz. 6 ayda bir veya 1.500 çalışma saatinde — hangisi önce dolarsa — 32 kalemlik kontrol listesi uygulanır ve ölçülen değerlerle birlikte imzalı rapor olarak teslim edilir.',
+        facts: [
+          '6 ayda bir veya 1.500 saat',
+          '32 kalemlik kontrol listesi',
+          'UV lamba çıkış gücü ölçümü',
+          'Kayış, encoder, filtre, vakum pompası',
+        ],
+      },
+      {
+        n: 'D',
+        h: 'Yedek Parça',
+        b: 'Üretimi durduran kalemler İstanbul deposunda tutulur; parça beklerken makinenin durmasını normal saymıyoruz. Stoktaki parça aynı iş günü kargoya verilir, siparişe bağlı parçanın tedarik tarihi yazılı olarak bildirilir.',
+        facts: [
+          'Baskı kafası, damper, mürekkep pompası',
+          'Encoder şerit, kayış, filtre seti',
+          'UV LED modülü ve sürücü kartı',
+          'Orijinal ve muadil seçenek yan yana',
+        ],
+      },
+    ]
+  : [
+      {
+        n: 'A',
+        h: 'Site survey and installation',
+        b: 'We measure the site before the machine ships: door width, lift and floor load capacity, panel capacity, compressor flow, ventilation and extraction. That list is an annex to the order form. A machine that will not fit through your door is our mistake, not yours.',
+        facts: [
+          '380 V / 3-phase + neutral + earth',
+          'Ambient 18–28 °C, relative humidity 40–60%',
+          'Installation and commissioning: 2–4 days',
+          'First ICC profile and test print included',
+        ],
+      },
+      {
+        n: 'B',
+        h: 'Operator training',
+        b: 'Training happens at the machine, not in a slide deck: RIP setup, building an ICC profile, the daily and weekly maintenance routine, reading a nozzle check, and the warning signs that precede a fault. It continues until your team runs the machine unaided.',
+        facts: [
+          '3 working days on site',
+          'Up to 3 operators',
+          'Turkish maintenance card and checklist',
+          'Free repeat when staff change',
+        ],
+      },
+      {
+        n: 'C',
+        h: 'Scheduled maintenance',
+        b: 'On a calendar rather than on a breakdown. Every six months or 1,500 running hours — whichever comes first — we work a 32-item checklist and hand it over as a signed report with the measured values on it.',
+        facts: [
+          'Every 6 months or 1,500 hours',
+          '32-item checklist',
+          'UV lamp output measured, not assumed',
+          'Belts, encoder, filters, vacuum pump',
+        ],
+      },
+      {
+        n: 'D',
+        h: 'Spare parts',
+        b: 'The items that stop production are held in Istanbul; a machine standing still while a part is in transit is not something we treat as normal. Stocked parts ship the same working day, and for anything on order you get a written delivery date.',
+        facts: [
+          'Printheads, dampers, ink pumps',
+          'Encoder strips, belts, filter sets',
+          'UV LED modules and driver boards',
+          'Original and compatible options side by side',
+        ],
+      },
+    ];
+
+/* --- 3. coverage tiers --------------------------------------------------- */
+const TIERS = tr
+  ? [
+      { k: 'Uzaktan bağlantı', v: `Türkiye’nin her yerinde, ${C.responseHours} saat içinde` },
+      { k: 'İstanbul', v: 'Aynı iş günü yerinde ekip' },
+      { k: 'Listedeki diğer şehirler', v: '48 saat içinde yerinde ekip' },
+      { k: 'Liste dışı iller', v: '72 saat içinde plan, yol maliyeti ayrı kalemlenir' },
+    ]
+  : [
+      { k: 'Remote connection', v: `Anywhere in Turkey, within ${C.responseHours} hours` },
+      { k: 'Istanbul', v: 'Engineer on site the same working day' },
+      { k: 'Other cities listed', v: 'Engineer on site within 48 hours' },
+      { k: 'Provinces outside the list', v: 'Plan within 72 hours, travel itemised separately' },
+    ];
+
+/* --- 4. troubleshooting FAQ --------------------------------------------- */
+const FAQ: Array<{ q: string; a: string }> = tr
+  ? [
+      {
+        q: 'Nozzle check’te eksik kanallar var — kafa tıkandı mı?',
+        a: 'Önce tıkanmanın türünü ayırın: eksik çizgiler tek bir blokta toplanmışsa damper veya hava kaçağı, dağınık ve rastgele ise kuruma kaynaklı tıkanmadır. Sırayla: (1) üç normal temizlik, aralarında iki dakika bekleyerek — arka arkaya on temizlik kafayı kurtarmaz, mürekkep harcar ve pompayı yorar. (2) Düzelmezse kafa yüzeyini tüy bırakmayan bez ve uygun flush ile silin. (3) Hâlâ eksikse kafa altına flush emdirilmiş bez koyup 30–60 dakika bekletin; UV kafalarda asla su, alkol veya aseton kullanmayın. (4) Bundan sonra da kanal dönmüyorsa sorun genellikle kafa değil, damper veya negatif basınç ayarıdır. Ortam bağıl nemi %40’ın altındaysa tıkanma tekrar eder — nemlendirici, tekrarlayan temizlikten ucuza gelir.',
+      },
+      {
+        q: 'Baskıda yatay bantlar (banding) çıkıyor. Nereden başlamalıyım?',
+        a: 'Banding’in üç ayrı sebebi vardır ve testleri farklıdır. Düzenli aralıklı, bant aralığı geçiş yüksekliğine eşit olan bantlar besleme (step) kalibrasyonudur: bir metrelik referans basıp gerçek ilerlemeyi ölçün ve step değerini düzeltin. Beyaz veya soluk ince çizgiler eksik nozzle’dır; nozzle check ile doğrulanır. Düzensiz, yer yer koyulaşan bantlar kafa yüksekliği veya malzeme dalgalanmasıdır; medya gerginliğini, vakumu ve rulo geriliminde kaymayı kontrol edin. UV makinelerde lamba çıkış gücü düştüğünde ıslak üstüne ıslak birikme de bant gibi görünür. Geçiş sayısını artırmak bandingi gizler, sebebini çözmez ve üretim hızınızı yarıya düşürür.',
+      },
+      {
+        q: 'Beyaz mürekkep dipte çöküyor, beyaz soluk basıyor.',
+        a: 'Beyaz mürekkep titanyum dioksit pigment taşır; yoğunluğu diğer renklerin yaklaşık iki katıdır ve hareketsiz kalırsa 24–48 saat içinde çöker. Beyaz sirkülasyonlu makinelerde makineyi tamamen kapatmayın, sirkülasyon modunda bırakın. Sirkülasyonsuz sistemlerde her sabah beyaz kanalı 10 dakika devirdirin ve şişeyi ters çevirerek karıştırın; çalkalamak köpük yapar, ters çevirmek yapmaz. Çökelme başlamışsa filtre ile damperi değiştirin ve hattı flush ile yıkayın — sadece şişeyi karıştırmak hatta çökmüş pigmenti geri getirmez. Beyazın raf ömrü diğer renklerden kısadır; altı aydan eski beyaz kullanmayın.',
+      },
+      {
+        q: 'Encoder hatası veriyor, kafa arabası sarsılıyor ve konum kayıyor.',
+        a: 'Encoder şeridi optik bir cetveldir; üzerindeki her mürekkep zerresi okuyucuya yanlış konum bildirir. Sırayla: (1) şeridi kuru ve tüy bırakmayan bezle baştan sona silin, üzerine temizleyici sıkmayın — tortu ve çizik bırakır. (2) Şeridin gergin ve bükülmemiş olduğunu kontrol edin; kıvrılmış şerit her zaman aynı noktada hata verir. (3) Okuyucu ağzını düşük basınçlı hava ile temizleyin. (4) Hata hep aynı X koordinatında tekrarlıyorsa şerit fiziksel olarak hasarlıdır ve değişmesi gerekir; rastgele noktalarda çıkıyorsa kablo, soket veya sürücü kartına bakılır. Şeridi çıplak elle tutmayın: parmak izinin yağı da aynı hatayı üretir.',
+      },
+      {
+        q: 'UV baskı tam kurumuyor / DTF tozu tam erimiyor.',
+        a: 'UV tarafında iki ayrı arızayı karıştırmayın: tırnakla çizince iz kalıyorsa kürleme yetersizdir, iz kalmıyor ama bant testinde kalkıyorsa yüzey enerjisi sorunudur ve primer gerekir. Kürleme düşükse önce LED camını mürekkep dumanından temizleyin, sonra çıkış gücünü ölçün — LED modülleri zamanla sessizce zayıflar. İkinci sebep kafa–malzeme mesafesinin fazla olmasıdır. DTF tarafında fırın sıcaklığını hava değil bant üzerinden ölçün: 110–130 °C ve 2–3 dakika kalış süresi gerekir. Toz eriyip parlıyor ama yüzey pürüzlüyse süre kısa, film sararıyor veya buruşuyorsa sıcaklık yüksektir.',
+      },
+      {
+        q: 'Aynı dosya dün farklı, bugün farklı renk basıyor.',
+        a: 'Renk kayması neredeyse hiçbir zaman “makine bozuldu” değildir; sırayla eleyin. (1) Aynı ICC profili ve aynı geçiş modu mu? Profil, geçiş sayısı veya çözünürlük değiştiğinde renk de değişir. (2) Malzeme partisi değişti mi? Aynı marka brandanın farklı lotu, aynı profille %5–8 farklı basar. (3) Nozzle check temiz mi? Bir kanaldaki eksik nozzle önce çizgi olarak değil, renk dengesi kayması olarak görünür. (4) Ortam sıcaklığı 18 °C’nin altına indi mi? Viskozite artar, damla hacmi düşer ve renk açılır. Kalıcı çözüm her malzeme grubu için ayrı profil çıkarmak ve ayda bir doğrulama baskısı almaktır.',
+      },
+      {
+        q: 'Baskıda toz gibi kirlilik, mürekkep sislenmesi (misting) var.',
+        a: 'Misting’in birinci sebebi kafa–malzeme mesafesidir: 1,5 mm yerine 3 mm çalışmak damlacığın uçuşması için yeterlidir. İkinci sebep statiktir — kuru ortamda film ve folyo yüklenir, havadaki mürekkep zerresini kendine çeker; iyonizasyon çubuğu veya düzgün topraklama ile biter. Üçüncüsü negatif basınç (vakum) ayarının düşük olmasıdır; menisküs kararsızlaşır ve kafa altında birikme başlar. Kafa yüksekliğini malzemenin izin verdiği en düşük değere indirin, çoğu durumda kirlilik aynı gün biter.',
+      },
+      {
+        q: 'Arıza kafada mı, kartta mı? Kafayı değiştirmeden nasıl anlarım?',
+        a: 'Kafa pahalı, kart ucuzdur; bu yüzden test sırası önemlidir. Aynı modelde iki kafa varsa kafaların yerini değiştirin: hata kafayla birlikte yer değiştirdiyse arıza kafadadır, aynı kanalda kaldıysa sürücü kartı veya kablodadır. Tek kafalı makinede aynı testi veri kablosunu ve kart üzerindeki kanalı değiştirerek yaparsınız. Servis menüsünden kafa voltajını ve sıcaklığını okuyun; sıcaklık hiç okunamıyorsa sorun büyük olasılıkla kablo veya karttır, çünkü ölü bir kafa bile sıcaklık bildirir. Bu testleri uzaktan bağlanıp sizinle birlikte yapıyoruz; kafa değişimi gerekmediği çoğu zaman aynı gün ortaya çıkıyor.',
+      },
+    ]
+  : [
+      {
+        q: 'The nozzle check shows missing channels — is the head blocked?',
+        a: 'First separate the two failure types: if the missing lines sit in one block it is a damper or an air leak; if they are scattered and random it is drying. In order: (1) three normal cleans with two minutes between them — ten cleans back to back will not recover a head, it just wastes ink and stresses the pump. (2) If that fails, wipe the nozzle plate with a lint-free cloth and the correct flush. (3) Still missing, park a flush-soaked cloth under the head for 30–60 minutes; never use water, alcohol or acetone on a UV head. (4) If a channel still will not return, the fault is usually not the head but the damper or the negative-pressure setting. Below 40% relative humidity the blockage comes back — a humidifier is cheaper than repeat cleaning.',
+      },
+      {
+        q: 'I am getting horizontal banding. Where do I start?',
+        a: 'Banding has three distinct causes and three distinct tests. Evenly spaced bands whose pitch equals the pass height are a media-feed (step) calibration problem: print a one-metre reference, measure the real advance and correct the step value. Fine white or pale lines are missing nozzles; confirm with a nozzle check. Irregular bands that darken in places are head height or media flutter; check media tension, vacuum and roll-tension drift. On UV machines, a lamp that has lost output produces wet-on-wet build-up that also reads as banding. Raising the pass count hides banding without fixing it, and halves your output.',
+      },
+      {
+        q: 'White ink settles in the bottle and prints weak.',
+        a: 'White ink carries titanium dioxide pigment at roughly twice the density of the other colours, and it settles within 24–48 hours if it stands still. On machines with white circulation, do not switch the machine off — leave it in circulation mode. Without circulation, run the white channel for ten minutes every morning and mix the bottle by inverting it; shaking makes foam, inverting does not. Once settling has started, change the filter and damper and flush the line — mixing the bottle alone will not bring pigment back out of the line. White has a shorter shelf life than the other colours; do not use white older than six months.',
+      },
+      {
+        q: 'Encoder error: the carriage judders and the position drifts.',
+        a: 'The encoder strip is an optical ruler, and every speck of ink on it reports a false position. In order: (1) wipe the strip end to end with a dry lint-free cloth; do not spray cleaner onto it, which leaves residue and scratches. (2) Check that the strip is taut and untwisted — a kinked strip always fails at the same point. (3) Blow out the reader slot with low-pressure air. (4) If the error repeats at the same X coordinate the strip is physically damaged and must be replaced; if it appears at random points, look at the cable, the connector and the driver board. Never handle the strip bare-handed: the oil from a fingerprint produces the same fault.',
+      },
+      {
+        q: 'UV prints are not fully cured / DTF powder is not melting properly.',
+        a: 'On UV, do not confuse two different faults: if a fingernail marks the print, cure is short; if it does not mark but lifts in a tape test, it is a surface-energy problem and needs primer. For low cure, clean the LED glass of ink mist first, then measure output — LED modules weaken quietly over time. The second cause is excessive head-to-material distance. On DTF, measure oven temperature at the belt rather than in the air: 110–130 °C with 2–3 minutes dwell. If the powder melts glossy but the surface is rough the dwell is short; if the film yellows or curls the temperature is too high.',
+      },
+      {
+        q: 'The same file printed a different colour yesterday and today.',
+        a: 'Colour drift is almost never a broken machine. Eliminate in order. (1) Same ICC profile and same pass mode? Change the profile, the pass count or the resolution and the colour changes with it. (2) Did the material batch change? A different lot of the same branded banner prints 5–8% off on the same profile. (3) Is the nozzle check clean? A missing nozzle in one channel shows up as a colour-balance shift long before it shows up as a line. (4) Did the room drop below 18 °C? Viscosity rises, drop volume falls and the print goes light. The permanent fix is a profile per material group plus a monthly verification print.',
+      },
+      {
+        q: 'There is a dusty contamination on the print — ink misting.',
+        a: 'The first cause of misting is head-to-material distance: running at 3 mm instead of 1.5 mm is enough for the droplet to stray. The second is static — in a dry room film and vinyl charge up and pull airborne ink onto themselves; an ionising bar or proper earthing ends it. The third is a low negative-pressure (vacuum) setting, which destabilises the meniscus and starts build-up under the head. Drop the head to the lowest height the material allows and the contamination usually stops the same day.',
+      },
+      {
+        q: 'Is the fault the head or the board? How do I tell without buying a head?',
+        a: 'Heads are expensive and boards are not, so test order matters. On a machine with two identical heads, swap them: if the fault moves with the head, it is the head; if it stays on the same channel, it is the driver board or the cable. On a single-head machine you run the same test by swapping the data cable and the channel on the board. Read head voltage and temperature from the service menu — if temperature reads nothing at all the problem is most likely the cable or the board, because even a dead head still reports temperature. We run these tests with you over a remote connection, and most of the time it turns out the same day that no head is needed.',
+      },
+    ];
+
+const title = tr
+  ? 'Teknik Servis — 24 Saat İçinde Müdahale | Maven'
+  : 'Technical Service — Response Within 24 Hours | Maven';
+const description = tr
+  ? `Dijital baskı makinesi teknik servisi: ${C.responseHours} saat içinde uzaktan teşhis, ${cityCount} şehirde yerinde ekip, elektronik ${C.warrantyElectronicMonths} ay / mekanik ${C.warrantyMechanicalMonths} ay garanti, stokta kritik yedek parça.`
+  : `Technical service for digital printing machines: remote diagnosis within ${C.responseHours} hours, engineers on site in ${cityCount} cities, ${C.warrantyElectronicMonths}-month electronic and ${C.warrantyMechanicalMonths}-month mechanical warranty, critical spares in stock.`;
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey="service"
+  schema={[
+    {
+      '@type': 'Service',
+      name: tr ? 'Dijital baskı makinesi teknik servisi' : 'Digital printing machine technical service',
+      serviceType: tr ? 'Teknik servis ve bakım' : 'Technical service and maintenance',
+      provider: { '@id': `${SITE.url}/#organization` },
+      areaServed: C.onSiteCities.map((city) => ({ '@type': 'City', name: city })),
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: FAQ.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ]}
+>
+  <!-- 1 — DARK HEADER ------------------------------------------------------ -->
+  <section class="svc-head" data-ground="ink" data-accent="yellow">
+    <div class="shell">
+      <Breadcrumb locale={locale} crumbs={[{ label: t('navService', locale) }]} />
+
+      <h1 class="svc-head__h">{tr ? 'Teknik Servis' : 'Technical Service'}</h1>
+
+      {tr ? (
+        <p class="lead svc-head__promise">
+          Arıza kaydı açıldıktan sonra <b class="hi">{C.responseHours} saat</b> içinde uzaktan
+          bağlanıyoruz; <b class="hi">{cityCount} şehirde</b> yerinde ekip çıkarıyoruz.
+        </p>
+      ) : (
+        <p class="lead svc-head__promise">
+          We connect remotely within <b class="hi">{C.responseHours} hours</b> of a fault being
+          logged, and put an engineer on site in <b class="hi">{cityCount} cities</b>.
+        </p>
+      )}
+
+      <div class="cluster svc-head__actions">
+        <a class="btn btn--outline" href={path('service.request', locale)}>
+          {t('serviceRequest', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="link link--accent mono svc-head__tel" href={`tel:${SITE.contact.phone.e164}`}>
+          {SITE.contact.phone.display[locale]}
+        </a>
+        <a class="link link--accent" href={wa} target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 — NUMBERED COMMITMENTS --------------------------------------------- -->
+  <section class="section" data-ground="bone" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">01 — {tr ? 'TAAHHÜT' : 'COMMITMENTS'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Altı taahhüt, altı sayı. Sıfat yok.'
+            : 'Six commitments, six numbers. No adjectives.'}
+        </h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Bu sayfadaki her satır ölçülebilir. Ölçemediğimiz bir şeyi söz vermiyoruz — “kaliteli hizmet” cümlesinin bir arıza sabahında hiçbir karşılığı yok.'
+            : 'Every line on this page can be measured. We do not promise anything we cannot measure — "quality service" is worth nothing on the morning a machine stops.'}
+        </p>
+
+        <ol class="commits reveal" role="list" data-stagger>
+          {COMMITMENTS.map((c) => (
+            <li class="commit reveal">
+              <span class="commit__n mono">{c.n}</span>
+              <div class="commit__text">
+                <h3 class="commit__h">{c.h}</h3>
+                <p class="muted">{c.b}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — SERVICE BLOCKS ---------------------------------------------------- -->
+  <section class="section section--ruled" data-ground="paper" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">02 — {tr ? 'HİZMETLER' : 'SERVICES'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Makineyi kuran ekip, iki yıl sonra arızasına da bakar.'
+            : 'The team that installs the machine is the team that fixes it two years later.'}
+        </h2>
+
+        <div class="blocks reveal" data-stagger>
+          {BLOCKS.map((b) => (
+            <article class="block reveal">
+              <span class="block__n mono" aria-hidden="true">{b.n}</span>
+              <h3 class="block__h">{b.h}</h3>
+              <p class="muted">{b.b}</p>
+              <ul class="block__facts" role="list">
+                {b.facts.map((f) => <li class="mono">{f}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div class="cluster block__links">
+          <a class="link link--accent" href={path('service.training', locale)}>
+            {t('installTraining', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+          <a class="link link--accent" href={path('service.warranty', locale)}>
+            {t('warrantyTerms', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+          <a class="link link--accent" href={path('inks.spares', locale)}>
+            {tr ? 'Yedek Parça' : 'Spare Parts'} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — COVERAGE ---------------------------------------------------------- -->
+  <section class="section" data-ground="ink" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">03 — {tr ? 'KAPSAMA' : 'COVERAGE'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">{t('serviceCoverage', locale)}</h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Aşağıdaki şehirlerde kendi teknisyenimiz sahaya çıkar; taşeron servis kullanmıyoruz. Listede olmayan iller için de servis veriyoruz, ancak süreyi ve yol maliyetini önceden yazılı olarak bildiriyoruz.'
+            : 'In the cities below our own engineer travels to you; we do not subcontract service. We also cover provinces outside the list, but the lead time and the travel cost are stated in writing first.'}
+        </p>
+
+        <ul class="cities reveal" role="list">
+          {C.onSiteCities.map((city) => (
+            <li class="city">
+              <span class="city__mark" aria-hidden="true"></span>
+              <span class="city__name mono">{city}</span>
+            </li>
+          ))}
+        </ul>
+
+        <dl class="tiers reveal">
+          {TIERS.map((tier) => (
+            <div class="tier">
+              <dt class="tier__k">{tier.k}</dt>
+              <dd class="tier__v mono">{tier.v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — TROUBLESHOOTING FAQ ------------------------------------------------ -->
+  <section class="section" data-ground="paper" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">04 — {tr ? 'ARIZA REHBERİ' : 'TROUBLESHOOTING'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Bizi aramadan önce deneyin. Çoğu arıza burada bitiyor.'
+            : 'Try this before you call us. Most faults end here.'}
+        </h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Aşağıdakiler servis kaydı açtığımız sekiz arızanın kendisi. Adım adım yazdık; çözerseniz bize hiç ihtiyacınız olmaz, çözemezseniz aradığınızda hangi adımda takıldığınızı söylersiniz ve teşhis on dakika kısalır.'
+            : 'These are the eight faults we actually log. They are written as steps: if they fix it you never need us, and if they do not, you can tell us which step failed and the diagnosis gets ten minutes shorter.'}
+        </p>
+
+        <div class="faq reveal">
+          {FAQ.map((item, i) => (
+            <details name="svc-faq" open={i === 0}>
+              <summary>
+                <span>{item.q}</span>
+                <span class="accordion__chevron" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="accordion__panel"><div><p>{item.a}</p></div></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — DOCUMENTS + CTA ----------------------------------------------------- -->
+  <section class="section section--ruled" data-ground="bone" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">05 — {tr ? 'BELGELER' : 'DOCUMENTS'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr ? 'Arıza kaydınızı açalım.' : 'Let us open your service ticket.'}
+        </h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Makine modeli, seri numarası ve arızanın bir cümlelik tarifi yeterli. Nozzle check çıktısını da tarif ederseniz ilk teşhis genellikle ilk telefonda biter.'
+            : 'The machine model, the serial number and one sentence describing the fault are enough. Describe the nozzle check as well and the first diagnosis usually finishes on the first call.'}
+        </p>
+
+        <div class="cluster svc-foot">
+          <a class="btn" href={path('service.request', locale)}>
+            {t('serviceRequest', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="link link--accent" href={path('documents', locale)}>
+            {t('navDocuments', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+          <a class="link link--accent" href={path('service.warranty', locale)}>
+            {t('warrantyTerms', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* --- 1. dark header --- */
+  .svc-head {
+    padding-block: var(--sp-7) calc(var(--section-pad) * 0.72);
+  }
+
+  .svc-head__h {
+    margin-block: var(--sp-8) var(--sp-6);
+  }
+
+  .svc-head__promise {
+    max-width: 42ch;
+  }
+
+  /* The one place on this page where the accent is allowed to be a word:
+     yellow reaches 15.22:1 on ink, and it is unreadable on anything lighter. */
+  .svc-head__promise .hi {
+    color: var(--yellow);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .svc-head__actions {
+    margin-block-start: var(--sp-8);
+    --cluster-gap: var(--sp-6);
+  }
+
+  .svc-head__tel {
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+  }
+
+  /* --- 2. numbered commitments --- */
+  .commits {
+    display: grid;
+    gap: 0;
+    margin-block-start: var(--sp-8);
+    padding: 0;
+  }
+
+  .commit {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--sp-5);
+    padding-block: var(--sp-6);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .commit:last-child {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  /* On a light ground the accent is a rule, never a word — a 32 px yellow
+     segment riding on the hairline above each item. */
+  .commit::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--border) * -1);
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .commit__n {
+    font-size: var(--step--2);
+    color: var(--on-ground-muted);
+    letter-spacing: 0.1em;
+    padding-block-start: 0.5em;
+  }
+
+  .commit__h {
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-block-end: var(--sp-2);
+  }
+
+  .commit__text p {
+    font-size: var(--step--1);
+    max-width: 62ch;
+  }
+
+  /* --- 3. service blocks --- */
+  .blocks {
+    display: grid;
+    gap: var(--gutter);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    margin-block-start: var(--sp-8);
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-6);
+    border: var(--border) solid var(--hairline);
+    background: var(--ground);
+  }
+
+  .block__n {
+    font-size: var(--step--2);
+    letter-spacing: 0.16em;
+    color: var(--on-ground-muted);
+  }
+
+  .block__h {
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .block p {
+    font-size: var(--step--1);
+  }
+
+  .block__facts {
+    display: grid;
+    gap: 0;
+    margin-block-start: auto;
+    padding: 0;
+    padding-block-start: var(--sp-4);
+    border-top: var(--border) solid var(--hairline);
+    list-style: none;
+  }
+
+  .block__facts li {
+    padding-block: var(--sp-2);
+    font-size: var(--step--2);
+    color: var(--on-ground-muted);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .block__facts li:last-child {
+    border-bottom: 0;
+  }
+
+  .block__links {
+    margin-block-start: var(--sp-7);
+    --cluster-gap: var(--sp-6);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  /* --- 4. coverage --- */
+  .cities {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+    gap: 0;
+    margin-block: var(--sp-8) var(--sp-9);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .city {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding-block: var(--sp-4);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .city__mark {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+  }
+
+  .city__name {
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+  }
+
+  .tiers {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .tier {
+    display: grid;
+    gap: var(--sp-2) var(--sp-6);
+    padding-block: var(--sp-5);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  @media (min-width: 640px) {
+    .tier {
+      grid-template-columns: minmax(0, 30ch) minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .tier__k {
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  .tier__v {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--on-ground-muted);
+  }
+
+  /* --- 5. FAQ --- */
+  .faq {
+    margin-block-start: var(--sp-8);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .faq details {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-5);
+    padding-block: var(--sp-5);
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .faq p {
+    padding-block-end: var(--sp-6);
+    color: var(--muted);
+    max-width: 74ch;
+  }
+
+  .accordion__chevron {
+    font-size: 1.4em;
+    line-height: 1;
+    color: var(--muted);
+  }
+
+  /* --- 6. foot --- */
+  .svc-foot {
+    margin-block-start: var(--sp-7);
+    --cluster-gap: var(--sp-6);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+</style>

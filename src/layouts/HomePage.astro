@@ -89,19 +89,19 @@ const APPLICATIONS = [
 const COMMITMENTS = tr
   ? [
       { n: '01', h: `${SITE.commitments.responseHours} saat içinde müdahale`, b: 'Arıza kaydınız açıldığı andan itibaren en geç 24 saat içinde uzaktan bağlanır, gerekiyorsa yerinde ekip planlanır.' },
-      { n: '02', h: 'Garantiyi ikiye ayırıyoruz', b: `Elektronik aksam ${SITE.commitments.warrantyElectronicMonths} ay, mekanik aksam ${SITE.commitments.warrantyMechanicalMonths} ay. Tek bir "1 yıl garanti" cümlesi, hangi parçanın neyi kapsadığını gizler.` },
+      { n: '02', h: 'Garanti kapsamı', b: `Elektronik aksam ${SITE.commitments.warrantyElectronicMonths} ay, mekanik aksam ${SITE.commitments.warrantyMechanicalMonths} ay. Baskı kafası, sarf malzemesi ve operatör kaynaklı hasar garanti dışıdır.` },
       { n: '03', h: 'Kritik yedek parça stokta', b: 'Baskı kafası, dampers, kayış, encoder şerit ve pompa gibi üretimi durduran kalemler İstanbul deposunda tutulur.' },
-      { n: '04', h: 'Eğitimde süre sınırı yok', b: 'Operatör eğitimi, ekibiniz makineyi tek başına çalıştırana kadar devam eder. Personel değişiminde tekrarı ücretsizdir.' },
+      { n: '04', h: 'Operatör eğitimi', b: 'Kurulum sonrası yerinde verilir; süre makinenin devreye alınmasına göre değişir. Personel değişiminde tekrar eğitim kapsam dahilindedir.' },
       { n: '05', h: `${SITE.commitments.onSiteCities.length} şehirde yerinde servis`, b: SITE.commitments.onSiteCities.join(' · ') },
-      { n: '06', h: 'Kurulum öncesi keşif', b: 'Elektrik, zemin, kapı ölçüsü ve havalandırma satıştan önce kontrol edilir. Makinenin kapıdan girmemesi bizim hatamız olur, sizin değil.' },
+      { n: '06', h: 'Kurulum öncesi keşif', b: 'Elektrik altyapısı, zemin taşıma kapasitesi, kapı ve asansör ölçüleri ile havalandırma sevkiyat öncesinde yerinde kontrol edilir.' },
     ]
   : [
       { n: '01', h: `Response within ${SITE.commitments.responseHours} hours`, b: 'From the moment a fault is logged we connect remotely within 24 hours and schedule an on-site engineer if needed.' },
-      { n: '02', h: 'We split the warranty', b: `Electronics ${SITE.commitments.warrantyElectronicMonths} months, mechanical parts ${SITE.commitments.warrantyMechanicalMonths} months. A single "one year warranty" hides which part covers what.` },
+      { n: '02', h: 'Warranty scope', b: `Electronics ${SITE.commitments.warrantyElectronicMonths} months, mechanical parts ${SITE.commitments.warrantyMechanicalMonths} months. Printheads, consumables and operator-caused damage are outside warranty.` },
       { n: '03', h: 'Critical spares in stock', b: 'Printheads, dampers, belts, encoder strips and pumps — the items that stop production — are held in Istanbul.' },
-      { n: '04', h: 'Training has no time limit', b: 'Operator training continues until your team runs the machine unaided. Repeats after staff changes are free.' },
+      { n: '04', h: 'Operator training', b: 'Delivered on site after installation; duration depends on commissioning. Repeat training after a staff change is in scope.' },
       { n: '05', h: `On-site service in ${SITE.commitments.onSiteCities.length} cities`, b: SITE.commitments.onSiteCities.join(' · ') },
-      { n: '06', h: 'Pre-installation survey', b: 'Power, floor, door width and ventilation are checked before the sale. A machine that will not fit through your door is our mistake, not yours.' },
+      { n: '06', h: 'Pre-installation survey', b: 'Electrical supply, floor loading, door and lift dimensions and ventilation are checked on site before despatch.' },
     ];
 
 const familyCount = (key: string) => machines.filter((m) => m.data.family === key).length;
@@ -147,8 +147,8 @@ const description = tr
 
         <p class="lead reveal">
           {tr
-            ? 'Makineyi satan, mürekkebini stoklayan ve arızasına aynı gün bakan tek firma. Yedi makine ailesi, sekiz mürekkep serisi, on iki şehirde yerinde servis.'
-            : 'One company that sells the machine, stocks its ink and answers its faults the same day. Seven machine families, eight ink series, on-site service in twelve cities.'}
+            ? 'Yedi makine ailesi, sekiz mürekkep serisi ve on iki şehirde yerinde teknik servis. Makine, sarf malzemesi ve servis aynı yerden yürütülür.'
+            : 'Seven machine families, eight ink series and on-site service in twelve cities. Machine, consumables and service are handled from one place.'}
         </p>
 
         <div class="cluster reveal">
@@ -210,13 +210,13 @@ const description = tr
       <div class="section__body">
         <h2 class="reveal">
           {tr
-            ? 'Yedi makine ailesi, giriş seviyesinden endüstriyel hacme.'
-            : 'Seven machine families, from entry level to industrial volume.'}
+            ? 'Makineler, baskı yöntemine göre yedi aileye ayrılır.'
+            : 'Machines are grouped into seven families by printing process.'}
         </h2>
         <p class="lead muted reveal">
           {tr
-            ? 'Hangi makinenin doğru olduğunu iş hacminiz ve bastığınız malzeme belirler. Her ailenin sayfasında fiyatı neyin belirlediğini de yazdık.'
-            : 'The right machine follows from your volume and your material. Each family page also explains what actually drives the price.'}
+            ? 'Hangi ailenin uygun olduğunu bastığınız malzeme ve günlük hacim belirler. Her aile sayfasında o ailenin çalışma biçimi ve fiyatı belirleyen kalemler anlatılır.'
+            : 'Which family applies is decided by the material and the daily volume. Each family page explains how that process works and which items form its price.'}
         </p>
 
         <ul class="cards reveal" role="list" data-stagger>
@@ -253,8 +253,8 @@ const description = tr
       <div class="section__body">
         <h2 class="reveal">
           {tr
-            ? 'Makineyi bir kez satarız. Mürekkebi her ay.'
-            : 'We sell the machine once. The ink, every month.'}
+            ? 'Mürekkep ve sarf malzemeleri, sekiz kimya ailesinde.'
+            : 'Inks and consumables, across eight chemistry families.'}
         </h2>
 
         <!-- The channel strip: the site's signature component. Real swatches,
@@ -375,7 +375,7 @@ const description = tr
       </div>
       <div class="section__body">
         <h2 class="reveal">
-          {tr ? 'Sıfat değil, sayı veriyoruz.' : 'We publish numbers, not adjectives.'}
+          {tr ? 'Teknik servis kapsamı.' : 'What technical service covers.'}
         </h2>
         <ol class="commitments reveal" role="list" data-stagger>
           {COMMITMENTS.map((c) => (
@@ -400,12 +400,12 @@ const description = tr
   <section class="cta" data-ground="ink" data-accent="cyan">
     <div class="shell">
       <h2 class="cta__h">
-        {tr ? 'Makinenizi birlikte seçelim.' : 'Let us choose your machine together.'}
+        {tr ? 'Teklif ve teknik bilgi.' : 'Quotes and technical information.'}
       </h2>
       <p class="lead muted">
         {tr
-          ? 'Ne bastığınızı ve günlük hacminizi söyleyin; hangi makinenin gerçekten gerektiğini — ve gerekmediğini — söyleyelim.'
-          : 'Tell us what you print and how much of it. We will tell you which machine you actually need, and which you do not.'}
+          ? 'Bastığınız malzeme ve günlük hacim bilgisiyle yapılandırma, kurulum gereksinimleri ve fiyat kalemleri çıkarılır. Teknik sorular için doğrudan telefon veya WhatsApp kullanılabilir.'
+          : 'Given the material and the daily volume, the configuration, installation requirements and price items can be worked out. Technical questions can go straight to phone or WhatsApp.'}
       </p>
       <div class="cluster">
         <a class="btn btn--outline" href={path('quote', locale)}>
