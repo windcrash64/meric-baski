@@ -1,0 +1,254 @@
+sku: MI-920
+series: Maven MI-920 PRIMER
+family: auxiliary
+type: auxiliary
+order: 120
+featured: false
+
+oemEquivalent: []
+# The primer sits under the ink, not in the ink system — nothing to flush and
+# nothing to re-profile when you adopt it.
+changeover: switch-and-print
+
+channels: []
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note:
+      tr: >-
+        8–12 m² yüzey; tiftiksiz bez veya ince püskürtmeyle uygulanır,
+        mürekkep sistemine dökülmez
+      en: >-
+        covers 8–12 m²; applied by lint-free wipe or fine spray, never decanted
+        into the ink system
+
+compat:
+  # Applied by hand, not jetted — printhead compatibility does not apply.
+  printheads: []
+  machines:
+    - MF-6090-U3
+    - MF-1216-R4
+    - MF-2513-R8
+    - MF-3220-K12
+    - MH-1800-U4
+    - MH-3200-R12
+    - MC-300-U1
+  thirdPartyPrinters: []
+  chipIncluded: false
+
+specs:
+  cure:
+    method: air
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: >-
+      Kapalı ambalajda 12 ay. Açıldıktan sonra 3 ay: silan bağlayıcı havadaki
+      nemle yavaşça tepkimeye girer, şişe her açıldığında etkinliği düşer. Bir
+      litreyi üç ayda bitiremeyecekseniz küçük bir çalışma şişesine aktarın ve
+      ana şişeyi kapalı tutun.
+    en: >-
+      12 months unopened, 3 months once opened: the silane binder reacts slowly
+      with atmospheric moisture and loses activity every time the bottle is
+      opened. If you cannot use a litre in three months, decant a small working
+      bottle and keep the main one sealed.
+  storageTempC: [5, 25]
+  operatingTempC: [15, 30]
+  operatingHumidityPct: [30, 65]
+
+substrates: [glass, metal, ceramic, acrylic, polycarb, alucomp, pvc]
+applications: [signage, interior, industrial]
+
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-920-primer-tds-tr.pdf, bytes: 244736, version: "v1.1", date: "2026-02" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-920-primer-tds-en.pdf, bytes: 239616, version: "v1.1", date: "2026-02" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-920-primer-gbf-tr.pdf, bytes: 438272, version: "2026-01" }
+
+ancillaries: [mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-920-primer/bottle.jpg
+    kind: machine
+    alt:
+      tr: "1 litrelik astar şişesi, yanında tiftiksiz bez ve nitril eldiven"
+      en: "One-litre primer bottle beside a lint-free cloth and nitrile gloves"
+  - src: /img/inks/mi-920-primer/wipe.jpg
+    kind: detail
+    alt:
+      tr: "Cam levha üzerine tiftiksiz bezle tek yönde ince astar uygulaması"
+      en: "Thin primer being wiped onto a glass panel in a single direction with a lint-free cloth"
+    caption: { tr: ThinFilm tek geçiş uygulaması, en: ThinFilm single-pass application }
+  - src: /img/inks/mi-920-primer/crosscut.jpg
+    kind: detail
+    alt:
+      tr: "Baskı üzerinde çapraz kesme testi yapılmış alan ve kaldırılmış yapışkan bant"
+      en: "Cross-cut test area on a printed panel with the adhesive tape lifted"
+    caption: { tr: ISO 2409 çapraz kesme doğrulaması, en: ISO 2409 cross-cut verification }
+  - src: /img/inks/mi-920-primer/matrix.svg
+    kind: diagram
+    alt:
+      tr: "Yüzey türleri ile astar gerekliliğini eşleştiren tablo: cam, metal, seramik, pleksi, polikarbon, PP"
+      en: "Table matching surface types to primer requirement: glass, metal, ceramic, acrylic, polycarbonate, PP"
+    caption: { tr: Yüzey × astar matrisi, en: Substrate × primer matrix }
+
+price: null
+
+i18n:
+  tr:
+    role: Cam, metal ve PP yüzeylerde UV mürekkep yapışması için solvent bazlı astar
+    summary: >-
+      MI-920, UV mürekkebin cam, metal ve polipropilen gibi zor yüzeylere
+      tutunması için kullanılan solvent bazlı astardır. Tiftiksiz bezle silerek
+      veya ince püskürtmeyle uygulanır, 5–10 dakikada uçar ve yüzey 24 saat
+      içinde basılmalıdır. Sarfiyat litre başına 8–12 m²'dir; fazla astar
+      yapışmayı artırmaz, aksine yumuşak bir ara katman bırakarak azaltır.
+      Yapışma, ISO 2409 çapraz kesme ve bant testiyle doğrulanır. Solvent
+      bazlıdır: havalandırma, eldiven ve Türkçe GBF şarttır.
+    features:
+      - >-
+        GripBase Yapışma Köprüsü — silan bazlı bağlayıcı, bir ucundan inorganik
+        yüzeye (cam, seramik, anotlanmış alüminyum), diğer ucundan UV
+        mürekkebin akrilat ağına bağlanır. Yapışma mekanik değil kimyasaldır;
+        bu yüzden ıslak ve termal çevrimli koşullarda da tutar.
+      - >-
+        FlashSet Uçma Penceresi — uygulamadan 5–10 dakika sonra yüzey basıma
+        hazırdır ve 24 saat boyunca hazır kalır. Bu pencere kapandıktan sonra
+        yüzeye dokunulmuşsa astar yeniden uygulanmalıdır; parmak izi tek başına
+        yapışmayı bozar.
+      - >-
+        ThinFilm Tek Geçiş — 8–12 m²/L sarfiyat, tek yönde tek geçişle. Fazla
+        astar yapışmayı artırmaz; kürlenmemiş yumuşak bir ara katman bırakır ve
+        baskı bu katmanla birlikte kalkar. Islak parlaklık görüyorsanız fazla
+        sürmüşsünüz demektir.
+      - >-
+        CrossCut Doğrulama — her yeni yüzey için ISO 2409 çapraz kesme ve bant
+        testi yapın; kabul sınırımız GT0–GT1. Testi baskıdan 24 saat sonra
+        tekrarlayın, çünkü UV mürekkebin nihai yapışması son kürlenmeyle
+        birlikte oturur.
+    disclaimer: >-
+      Astar, yapışmayı garanti eden bir ürün değil, yapışma ihtimalini artıran
+      bir ara katmandır. Sonuç yüzey temizliğine, malzemenin kendi kaplamasına,
+      ortam nemine ve kürleme dozuna göre değişir. Her yeni malzemede, seri
+      üretime geçmeden önce çapraz kesme testi yapın. Solvent bazlıdır;
+      uygulama alanında havalandırma, nitril eldiven ve göz koruması gereklidir,
+      Türkçe Güvenlik Bilgi Formu ürünle birlikte gönderilir.
+    faq:
+      - q: Hangi yüzeylerde gerçekten işe yarıyor?
+        a: >-
+          Cam, seramik, anotlanmış ve toz boyalı metal, bazı polikarbon ve
+          pleksi türlerinde belirgin fark yaratır. Polipropilen ve polietilende
+          durum farklı: astar yapışmayı iyileştirir ama kalıcı çözüm değildir —
+          bu iki malzemede asıl çözüm alev ya da korona ile yüzey aktivasyonudur.
+          PP parça basıyorsanız bunu baştan planlayın.
+      - q: Her cam işinde astar gerekir mi?
+        a: >-
+          Hayır. İç mekânda kalacak, mekanik yük görmeyen cam işlerinde doğru
+          kürleme dozuyla basılmış UV mürekkep çoğu zaman astarsız tutar. Astarı
+          dış mekân, ıslak alan, temizlik kimyasalına maruz kalan yüzeyler ve
+          taşınma sırasında sürtünen paneller için ayırın. Gereksiz astar hem
+          maliyet hem ek işlem süresidir.
+      - q: Astar sürülmüş yüzeyde hatalı baskıyı kurtarabilir miyim?
+        a: >-
+          Pratikte hayır. Astarın işi baskıyı sökülmez yapmaktır; başarılı
+          olduğunda hatalı baskıyı da sökülmez yapar. Cam ve metalde çözücüyle
+          kazıma denemesi yüzeyi çizer. Astar kullandığınız işlerde ilk parçayı
+          numune olarak basın ve onaylatın.
+      - q: Şeffaf camda astar iz bırakır mı?
+        a: >-
+          Düzgün uygulandığında görünmez, fakat fazla veya düzensiz sürüldüğünde
+          ışığa tutulduğunda bulut şeklinde iz verir. Şeffaf camda tek yönde,
+          tek geçişte ve bezi katlayarak temiz yüzle silin. Baskı arkadan
+          görülecekse numune üzerinde mutlaka kontrol edin.
+      - q: Kafadan basılan primer ile aynı şey mi?
+        a: >-
+          Değil. MI-920 elle uygulanan bir astardır; kafadan püskürtülmek üzere
+          tasarlanmamıştır ve mürekkep sistemine kesinlikle dökülmemelidir.
+          Kanaldan primer basan sistemler için ayrı, düşük viskoziteli bir ürün
+          gerekir; makinenizde böyle bir kanal varsa bize sorun.
+      - q: Güvenlik açısından nelere dikkat etmeliyim?
+        a: >-
+          Solvent bazlıdır: parlayıcıdır, buharı ağırdır ve kapalı alanda
+          birikir. Uygulamayı havalandırılan bir bölümde yapın, nitril eldiven ve
+          göz koruması kullanın, bezleri kapaklı metal kutuda biriktirin. Türkçe
+          GBF ürünle birlikte gelir ve İSG dosyanıza doğrudan konabilir.
+  en:
+    role: Solvent-based adhesion promoter for UV ink on glass, metal and PP
+    summary: >-
+      The MI-920 is a solvent-based primer that helps UV ink hold onto
+      difficult surfaces such as glass, metal and polypropylene. It is applied
+      with a lint-free wipe or a fine spray, flashes off in 5–10 minutes, and
+      the surface should be printed within 24 hours. Coverage is 8–12 m² per
+      litre; more primer does not improve adhesion, it leaves a soft
+      interlayer that reduces it. Adhesion is verified by ISO 2409 cross-cut
+      and tape test. Ventilation, gloves and eye protection are mandatory.
+    features:
+      - >-
+        GripBase Adhesion Bridge — a silane binder bonds at one end to the
+        inorganic surface (glass, ceramic, anodised aluminium) and at the other
+        to the acrylate network of the UV ink. The bond is chemical rather than
+        mechanical, which is why it survives wet and thermally cycled service.
+      - >-
+        FlashSet Window — the surface is ready to print 5–10 minutes after
+        application and stays ready for 24 hours. If the surface is touched
+        after that window it must be primed again; a fingerprint on its own is
+        enough to break adhesion.
+      - >-
+        ThinFilm Single Pass — 8–12 m² per litre, one pass in one direction.
+        Extra primer does not add adhesion; it leaves an uncured soft layer and
+        the print lifts with it. If you can see wet gloss, you have used too
+        much.
+      - >-
+        CrossCut Verification — run an ISO 2409 cross-cut and tape test on every
+        new surface, with GT0–GT1 as the acceptance limit. Repeat it 24 hours
+        after printing, because final UV adhesion only settles as the print
+        completes its post-cure.
+    disclaimer: >-
+      A primer improves the probability of adhesion; it does not guarantee it.
+      Results depend on surface cleanliness, the material's own coating, ambient
+      humidity and cure dose. Run a cross-cut test on every new material before
+      committing to production. The product is solvent-based: use it in a
+      ventilated area with nitrile gloves and eye protection. A Turkish safety
+      data sheet ships with the product.
+    faq:
+      - q: Which surfaces does it actually help?
+        a: >-
+          Glass, ceramic, anodised and powder-coated metal, and some grades of
+          polycarbonate and acrylic show a clear difference. Polypropylene and
+          polyethylene are a different story: primer improves adhesion but is
+          not a permanent answer — on those two, flame or corona treatment is
+          the real fix. If you print PP parts, plan for that from the start.
+      - q: Does every glass job need primer?
+        a: >-
+          No. Indoor glass that sees no mechanical load usually holds without
+          primer if the cure dose is right. Keep primer for outdoor work, wet
+          areas, surfaces exposed to cleaning chemicals, and panels that rub
+          against each other in transit. Priming everything just adds cost and
+          a process step.
+      - q: Can I salvage a misprint on a primed surface?
+        a: >-
+          In practice, no. The primer's job is to make the print permanent, and
+          when it works it makes a bad print permanent too. Trying to strip glass
+          or metal with solvent scratches the surface. On primed jobs, print and
+          approve a first-off sample.
+      - q: Will primer show on clear glass?
+        a: >-
+          Applied correctly it is invisible, but too much or an uneven film
+          shows as a cloudy haze in raking light. On clear glass, wipe in one
+          direction, in one pass, folding the cloth to a clean face. If the
+          print will be viewed from the reverse, always check on a sample first.
+      - q: Is this the same as a jetted primer channel?
+        a: >-
+          No. The MI-920 is applied by hand, is not designed to be jetted, and
+          must never be decanted into the ink system. Machines that print primer
+          through a channel need a separate low-viscosity product — ask us if
+          yours has one.
+      - q: What do I need to watch on safety?
+        a: >-
+          It is solvent-based: flammable, with vapour that is heavier than air
+          and accumulates in enclosed spaces. Apply it in a ventilated bay, wear
+          nitrile gloves and eye protection, and collect used cloths in a closed
+          metal container. The Turkish GBF ships with the product and can go
+          straight into your health and safety file.

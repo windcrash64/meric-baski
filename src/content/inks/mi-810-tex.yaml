@@ -1,0 +1,281 @@
+sku: MI-810
+series: Maven MI-810 TEX
+family: textile-pigment
+type: ink
+order: 100
+featured: false
+
+# The DTG inks worth being "equivalent" to sit inside chip-locked cartridge
+# systems we cannot legally or technically replace. Claiming an equivalence we
+# cannot deliver would be worse than an empty field — see the first FAQ.
+oemEquivalent: []
+changeover: switch-and-swap
+
+channels:
+  - { code: C, sku: MI-810-C, availability: stock }
+  - { code: M, sku: MI-810-M, availability: stock }
+  - { code: Y, sku: MI-810-Y, availability: stock }
+  - { code: K, sku: MI-810-K, availability: stock }
+  - { code: W, sku: MI-810-W, availability: stock }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note: { tr: tüm kanallar, en: all channels }
+  - format: bag-in-box
+    volume: 2
+    unit: L
+    note:
+      tr: >-
+        beyaz ve siyah için; günde 300 baskının üzerinde çalışan hatlarda
+        ambalaj değişimini yarıya indirir
+      en: >-
+        white and black; halves container changes on lines running more than
+        300 garments a day
+
+compat:
+  printheads: [Epson i3200-A1, Epson i1600-A1, Epson XP600, Epson DX5]
+  dropSizePl: [2.5, 12]
+  # Maven'in kataloğunda DTG makinesi yok. Boş bırakmak, doğrulamadığımız bir
+  # makine adı yazmaktan dürüst.
+  machines: []
+  thirdPartyPrinters:
+    - Açık besleme sistemli i3200-A1 / i1600-A1 tabanlı DTG makineleri
+    - Beyaz kanalında sirkülasyon bulunan direkt tekstil rulo hatları
+  chipIncluded: false
+
+specs:
+  cure:
+    method: heat
+    fixationC: 160
+    transferSeconds: [60, 90]
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: >-
+      Açılmamış ambalajda, 5–30 °C arasında ve doğrudan güneş görmeyen bir
+      depoda 12 ay. Beyaz kanal istisnadır ve 6 ay üzerinden planlanmalıdır;
+      tekstil beyazı buradaki en yüksek pigment yüklü mürekkeptir. Açılan
+      ambalajı 90 gün içinde bitirin.
+    en: >-
+      12 months unopened, stored between 5 and 30 °C out of direct sunlight.
+      White is the exception and should be planned on a 6-month clock — textile
+      white carries the heaviest pigment load in this range. Use an opened
+      container within 90 days.
+  storageTempC: [5, 30]
+  operatingTempC: [18, 30]
+  operatingHumidityPct: [40, 60]
+  viscosityCps: { value: 4.5, tolerance: 0.5, atC: 25 }
+  surfaceTensionDyn: { value: 32, tolerance: 3 }
+  ph: { value: 8.5, tolerance: 0.5 }
+  particleSizeNm: [100, 250]
+  fastness:
+    - { standard: "ISO 105-C06", result: "≥ 4" }
+    - { standard: "ISO 105-X12", result: "3–4" }
+    - { standard: "ISO 105-E04", result: "4" }
+
+substrates: [textile, leather]
+applications: [textile]
+
+# ECO PASSPORT and ZDHC belong to the producing plant. We forward the current
+# certificate against a batch number rather than render a mark we do not own.
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-810-tex-tds-tr.pdf, bytes: 274432, version: "v1.1", date: "2026-03" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-810-tex-tds-en.pdf, bytes: 267264, version: "v1.1", date: "2026-03" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-810-tex-gbf-tr.pdf, bytes: 401408, version: "2026-02" }
+
+ancillaries: [mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-810-tex/bottle.jpg
+    kind: machine
+    alt:
+      tr: "Beş kanallı tekstil pigment mürekkep seti: 1 litrelik şişeler ve 2 litrelik bag-in-box kutu"
+      en: "Five-channel textile pigment ink set: one-litre bottles and a two-litre bag-in-box"
+  - src: /img/inks/mi-810-tex/pretreat.jpg
+    kind: detail
+    alt:
+      tr: "Ön işlem sıvısı püskürtülmüş ve preslenmiş siyah tişört, kenarında işlem görmemiş alan"
+      en: "Black t-shirt sprayed and pressed with pre-treatment, with an untreated area at the edge"
+    caption: { tr: Ön işlem olmadan beyaz kumaşa tutunmaz, en: Without pre-treatment white will not anchor }
+  - src: /img/inks/mi-810-tex/fixation.jpg
+    kind: detail
+    alt:
+      tr: "Baskılı tişörtün transfer presinde 160 °C'de fiksaj gördüğü an, gösterge ekranı okunuyor"
+      en: "Printed garment being fixed at 160 °C in a heat press with the controller display visible"
+  - src: /img/inks/mi-810-tex/app-hoodie.jpg
+    kind: application
+    alt:
+      tr: "Koyu renk sweatshirt üzerine basılmış, beyaz alt katmanlı yumuşak tuşeli baskı"
+      en: "Soft-hand print with a white underbase on a dark sweatshirt"
+    caption: { tr: DTG Koyu Kumaş Baskı, en: DTG print on dark fabric }
+
+price: null
+
+i18n:
+  tr:
+    role: Ön işlem gerektiren DTG ve direkt tekstil makineleri için su bazlı pigment mürekkep
+    summary: >-
+      MI-810, ön işlem görmüş pamuklu ve karışım kumaşlara doğrudan basılan su
+      bazlı tekstil pigment mürekkebidir. DTG makinelerinde ve açık besleme
+      sistemli direkt tekstil hatlarında çalışır. Fiksaj 160 °C'de 60–90
+      saniyedir; presten çıkan baskı ISO 105-C06 yıkama haslığında 4 ve üzerini
+      verir. Beyaz kanal SedimentGuard dispersiyonuyla üretilir, koyu kumaşta ön
+      işlem sıvısı zorunludur. Renkler 1 litre şişede, yüksek hacimli kanallar
+      2 litre bag-in-box ambalajda gelir. Ön işlem sıvısı mürekkebe dahil
+      değildir ve ayrı bir sarf kalemidir.
+    features:
+      - >-
+        SedimentGuard Beyaz Dispersiyon — renk pigmentleri 100–150 nm, beyaz
+        pigmentin D50 değeri 200–250 nm bandında tutulur. Tekstil beyazı en ağır
+        pigment yüklü mürekkeptir; çökeldiğinde önce beyazın kapatıcılığı, sonra
+        nozüller gider.
+      - >-
+        FixLock Fiksaj Penceresi — 160 °C'de 60–90 saniye. Bu pencerenin altında
+        kalan baskı presten mükemmel çıkar, sorun üçüncü yıkamada görünür.
+        Fiksaj süresini kumaş gramajına göre değil, presin gerçek yüzey
+        sıcaklığına göre ayarlayın.
+      - >-
+        SoftHand Tuşe — bağlayıcı oranı, kapatıcılığı düşürmeden tuşeyi
+        yumuşatacak şekilde ayarlanmıştır. Koyu kumaşta hissettiğiniz sertliğin
+        büyük kısmı mürekkepten değil, ön işlem sıvısının fazlasından gelir.
+      - >-
+        NozzleSafe Bekleme Direnci — 25 °C ve %50 bağıl nemde kapaksız 20 dakika
+        bekleyen nozüller tek temizleme darbesiyle geri döner. Ortam nemi %40'ın
+        altına düştüğünde bu süre belirgin şekilde kısalır.
+      - >-
+        MavenMatch Profil Paketi — pamuk, %50 karışım ve koyu kumaş için üç ayrı
+        ICC profili ve beyaz alt katman limiti hazır gelir. Ön işlem sıvınızı
+        veya kumaş tedarikçinizi değiştirdiğinizde profil yeniden çıkarılmalıdır.
+    disclaimer: >-
+      Yapışma, tuşe ve haslık değerleri kumaş cinsine, ön işlem sıvısının
+      uygulama miktarına, pres sıcaklığına ve basıncına göre değişir. Buradaki
+      değerler laboratuvar koşullarında %100 pamuk üzerinde ölçülmüş referans
+      değerlerdir, taahhüt değildir. Seri üretime geçmeden önce kendi kumaşınızda
+      ve kendi ön işlem ayarınızda yıkama testi yapın.
+    faq:
+      - q: MI-810 hangi makinelerde kullanılabilir, hangilerinde kullanılamaz?
+        a: >-
+          Açık besleme sistemli, beyaz kanalında sirkülasyon bulunan DTG ve
+          direkt tekstil makineleri için üretildi. Çipe kilitli kapalı kartuş
+          sistemlerinde — Epson SureColor F2100/F3000 ve Brother GTX gibi —
+          kullanılamaz; bu makinelerin besleme sistemi üçüncü taraf mürekkebe
+          kapalıdır. Makinenizin kartuş mu yoksa toplu besleme mi olduğunu teklif
+          öncesi birlikte teyit ediyoruz.
+      - q: Ön işlem sıvısı gerçekten zorunlu mu?
+        a: >-
+          Koyu kumaşta kesinlikle. Pigment mürekkep kumaş lifine kimyasal olarak
+          bağlanmaz; ön işlem sıvısı pigmenti yüzeyde tutan katmanı oluşturur.
+          Açık kumaşta beyaz basmıyorsanız ön işlemsiz çalışabilirsiniz, ancak
+          renk doygunluğu ve yıkama haslığı düşer. Uygulamanın homojenliği,
+          çoğu atölyede mürekkebin kendisinden daha belirleyicidir.
+      - q: Ön işlem sıvısını da siz veriyor musunuz?
+        a: >-
+          Bu katalogda ayrı bir kalem olarak listelemiyoruz; MI-810 ile birlikte
+          kumaş cinsine göre tedarik ediyoruz. Teklif isterken kumaş tipini
+          (pamuk, karışım, koyu/açık) ve aylık adedi yazın — sıvının seyreltme
+          oranı ve püskürtme gramajı buna göre değişiyor.
+      - q: DTG mi, DTF mi almalıyım?
+        a: >-
+          Ağırlıklı pamuklu ve tuşenin önemli olduğu işlerde DTG daha iyi: baskı
+          kumaşın içine oturur, elle hissedilmez. Karışık kumaş, polyester, çanta,
+          şapka gibi düzensiz yüzeylerde DTF daha doğru — ön işlem yok, kumaş
+          bağımsız. Ayda birkaç yüz adet karışık iş yapıyorsanız MD-600 A4 ve
+          MI-710 DTF'yi konuşalım; bu mürekkep sizin için yanlış tercih olur.
+      - q: Yıkama haslığı neden bazı işlerde tutmuyor?
+        a: >-
+          Neredeyse her zaman fiksaj yetersizliğinden. Presin gösterdiği sıcaklık
+          ile yüzey sıcaklığı arasında 10–15 °C fark olabilir; presi termal şeritle
+          ölçtürün. İkinci sebep ön işlem fazlası: fazla sıvı, mürekkebin
+          altında yıkamayla kalkan bir katman bırakır.
+      - q: Beyazı ne kadar sürede tüketmeliyim?
+        a: >-
+          Altı ay üzerinden planlayın; renklerin raf ömrü on iki ay olsa da beyaz
+          yarısı kadar. Hafta sonu duracak makinede sirkülasyonu açık bırakın.
+          Tekstil beyazı, DTF beyazından bile ağır pigment taşır — kapalı bir
+          sistemde iki gün içinde çökmeye başlar.
+  en:
+    role: Water-based pigment ink for pre-treated DTG and direct-to-textile machines
+    summary: >-
+      The MI-810 is a water-based textile pigment ink printed directly onto
+      pre-treated cotton and blended fabric. It runs on DTG machines and on
+      open-supply direct-to-textile lines. Fixation is 60–90 seconds at 160 °C,
+      and a correctly fixed print returns ISO 105-C06 wash fastness of grade 4
+      or better. White uses the SedimentGuard dispersion, and on dark garments
+      pre-treatment fluid is mandatory. Colours ship in 1 litre bottles, the
+      high-volume channels in 2 litre bag-in-box. Pre-treatment fluid is a
+      separate consumable, not included.
+    features:
+      - >-
+        SedimentGuard White Dispersion — colour pigments sit at 100–150 nm and
+        white is held to a D50 of 200–250 nm. Textile white carries the heaviest
+        pigment load here; when it settles you lose opacity first and nozzles
+        shortly after.
+      - >-
+        FixLock Fixation Window — 60–90 seconds at 160 °C. A print fixed below
+        that window looks perfect coming off the press; the problem appears at
+        the third wash. Set the time against the measured platen surface
+        temperature, not the fabric weight.
+      - >-
+        SoftHand Feel — binder content is tuned to soften the hand without
+        giving up opacity. Most of the stiffness you feel on a dark garment
+        comes from excess pre-treatment, not from the ink.
+      - >-
+        NozzleSafe Idle Resistance — nozzles left uncapped for 20 minutes at
+        25 °C and 50 %RH recover in a single purge. Below 40 %RH in the room,
+        that window shortens noticeably.
+      - >-
+        MavenMatch Profile Pack — three ICC profiles and white underbase limits
+        ship ready, for cotton, 50 % blends and dark garments. Change your
+        pre-treatment fluid or your fabric supplier and the profile has to be
+        rebuilt.
+    disclaimer: >-
+      Adhesion, hand and fastness vary with fabric type, the amount of
+      pre-treatment applied, and press temperature and pressure. The figures
+      here are laboratory reference values measured on 100 % cotton, not a
+      warranty. Run a wash test on your own fabric with your own pre-treatment
+      settings before committing to production.
+    faq:
+      - q: Which machines does the MI-810 fit, and which does it not?
+        a: >-
+          It is built for open-supply DTG and direct-to-textile machines with
+          circulation on the white channel. It cannot be used in chip-locked
+          closed cartridge systems such as the Epson SureColor F2100/F3000 or
+          Brother GTX — their supply systems are closed to third-party ink. We
+          confirm whether your machine is cartridge-fed or bulk-fed before
+          quoting.
+      - q: Is pre-treatment really mandatory?
+        a: >-
+          On dark fabric, absolutely. Pigment ink does not bond chemically to
+          the fibre; the pre-treatment forms the layer that holds pigment at the
+          surface. On light fabric printed without white you can work untreated,
+          but colour saturation and wash fastness both drop. In most shops the
+          evenness of the pre-treatment decides more than the ink does.
+      - q: Do you supply the pre-treatment fluid as well?
+        a: >-
+          We do not list it as a separate line in this catalogue; we supply it
+          alongside the MI-810 against your fabric type. When you ask for a
+          quote, state the fabric (cotton, blend, dark or light) and monthly
+          volume — dilution ratio and spray weight follow from that.
+      - q: Should I buy DTG or DTF?
+        a: >-
+          For mostly-cotton work where hand matters, DTG is better: the print
+          sits in the fabric and you cannot feel it. For mixed fabric,
+          polyester, bags and caps, DTF is the right answer — no pre-treatment
+          and no fabric dependency. If you run a few hundred mixed pieces a
+          month, talk to us about the MD-600 A4 and MI-710 DTF instead; this ink
+          would be the wrong purchase.
+      - q: Why does wash fastness fail on some jobs?
+        a: >-
+          Almost always under-fixation. There can be 10–15 °C between what the
+          press displays and the actual platen surface, so measure it with a
+          thermal strip. The second cause is excess pre-treatment, which leaves
+          a layer under the ink that lifts in the wash.
+      - q: How quickly should I turn over white?
+        a: >-
+          Plan on six months even though the colours are good for twelve. Leave
+          circulation running if the machine will sit over a weekend. Textile
+          white carries a heavier pigment load than DTF white — in a static
+          system it starts to settle within two days.

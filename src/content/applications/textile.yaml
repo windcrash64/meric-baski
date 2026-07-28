@@ -1,0 +1,230 @@
+key: textile
+order: 50
+accent: cyan
+
+hero:
+  src: /img/applications/textile/hero.jpg
+  kind: application
+  alt:
+    tr: Askılıkta sıralanmış yeni basılmış tişörtler ve arkalarında duran transfer presi
+    en: Freshly printed t-shirts on a rail with the heat press standing behind them
+
+gallery:
+  - src: /img/applications/textile/dtf-tisort.jpg
+    kind: application
+    alt: { tr: Pamuklu tişörte preslenmiş çok renkli transfer baskı pres açılırken görünüyor, en: Multi-colour transfer on a cotton t-shirt seen as the heat press opens }
+    caption: { tr: DTF Tekstil Transfer Baskı, en: DTF textile transfer }
+  - src: /img/applications/textile/film-soyma.jpg
+    kind: detail
+    alt: { tr: Preslenmiş tişörtten PET filmin tek hamlede soyulduğu an, en: PET film being peeled from a pressed garment in one movement }
+    caption: { tr: Sıcak Soyma, en: Hot peel }
+  - src: /img/applications/textile/sublimasyon-forma.jpg
+    kind: application
+    alt: { tr: Askıda duran süblimasyonla basılmış polyester sporcu formaları, en: Sublimated polyester sports jerseys hanging on a rail }
+    caption: { tr: Süblimasyon Forma Baskı, en: Sublimated sports jersey }
+  - src: /img/applications/textile/bayrak-flama.jpg
+    kind: application
+    alt: { tr: Fuar salonunda tavandan sarkan basılı kumaş bayraklar ve flamalar, en: Printed fabric flags and banners hanging from the ceiling of an exhibition hall }
+    caption: { tr: Süblimasyon Bayrak Baskı, en: Sublimated fabric flag }
+  - src: /img/applications/textile/kalender-cikis.jpg
+    kind: detail
+    alt: { tr: Kalenderin çıkışında transfer kâğıdının kumaştan ayrıldığı an, en: Transfer paper separating from the fabric at the calender exit }
+    caption: { tr: Kalenderde Fiksaj, en: Fixation on the calender }
+  - src: /img/applications/textile/toz-serpme.jpg
+    kind: detail
+    alt: { tr: Serpme ünitesinde basılı filmin üzerine dökülen toz ve altındaki geri kazanım eleği, en: Powder falling onto printed film inside the shaker with the recovery sieve beneath }
+    caption: { tr: PU Toz Serpme, en: Hot-melt powder application }
+  - src: /img/applications/textile/promosyon-termos.jpg
+    kind: application
+    alt: { tr: Metal termosun gövdesine basılmış kurumsal logonun yakın çekimi, en: Close-up of a corporate logo printed on the body of a metal flask }
+    caption: { tr: UV Promosyon Ürün Baskı, en: UV printed promotional item }
+  - src: /img/applications/textile/uvdtf-kupa.jpg
+    kind: application
+    alt: { tr: Kavisli seramik kupanın yüzeyine elle bastırılan kabartmalı kristal etiket, en: Raised crystal label being pressed by hand onto a curved ceramic mug }
+    caption: { tr: UV DTF Kristal Etiket, en: UV DTF crystal label }
+
+machines: [MD-600-A4, MT-1900-A4, MC-300-U1, MF-6090-U3]
+inks: [mi-710-dtf, md-pwd-170, md-film-600, mi-610-sub, mi-810-tex]
+substrates: [textile, film, paper, leather, acrylic, wood, metal, ceramic]
+
+i18n:
+  tr:
+    name: Tekstil ve Promosyon
+    kicker: Tek tişörtten seri üretime geçin
+    intro: >-
+      Tekstilde makineyi kumaş seçer. Süblimasyon yalnızca polyester ve yalnızca
+      açık renk kumaşta çalışır; boya lifin içine girdiği için elde iz bırakmaz,
+      ama pamuklu bir tişörtte hiç çalışmaz — yavaş değil, imkânsızdır. DTF,
+      filme basılıp preslendiği için pamuklu, karışım ve koyu kumaşta iş görür;
+      karşılığında her işte beyaz alt katman vardır. Doğrudan tekstil pigmenti
+      ise ön işlem sıvısı ister. Üç yolun üçü de aynı işi yapmaz; hangi kumaştan
+      ayda kaç adet çıktığı sorusu, makine sorusundan önce gelir.
+
+      Promosyon tarafı bambaşka bir üretimdir. Termos, bardak, plaket ve telefon
+      kılıfı gibi rijit ürünler UV flatbed tablasına dizilip doğrudan basılır;
+      kavisli ve düzensiz gövdeler ise tablaya oturmaz, onlara UV DTF kristal
+      etiket uygulanır. Her iki tarafta da maliyeti belirleyen şey baskı hızı
+      değildir: DTF adet başına maliyeti değil kurulum süresini sıfırlar,
+      süblimasyon hattının gerçek kapasitesini yazıcı değil kalender belirler ve
+      beyaz mürekkep hem en pahalı hem raf ömrü en kısa kalemdir. Kapasite
+      planını bu üç gerçeğin üzerine kurun.
+    jobs:
+      - Pamuklu ve karışım tişörtlere DTF transfer baskı
+      - Koyu kumaşlarda beyaz alt katmanlı film transfer
+      - Polyester forma, eşofman ve sporcu kıyafeti süblimasyonu
+      - Bayrak, flama ve gergi kumaş (fabric frame) baskısı
+      - Kurumsal iş kıyafeti, önlük ve şapka baskısı
+      - Termos, bardak, telefon kılıfı ve plaket gibi promosyon ürünleri
+      - Çanta, deri aksesuar ve tekstil etiketi baskısı
+      - Kavisli promosyon ürünleri için UV DTF kristal etiket
+    faq:
+      - q: DTF mi süblimasyon mu?
+        a: >-
+          Cevabı kumaş veriyor, makine değil. Süblimasyon dispers boyayı
+          polyester lifinin içine sokar; genellikle %65 üzeri polyester ve açık
+          renk kumaş gerekir. Pamuklu bir tişörtte süblimasyon yavaş kalmaz, hiç
+          çalışmaz. DTF ise filme basılıp preslendiği için pamuklu, karışım ve
+          koyu kumaşta çalışır ve her işte beyaz alt katman taşır — bunun bedeli
+          süblimasyondaki kadar yumuşak olmayan bir tuşedir. İşinizin çoğu
+          pamuklu tişörtse DTF; çoğu polyester forma, bayrak ve gergi kumaşsa
+          süblimasyon.
+      - q: MD-600 A4 hangi hacim için doğru ve 12 m²/sa gerçek üretim hızı mı?
+        a: >-
+          Sistem, günde 200–800 transfer çıkaran karışık ve küçük adetli işler
+          için kurulmuştur. Günde 100 transferin altındaysanız 30 cm'lik bir
+          sistem daha doğru; tek desenden binlerce adet basıyorsanız serigrafi
+          hâlâ daha ucuzdur — DTF adet başına maliyeti değil, kurulum süresini
+          sıfırlar. 12 m²/sa değeri film tarafındaki 4 geçiş hızıdır; hattın
+          gerçek hızını fırın ve toz eritme belirler ve yüksek kaplama oranında
+          8–9 m²/sa'ya iner. DTF'de beyazsız iş yoktur, o katman her hesaba dahildir.
+      - q: Süblimasyon hattının kapasitesini ne belirler?
+        a: >-
+          Yazıcı değil, kalender. MT-1900 A4 üç geçişte 120 m²/sa transfer kâğıdı
+          basar; ama boya kumaşa MR-1900 kalenderde, 180–220 °C ve 30–180 saniye
+          bekleme süresiyle geçer. Kalın polyesterde bekleme süresi uzar ve hat
+          yazıcının yarısına iner. Kalender aynı zamanda atölyedeki en büyük
+          elektrik yüküdür — 380 V 3 faz, yaklaşık 40 kW. Pano ve kablo kesiti
+          işini makineden önce planlayın; bunu sonraya bırakan atölyeler
+          makineyi haftalarca çalıştıramaz.
+      - q: Beyaz mürekkep, toz ve havalandırma için neyi planlamalıyım?
+        a: >-
+          Üçü de sarf planının parçasıdır. DTF beyazının raf ömrü açılmamış hâlde
+          6 aydır, yani renklerin yarısı; aylık tüketiminizin en fazla iki katı
+          kadar stok tutun ve makine hafta sonu kapalı kalacaksa sirkülasyonu
+          açık bırakın. Sıcak eriyik tozunda belirleyici olan sıcaklık değil
+          nemdir; açılan torbayı kapaklı hazneye alın, zemine değil paletin
+          üstüne koyun ve %60 bağıl nemin üzerinde bir depoda tutmayın. Fırın
+          çıkışı ise mutlaka dışarı verilmelidir; entegre duman filtresi kokuyu
+          azaltır ama dış atımın yerini tutmaz. Penceresiz bir bodruma bu sistemi
+          kurmayın.
+      - q: Marka denetimleri haslık ve sertifika istiyor, ne verebiliyorsunuz?
+        a: >-
+          Haslık değerlerini teknik veri sayfasında yayınlıyoruz. DTF pigmentinde
+          ISO 105-C06 ≥ 4 ve ISO 105-X12 4–5; tekstil pigmentinde ISO 105-C06
+          ≥ 4, ISO 105-X12 3–4 ve ISO 105-E04 4; süblimasyonda EN ISO 105-B02 4–5
+          ve EN ISO 105-C10 ≥ 4. ECO PASSPORT ve ZDHC belgeleri ise üretim
+          tesisine aittir, bayiye değil; bu markaları kendi işaretimiz gibi
+          göstermiyoruz, parti numarasına karşılık güncel sertifikayı iletiyoruz.
+          Bir tedarikçi bu belgeleri kendi adına gösteriyorsa belgenin aslını isteyin.
+      - q: Promosyon ürünlerine baskı hangi makineyle yapılır?
+        a: >-
+          Düz ve rijit ürünler — plaket, telefon kılıfı, ahşap kutu, cam levha —
+          MF-6090 U3 tablasına dizilir ve doğrudan basılır; 180 mm baskı
+          yüksekliği kalın parçaları ara aparat olmadan alır ve makine tek fazla
+          çalışır. Kavisli gövdeler, yani termos, bardak ve şişe, tablaya
+          oturmaz. Bunlarda ya döner aparatlı ayrı bir makine gerekir ya da
+          MC-300 U1 ile UV DTF kristal etiket basılıp ürüne uygulanır. İkincisi
+          tek adet için bile mantıklıdır çünkü etiket stoklanabilir; birincisi
+          yalnızca aynı gövdeden sürekli yüksek adet basıyorsanız kendini amorti eder.
+  en:
+    name: "Textile & Promotional"
+    kicker: Go from a single t-shirt to a production run
+    intro: >-
+      In textiles the fabric picks the machine. Sublimation works only on
+      polyester and only on light colours; the dye enters the fibre, so there is
+      nothing to feel on the surface — but on a cotton t-shirt it does not work
+      at all, not slower but impossible. DTF is printed onto film and pressed,
+      so it handles cotton, blends and dark garments, at the cost of a white
+      underbase on every job. Direct textile pigment needs a pre-treatment
+      liquid. None of the three does the others' work, and how many pieces of
+      which fabric you ship a month comes before which machine you buy.
+
+      Promotional work is a different production entirely. Rigid goods — flasks,
+      mugs, awards, phone cases — are laid out on a UV flatbed and printed
+      directly, while curved and irregular bodies never sit flat on a bed and
+      take a UV DTF crystal label instead. On both sides, what sets cost is not
+      print speed: DTF removes setup time rather than unit cost, the real
+      capacity of a sublimation line is set by the calender and not the printer,
+      and white is both the most expensive ink and the one with the shortest
+      shelf life. Build the capacity plan on those three facts.
+    jobs:
+      - DTF transfers onto cotton and blended t-shirts
+      - White-underbase film transfers for dark garments
+      - Sublimated polyester jerseys, tracksuits and sportswear
+      - Fabric flags, banners and tension-frame fabric graphics
+      - Corporate workwear, aprons and caps
+      - Promotional goods such as flasks, mugs, phone cases and awards
+      - Bags, leather accessories and textile labels
+      - UV DTF crystal labels for curved promotional items
+    faq:
+      - q: DTF or sublimation?
+        a: >-
+          The fabric answers that, not the machine. Sublimation drives disperse
+          dye into the polyester fibre and generally needs at least 65 % polyester
+          and a light-coloured garment. On a cotton t-shirt sublimation is not
+          slow, it simply does not work. DTF is printed onto film and pressed, so
+          it runs on cotton, blends and dark fabric, and it carries a white
+          underbase on every job — the price of which is a hand feel that is never
+          as soft as sublimation. If most of your work is cotton t-shirts, DTF; if
+          most of it is polyester jerseys, flags and tension fabric, sublimation.
+      - q: What volume is the MD-600 A4 right for, and is 12 m²/h a real figure?
+        a: >-
+          The system is built for shops running 200–800 transfers a day across
+          mixed, short-run work. Below 100 transfers a day a 30 cm system fits
+          better; above a few thousand pieces of a single design, screen printing
+          is still cheaper — DTF removes setup time, not unit cost. The 12 m²/h is
+          the four-pass figure on the film side; real line speed is set by the
+          oven and the powder melt, and at heavy coverage it drops to 8–9 m²/h.
+          Every DTF job carries a white underbase, and it is in every calculation.
+      - q: What sets the capacity of a sublimation line?
+        a: >-
+          The calender, not the printer. The MT-1900 A4 prints 120 m²/h of
+          transfer paper at three passes, but the dye only reaches the fabric on
+          the MR-1900 calender, at 180–220 °C with a 30–180 second dwell. Heavy
+          polyester needs a longer dwell and the line falls to half the printer's
+          output. The calender is also the largest electrical load in the shop —
+          380 V three-phase, around 40 kW. Plan the panel and cable sizing before
+          the machine; shops that leave it until later cannot run the machine for
+          weeks.
+      - q: What do I need to plan for white ink, powder and extraction?
+        a: >-
+          All three are part of the consumables plan. DTF white has a 6-month
+          unopened shelf life, half that of the colours — hold no more than twice
+          your monthly usage, and leave circulation running if the machine sits
+          over a weekend. With hot-melt powder it is humidity, not temperature,
+          that decides: move an opened sack into a lidded hopper, keep it on a
+          pallet rather than the floor, and do not store it above 60 %RH. Oven
+          exhaust must be ducted outside; the integrated fume filter reduces
+          odour but does not replace extraction. Do not install this system in a
+          basement with no outside wall.
+      - q: Brand audits ask for fastness data and certificates — what can you supply?
+        a: >-
+          We publish the fastness results on the technical data sheet: for DTF
+          pigment, ISO 105-C06 ≥ 4 and ISO 105-X12 4–5; for textile pigment,
+          ISO 105-C06 ≥ 4, ISO 105-X12 3–4 and ISO 105-E04 4; for sublimation,
+          EN ISO 105-B02 4–5 and EN ISO 105-C10 ≥ 4. ECO PASSPORT and ZDHC
+          certificates belong to the producing plant, never to a dealer — we do
+          not render those marks as our own, we forward the current certificate
+          against a batch number. If a supplier presents them as theirs, ask to
+          see the original.
+      - q: Which machine prints promotional goods?
+        a: >-
+          Flat, rigid items — awards, phone cases, wooden boxes, glass panels —
+          are laid out on the MF-6090 U3 bed and printed directly; its 180 mm
+          print height takes thick parts without a spacer and the machine runs
+          single-phase. Curved bodies such as flasks, mugs and bottles never sit
+          flat. Those need either a separate machine with a rotary attachment, or
+          a UV DTF crystal label printed on the MC-300 U1 and applied to the
+          item. The second route makes sense even for one piece, because labels
+          can be stocked; the first only pays for itself if you print high volumes
+          of the same body continuously.

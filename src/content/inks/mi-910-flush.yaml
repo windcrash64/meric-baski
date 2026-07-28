@@ -1,0 +1,247 @@
+sku: MI-910
+series: Maven MI-910 FLUSH
+family: auxiliary
+type: auxiliary
+order: 110
+featured: false
+
+oemEquivalent: []
+# Not an ink changeover in the usual sense — the fluid is matched to the ink
+# already in the machine, so there is nothing to re-profile.
+changeover: switch-and-print
+
+channels: []
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note:
+      tr: sistem yıkaması ve kafa sökme öncesi doldurma için
+      en: for system flushing and for filling a head before removal
+  - format: bottle
+    volume: 250
+    unit: ml
+    note:
+      tr: >-
+        pipetli şişe; kapatma istasyonu nemlendirmesi ve wiper temizliği için —
+        günlük bakım kalemidir, yıkama sıvısı değildir
+      en: >-
+        pipette bottle; for moistening the capping station and cleaning the
+        wiper — a daily maintenance item, not a flushing volume
+
+compat:
+  printheads:
+    - Ricoh Gen6
+    - Konica Minolta KM1024i
+    - Epson i3200-U1
+    - Epson i3200-E1
+    - Epson i3200-A1
+    - Epson i1600-A1
+    - Epson XP600
+  machines:
+    - MF-6090-U3
+    - MF-1216-R4
+    - MF-2513-R8
+    - MF-3220-K12
+    - MH-1800-U4
+    - MH-3200-R12
+    - MS-1802-E4
+    - MS-1600-PC
+    - MD-600-A4
+    - MT-1900-A4
+    - MC-300-U1
+  thirdPartyPrinters: []
+  chipIncluded: false
+
+specs:
+  cure:
+    method: none
+  shelfLifeMonths: 24
+  shelfLifeNote:
+    tr: >-
+      Kapalı ambalajda 24 ay. Açılan şişeyi kapağı sıkılı ve dik tutun: MI-910-S
+      ve MI-910-U varyantları uçucudur, açık bırakılan şişede bileşim birkaç
+      günde değişir ve sıvı yıkama gücünü kaybeder.
+    en: >-
+      24 months unopened. Keep an opened bottle sealed and upright: the MI-910-S
+      and MI-910-U variants are volatile, and a bottle left open shifts
+      composition within days and loses its flushing power.
+  storageTempC: [5, 25]
+  operatingTempC: [15, 30]
+
+substrates: []
+applications: []
+
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-910-flush-tds-tr.pdf, bytes: 231424, version: "v1.3", date: "2026-05" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-910-flush-tds-en.pdf, bytes: 226304, version: "v1.3", date: "2026-05" }
+  # Three chemistries, three safety data sheets. A single GBF covering all
+  # variants would not be a valid one.
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-910-w-gbf-tr.pdf, bytes: 387072, version: "2026-01" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-910-s-gbf-tr.pdf, bytes: 401408, version: "2026-01" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-910-u-gbf-tr.pdf, bytes: 396288, version: "2026-01" }
+
+ancillaries: []
+
+gallery:
+  - src: /img/inks/mi-910-flush/bottles.jpg
+    kind: machine
+    alt:
+      tr: "Üç varyantın 1 litrelik şişeleri yan yana, kapakları farklı renkte"
+      en: "One-litre bottles of the three variants side by side, each with a different cap colour"
+  - src: /img/inks/mi-910-flush/pipette.jpg
+    kind: detail
+    alt:
+      tr: "250 ml pipetli şişeyle kapatma istasyonu keçesine sıvı damlatılıyor"
+      en: "Fluid being dosed onto the capping station pad from the 250 ml pipette bottle"
+    caption: { tr: PipetteDose günlük bakım, en: PipetteDose daily maintenance }
+  - src: /img/inks/mi-910-flush/label.jpg
+    kind: detail
+    alt:
+      tr: "Varyant kodu ve uyumlu mürekkep ailesinin okunduğu şişe etiketi yakın çekim"
+      en: "Close-up of the bottle label showing the variant code and the matching ink family"
+    caption: { tr: VariantLock renk kodu, en: VariantLock colour coding }
+
+price: null
+
+i18n:
+  tr:
+    role: Su bazlı, eko solvent ve UV mürekkepler için üç varyantlı kafa temizleme ve yıkama sıvısı
+    summary: >-
+      MI-910, baskı kafası temizliği, kapatma istasyonu nemlendirmesi ve sistem
+      yıkaması için üretilmiş yardımcı sıvıdır. Üç varyantı vardır: su bazlı
+      MI-910-W, eko solvent MI-910-S ve UV mürekkepler için MI-910-U. Varyantlar
+      birbirinin yerine kullanılamaz; yanlış eşleşme jelleşme ve kafa kaybıyla
+      sonuçlanır. Bu yüzden etiket ve kapak renkleri ayrıştırılmıştır. 1
+      litrelik şişe sistem yıkaması, 250 ml pipetli şişe ise kapatma istasyonu
+      ve wiper temizliği içindir. Raf ömrü kapalı ambalajda 24 aydır.
+    features:
+      - >-
+        FlushLine Üç Varyant — MI-910-W su bazlı DTF, süblimasyon ve tekstil
+        pigment sistemleri; MI-910-S eko solvent; MI-910-U UV ve UV DTF içindir.
+        Her varyant, yerini aldığı mürekkebin taşıyıcı kimyasıyla aynı
+        ailedendir; bu yüzden karışım noktasında çökelme yapmaz.
+      - >-
+        VariantLock Renk Kodu — üç varyantın kapağı ve etiket şeridi farklı
+        renktedir. Vardiya sonunda acele eden bir operatörün yanlış şişeyi
+        alması, bu üründe kafa değişimiyle sonuçlanan tek hatadır; renk kodu
+        tam olarak bunun için var.
+      - >-
+        ResidueFree Kalıntısız Buharlaşma — sıvı, damper ve hortum iç
+        yüzeyinde film bırakmadan uçar. Kalıntı bırakan ucuz temizleyiciler,
+        yıkamadan sonra yeni mürekkebin ilk litresini kirletir ve renk kaymasına
+        yol açar.
+      - >-
+        PipetteDose 250 ml — kapatma istasyonu keçesini ve wiper lastiğini
+        günlük nemlendirmek için ölçülü doz verir. Kafa ömrünü uzatan işlemin
+        %80'i budur; sistem yıkaması değil, her gün iki dakikalık bu bakımdır.
+    disclaimer: >-
+      Temizleme sıvısı, mürekkep taşıyıcı kimyasına göre seçilir. Yanlış varyant
+      kullanımından doğan kafa, damper ve pompa hasarı garanti kapsamı dışındadır.
+      Makinenizin mürekkep ailesinden emin değilseniz yıkamaya başlamadan önce
+      teknik servisimize sorun; bir telefon, bir kafadan ucuzdur.
+    faq:
+      - q: Makineme hangi varyant gerekiyor?
+        a: >-
+          MD-600 A4 ve MT-1900 A4 gibi su bazlı sistemlerde MI-910-W; MS-1802 E4
+          ve MS-1600 PC gibi eko solvent makinelerde MI-910-S; MF ve MH serisi UV
+          flatbed/hibrit makineler ile MC-300 U1 UV DTF'de MI-910-U. MK-1612
+          kesim makinesinde temizleme sıvısı kullanılmaz.
+      - q: Tek bir sıvı hepsini temizleyemez mi?
+        a: >-
+          Hayır, ve bu ürünün en önemli uyarısı budur. Su bazlı bir sisteme
+          solvent varyant verirseniz pigment şoklanır ve anında çöker; UV
+          sistemine su bazlı sıvı verirseniz monomer ile karışım noktasında
+          jelleşme olur. Her iki hata da kafayı bitirir ve geri dönüşü yoktur.
+      - q: Tıkanmış bir kafayı bu sıvı kurtarır mı?
+        a: >-
+          Bazen. Birkaç saatlik kuruma varsa sıvıyı kafa altına verip 30–60
+          dakika bekletmek çoğunlukla yeterlidir. Günlerdir kuru duran bir kafada
+          şansınız düşüktür ve zorlarsanız nozül plakasını kaybedersiniz. 12
+          saatten uzun bekletme yapmayın; sıvı, kafa içindeki yapıştırıcıyı da
+          etkiler.
+      - q: Kafayı ultrasonik banyoda temizleyebilir miyim?
+        a: >-
+          Piezo kafalarda yapmayın. Ultrasonik titreşim, nozül plakasının
+          arkasındaki piezo elemanları ve yapıştırma hattını yorar; kafa o gün
+          çalışsa bile ömrü kısalır. Kafayı bize gönderin, sökülmüş kafada
+          kontrollü basınçla yıkama yapıyoruz.
+      - q: Ne kadar yıkama sıvısı stoklamalıyım?
+        a: >-
+          Günlük bakım için ayda bir 250 ml şişe yeterlidir. Sistem yıkaması
+          planlıyorsanız kanal başına yaklaşık 400 ml hesaplayın: beş kanallı bir
+          DTF makinesinde tam yıkama 2 litre demektir. Mürekkep değişimi
+          yapmadan önce sıvının elinizde olduğundan emin olun — yarıda kalan bir
+          yıkama, hiç başlamamış olmaktan kötüdür.
+  en:
+    role: Head cleaning and flushing fluid in three variants, for aqueous, eco-solvent and UV inks
+    summary: >-
+      The MI-910 is the auxiliary fluid for head cleaning, capping station
+      maintenance and system flushing. It comes in three variants: MI-910-W for
+      aqueous, MI-910-S for eco solvent and MI-910-U for UV inks. The variants
+      are not interchangeable — the wrong match gels the line and costs a head,
+      which is why the labels and caps are colour-separated. The 1 litre bottle
+      is the flushing volume; the 250 ml pipette bottle is for the capping
+      station and wiper. Shelf life is 24 months unopened.
+    features:
+      - >-
+        FlushLine Three Variants — MI-910-W serves aqueous DTF, sublimation and
+        textile pigment systems, MI-910-S serves eco solvent, MI-910-U serves UV
+        and UV DTF. Each variant shares the carrier chemistry of the ink it
+        replaces, so nothing precipitates where the two meet.
+      - >-
+        VariantLock Colour Coding — the three variants carry different cap and
+        label colours. An operator grabbing the wrong bottle at the end of a
+        shift is the single mistake on this product that ends in a head change,
+        and the colour code exists for exactly that.
+      - >-
+        ResidueFree Evaporation — the fluid leaves no film on damper and tube
+        walls. Cheap cleaners that do leave residue contaminate the first litre
+        of the new ink after a flush and show up as a colour shift.
+      - >-
+        PipetteDose 250 ml — a measured dose for the daily wetting of the
+        capping pad and wiper blade. Eighty per cent of head life comes from
+        this two-minute routine, not from occasional deep flushes.
+    disclaimer: >-
+      The cleaning fluid must be selected against the carrier chemistry of the
+      ink in the machine. Damage to heads, dampers or pumps caused by using the
+      wrong variant is not covered by warranty. If you are unsure which ink
+      family your machine runs, call our service desk before you start — a phone
+      call is cheaper than a printhead.
+    faq:
+      - q: Which variant does my machine need?
+        a: >-
+          MI-910-W for aqueous systems such as the MD-600 A4 and MT-1900 A4;
+          MI-910-S for eco-solvent machines such as the MS-1802 E4 and MS-1600
+          PC; MI-910-U for the MF and MH series UV flatbeds and hybrids and for
+          the MC-300 U1 UV DTF. The MK-1612 cutter uses no cleaning fluid at all.
+      - q: Can one fluid not clean all of them?
+        a: >-
+          No, and this is the most important warning on the product. Put the
+          solvent variant into an aqueous system and the pigment shocks out
+          immediately; put the aqueous variant into a UV system and it gels
+          where it meets the monomer. Both mistakes finish the head, and neither
+          is recoverable.
+      - q: Will this fluid recover a blocked head?
+        a: >-
+          Sometimes. After a few hours of drying, filling the head from below
+          and leaving it 30 to 60 minutes usually works. After days of drying
+          the odds are poor, and forcing it costs you the nozzle plate. Never
+          soak longer than 12 hours — the fluid also attacks the adhesive inside
+          the head.
+      - q: Can I clean a head in an ultrasonic bath?
+        a: >-
+          Not a piezo head. Ultrasonic energy fatigues the piezo elements and
+          the bond line behind the nozzle plate; even if the head prints that
+          day, its life is shortened. Send it to us instead — we flush removed
+          heads under controlled pressure.
+      - q: How much flushing fluid should I keep?
+        a: >-
+          One 250 ml bottle a month covers daily maintenance. For a system
+          flush, budget roughly 400 ml per channel: a five-channel DTF machine
+          is a 2 litre job. Make sure the fluid is on the shelf before you start
+          an ink change — a flush abandoned halfway is worse than one never
+          started.

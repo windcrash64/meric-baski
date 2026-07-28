@@ -1,0 +1,279 @@
+sku: MI-210
+series: Maven MI-210 UV-LED R
+family: uv-led
+type: ink
+order: 20
+featured: true
+
+# Ricoh Gen5/Gen6 kafalı LED makineler için ana mürekkebimiz. Kimyasal olarak
+# uyumlu, renk gamı OEM ile birebir değil — bu yüzden `switch-and-match`.
+oemEquivalent:
+  - Mimaki LUS-120
+  - Marabu UltraJet DLE-JX
+  - InkTec JETRIX ULE
+changeover: switch-and-match
+
+channels:
+  - { code: C, sku: MI-210-C, availability: stock }
+  - { code: M, sku: MI-210-M, availability: stock }
+  - { code: Y, sku: MI-210-Y, availability: stock }
+  - { code: K, sku: MI-210-K, availability: stock }
+  - { code: Lc, sku: MI-210-LC, availability: stock }
+  - { code: Lm, sku: MI-210-LM, availability: stock }
+  - { code: W, sku: MI-210-W, availability: stock }
+  - { code: Cl, sku: MI-210-CL, availability: stock }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note:
+      tr: kanal çipi dahil
+      en: channel chip included
+  - format: pouch
+    volume: 600
+    unit: ml
+    note:
+      tr: toplu besleme tankları için; çip içermez
+      en: for bulk supply tanks; no chip
+
+compat:
+  printheads:
+    - Ricoh Gen5
+    - Ricoh Gen5s
+    - Ricoh Gen6
+  dropSizePl: [5, 35]
+  machines:
+    - MF-2513-R8
+    - MH-3200-R12
+    - MF-1216-R4
+  thirdPartyPrinters:
+    - Mimaki JFX200-2513
+    - Mimaki UJV55-320
+    - HandTop HT3200 UV
+    - DOCAN FR3210
+  chipIncluded: true
+
+specs:
+  # UV-LED TDS'lerinde yayımlanan iki sayı budur: dalga boyu ve son kürlenme
+  # süresi. Viskozite yayımlanmaz.
+  cure:
+    method: uv-led
+    wavelengthNm: 395
+    postCureHours: 24
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: orijinal ambalajında, karanlıkta ve dik konumda saklanır
+    en: stored upright in the original packaging, away from light
+  storageTempC: [15, 25]
+  operatingTempC: [18, 27]
+  operatingHumidityPct: [40, 60]
+  outdoorDurabilityMonths: 24
+  outdoorDurabilityNote:
+    tr: dikey maruziyet, Orta Avrupa iklimi, laminasyonsuz baskı
+    en: vertical exposure, central European climate, unlaminated print
+
+substrates: [acrylic, polycarb, pvc, foamboard, alucomp, photoblock, glass, metal, mdf, wood, banner, vinyl]
+applications: [signage, interior, industrial, packaging]
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-210-uv-led-r-tds-tr.pdf, bytes: 396288, version: v2.0, date: "2026-05" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-210-uv-led-r-tds-en.pdf, bytes: 389120, version: v2.0, date: "2026-05" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-210-uv-led-r-gbf-tr.pdf, bytes: 604160, version: KKDİK-2026.1, date: "2026-03" }
+
+ancillaries: [mi-910-flush, mi-920-primer]
+
+gallery:
+  - src: /img/inks/mi-210-uv-led-r/hero.jpg
+    kind: detail
+    alt:
+      tr: "Bir litrelik şişe ve yanında duran çip ile kapak contası"
+      en: "One litre bottle with its chip and cap seal set down beside it"
+  - src: /img/inks/mi-210-uv-led-r/channels.jpg
+    kind: detail
+    alt:
+      tr: "Sekiz kanalın şişeleri açık camgöbeğinden laka doğru sıralanmış"
+      en: "Bottles of all eight channels lined up from light cyan through to varnish"
+    caption:
+      tr: Sekiz kanal, beyaz ve lak dahil
+      en: Eight channels including white and varnish
+  - src: /img/inks/mi-210-uv-led-r/pouch.jpg
+    kind: detail
+    alt:
+      tr: "600 ml torbanın tank kapağına bağlandığı rekor ve hava alma vanası"
+      en: "Coupling and bleed valve where the 600 ml pouch connects to the tank lid"
+  - src: /img/inks/mi-210-uv-led-r/app-glass.jpg
+    kind: application
+    alt:
+      tr: "Cam kapı üzerinde beyaz alt katman üstüne basılmış buzlu desen"
+      en: "Frosted pattern printed over a white underbase on a glass door"
+    caption:
+      tr: UV Cam Kapı Baskı
+      en: UV printed glass door
+
+i18n:
+  tr:
+    role: Ricoh Gen5/Gen6 kafalar için 395 nm UV-LED mürekkep
+    summary: >-
+      MI-210 UV-LED R, Ricoh Gen5 ve Gen6 kafalı LED kürlemeli makineler için
+      üretilmiş 395 nm UV-LED mürekkeptir; Mimaki LUS-120, Marabu UltraJet
+      DLE-JX ve InkTec JETRIX ULE mürekkeplerinin yerine kullanılır. MF-2513 R8,
+      MH-3200 R12 ve MF-1216 R4 gövdelerinde doğrulanmıştır. Sekiz kanallı skala
+      beyaz ve lak içerir; nihai yapışma baskıdan 24 saat sonra oluşur.
+      1 litrelik şişe çipiyle birlikte, 600 ml torba ise toplu besleme tankları
+      için gelir. Geçişte renk profilinin yeniden çıkarılması gerekir.
+    features:
+      - >-
+        MavenCure LED 395 — 395 nm LED bandına göre kurulmuş fotobaşlatıcı
+        sistemi, düşük lamba sıcaklığında kürlenir. Bu, ince folyo ve ısıya
+        duyarlı malzemede boyut kaymasını önleyen asıl özelliktir; nihai
+        yapışma 24 saatlik son kürlenmeden sonra ölçülür.
+      - >-
+        DeepStack Pigment Yükü — açık camgöbeği ve açık macenta kanalları,
+        ten tonlarında ve açık gri geçişlerde tanelenmeyi düşürür. Sekiz kanal
+        aynı seride tutulduğu için beyaz ve lak eklendiğinde renk dengesi
+        yeniden kurulmaz.
+      - >-
+        MavenWhite Yüksek Opaklık — beyaz, sirkülasyonlu besleme sistemlerine
+        göre ayarlanmıştır ve tek kat kapatıcılık verir. Renk-beyaz-renk
+        işlerde hızın yaklaşık üçte bire düştüğünü baştan hesaba katın.
+      - >-
+        CrystalGloss Lak Katmanı — lak, bölgesel kanal olarak basılır; mat
+        yüzey üzerinde parlak vurgu ya da tırnakla hissedilen kabartma verir.
+        Lak kanalının dosyada ayrı katman olarak kurulması gerekir.
+      - >-
+        ColorMatch Profil Paketi — geçiş sınıfı "Profil gerekir". Kanal başına
+        doğrusallaştırma, toplam mürekkep limiti ve ICC profili yeniden
+        çıkarılır. Yarım günlük kalibrasyon planlayın; bunu atlarsanız fark
+        önce kurumsal lacivert ve turuncularda görülür.
+    disclaimer: >-
+      Yapışma, dış mekân dayanımı ve kimyasal direnç; malzemeye, yüzey
+      hazırlığına ve baskı parametrelerine göre değişir. Buradaki değerler
+      laboratuvar koşullarında ölçülmüştür ve bağlayıcı bir taahhüt değildir.
+      Seri üretime geçmeden önce kendi malzemenizde test edin. Ürün
+      sorumluluğumuz teslim edilen malın bedeliyle sınırlıdır. Türkçe Güvenlik
+      Bilgi Formu (GBF) her sevkiyatla birlikte verilir.
+    faq:
+      - q: Hangi makinelerde doğrulandı?
+        a: >-
+          MF-2513 R8, MH-3200 R12 ve MF-1216 R4 gövdelerinde, kendi
+          atölyemizdeki kurulumlarda doğrulandı. Ricoh Gen6 ile sipariş edilen
+          MF-3220 K12 gövdesinde de çalışır. Konica KM1024i konfigürasyonundaki
+          MF-3220 K12 için farklı bir damla ve yüzey gerilimi penceresi gerekir;
+          o makineye MI-210 önermiyoruz, uyumluluk kontrolü için bize yazın.
+      - q: Çip dahil mi, 600 ml torbada ne oluyor?
+        a: >-
+          1 litrelik şişede kanal çipi kutunun içinde gelir; makinenin çip
+          okuyucusuna takılır ve seviye sayacı sıfırlanır. 600 ml torba toplu
+          besleme tankları içindir, çip içermez — tank sistemlerinde seviye
+          zaten şamandıra ile okunur. Çipi olmayan bir kanalı çipli sisteme
+          takmayın, makine hatayla durur.
+      - q: Neden "Profil gerekir" etiketi var, "Doğrudan geçiş" değil?
+        a: >-
+          Çünkü dürüst olan bu. Kimya uyumlu ve yıkama olmadan geçebilirsiniz,
+          fakat pigment dispersiyonu OEM ile birebir aynı değildir; gam
+          kenarları farklıdır. Mevcut ICC profilinizle basmaya devam ederseniz
+          kurumsal renkler kayar. Doğrusallaştırma ve profil çıkarma yarım gün
+          sürer ve bir kez yapılır.
+      - q: 24 saatlik son kürlenme ne anlama geliyor?
+        a: >-
+          Baskı makineden çıktığında kuru ve elleçlenebilir durumdadır, ancak
+          çapraz bağlanma 24 saat boyunca devam eder. Yapışma testini, bükme
+          testini ve kimyasal direnç kontrolünü makine çıkışında yapmayın;
+          sonuç olduğundan kötü çıkar. Aynı sebeple sıkı paketleme ve
+          laminasyon için de bir gün bekleyin.
+      - q: Beyaz kanal ne kadar bekleyebilir?
+        a: >-
+          Sirkülasyonlu bir makinede günlük kullanımda sorun çıkmaz. Makine bir
+          haftadan uzun duracaksa beyaz hattı MI-910 ile yıkayın; beyaz pigment
+          çöktüğünde bedeli filtre, damper ve çoğu zaman bir kafa temizleme
+          seansıdır. Bu, beyaz kullanan her atölyenin en büyük gizli maliyeti.
+      - q: İnce folyo ve esnek malzemede kullanabilir miyim?
+        a: >-
+          Kısıtlı. MI-210 rijit malzeme için ayarlanmış, sert ve çizilmeye
+          dirençli bir filmdir; katlanan ya da gerilen malzemede kırılır.
+          Esnek film, ince PVC ve rulo işler için MI-220 UV-LED E doğru üründür.
+          İki mürekkebi aynı makinede karıştırmayın.
+  en:
+    role: 395 nm UV-LED ink for Ricoh Gen5/Gen6 printheads
+    summary: >-
+      The MI-210 UV-LED R is a 395 nm UV-LED ink built for LED-cured machines
+      running Ricoh Gen5 and Gen6 heads, used in place of Mimaki LUS-120,
+      Marabu UltraJet DLE-JX and InkTec JETRIX ULE. It is validated on the
+      MF-2513 R8, MH-3200 R12 and MF-1216 R4. The eight-channel set includes
+      white and varnish, and final adhesion is reached 24 hours after printing.
+      The 1 litre bottle ships with its channel chip; the 600 ml pouch feeds
+      bulk tanks. Changing over requires rebuilding the colour profile.
+    features:
+      - >-
+        MavenCure LED 395 — a photoinitiator system matched to the 395 nm LED
+        band, curing at low lamp temperature. That is what keeps thin film and
+        heat-sensitive sheet from moving dimensionally; final adhesion is
+        measured after the 24-hour post-cure, not off the machine.
+      - >-
+        DeepStack Pigment Load — light cyan and light magenta channels cut
+        graininess in skin tones and light grey transitions. All eight channels
+        come from one series, so adding white and varnish does not force a
+        rebalance of the colour build.
+      - >-
+        MavenWhite High Opacity — the white is tuned for circulated supply
+        systems and gives single-hit opacity. Budget for the speed cost:
+        colour-white-colour work runs at roughly a third of colour-only output.
+      - >-
+        CrystalGloss Varnish Layer — varnish prints as a spot channel, giving
+        either a gloss accent over a matt surface or a raised, tactile finish.
+        It has to be built as a separate layer in the artwork.
+      - >-
+        ColorMatch Profile Package — the changeover class is Switch and Match.
+        Per-channel linearisation, total ink limit and the ICC profile are all
+        rebuilt. Plan half a day of calibration; skip it and the drift shows
+        first in corporate deep blues and oranges.
+    disclaimer: >-
+      Adhesion, outdoor durability and chemical resistance vary with the
+      substrate, its surface preparation and the print parameters. The figures
+      here were measured under laboratory conditions and are not a binding
+      commitment. Test on your own material before committing to production.
+      Our product liability is limited to the value of the goods delivered. A
+      Turkish safety data sheet (GBF) ships with every delivery.
+    faq:
+      - q: Which machines is it validated on?
+        a: >-
+          The MF-2513 R8, MH-3200 R12 and MF-1216 R4, on installations in our
+          own workshop. It also runs on an MF-3220 K12 ordered with Ricoh Gen6
+          heads. The Konica KM1024i configuration of the MF-3220 K12 needs a
+          different drop and surface-tension window, so we do not recommend
+          MI-210 there — write to us for a compatibility check.
+      - q: Is the chip included, and what about the 600 ml pouch?
+        a: >-
+          The 1 litre bottle ships with its channel chip in the box; it goes
+          into the reader and resets the level counter. The 600 ml pouch is for
+          bulk tanks and carries no chip, because tank systems read level from
+          a float instead. Do not fit an unchipped channel to a chipped
+          system — the machine will stop with an error.
+      - q: Why Switch and Match rather than Switch and Print?
+        a: >-
+          Because that is the honest label. The chemistry is compatible and you
+          can change over without flushing, but the pigment dispersion is not
+          identical to the OEM ink and the gamut edges differ. Keep printing on
+          your old ICC profile and corporate colours will drift.
+          Linearisation and profiling take half a day, once.
+      - q: What does the 24-hour post-cure actually mean?
+        a: >-
+          The print leaves the machine dry and handleable, but cross-linking
+          continues for a further 24 hours. Do not run adhesion, bend or
+          chemical-resistance checks at the machine exit — they will read worse
+          than the finished job. For the same reason, wait a day before tight
+          packing or laminating.
+      - q: How long can the white channel stand?
+        a: >-
+          In daily use on a circulated machine, it is not an issue. If the
+          machine will stand for more than a week, flush the white line with
+          MI-910; once white pigment settles, the bill is a filter, a damper
+          and usually a head cleaning session. This is the largest hidden cost
+          in any shop running white.
+      - q: Can I use it on thin film and flexible material?
+        a: >-
+          Only within limits. MI-210 is tuned for rigid substrates and cures to
+          a hard, scratch-resistant film that cracks on material which folds or
+          stretches. For flexible film, thin PVC and roll work, MI-220 UV-LED E
+          is the right product. Do not mix the two inks in one machine.

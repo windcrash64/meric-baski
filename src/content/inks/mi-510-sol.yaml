@@ -1,0 +1,275 @@
+sku: MI-510
+series: Maven MI-510 SOL
+family: solvent
+type: ink
+order: 70
+featured: false
+
+oemEquivalent: [Sun Chemical Streamline HRe, Nazdar 700 Series]
+changeover: switch-and-swap
+
+channels:
+  - { code: C, sku: MI-510-C, availability: stock }
+  - { code: M, sku: MI-510-M, availability: stock }
+  - { code: Y, sku: MI-510-Y, availability: stock }
+  - { code: K, sku: MI-510-K, availability: stock }
+  - { code: Lc, sku: MI-510-LC, availability: on-request }
+  - { code: Lm, sku: MI-510-LM, availability: on-request }
+
+packaging:
+  - format: bottle
+    volume: 5
+    unit: L
+    note:
+      tr: "tek kanal dolumu; 3,2 m makinede yaklaşık bir vardiya"
+      en: "single-channel fill; roughly one shift on a 3.2 m machine"
+  - format: bottle
+    volume: 10
+    unit: L
+  - format: bottle
+    volume: 20
+    unit: L
+    note:
+      tr: "sürekli üretim ambalajı; litre maliyeti en düşük seviyede"
+      en: "the continuous-production pack; lowest cost per litre"
+  - format: bag-in-box
+    volume: 5
+    unit: L
+    note:
+      tr: "kapalı sistem dolum; buhar kaçağını ve kalıntı atığı azaltır"
+      en: "closed-system filling; reduces vapour escape and residual waste"
+
+compat:
+  printheads:
+    - "Konica Minolta KM1024i (13 pl)"
+    - "Konica Minolta KM1024i (30 pl)"
+    - "Konica Minolta KM512i (42 pl)"
+    - "Seiko SPT 510 (35 pl)"
+  dropSizePl: [6, 42]
+  # Maven kataloğunda bu sınıfta bir makine yok. Ürün, sahadaki 3,2 m grand
+  # format makineler için tedarik ediliyor — listeyi doldurmuyoruz.
+  machines: []
+  thirdPartyPrinters: [Flora LJ320P, Infiniti FY-3266R, Gongzheng ThunderJet, Allwin E-3202K]
+  chipIncluded: false
+
+specs:
+  # Solvent kürlenmez; ısıtıcıda çözücü uçar. postCure burada laminasyon ve
+  # aplikasyon öncesi gaz atma süresidir — eko solventin iki katı.
+  cure:
+    method: heat
+    postCureHours: 48
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: "açılmamış ambalajda, ateş ve doğrudan güneşten uzakta"
+    en: "unopened, away from ignition sources and direct sunlight"
+  storageTempC: [15, 30]
+  operatingTempC: [18, 32]
+  operatingHumidityPct: [35, 65]
+  outdoorDurabilityMonths: 36
+  outdoorDurabilityNote:
+    tr: "laminesiz, dikey maruziyet, Orta Avrupa iklimi; Akdeniz kıyısında ve yatay maruziyette daha kısa"
+    en: "unlaminated, vertical exposure, central European climate; shorter on the Mediterranean coast and in horizontal exposure"
+
+substrates: [banner, mesh, vinyl, paper]
+applications: [signage, vehicle]
+
+# Bayi olarak üreticinin sertifikasını kendi markamız gibi gösteremeyiz; bu seride
+# ürün bazlı bir sertifika iddiamız yoktur.
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-510-sol-tds-tr.pdf, bytes: 281600, version: v1.0, date: "2026-02" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-510-sol-tds-en.pdf, bytes: 274432, version: v1.0, date: "2026-02" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-510-sol-gbf-tr.pdf, bytes: 704512, version: "2026-01" }
+
+ancillaries: [mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-510-sol/hero.jpg
+    kind: detail
+    alt:
+      tr: "Yirmi litrelik mürekkep bidonu ve yanındaki beş litrelik bag-in-box kutusu"
+      en: "A twenty-litre ink container next to a five-litre bag-in-box carton"
+  - src: /img/inks/mi-510-sol/extraction.jpg
+    kind: detail
+    alt:
+      tr: "Baskı makinesinin üzerine yerleştirilmiş emiş davlumbazı ve dışarı çıkan kanal"
+      en: "Extraction hood mounted over the printer with the duct running outside"
+    caption:
+      tr: "Zorunlu emiş hattı"
+      en: "Mandatory extraction line"
+  - src: /img/inks/mi-510-sol/bib.jpg
+    kind: detail
+    alt:
+      tr: "Bag-in-box ambalajın vanalı ucunun tank besleme hattına bağlanması"
+      en: "The valved outlet of a bag-in-box being connected to the tank supply line"
+  - src: /img/inks/mi-510-sol/app-billboard.jpg
+    kind: application
+    alt:
+      tr: "Cephede asılı büyük ebat brandanın alt köşesi, gergi halkaları ve baskı yüzeyi"
+      en: "Lower corner of a large-format banner hung on a facade, showing eyelets and the printed surface"
+    caption:
+      tr: "Solvent Bilbord Baskı"
+      en: "Solvent billboard printing"
+
+# Sarf ürünlerde fiyat verilebilir; kur ve lot büyüklüğüne bağlı olduğu için
+# liste fiyatı yerine teklif veriyoruz.
+price: null
+
+i18n:
+  tr:
+    role: Konica KM1024i ve KM512i kafalı grand format makineler için gerçek solvent
+    summary: >-
+      MI-510 SOL, Konica KM1024i ve KM512i kafalı grand format makineler için gerçek
+      solvent mürekkeptir; Sun Chemical Streamline HRe ve Nazdar 700 serisinin yerine
+      kullanılır. Kaplamasız brandaya doğrudan yapışır, laminesiz dikey maruziyette
+      36 ay dış mekân ömrü verir ve metrekare başına maliyeti kataloğumuzdaki en düşük
+      seviyededir. Bedeli havalandırmadır: bu mürekkep mekanik emiş ve dışarı atım
+      hattı olmayan bir atölyede kullanılamaz. 5, 10 ve 20 litre şişe ile 5 litre
+      bag-in-box ambalajlarda verilir.
+    features:
+      - >-
+        DeepStrike Çözücü Paketi — Agresif çözücüler PVC yüzeyi açar, pigment
+        malzemenin içine oturur. Kaplamasız brandaya astar ve ek ısı olmadan yapışır;
+        eko solventin kaldıramadığı ucuz branda kalitelerinde fark buradadır. Bu
+        agresifliğin bedeli havalandırmadır: makine üstü emiş ve dışarı atım hattı
+        olmadan bu mürekkep kullanılamaz, opsiyonel değildir.
+      - >-
+        TripleFilter Üretim Hattı — Mürekkep üç kademede, son kademede 1 µm'ye kadar
+        filtrelenir ve gazı alınır. 30 ve 42 pikolitrelik büyük damlalı kafalarda
+        tıkanma geç fark edilir; iki metrelik bir bilbordda eksik nozülü baskı bittikten
+        sonra görürsünüz, bu yüzden filtrasyon burada daha kritiktir.
+      - >-
+        ColorLock Lot Tutarlılığı — Her lot referans standardına karşı ölçülür, lotlar
+        arası fark ortalama ΔE ≤ 1,0 bandında tutulur. Bir kampanyanın panoları
+        haftalara yayılarak basılır; ikinci partide değişen bir maviyi müşteri ilk
+        bakışta görür.
+      - >-
+        LongRun Ambalaj — 5, 10 ve 20 litre şişe ile kapalı sistem 5 litre bag-in-box.
+        3,2 metrelik bir makine üretim modunda vardiya başına yaklaşık 4–7 litre yakar;
+        20 litrelik ambalaj bu yüzden haftalık stok birimidir, aylık değil.
+      - >-
+        OutGas 48 Penceresi — Gerçek solvent, eko solventten daha derine işler ve gazını
+        daha yavaş atar. Laminasyon, kesim ve germe işlemleri için 48 saat bekleyin;
+        erken lamine edilen brandada kabarcık ve kenar kalkması olağandır.
+    disclaimer: >-
+      Bu ürün parlayıcı ve uçucu organik çözücüler içerir. Mekanik emişi ve dışarı atım
+      hattı olmayan ortamlarda kullanılamaz; kullanım sırasında nitril eldiven ve göz
+      koruması zorunludur. Depolama ve elleçleme koşulları için Türkçe Güvenlik Bilgi
+      Formu'nun 7. ve 8. bölümlerini kendi İSG dosyanıza alın. Yapışma, dış mekân
+      dayanımı ve renk sonuçları malzemeye ve baskı koşullarına göre değişir; buradaki
+      değerler tipik sonuçlardır, taahhüt değildir. Seri üretime başlamadan önce kendi
+      brandanızda test edin. Sorumluluğumuz teslim edilen malın bedeliyle sınırlıdır.
+    faq:
+      - q: Havalandırma gerçekten zorunlu mu?
+        a: >-
+          Evet, ve bu cümleyi yumuşatmıyoruz. Makinenin üzerine davlumbaz, davlumbazdan
+          doğrudan dışarı atım hattı ve odada saatte 6–10 hava değişimi isteriz.
+          Penceresiz bir depoya, ofisin bitişiğine veya kombinin bulunduğu bir hacme
+          kurulmaz. Bu şartları sağlamayacaksanız bu mürekkebi satmıyoruz; eko solvent
+          tarafına, MI-410 ECO'ya bakın.
+      - q: Eko solventten farkı nedir?
+        a: >-
+          Üç yerde: yapışma, dayanım ve maliyet. Gerçek solvent kaplamasız brandaya
+          doğrudan yapışır, laminesiz dış mekân ömrü 24 ay yerine 36 aydır ve metrekare
+          maliyeti belirgin şekilde düşüktür. Karşılığında koku, VOC emisyonu, zorunlu
+          havalandırma ve daha sıkı depolama şartları gelir. İç mekân işi ağırlıklı bir
+          atölye için yanlış üründür.
+      - q: Bu mürekkep için sizde makine var mı?
+        a: >-
+          Şu an yok. Katalogdaki en yakın makineler UV hibrit tarafındadır ve farklı bir
+          kimya kullanır. MI-510 SOL, sahada zaten çalışan 3,2 metrelik Konica kafalı
+          makineler için tedarik edilir; makine ile birlikte satılan bir sarf değildir.
+          Bunu baştan söylüyoruz ki teklif aşamasında yanlış beklenti oluşmasın.
+      - q: Kafa ömrünü kısaltır mı?
+        a: >-
+          Gerçek solvent, eko solvente göre kafa üzerinde daha ağır bir yüktür. Sürekli
+          üretimde Konica kafalarda 12–24 ay arası bir servis ömrü olağandır ve bu
+          aralığı belirleyen esas olarak mürekkebin markası değil, filtre değişimi,
+          kapaklama disiplini ve haftalık temizlik rutinidir. Kafa ömrü taahhüdü veren
+          mürekkep satıcısına inanmayın.
+      - q: Bir litre kaç metrekare basar?
+        a: >-
+          Orta kaplamalı branda işinde 1 litre yaklaşık 120–160 m² kaplar; aynı işte eko
+          solvent 90–120 m² yapar. Aradaki fark, litre fiyatındaki farkla birleşince
+          metrekare maliyetini gerçekten aşağı çeken şeydir. Tam kaplama işlerde her iki
+          rakamı da yaklaşık üçte bir aşağı alın.
+  en:
+    role: True solvent for grand-format machines with Konica KM1024i and KM512i heads
+    summary: >-
+      MI-510 SOL is a true solvent ink for grand-format machines running Konica
+      KM1024i and KM512i heads, used in place of Sun Chemical Streamline HRe and the
+      Nazdar 700 series. It bonds directly to uncoated banner, gives 36 months
+      outdoors in unlaminated vertical exposure, and has the lowest cost per square
+      metre in our catalogue. The price is ventilation: this ink cannot be used in a
+      shop without mechanical extraction ducted outside. Supplied in 5, 10 and 20
+      litre bottles and a 5 litre bag-in-box.
+    features:
+      - >-
+        DeepStrike Solvent Package — Aggressive solvents open the PVC surface so pigment
+        settles into the material. It bonds to uncoated banner without primer or extra
+        heat, which is exactly where eco-solvent fails on cheaper banner grades. The
+        price of that aggression is ventilation: without an extraction hood over the
+        machine and a duct outside, this ink cannot be used. It is not optional.
+      - >-
+        TripleFilter Production Line — Filtered in three stages, down to 1 µm at the
+        last, and degassed. On 30 and 42 picolitre heads a blocked nozzle shows up late:
+        on a two-metre billboard you find the missing nozzle after the print is
+        finished, which makes filtration more critical here, not less.
+      - >-
+        ColorLock Batch Consistency — Every batch is measured against the reference
+        standard and held at an average ΔE ≤ 1.0. A campaign's boards are printed across
+        several weeks, and a blue that shifts on the second run is the first thing the
+        client sees.
+      - >-
+        LongRun Packaging — 5, 10 and 20 litre bottles plus a closed-system 5 litre
+        bag-in-box. A 3.2 m machine in production burns roughly 4–7 litres a shift,
+        which makes the 20 litre pack a weekly stock unit rather than a monthly one.
+      - >-
+        OutGas 48 Window — True solvent penetrates deeper than eco-solvent and releases
+        more slowly. Allow 48 hours before lamination, cutting or tensioning; banner
+        laminated early routinely bubbles and lifts at the edges.
+    disclaimer: >-
+      This product contains flammable, volatile organic solvents. It must not be used in
+      spaces without mechanical extraction ducted outside, and nitrile gloves and eye
+      protection are mandatory in use. Take sections 7 and 8 of the Turkish Safety Data
+      Sheet (GBF) into your own occupational-safety file for storage and handling
+      conditions. Adhesion, outdoor durability and colour results vary with the media
+      and your printing conditions; the figures here are typical results, not a
+      guarantee. Test on your own banner before committing to production. Our liability
+      is limited to the value of the goods supplied.
+    faq:
+      - q: Is ventilation genuinely mandatory?
+        a: >-
+          Yes, and we are not going to soften that sentence. We require a hood over the
+          machine, a duct from that hood straight outside, and 6–10 air changes an hour
+          in the room. It does not go into a windowless store, next to an office, or in
+          a space shared with a boiler. If you cannot meet those conditions we will not
+          sell you this ink — look at the eco-solvent side, MI-410 ECO.
+      - q: How does it differ from eco-solvent?
+        a: >-
+          In three places: adhesion, durability and cost. True solvent bonds directly to
+          uncoated banner, lasts 36 months unlaminated outdoors instead of 24, and costs
+          noticeably less per square metre. In return you get odour, VOC emissions,
+          mandatory ventilation and stricter storage rules. For a shop doing mostly
+          interior work it is the wrong product.
+      - q: Do you sell a machine that runs this ink?
+        a: >-
+          Not at the moment. The closest machines in our catalogue are on the UV hybrid
+          side and use a different chemistry. MI-510 SOL is supplied for 3.2 m
+          Konica-head machines already installed in the field; it is not a consumable
+          sold alongside a machine. We say so up front so nothing is assumed at
+          quotation stage.
+      - q: Will it shorten printhead life?
+        a: >-
+          True solvent is a heavier load on a head than eco-solvent. In continuous
+          production, 12–24 months of service life on Konica heads is normal, and what
+          decides where you land in that range is filter changes, capping discipline and
+          the weekly cleaning routine — not the brand on the bottle. Do not believe an
+          ink supplier who guarantees head life.
+      - q: How many square metres does a litre print?
+        a: >-
+          On moderate-coverage banner work, one litre covers roughly 120–160 m²; the
+          same job in eco-solvent gives 90–120 m². That difference, combined with the
+          difference in price per litre, is what actually pulls the cost per square
+          metre down. On full-coverage work, take about a third off both figures.

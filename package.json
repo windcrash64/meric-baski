@@ -9,10 +9,12 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "images": "node tools/build-images.mjs",
+    "fonts": "bash tools/fonts.sh",
+    "brand": "tools/.venv/Scripts/python.exe tools/build_brand.py",
+    "build": "node tools/build-images.mjs && astro build",
     "preview": "astro preview",
-    "check": "astro check",
-    "models": "node scripts/optimise-models.mjs"
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.3",

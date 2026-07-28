@@ -1,0 +1,287 @@
+sku: MI-420
+series: Maven MI-420 ECO-TR
+family: eco-solvent
+type: ink
+order: 60
+featured: false
+
+# Bu üründe satın alma kararını doğrudan bu liste veriyor: alıcı neyin yerine
+# geçtiğini arıyor. Metin olarak yazılır, logo olarak asla gösterilmez.
+oemEquivalent:
+  - Roland TrueVIS TR2
+  - Roland ECO-SOL MAX 2
+  - Roland ECO-SOL MAX 3
+  - Epson UltraChrome GS3
+  - Mutoh Eco-Ultra
+  - Mutoh MS41
+  - Mimaki SS21
+changeover: switch-and-print
+
+channels:
+  - { code: C, sku: MI-420-C, availability: stock }
+  - { code: M, sku: MI-420-M, availability: stock }
+  - { code: Y, sku: MI-420-Y, availability: stock }
+  - { code: K, sku: MI-420-K, availability: stock }
+  - { code: Lc, sku: MI-420-LC, availability: on-request }
+  - { code: Lm, sku: MI-420-LM, availability: on-request }
+  - { code: Or, sku: MI-420-OR, availability: on-request }
+
+packaging:
+  - format: cartridge
+    volume: 220
+    unit: ml
+    note:
+      tr: "ECO-SOL MAX 2 ve Eco-Ultra kartuş yuvası; çip dahil"
+      en: "ECO-SOL MAX 2 and Eco-Ultra cartridge slot; chip included"
+  - format: cartridge
+    volume: 440
+    unit: ml
+    note:
+      tr: "ECO-SOL MAX 2 büyük kartuş formatı; çip dahil"
+      en: "the large ECO-SOL MAX 2 cartridge format; chip included"
+  - format: pouch
+    volume: 500
+    unit: ml
+    note:
+      tr: "TrueVIS TR2 poşet formatı; çip dahil"
+      en: "TrueVIS TR2 pouch format; chip included"
+  - format: pouch
+    volume: 700
+    unit: ml
+    note:
+      tr: "SureColor S serisi mürekkep paketi formatı; çip dahil"
+      en: "SureColor S-series ink pack format; chip included"
+
+compat:
+  printheads: [Roland FlexFire, Epson PrecisionCore TFP, Epson DX7, Epson DX5]
+  dropSizePl: [3.5, 30]
+  machines: [MS-1600-PC, MS-1802-E4]
+  thirdPartyPrinters:
+    - Roland TrueVIS VG3-640
+    - Roland TrueVIS SG3-300
+    - Roland VersaEXPRESS RF-640
+    - Epson SureColor S60600
+    - Epson SureColor S80600
+    - Mutoh ValueJet 1624X
+    - Mutoh XpertJet 1641SR
+  chipIncluded: true
+
+specs:
+  # Eko solvent kürlenmez; ısıtıcı hattında çözücü uçar. postCure burada
+  # laminasyon öncesi gaz atma süresidir.
+  cure:
+    method: heat
+    postCureHours: 24
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: "açılmamış kartuşta; takılan kartuşu 6 ay içinde bitirin"
+    en: "in an unopened cartridge; finish a fitted cartridge within 6 months"
+  storageTempC: [15, 30]
+  operatingTempC: [18, 30]
+  operatingHumidityPct: [35, 65]
+  outdoorDurabilityMonths: 24
+  outdoorDurabilityNote:
+    tr: "laminesiz, dikey maruziyet, Orta Avrupa iklimi; UV laminasyonla 36 aya çıkar"
+    en: "unlaminated, vertical exposure, central European climate; 36 months with UV lamination"
+
+substrates: [vinyl, banner, mesh, canvas, wallpaper, paper]
+applications: [signage, vehicle, interior]
+
+# Üreticinin sertifikasını bayi olarak kendi markamız gibi gösteremeyiz; bu seride
+# ürün bazlı bir sertifika iddiamız yoktur.
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-420-eco-tr-tds-tr.pdf, bytes: 254976, version: v1.1, date: "2026-02" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-420-eco-tr-tds-en.pdf, bytes: 249856, version: v1.1, date: "2026-02" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-420-eco-tr-gbf-tr.pdf, bytes: 598016, version: "2026-01" }
+
+ancillaries: [mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-420-eco-tr/hero.jpg
+    kind: detail
+    alt:
+      tr: "440 ml kartuş ile 500 ml poşetin uç kısımları görünecek şekilde yan yana duruşu"
+      en: "A 440 ml cartridge and a 500 ml pouch standing side by side with their outlets visible"
+  - src: /img/inks/mi-420-eco-tr/chip.jpg
+    kind: detail
+    alt:
+      tr: "Kartuşun ucundaki çip teması ve makinenin okuma kontağının yakın çekimi"
+      en: "Close-up of the chip contact on the cartridge and the reader contact in the machine"
+    caption:
+      tr: "ChipReady çip teması"
+      en: "ChipReady chip contact"
+  - src: /img/inks/mi-420-eco-tr/slot.jpg
+    kind: detail
+    alt:
+      tr: "Yazıcının mürekkep yuvasına yerleştirilen poşet ve ekrandaki seviye göstergesi"
+      en: "A pouch being seated in the printer's ink bay with the level readout on screen"
+  - src: /img/inks/mi-420-eco-tr/app-vehicle.jpg
+    kind: application
+    alt:
+      tr: "Araç kaportasına uygulanmış tam kaplama folyonun köşe kıvrımındaki yakın çekim"
+      en: "Close-up of a full-wrap vinyl folded into a body-panel corner on a vehicle"
+    caption:
+      tr: "Eko Solvent Araç Giydirme Baskı"
+      en: "Eco-solvent vehicle wrap printing"
+
+# Sarf ürünlerde fiyat verilebilir; kur ve lot büyüklüğüne bağlı olduğu için
+# liste fiyatı yerine teklif veriyoruz.
+price: null
+
+i18n:
+  tr:
+    role: TrueVIS TR2, SureColor ve Mutoh kartuş formatlarında OEM eşdeğeri eko solvent
+    summary: >-
+      MI-420 ECO-TR, OEM kartuş ve mürekkep paketi formatlarında verilen eko solvent
+      serisidir: Roland TrueVIS TR2, Roland ECO-SOL MAX 2 ve MAX 3, Epson UltraChrome
+      GS3, Mutoh Eco-Ultra ve MS41, Mimaki SS21. Çip kartuşun üzerindedir, seviye
+      okuması makinenin kendi ekranından çalışır. Renk hedefi OEM profiline
+      eşlenmiştir; bu yüzden geçiş sınıfı doğrudan geçiştir ve mevcut ICC
+      profilinizle basmaya devam edersiniz. 220 ve 440 ml kartuş, 500 ve 700 ml poşet
+      formatlarında; beyaz ve metalik gümüş bu seride yoktur.
+    features:
+      - >-
+        MatchPoint OEM Renk Eşlemesi — Renk hedefi, OEM mürekkebin kendi ICC profili
+        altında standart döküm folyoda ortalama ΔE ≤ 2,0 olacak şekilde kurulur.
+        Sözleşmeli kurumsal renk basıyorsanız yine de yeniden profil çıkarın; hiçbir
+        üçüncü parti mürekkep OEM'i birebir vermez, bunu iddia eden de doğru
+        söylemiyordur.
+      - >-
+        ChipReady Kartuş ve Poşet — Çip her ambalajın üzerindedir; makine seviyeyi
+        kendi ekranından okur, harici kart veya reset cihazı gerekmez. Bazı firmware
+        sürümleri üçüncü parti çipi reddeder: sipariş öncesi makine modelini ve
+        yazılım sürümünü bize bildirin, uyumsuzsa göndermiyoruz.
+      - >-
+        LowOdour LO-2 Çözücü Paketi — MI-410 ile aynı düşük buhar basınçlı çözücü
+        paketi. İki ürün arasında geçişte yıkama gerekmez; filo içinde hem kartuşlu
+        hem tanklı makine çalıştıran atölye tek kimyayla stok tutar.
+      - >-
+        ColorLock Lot Tutarlılığı — Her lot referans standardına karşı ölçülür, lotlar
+        arası fark ortalama ΔE ≤ 1,0 bandında tutulur. Kartuşlu makinede bu daha da
+        önemlidir: bir işi bitirirken kartuş değişirse fark baskının ortasında çıkar.
+      - >-
+        OutGas 24 Penceresi — Laminasyon ve araç aplikasyonu için baskıdan sonra en az
+        24 saat bekleyin. Kartuş formatı bu süreyi değiştirmez; çözücü hangi ambalajdan
+        gelirse gelsin aynı hızda uçar.
+    disclaimer: >-
+      Marka ve model adları yalnızca uyumluluğu belirtmek için kullanılmıştır; tescilli
+      markalar sahiplerine aittir ve Maven ile aralarında bağ yoktur. Yapışma, dış
+      mekân dayanımı ve renk sonuçları malzemeye ve baskı koşullarına göre değişir;
+      buradaki değerler tipik sonuçlardır, taahhüt değildir. Seri üretime başlamadan
+      önce kendi malzemenizde test edin. Üçüncü parti mürekkep kullanımının makine
+      üreticinizin garanti şartlarına etkisini sipariş öncesi kendi sözleşmenizden
+      kontrol edin. Sorumluluğumuz teslim edilen malın bedeliyle sınırlıdır.
+    faq:
+      - q: Üçüncü parti mürekkep makine garantimi etkiler mi?
+        a: >-
+          Etkileyebilir, açık söyleyelim. Makine üreticileri garanti kapsamını çoğu
+          zaman kendi sarfının kullanılmasına bağlar; garanti süresi devam eden yeni bir
+          Roland veya Epson'da bu riski almadan önce kendi sözleşmenizi okuyun. Bizim
+          verdiğimiz taahhüt şudur: mürekkebin kendisinden kaynaklanan bir arızada
+          kafayı ve hattı biz karşılarız. Makinenin OEM garantisi sizinle üretici
+          arasındadır, onu biz devralamayız.
+      - q: Çip her ambalajda yeni mi geliyor?
+        a: >-
+          Evet, çip kartuşun veya poşetin üzerindedir ve her ambalajda yenilenir.
+          Makine seviyeyi kendi ekranından okur. Tek risk firmware'dir: bazı sürümler
+          üçüncü parti çipi tanımaz ve üretici güncellemeleri bunu değiştirebilir.
+          Sipariş öncesi model ve yazılım sürümünü sorduğumuz için sebep budur.
+      - q: "\"Doğrudan geçiş\" gerçekten yıkamasız mı?"
+        a: >-
+          Listelenen OEM eko solvent ailelerinden geliyorsanız evet: kanal başına
+          50–80 ml sürüp basmaya devam edersiniz. Mild solvent (örneğin Mimaki BS4) veya
+          gerçek solventten geliyorsanız hayır; o durumda MI-910 FLUSH ile tam yıkama
+          gerekir. Emin değilseniz makinede hangi mürekkebin olduğunu bize sorun,
+          tahmin etmeyin.
+      - q: Maven makinelerinde de bu seri mi kullanılıyor?
+        a: >-
+          Hayır. MS-1802 E4 ve MS-1600 PC toplu besleme ile çalışır; oralarda doğru
+          ürün MI-410 ECO'dur. MI-420 uyumluluk listesinde yer alıyor çünkü kimya
+          aynıdır ve iki ürün arasında yıkamasız geçilir — filosunda hem Roland hem
+          Maven bulunan atölyeler bu yüzden tek kimyayla çalışabiliyor.
+      - q: Beyaz ve metalik gümüş var mı?
+        a: >-
+          Yok. TrueVIS beyaz ve metalik gümüş kanallarını OEM'den almaya devam
+          edersiniz; bu seride yalnızca CMYK, açık camgöbeği, açık macenta ve turuncu
+          bulunur. Açık renkler ve turuncu talebe bağlı üretilir, teslim süresi
+          stoktakilerden uzundur.
+  en:
+    role: OEM-equivalent eco-solvent in TrueVIS TR2, SureColor and Mutoh cartridge formats
+    summary: >-
+      MI-420 ECO-TR is the eco-solvent line supplied in OEM cartridge and ink-pack
+      formats: Roland TrueVIS TR2, Roland ECO-SOL MAX 2 and MAX 3, Epson UltraChrome
+      GS3, Mutoh Eco-Ultra and MS41, Mimaki SS21. The chip is on the pack, so the
+      machine reads level on its own display. Colour is matched to the OEM target,
+      which is why it is classed Switch & Print and you keep printing with your
+      existing ICC profile. 220 and 440 ml cartridges, 500 and 700 ml pouches; no
+      white or metallic silver in this series.
+    features:
+      - >-
+        MatchPoint OEM Colour Match — The colour target is set so that, under the OEM
+        ink's own ICC profile on standard cast vinyl, the average difference stays at
+        ΔE ≤ 2.0. If you print contracted corporate colours, still re-profile: no
+        third-party ink reproduces an OEM exactly, and anyone claiming otherwise is not
+        being straight with you.
+      - >-
+        ChipReady Cartridge and Pouch — A chip ships on every pack, so the machine
+        reads level on its own display with no external card or reset device. Some
+        firmware versions reject third-party chips: tell us the machine model and
+        firmware version before ordering, and if it is incompatible we will not ship.
+      - >-
+        LowOdour LO-2 Solvent Package — The same low vapour-pressure solvent package as
+        MI-410. Moving between the two needs no flush, so a shop running both cartridge
+        and tank machines can stock a single chemistry.
+      - >-
+        ColorLock Batch Consistency — Every batch is measured against the reference
+        standard and held at an average ΔE ≤ 1.0. On a cartridge machine this matters
+        more, not less: if a cartridge runs out mid-job, any shift shows up in the
+        middle of the print.
+      - >-
+        OutGas 24 Window — Wait at least 24 hours after printing before laminating or
+        applying to a vehicle. The cartridge format changes nothing here; solvent
+        leaves at the same rate whatever the pack it came from.
+    disclaimer: >-
+      Brand and model names are used solely to indicate compatibility; the registered
+      marks belong to their owners and imply no association with Maven. Adhesion,
+      outdoor durability and colour results vary with the media and your printing
+      conditions; the figures here are typical results, not a guarantee. Test on your
+      own media before committing to production. Check the effect of third-party ink on
+      your printer manufacturer's warranty terms in your own contract before ordering.
+      Our liability is limited to the value of the goods supplied.
+    faq:
+      - q: Does third-party ink affect my printer warranty?
+        a: >-
+          It can, and we will say so plainly. Machine manufacturers often tie warranty
+          cover to the use of their own consumables; on a Roland or Epson still inside
+          its warranty period, read your own contract before taking that risk. What we
+          commit to is this: if a fault is traceable to the ink itself, we cover the
+          head and the line. The printer's OEM warranty is between you and the
+          manufacturer, and we cannot take it over.
+      - q: Does a new chip come with every pack?
+        a: >-
+          Yes — the chip is on the cartridge or pouch and is renewed with every pack, so
+          the machine reads level on its own display. The single risk is firmware: some
+          versions do not recognise third-party chips, and manufacturer updates can
+          change that. It is why we ask for the model and firmware version before
+          taking an order.
+      - q: Is "Switch & Print" really flush-free?
+        a: >-
+          Coming from the OEM eco-solvent families listed, yes: purge 50–80 ml per
+          channel and keep printing. Coming from a mild solvent such as Mimaki BS4, or
+          from true solvent, no — that needs a full flush with MI-910 FLUSH. If you are
+          not sure what is in the machine, ask us rather than guessing.
+      - q: Do Maven machines use this series too?
+        a: >-
+          No. The MS-1802 E4 and MS-1600 PC are bulk-fed, and MI-410 ECO is the right
+          product there. MI-420 appears in their compatibility list because the
+          chemistry is identical and you can move between the two without flushing —
+          which is how shops with both Roland and Maven machines run one chemistry
+          across the fleet.
+      - q: Are white and metallic silver available?
+        a: >-
+          No. You continue to buy TrueVIS white and metallic silver from the OEM; this
+          series covers CMYK, light cyan, light magenta and orange only. The light
+          colours and orange are made to order, so lead time is longer than for stock
+          items.

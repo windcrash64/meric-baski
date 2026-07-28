@@ -1,0 +1,266 @@
+sku: MI-220
+series: Maven MI-220 UV-LED E
+family: uv-led
+type: ink
+order: 30
+featured: false
+
+# Epson kafalı LED makinelerin çoğu bilinmeyen bir jenerik mürekkeple gelir;
+# o hattı yıkamadan geçiş yapılmaz. Bu yüzden `switch-and-swap`.
+oemEquivalent:
+  - InkTec SE Serisi
+  - Roland ECO-UV EUV5
+changeover: switch-and-swap
+
+channels:
+  - { code: C, sku: MI-220-C, availability: stock }
+  - { code: M, sku: MI-220-M, availability: stock }
+  - { code: Y, sku: MI-220-Y, availability: stock }
+  - { code: K, sku: MI-220-K, availability: stock }
+  - { code: W, sku: MI-220-W, availability: stock }
+  - { code: Cl, sku: MI-220-CL, availability: stock }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note:
+      tr: kanal başına; çip içermez
+      en: per channel; no chip
+
+compat:
+  printheads:
+    - Epson i3200-U1
+    - Epson i1600-U1
+    - Epson XP600
+    - Epson DX7
+  dropSizePl: [3, 25]
+  machines:
+    - MF-6090-U3
+    - MH-1800-U4
+    - MF-1216-R4
+  thirdPartyPrinters:
+    - Sublistar A3 30R
+    - Oric OR-6090
+    - MTuTech MT-6090 UV
+  chipIncluded: false
+
+specs:
+  cure:
+    method: uv-led
+    wavelengthNm: 395
+    postCureHours: 24
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: orijinal ambalajında, karanlıkta ve dik konumda saklanır
+    en: stored upright in the original packaging, away from light
+  storageTempC: [15, 25]
+  operatingTempC: [18, 28]
+  operatingHumidityPct: [40, 65]
+  # Esnek reçine paketi, sert filme göre bir miktar dayanım verir; 24 ay değil,
+  # 18 ay beyan ediyoruz.
+  outdoorDurabilityMonths: 18
+  outdoorDurabilityNote:
+    tr: dikey maruziyet, Orta Avrupa iklimi, laminasyonsuz baskı
+    en: vertical exposure, central European climate, unlaminated print
+
+substrates: [film, vinyl, pvc, polycarb, acrylic, foamboard, photoblock, paper, leather, wood, metal, glass]
+applications: [signage, interior, packaging, industrial]
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-220-uv-led-e-tds-tr.pdf, bytes: 372736, version: v1.1, date: "2026-05" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-220-uv-led-e-tds-en.pdf, bytes: 366592, version: v1.1, date: "2026-05" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-220-uv-led-e-gbf-tr.pdf, bytes: 598016, version: KKDİK-2026.1, date: "2026-03" }
+
+ancillaries: [mi-910-flush, mi-920-primer]
+
+gallery:
+  - src: /img/inks/mi-220-uv-led-e/hero.jpg
+    kind: detail
+    alt:
+      tr: "Altı kanalın bir litrelik şişeleri iki sıra hâlinde dizilmiş"
+      en: "One litre bottles of all six channels arranged in two rows"
+  - src: /img/inks/mi-220-uv-led-e/flex-test.jpg
+    kind: detail
+    alt:
+      tr: "Basılı ince folyonun bir mandrel çevresinde kırılmadan bükülmesi"
+      en: "Printed thin film bent around a mandrel without the ink cracking"
+    caption:
+      tr: FlexBond esneklik testi
+      en: FlexBond flexibility test
+  - src: /img/inks/mi-220-uv-led-e/app-panel.jpg
+    kind: application
+    alt:
+      tr: "Kavisli pleksi panele basılmış menü tabelası ve arkasındaki LED aydınlatma"
+      en: "Menu sign printed on a curved acrylic panel with LED lighting behind it"
+    caption:
+      tr: UV Pleksi Menü Baskı
+      en: UV printed acrylic menu panel
+
+i18n:
+  tr:
+    role: Epson i3200-U1 ve XP600 kafalar için esnek UV-LED mürekkep
+    summary: >-
+      MI-220 UV-LED E, Epson i3200-U1 ve XP600 kafalı LED makineler için
+      formüle edilmiş 395 nm UV-LED mürekkeptir; InkTec SE serisi ve Roland
+      ECO-UV EUV5 sınıfındaki mürekkeplerin yerine kullanılır. Reçine paketi
+      esnekliğe göre kurulmuştur — ince folyo, PVC ve rulo malzemede kırılmadan
+      çalışır. MF-6090 U3, MH-1800 U4 ve Epson kafalı MF-1216 R4 gövdelerinde
+      doğrulanmıştır. Altı kanallı skala beyaz ve lak içerir, 1 litrelik şişede
+      tedarik edilir. Geçiş hat yıkaması ister.
+    features:
+      - >-
+        MavenCure LED 395 — 395 nm bandına göre kurulmuş fotobaşlatıcı sistemi,
+        lamba sıcaklığını düşük tutar. Dekota, ince PVC ve fotoblok gibi ısıyla
+        kabaran malzemelerde bu, dalgalanmayı önleyen tek etkendir; nihai
+        yapışma 24 saatlik son kürlenmeden sonra oluşur.
+      - >-
+        FlexBond Esnek Reçine Paketi — kürlenmiş film, 4 mm çaplı mandrel
+        etrafında kırılmadan bükülür. Karşılığı açık olsun: sert MI-210 filmine
+        göre çizilme ve kimyasal direnç bir kademe düşüktür. Katlanan, gerilen
+        ve rulo işler için doğru mürekkep budur, yer karosu için değil.
+      - >-
+        MavenWhite Yüksek Opaklık — beyaz, sirkülasyonu olmayan küçük
+        makinelerde de kullanılabilecek şekilde ayarlanmıştır; buna rağmen
+        haftalık karıştırma ve boşta kalan hatlarda yıkama zorunludur.
+        Karıştırıcı çökelmeyi geciktirir, ortadan kaldırmaz.
+      - >-
+        CrystalGloss Lak Katmanı — lak, bölgesel kanal olarak basılır; mat
+        yüzeyde parlak vurgu ya da kabartma hissi verir. Ayrıca ince
+        malzemelerde renk katmanının üzerine koruyucu bir tabaka ekler.
+      - >-
+        SafeSwap Geçiş Protokolü — geçiş sınıfı "Yıkama gerekir". Hat, damper
+        ve filtreler MI-910 ile yıkanır. Bu sınıftaki makinelerin çoğunda önceki
+        mürekkebin kimyası bilinmediği için doğrudan geçiş vaat etmiyoruz;
+        1–1,5 litre fire ve iki üç saatlik duruş planlayın.
+    disclaimer: >-
+      Yapışma, dış mekân dayanımı ve kimyasal direnç; malzemeye, yüzey
+      hazırlığına ve baskı parametrelerine göre değişir. Buradaki değerler
+      laboratuvar koşullarında ölçülmüştür ve bağlayıcı bir taahhüt değildir.
+      Seri üretime geçmeden önce kendi malzemenizde test edin. Ürün
+      sorumluluğumuz teslim edilen malın bedeliyle sınırlıdır. Türkçe Güvenlik
+      Bilgi Formu (GBF) her sevkiyatla birlikte verilir.
+    faq:
+      - q: XP600 ile i3200-U1 aynı mürekkebi kullanabilir mi?
+        a: >-
+          Evet, MI-220 her iki kafada da çalışır; damla penceresi 3–25 pL
+          arasını kapsar. Ancak dalga formu ve kafa voltajı farklıdır — RIP
+          tarafında kafa tipini doğru seçmezseniz XP600'de saçaklanma,
+          i3200'de eksik nozzle görürsünüz. Kafa değiştirdiyseniz makine
+          firmware'inde de tanımlamayı güncelleyin.
+      - q: Esneklik neyin karşılığında geliyor?
+        a: >-
+          Çizilme direncinin ve kimyasal direncin bir kademe düşmesi
+          karşılığında. Kürlenmiş film 4 mm mandrelde kırılmaz, ama zeminde
+          yürünen levha, sık temizlenen tezgâh yüzeyi ya da alkol bazlı
+          temizleyiciyle silinen panel gibi işlerde MI-210 daha doğru tercih.
+          Aynı atölyede iki mürekkebi farklı makinelerde tutmak yaygındır.
+      - q: Sirkülasyonu olmayan bir makinede beyaz kullanabilir miyim?
+        a: >-
+          Kullanabilirsiniz ama rutin şart. MF-6090 U3 gibi karıştırıcılı
+          sistemlerde beyazı haftada en az iki kez çalıştırın; makine bir
+          haftadan uzun duracaksa beyaz hattı yıkayın. Beyazı ayda birkaç kez
+          kullanıyorsanız kanalı sürekli dolu tutmak yerine iş geldikçe doldurup
+          yıkamak daha ucuza gelir.
+      - q: Dış mekânda 18 ay ne anlama geliyor?
+        a: >-
+          Dikey maruziyet, Orta Avrupa iklimi, laminasyonsuz ve tam kürlenmiş
+          baskı için. MI-210'un 24 ayına göre daha kısadır; esnek reçine
+          paketinin bedeli budur. Akdeniz ikliminde, yatay maruziyette veya
+          araç yüzeyinde laminasyon önerilir.
+      - q: Bu mürekkep hangi işte yanlış tercih?
+        a: >-
+          Günlük 40 m²'nin üzerinde rijit levha basan bir atölyede. MI-220,
+          Epson kafalı küçük ve orta makineler için ayarlanmıştır; Ricoh Gen6
+          kafalı endüstriyel bir flatbed'de hem hız hem dayanım açısından
+          MI-210 UV-LED R doğru üründür.
+      - q: Cam ve metalde primer gerekir mi?
+        a: >-
+          Evet, kalıcı iş için gerekir. MI-920 primer olmadan float camda ve
+          anodize alüminyumda yapışma iç mekânda birkaç ay dayanır, dış mekânda
+          daha az. Seramik ve toz boyalı yüzeylerde de aynı kural geçerli.
+          Her yeni malzemede ISO 2409 çapraz kesme testi yapın.
+  en:
+    role: Flexible UV-LED ink for Epson i3200-U1 and XP600 printheads
+    summary: >-
+      The MI-220 UV-LED E is a 395 nm UV-LED ink formulated for LED machines
+      running Epson i3200-U1 and XP600 heads, used in place of the InkTec SE
+      series and Roland ECO-UV EUV5. Its resin package is built for
+      flexibility — it works on thin film, PVC and roll material without
+      cracking. It is validated on the MF-6090 U3, MH-1800 U4 and the
+      Epson-head MF-1216 R4. The six-channel set includes white and varnish and
+      is supplied in 1 litre bottles. Changeover requires a line flush.
+    features:
+      - >-
+        MavenCure LED 395 — a photoinitiator system matched to the 395 nm band,
+        keeping lamp temperature low. On foam PVC, thin PVC and foam board,
+        which blister with heat, that is the single factor preventing
+        distortion; final adhesion follows the 24-hour post-cure.
+      - >-
+        FlexBond Flexible Resin Package — the cured film bends around a 4 mm
+        mandrel without cracking. The trade-off, stated plainly, is that
+        scratch and chemical resistance sit a step below the harder MI-210
+        film. This is the right ink for material that folds, stretches or comes
+        off a roll — not for floor graphics.
+      - >-
+        MavenWhite High Opacity — the white is tuned to work even on small
+        machines with no circulation, but weekly stirring and a flush of any
+        idle line remain mandatory. A stirrer delays settling; it does not
+        prevent it.
+      - >-
+        CrystalGloss Varnish Layer — varnish prints as a spot channel for gloss
+        accents on a matt surface or a tactile raised finish, and it adds a
+        protective layer over the colour on thin substrates.
+      - >-
+        SafeSwap Changeover Protocol — the class is Switch and Swap. Lines,
+        dampers and filters are flushed with MI-910. On most machines in this
+        class the chemistry of the incumbent ink is unknown, so we do not
+        promise a direct switch. Budget 1–1.5 litres of waste and two to three
+        hours of downtime.
+    disclaimer: >-
+      Adhesion, outdoor durability and chemical resistance vary with the
+      substrate, its surface preparation and the print parameters. The figures
+      here were measured under laboratory conditions and are not a binding
+      commitment. Test on your own material before committing to production.
+      Our product liability is limited to the value of the goods delivered. A
+      Turkish safety data sheet (GBF) ships with every delivery.
+    faq:
+      - q: Can XP600 and i3200-U1 run the same ink?
+        a: >-
+          Yes — MI-220 runs on both, and the drop window covers 3 to 25 pL. The
+          waveform and head voltage differ, though, so if the head type is set
+          wrong in the RIP you will see satellites on an XP600 and dropped
+          nozzles on an i3200. If you have swapped heads, update the definition
+          in the machine firmware as well.
+      - q: What does the flexibility cost?
+        a: >-
+          A step down in scratch and chemical resistance. The cured film
+          survives a 4 mm mandrel, but for floor panels, worktop surfaces that
+          are cleaned constantly or anything wiped with alcohol-based cleaner,
+          MI-210 is the better answer. Running both inks on different machines
+          in one shop is common practice.
+      - q: Can I run white on a machine without circulation?
+        a: >-
+          You can, but the routine is not optional. On stirred systems such as
+          the MF-6090 U3, run white at least twice a week, and flush the line
+          if the machine will stand for more than a week. If you only use white
+          a few times a month, it is cheaper to fill and flush per job than to
+          keep the channel loaded.
+      - q: What does 18 months outdoors mean here?
+        a: >-
+          Vertical exposure, central European climate, unlaminated and fully
+          cured. It is shorter than MI-210's 24 months, and that is the price
+          of the flexible resin package. In a Mediterranean climate, under
+          horizontal exposure or on a vehicle surface, laminate the print.
+      - q: When is this ink the wrong choice?
+        a: >-
+          In a shop printing more than 40 m² of rigid sheet a day. MI-220 is
+          tuned for small and mid-size Epson-head machines; on an industrial
+          flatbed with Ricoh Gen6 heads, MI-210 UV-LED R is the right product
+          on both output and durability.
+      - q: Do glass and metal need primer?
+        a: >-
+          Yes, for anything meant to last. Without MI-920 primer, adhesion on
+          float glass and anodised aluminium holds for a few months indoors and
+          less outside. The same applies to ceramic and powder-coated surfaces.
+          Run an ISO 2409 cross-hatch test on every new material.

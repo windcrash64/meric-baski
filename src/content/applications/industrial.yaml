@@ -1,0 +1,210 @@
+key: industrial
+order: 40
+accent: cyan
+
+hero:
+  src: /img/applications/industrial/hero.jpg
+  kind: application
+  alt:
+    tr: Vakumlu tabla üzerindeki büyük cam panelin üzerinden geçen baskı arabası
+    en: Printhead carriage travelling over a large glass panel held on a vacuum bed
+
+gallery:
+  - src: /img/applications/industrial/mimari-cam.jpg
+    kind: application
+    alt: { tr: Ofis bölmesi olarak kurulmuş buzlu desenli cam panelin arkasında toplantı masası, en: Frosted patterned glass partition in an office with a meeting table behind it }
+    caption: { tr: UV Cam Bölme Baskı, en: UV printed glass partition }
+  - src: /img/applications/industrial/makine-etiketi.jpg
+    kind: application
+    alt: { tr: Makine gövdesine vidalanmış alüminyum tip levhasında seri numarası ve uyarı simgeleri, en: Aluminium nameplate screwed to a machine body showing a serial number and warning symbols }
+    caption: { tr: Metal Etiket UV Baskı, en: UV printed metal nameplate }
+  - src: /img/applications/industrial/kontrol-paneli.jpg
+    kind: application
+    alt: { tr: Polikarbon membran ön panelde tuş alanları ve simgeler ters yüzden basılmış, en: Polycarbonate membrane fascia with key areas and icons printed on the reverse face }
+    caption: { tr: UV Kontrol Paneli Baskı, en: UV printed control panel overlay }
+  - src: /img/applications/industrial/anodize-plaket.jpg
+    kind: application
+    alt: { tr: Tezgâhta sıralanmış anodize alüminyum künyelerden biri eldivenli elle kaldırılıyor, en: One of a row of anodised aluminium tags being lifted from the bench with a gloved hand }
+    caption: { tr: Anodize Alüminyum UV Baskı, en: UV printed anodised aluminium }
+  - src: /img/applications/industrial/seramik-karo.jpg
+    kind: application
+    alt: { tr: Duvara dizilmiş desenli seramik karoların yanında henüz basılmamış bir karo duruyor, en: Patterned ceramic tiles set on a wall next to one tile still unprinted }
+    caption: { tr: UV Seramik Karo Baskı, en: UV printed ceramic tile }
+  - src: /img/applications/industrial/pano-etiket.jpg
+    kind: application
+    alt: { tr: Elektrik panosunun iç kapağına yapıştırılmış bağlantı şeması ve ikaz etiketleri, en: Wiring diagram and hazard labels applied to the inner door of an electrical panel }
+    caption: { tr: UV Uyarı Etiketi Baskı, en: UV printed warning label }
+  - src: /img/applications/industrial/yapisma-testi.jpg
+    kind: detail
+    alt: { tr: Basılı cam numune üzerinde çapraz kesilmiş alandan yapışkan bandın kaldırılması, en: Adhesive tape being lifted from a cross-hatched area on a printed glass sample }
+    caption: { tr: ISO 2409 Çapraz Kesme Testi, en: ISO 2409 cross-cut test }
+  - src: /img/applications/industrial/uvdtf-parca.jpg
+    kind: application
+    alt: { tr: Kavisli metal bir gövdeye elle bastırılan kabartmalı kristal etiket, en: Raised crystal label being pressed by hand onto a curved metal body }
+    caption: { tr: UV DTF Kristal Etiket, en: UV DTF crystal label }
+
+machines: [MF-2513-R8, MF-3220-K12, MF-1216-R4, MF-6090-U3, MC-300-U1, MK-1612]
+inks: [mi-210-uv-led-r, mi-110-uv, mi-220-uv-led-e, mi-310-uv-dtf, mi-920-primer]
+substrates: [glass, metal, ceramic, acrylic, polycarb, alucomp, wood, mdf, pvc, film]
+
+i18n:
+  tr:
+    name: Cam, Metal ve Endüstriyel
+    kicker: Sert yüzeye doğrudan basın
+    intro: >-
+      Bu sayfadaki işlerin ortak sorunu baskı kalitesi değil, yapışmadır. Cam,
+      anodize alüminyum, paslanmaz çelik, sırlı seramik ve polikarbon; hepsi UV
+      mürekkebin tutunmakta zorlandığı düşük yüzey enerjili malzemelerdir. Aynı
+      kalınlıktaki iki cam levha, kaplaması farklıysa aynı davranmaz. Bu yüzden
+      endüstriyel işte sıra makineden önce yüzeydedir: numune baskı, 24 saatlik
+      son kürlenme ve ardından çapraz kesme testi. Bu üç adımı atlayan atölye,
+      hatayı müşterinin sahasında öğrenir. Gerektiğinde araya astar girer; astar
+      bir opsiyon değil, malzemenin getirdiği bir adımdır.
+
+      İkinci belirleyici konu parçanın geometrisidir. Tabela levhası düzdür;
+      makine etiketi, pano ön yüzü ve dekoratif cam çoğu zaman değildir. Rijit
+      ve düz parça vakumlu tablaya oturur ve doğrudan basılır; kavisli şişe,
+      silindirik gövde ve kademeli yüzey ise tablaya oturmaz — orada baskı
+      yüzeye değil, filme yapılır ve UV DTF kristal etiket olarak aktarılır.
+      Tekrar eden işlerde asıl zaman kaybı baskıda değil, her seferinde yeniden
+      kurulan hizada olur; kayıt pimleri ve kilitli renk profili bu yüzden
+      makine seçiminin parçasıdır.
+    jobs:
+      - Mimari cam — duşakabin, bölme camı, cam kapı ve balkon panelleri
+      - Makine tip levhaları, seri numarası künyeleri ve ikaz etiketleri
+      - Kontrol paneli ön yüzleri ve polikarbon membran klavye baskısı
+      - Anodize alüminyum ve paslanmaz plaket, ödül ve künye üretimi
+      - Seramik karo, porselen ve dekoratif panel baskısı
+      - Elektrik panosu bağlantı şemaları ve uyarı levhaları
+      - Mimari malzeme numuneleri, renk karteleri ve teşhir örnekleri
+      - Kavisli ve düzensiz parçalar için UV DTF kristal etiket
+    faq:
+      - q: Cam, metal ve seramiğe astar olmadan basabilir miyim?
+        a: >-
+          Bir kısmına evet. İşlenmemiş float cam, ham alüminyum ve çoğu sert
+          plastik mürekkebi doğrudan kabul eder. Kaplamalı ve low-e cam, anodize
+          alüminyum, sırlı seramik ve polipropilen ise astar ister — MI-920
+          PRIMER tam olarak bunun için vardır. Kural şu: her yeni malzeme
+          partisinde numune basın, 24 saatlik son kürlenmeyi bekleyin ve ardından
+          ISO 2409 çapraz kesme testi yapın. Yüzey kimyası malzeme adına göre
+          değil parti numarasına göre değişir; geçen ay tutan cam bu ay tutmayabilir.
+      - q: Endüstriyel bir ortamda baskı ne kadar dayanır?
+        a: >-
+          Karıştırılmaması gereken iki ayrı eksen var. Dış mekân için mürekkep
+          tarafında yayınladığımız referans, laminasyonsuz dikey maruziyette ve
+          Orta Avrupa iklimi koşullarında 24 aydır; Türkiye'nin güney sahilinde
+          yıllık UV dozu bu referansın üzerindedir. İç mekânda ömür çok daha
+          uzundur, ama orada belirleyici olan kimyasal dayanımdır: her vardiya
+          izopropil alkolle silinen bir etiket hiçbir mürekkeple korumasız kalıcı
+          olmaz. Kesme sıvısı, temizlik kimyasalı veya yakıt teması varsa numuneyi
+          o kimyasalla test edin; biz de teklif öncesi aynısını yapıyoruz.
+      - q: Mimari camda baskı hangi yüze yapılır, temperli cam basılabilir mi?
+        a: >-
+          Dekoratif ve bölme camlarında baskı çoğunlukla ikinci yüze, yani
+          arkaya yapılır; grafik camın arkasında kaldığı için çizilmeye ve
+          temizlik kimyasalına karşı korunur. Baskı sırası da ters çevrilir —
+          önce renk, sonra kapatıcı beyaz. Temperleme mutlaka baskıdan önce
+          tamamlanmalıdır; UV mürekkep temper fırınının 600 °C'sini geçemez.
+          Şartname fırınlanmış seramik boya (emaye) istiyorsa UV baskı yanlış
+          teknolojidir. Bunu işi almadan söylemeyi tercih ediyoruz.
+      - q: Bu işler için hangi makine gerekir ve trifaze şart mı?
+        a: >-
+          Parçanın boyutu ve yüksekliği karar veriyor. 100 mm yüksekliğe ve
+          50 kg/m² ağırlığa kadar düz parçalar MF-2513 R8 tablasına oturur;
+          3200 × 2000 mm'ye kadar levha için MF-3220 K12 gerekir. Küçük ama kalın
+          parçalarda MF-6090 U3'ün 180 mm baskı yüksekliği daha rahattır ve o
+          makine tek fazla çalışır. MF-1216 R4 ve üzerindeki flatbedler ise
+          220 V 3 faz, 45 A ve 6 bar basınçlı hava ister; MK-1612 kesim tablası
+          380 V 3 fazdan beslenir. Kavisli bir gövdeye hiçbir flatbed basamaz;
+          o iş MC-300 U1 ile UV DTF etiket olarak çözülür ve o makine de tek
+          fazla çalışır.
+      - q: Aynı parçayı altı ay sonra tekrar bastığımda renk tutar mı?
+        a: >-
+          Kendiliğinden tutmaz. Endüstriyel işte tekrarlanabilirliği üç şey
+          sağlar: her malzeme için ayrı ve kilitli bir ICC profili,
+          spektrofotometreyle düzenli doğrulama ve mürekkep partisi değiştiğinde
+          yeniden ölçüm. Bunlar olmadan altı ay sonraki baskı gözle görülür
+          biçimde kayar. Katalogda tek bir ΔE rakamı yayınlamıyoruz, çünkü o
+          rakam cam, anodize alüminyum ve sırlı seramikte aynı çıkmaz; hedef
+          değeri sizin malzemeniz üzerinde birlikte belirliyoruz.
+  en:
+    name: "Glass, Metal & Industrial"
+    kicker: Print straight onto the hard surface
+    intro: >-
+      What these jobs have in common is not print quality — it is adhesion.
+      Glass, anodised aluminium, stainless steel, glazed ceramic and
+      polycarbonate are all low-surface-energy materials that UV ink struggles
+      to key into. Two sheets of glass of the same thickness behave differently
+      if their coatings differ. So the surface comes before the machine: test
+      print, wait out the 24-hour post-cure, then run a cross-cut test. A shop
+      that skips those three steps finds out on the customer's site. Where the
+      material demands it, primer goes in between — not an option, but a step
+      the substrate imposes.
+
+      The second deciding factor is the geometry of the part. A sign panel is
+      flat; a machine nameplate, a control panel fascia and decorative glass
+      often are not. Rigid, flat parts sit on the vacuum bed and are printed
+      directly. Curved bottles, cylindrical bodies and stepped surfaces never
+      sit flat — there the print goes onto film rather than the part, and
+      transfers as a UV DTF crystal label. On repeat work the real time loss is
+      not printing but re-establishing alignment, which is why registration pins
+      and a locked colour profile belong in the machine decision.
+    jobs:
+      - Architectural glass — shower screens, partitions, doors and balcony panels
+      - Machine nameplates, serial-number tags and hazard labels
+      - Control panel fascias and polycarbonate membrane keypads
+      - Anodised aluminium and stainless plaques, awards and tags
+      - Ceramic tile, porcelain and decorative panel printing
+      - Wiring diagrams and warning plates for electrical panels
+      - Material samples, colour swatch cards and showroom exhibits
+      - UV DTF crystal labels for curved and irregular parts
+    faq:
+      - q: Can I print on glass, metal and ceramic without primer?
+        a: >-
+          On some of it, yes. Uncoated float glass, bare aluminium and most rigid
+          plastics take the ink directly. Coated and low-e glass, anodised
+          aluminium, glazed ceramic and polypropylene need primer — that is
+          exactly what MI-920 PRIMER is for. The rule: test print every new batch
+          of material, wait out the 24-hour post-cure, then run an ISO 2409
+          cross-cut test. Surface chemistry varies by batch number, not by
+          material name; glass that keyed last month may not key this month.
+      - q: How long does the print last in an industrial environment?
+        a: >-
+          There are two separate axes and they should not be confused. Outdoors,
+          the reference we publish on the ink side is 24 months of unlaminated
+          vertical exposure in a central European climate; annual UV dose on the
+          southern Turkish coast runs above that reference. Indoors the life is
+          far longer, but there chemical resistance is what decides: no ink makes
+          a label permanent, unprotected, if it is wiped with isopropyl alcohol
+          every shift. Where cutting fluid, cleaning chemicals or fuel are in
+          contact, test the sample against that chemical — we do the same before
+          quoting.
+      - q: Which face of architectural glass is printed, and can toughened glass be printed?
+        a: >-
+          On decorative and partition glass the print usually goes on the second
+          surface, the back face, so the graphic sits behind the glass and is
+          protected from scuffing and cleaning chemicals. The print order is
+          reversed with it — colour first, then opaque white. Toughening must be
+          finished before printing; UV ink does not survive the 600 °C of a
+          tempering furnace. If the specification calls for kiln-fired ceramic
+          frit, UV printing is the wrong technology, and we would rather say so
+          before taking the job.
+      - q: Which machine do these jobs need, and is three-phase mandatory?
+        a: >-
+          Part size and height decide. Flat parts up to 100 mm high and 50 kg/m²
+          sit on the MF-2513 R8 bed; sheets up to 3200 × 2000 mm need the
+          MF-3220 K12. For small but thick parts the 180 mm print height of the
+          MF-6090 U3 is easier to live with, and that machine runs single-phase.
+          The MF-1216 R4 and everything above it wants 220 V three-phase at 45 A
+          plus 6 bar compressed air, and the MK-1612 cutting table runs on 380 V
+          three-phase. No flatbed can print a curved body — that job is solved as
+          a UV DTF label on the MC-300 U1, which is single-phase again.
+      - q: Will the colour match if I reprint the same part in six months?
+        a: >-
+          Not on its own. Three things make industrial work repeatable: a
+          separate, locked ICC profile per material, regular verification with a
+          spectrophotometer, and re-measurement whenever the ink batch changes.
+          Without them a reprint six months later drifts visibly. We do not
+          publish a single ΔE figure in the catalogue, because that number is not
+          the same on glass, anodised aluminium and glazed ceramic; we set the
+          target together, on your material.

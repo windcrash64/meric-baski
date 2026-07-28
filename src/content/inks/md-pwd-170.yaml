@@ -1,0 +1,280 @@
+sku: MD-PWD-170
+series: Maven MD-PWD 170
+family: auxiliary
+type: powder
+order: 130
+featured: false
+
+oemEquivalent: []
+# Changing powder grade changes hand and adhesion, but nothing in the ink
+# system — no flush, no profile.
+changeover: switch-and-print
+
+channels: []
+
+packaging:
+  - format: sack
+    volume: 1
+    unit: kg
+    note:
+      tr: deneme ve dane bandı karşılaştırması için
+      en: for trials and for comparing grades
+  - format: sack
+    volume: 5
+    unit: kg
+    note:
+      tr: tek vardiyalı atölyenin aylık ambalajı
+      en: the monthly pack for a single-shift shop
+  - format: sack
+    volume: 20
+    unit: kg
+    note:
+      tr: >-
+        sürekli üretim; açıldıktan sonra kapaklı hazneye aktarın, torbayı açık
+        bırakmayın
+      en: >-
+        continuous production; transfer to a lidded hopper once opened, never
+        leave the sack open
+
+compat:
+  # Powder is applied by the shaker, not jetted — printhead compatibility does
+  # not apply.
+  printheads: []
+  machines: [MD-600-A4]
+  thirdPartyPrinters:
+    - LINKO S60 Pro
+    - Audley 60 cm i3200-A1
+    - PO-TRY 60 cm 5 kafa
+  chipIncluded: false
+
+specs:
+  cure:
+    method: heat
+    transferTempC: [150, 160]
+    transferSeconds: [10, 15]
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: >-
+      Açılmamış torbada 12 ay. Belirleyici olan sıcaklık değil nemdir: toz
+      havadan nem çeker, topaklanır ve serpme ünitesinin eleğini tıkar.
+      Açılan torbayı kapaklı hazneye aktarın, zemine değil paletin üstüne
+      koyun ve %60 bağıl nemin üzerindeki bir depoda tutmayın.
+    en: >-
+      12 months in an unopened sack. Humidity, not temperature, is what decides:
+      the powder takes up moisture, cakes, and blocks the shaker sieve. Transfer
+      an opened sack to a lidded hopper, keep it off the floor on a pallet, and
+      do not store it above 60 %RH.
+  storageTempC: [5, 30]
+  operatingTempC: [15, 30]
+  operatingHumidityPct: [30, 60]
+
+substrates: [film, textile]
+applications: [textile]
+
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-md-pwd-170-tds-tr.pdf, bytes: 226304, version: "v1.2", date: "2026-03" }
+  - { kind: tds, lang: en, file: /docs/maven-md-pwd-170-tds-en.pdf, bytes: 221184, version: "v1.2", date: "2026-03" }
+  # A fine polymer dust handled next to a 160 °C oven genuinely needs one, even
+  # though the schema exempts powders.
+  - { kind: gbf, lang: tr, file: /docs/maven-md-pwd-170-gbf-tr.pdf, bytes: 372736, version: "2026-02" }
+
+ancillaries: [mi-710-dtf, md-film-600]
+
+gallery:
+  - src: /img/inks/md-pwd-170/sacks.jpg
+    kind: machine
+    alt:
+      tr: "1, 5 ve 20 kg'lık üç toz torbası yan yana, üzerlerinde dane bandı etiketleri"
+      en: "One, five and twenty kilogram powder sacks side by side with grade labels"
+  - src: /img/inks/md-pwd-170/grades.jpg
+    kind: diagram
+    alt:
+      tr: "Üç dane bandının mikroskop altında karşılaştırıldığı görsel: 0–80, 80–170 ve 120–250 mikron"
+      en: "Microscope comparison of the three grades: 0–80, 80–170 and 120–250 micron"
+    caption: { tr: GradeSelect dane bantları, en: GradeSelect grades }
+  - src: /img/inks/md-pwd-170/shaker.jpg
+    kind: detail
+    alt:
+      tr: "Serpme ünitesinde basılı filmin üzerine düşen toz ve altındaki geri kazanım eleği"
+      en: "Powder falling onto printed film inside the shaker, with the recovery sieve beneath"
+  - src: /img/inks/md-pwd-170/app-edge.jpg
+    kind: application
+    alt:
+      tr: "Preslenmiş transferin kenarında toz halesi bırakmayan temiz geçiş, yakın çekim"
+      en: "Close-up of a pressed transfer edge with no powder halo around the print"
+    caption: { tr: DTF Transfer Kenar Detayı, en: DTF transfer edge detail }
+
+price: null
+
+i18n:
+  tr:
+    role: DTF transferleri için yumuşak tuşeli, 80–170 µm sıcak eriyik yapıştırıcı toz
+    summary: >-
+      MD-PWD 170, DTF transferlerinde basılı filmin üzerine serpilen poliüretan
+      esaslı sıcak eriyik tozdur. Dane boyutu 80–170 µm yumuşak banttadır; bu
+      bant, tuşe ile yapışma arasındaki en dengeli noktadır. Toz fırında
+      yaklaşık 110 °C'de erir, 150–160 °C'de kürlenir ve preste 10–15 saniyede
+      kumaşa geçer. Aynı seride ince 0–80 µm ve kaba 120–250 µm dane bantları
+      da vardır. 1, 5 ve 20 kg torbalarda gelir; nem alan toz topaklanır ve
+      serpme ünitesini tıkar.
+    features:
+      - >-
+        GradeSelect Üç Dane Bandı — MD-PWD 80 ince (0–80 µm) ince çizgi, küçük
+        punto ve dantel gibi detaylı işler için; MD-PWD 170 yumuşak (80–170 µm)
+        günlük tekstil işinin standardı; MD-PWD 250 kaba (120–250 µm) ağır
+        kumaş, çanta ve yüksek esneme gerektiren parçalar için. Aynı filmde
+        aynı mürekkeple bile sonuç dane bandına göre değişir.
+      - >-
+        MeltPoint 110 — toz fırında yaklaşık 110 °C'de erir, 150–160 °C'de
+        kürlenir. Fırın sıcaklığını erime noktasına göre değil kürlenme
+        aralığına göre ayarlayın; erimiş ama kürlenmemiş toz preste parlak
+        görünür, ilk yıkamada kalkar.
+      - >-
+        SoftHand Tuşe — MI-710 DTF mürekkebiyle eşleştirildiğinde transfer
+        yıkama sonrası sertleşmez, kumaşla birlikte esner. Tuşedeki sertliğin
+        çoğu tozun fazlasından gelir; serpme ünitesinin geri kazanım eleğini
+        temiz tutmak, toz markasını değiştirmekten daha etkilidir.
+      - >-
+        FlowDry Nem Direnci — akış düzenleyici katkı, tozun elekten düzgün
+        geçmesini sağlar ve bekleme sırasında topaklanmayı geciktirir. Bu bir
+        nem geçirmezlik iddiası değildir: torba açık kaldığında toz yine nem
+        çeker, sadece daha yavaş.
+      - >-
+        PowderLine Uyumu — MD-600 A4'ün dikey serpme ünitesinin elek gözü ve
+        hava perdesi 80–170 µm bandına göre ayarlanmıştır. Daha ince toz hava
+        perdesinde savrulur, daha kaba toz elekte köprü yapar; makine ile toz
+        birlikte seçilir.
+    disclaimer: >-
+      Tuşe, esneme ve yıkama dayanımı; kumaş cinsine, toz miktarına, fırın
+      sıcaklığına ve pres parametrelerine göre değişir. Buradaki değerler
+      MD-FILM 600 film ve MI-710 DTF mürekkebiyle ölçülmüş referans
+      değerlerdir, taahhüt değildir. Dane bandını değiştirdiğinizde fırın ve
+      pres ayarlarınızı yeniden doğrulayın.
+    faq:
+      - q: Hangi dane bandını seçmeliyim?
+        a: >-
+          İnce punto, ince çizgi ve dantel benzeri detaylı işlerde 0–80 µm; genel
+          tekstil işinde 80–170 µm; ağır kumaş, çanta, iş elbisesi ve yüksek
+          esneme gereken parçalarda 120–250 µm. Kaba toz daha çok yapıştırıcı
+          gövdesi verir ama tuşeyi sertleştirir. Emin değilseniz 1 kg'lık
+          torbalarla üçünü de aynı desende deneyin — fark ilk yıkamadan sonra
+          net görülür.
+      - q: Beyaz toz mu siyah toz mu?
+        a: >-
+          Standart ürün beyazdır ve baskının altında kaldığı için görünmez. Koyu
+          kumaşta kenarda kalan ince toz halesi görünüyorsa siyah versiyonu
+          (MD-PWD 170-B) talep edin. Hale genellikle tozdan değil, serpme
+          ünitesinin hava perdesi ayarından kaynaklanır; siyah toz semptomu
+          gizler, sebebi çözmez.
+      - q: Ne kadar toz tüketirim?
+        a: >-
+          Planlama için 1 kg ≈ 25–35 m² film kabul edin. Gerçek tüketim işin
+          kaplama oranına ve serpme ünitesinin geri kazanım verimine göre
+          değişir; fazla toz elenip hazneye döndüğü için iyi ayarlanmış bir hat
+          bu bandın alt ucunda çalışır. Aylık film metrekarenizi biliyorsanız
+          toz stoğunuzu bunun üzerinden kurun.
+      - q: Toz topaklandı, kurtarabilir miyim?
+        a: >-
+          Hafif topaklanmayı elekten geçirerek kurtarabilirsiniz. Elle
+          ufalandığında tekrar dağılmayan, taneleri birbirine yapışmış bir toz
+          artık kullanılmaz — fırında düzgün erimez ve serpme ünitesinde köprü
+          yapar. Tozu ısıtarak kurutmayı denemeyin, erime noktasının altında
+          bile yapısı bozulur.
+      - q: Serpme ünitesi olmadan elle uygulayabilir miyim?
+        a: >-
+          Küçük hacimde, A3 boyunda, evet. Ancak elle serpmede toz dağılımı
+          düzensiz olur; ince alanlarda az, kenarlarda fazla kalır ve bu
+          doğrudan yıkama dayanımına yansır. Günde 50 transferin üzerine
+          çıkıyorsanız elle serpmeyi bırakın.
+      - q: Güvenlik açısından nelere dikkat etmeliyim?
+        a: >-
+          İnce polimer tozu solunabilir ve yanıcıdır. Hazne doldururken FFP2
+          maske kullanın, açık alev ve kıvılcım kaynağından uzak tutun, fırın
+          çevresinde toz birikmesine izin vermeyin. Sınıflandırılmamış katı bir
+          polimer için mevzuat Güvenlik Bilgi Formu zorunlu tutmasa da bu ürünle
+          birlikte Türkçe GBF gönderiyoruz; İSG dosyanıza doğrudan konabilir.
+  en:
+    role: Soft-grade hot-melt adhesive powder, 80–170 micron, for DTF transfers
+    summary: >-
+      MD-PWD 170 is the polyurethane-based hot-melt powder applied over printed
+      film in a DTF system. Its 80–170 micron soft grade is the most balanced
+      point between hand and adhesion. The powder melts at around 110 °C in the
+      oven, cures at 150–160 °C, and transfers to the garment in 10–15 seconds
+      under the press. The same series also covers a fine 0–80 micron and a
+      coarse 120–250 micron grade. It ships in 1, 5 and 20 kg sacks; powder that
+      picks up moisture cakes and blocks the shaker.
+    features:
+      - >-
+        GradeSelect Three Grades — MD-PWD 80 fine (0–80 µm) for thin lines,
+        small type and lace-like detail; MD-PWD 170 soft (80–170 µm) as the
+        standard for everyday apparel; MD-PWD 250 coarse (120–250 µm) for heavy
+        fabric, bags and high-stretch pieces. The same film with the same ink
+        gives a different result on a different grade.
+      - >-
+        MeltPoint 110 — the powder melts at about 110 °C and cures at
+        150–160 °C. Set the oven against the cure range, not the melt point:
+        powder that has melted but not cured looks glossy off the press and
+        lifts at the first wash.
+      - >-
+        SoftHand Feel — paired with MI-710 DTF ink, the transfer flexes with the
+        garment instead of stiffening after washing. Most stiffness comes from
+        excess powder, so keeping the shaker's recovery sieve clean does more
+        than changing powder brand.
+      - >-
+        FlowDry Moisture Resistance — a flow additive keeps the powder passing
+        cleanly through the sieve and slows caking while it sits in the hopper.
+        This is not a moisture barrier claim: an open sack still takes up
+        humidity, just more slowly.
+      - >-
+        PowderLine Compatibility — the sieve mesh and air curtain of the
+        MD-600 A4 vertical shaker are set for the 80–170 µm band. Finer powder
+        drifts in the air curtain and coarser powder bridges on the sieve, so
+        machine and powder are chosen together.
+    disclaimer: >-
+      Hand, stretch and wash durability vary with fabric, powder quantity, oven
+      temperature and press settings. The figures here are reference values
+      measured with MD-FILM 600 film and MI-710 DTF ink, not a warranty. When
+      you change grade, re-validate your oven and press settings.
+    faq:
+      - q: Which grade should I choose?
+        a: >-
+          0–80 µm for small type, fine lines and lace-like detail; 80–170 µm for
+          general apparel work; 120–250 µm for heavy fabric, bags, workwear and
+          pieces that stretch hard. Coarse powder gives more adhesive body but a
+          stiffer hand. If you are unsure, run all three from 1 kg sacks on the
+          same artwork — the difference is obvious after the first wash.
+      - q: White powder or black?
+        a: >-
+          The standard product is white and sits under the print where it cannot
+          be seen. If a fine powder halo shows at the edge on dark garments, ask
+          for the black version (MD-PWD 170-B). That halo usually comes from the
+          shaker's air curtain setting rather than the powder — black hides the
+          symptom, it does not fix the cause.
+      - q: How much powder will I use?
+        a: >-
+          For planning, assume 1 kg covers roughly 25–35 m² of film. Real
+          consumption depends on coverage and on how efficiently the shaker
+          recovers the excess; a well-set line runs at the bottom of that band.
+          If you know your monthly film metreage, size your powder stock from it.
+      - q: My powder has caked — can I recover it?
+        a: >-
+          Light caking can be sieved out and used. Powder whose grains have
+          fused and will not break up between your fingers is finished: it melts
+          unevenly in the oven and bridges in the shaker. Do not try to dry it
+          with heat — even below the melt point the structure is damaged.
+      - q: Can I apply it by hand without a shaker?
+        a: >-
+          At low volume and A3 size, yes. But hand application spreads powder
+          unevenly, leaving too little in open areas and too much at the edges,
+          and that shows directly in wash durability. Above about 50 transfers a
+          day, stop doing it by hand.
+      - q: What do I need to watch on safety?
+        a: >-
+          Fine polymer dust is respirable and combustible. Wear an FFP2 mask
+          when filling the hopper, keep it away from open flame and ignition
+          sources, and do not let dust accumulate around the oven. Regulation
+          does not require a safety data sheet for an unclassified solid
+          polymer, but we ship a Turkish GBF with this product anyway — it goes
+          straight into your health and safety file.

@@ -1,0 +1,287 @@
+sku: MI-310
+series: Maven MI-310 UV-DTF
+family: uv-dtf
+type: ink
+order: 40
+featured: false
+
+# UV DTF'te referans alınacak bir OEM mürekkebi yok — kategori Çin menşeli
+# makinelerle büyüdü ve her üretici kendi jenerik mürekkebini veriyor. Uyduruk
+# bir "eşdeğer" listelemek yerine boş bırakıyoruz; uyumluluk kafa + film çifti
+# ile tanımlanır (bkz. ABPair).
+oemEquivalent: []
+changeover: switch-and-match
+
+channels:
+  - { code: C, sku: MI-310-C, availability: stock }
+  - { code: M, sku: MI-310-M, availability: stock }
+  - { code: Y, sku: MI-310-Y, availability: stock }
+  - { code: K, sku: MI-310-K, availability: stock }
+  - { code: W, sku: MI-310-W, availability: stock }
+  - { code: Cl, sku: MI-310-CL, availability: stock }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+  - format: bottle
+    volume: 500
+    unit: ml
+    note:
+      tr: düşük devirli atölyelerde beyaz ve lak için
+      en: for white and varnish in low-turnover shops
+
+compat:
+  printheads:
+    - Epson i3200-U1HD
+    - Epson i1600-U1
+    - Epson XP600
+  dropSizePl: [2.5, 12]
+  machines:
+    - MC-300-U1
+  thirdPartyPrinters:
+    - MTuTech MT-UV DTF 30
+    - Oric OR-A3
+    - Sublistar A3 30R
+  chipIncluded: false
+
+specs:
+  cure:
+    method: uv-led
+    wavelengthNm: 395
+    postCureHours: 24
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: orijinal ambalajında, karanlıkta ve dik konumda saklanır
+    en: stored upright in the original packaging, away from light
+  storageTempC: [15, 25]
+  operatingTempC: [18, 28]
+  operatingHumidityPct: [40, 65]
+  # Etiket bir transfer katmanıdır, doğrudan baskı değil. 12 ay beyan ediyoruz;
+  # MC-300 U1 sayfasındaki değerle aynı, bilerek.
+  outdoorDurabilityMonths: 12
+  outdoorDurabilityNote:
+    tr: dikey maruziyet, Orta Avrupa iklimi, düzgün yüzeye uygulanmış etiket
+    en: vertical exposure, central European climate, label applied to a smooth surface
+
+substrates: [film, glass, metal, ceramic, acrylic, wood, leather, pvc, paper]
+applications: [packaging, industrial, interior]
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-310-uv-dtf-tds-tr.pdf, bytes: 344064, version: v1.0, date: "2026-06" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-310-uv-dtf-tds-en.pdf, bytes: 339968, version: v1.0, date: "2026-06" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-310-uv-dtf-gbf-tr.pdf, bytes: 587776, version: KKDİK-2026.1, date: "2026-04" }
+
+# A/B film ayrı bir sarf kalemidir ve DTF PET filmiyle karıştırılmamalıdır;
+# doğrulanmış film çiftleri teknik veri sayfasında listelenir.
+ancillaries: [mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-310-uv-dtf/hero.jpg
+    kind: detail
+    alt:
+      tr: "Altı kanalın şişeleri ve önlerinde açılmış bir kristal etiket rulosu"
+      en: "Bottles of all six channels with an unrolled length of crystal label film in front"
+  - src: /img/inks/mi-310-uv-dtf/lamination.jpg
+    kind: detail
+    alt:
+      tr: "A ve B filmini birleştiren merdanenin baskı ile temas ettiği bölge"
+      en: "Close-up of the roller nip where the A and B film meet over the print"
+    caption:
+      tr: ABPair laminasyon bölgesi
+      en: ABPair lamination nip
+  - src: /img/inks/mi-310-uv-dtf/layers.jpg
+    kind: diagram
+    alt:
+      tr: "Lak, renk ve beyaz katmanların film üzerindeki dizilimini gösteren kesit şeması"
+      en: "Cross-section diagram showing the varnish, colour and white layers stacked on the film"
+    caption:
+      tr: Ters baskı sırası — lak, renk, beyaz
+      en: Reverse print order — varnish, colour, white
+  - src: /img/inks/mi-310-uv-dtf/app-bottle.jpg
+    kind: application
+    alt:
+      tr: "Kavisli cam şişeye elle uygulanan kabartmalı etiketin kenarına bastırılması"
+      en: "Raised label being pressed down by hand along the edge of a curved glass bottle"
+    caption:
+      tr: UV DTF Cam Şişe Etiket
+      en: UV DTF label on glass
+
+i18n:
+  tr:
+    role: A/B film kristal etiket üretimi için UV DTF mürekkebi
+    summary: >-
+      MI-310 UV-DTF, A/B film ile kristal etiket üreten UV DTF makineleri için
+      formüle edilmiş 395 nm mürekkeptir. Bu kategoride referans alınacak bir
+      OEM mürekkebi yok; uyumluluk kafa ve film çiftiyle tanımlanır, bu yüzden
+      OEM eşdeğeri listelemiyoruz. CMYK'nın yanına beyaz ve lak basar; baskı
+      sırası lak, renk, beyaz şeklinde terstir. MC-300 U1 gövdesinde ve 30 cm
+      sınıfı Epson kafalı sistemlerde doğrulanmıştır. Laminasyon basıncı ve film
+      eşleştirmesi tablo hâlinde verilir.
+    features:
+      - >-
+        MavenCure LED 395 — mürekkep film üzerinde, 395 nm LED ile kürlenir.
+        Kritik nokta lak katmanıdır: yeterince kürlenmemiş lak transfer sonrası
+        parmak izi tutar ve etiket mat görünür. Nihai sertlik 24 saatlik son
+        kürlenmeden sonra oluşur.
+      - >-
+        ABPair Film Eşleştirme — A filminin yüzey enerjisi 38–42 din/cm
+        aralığında olmalı, B filminin yapıştırıcı sınıfı hedef yüzeye göre
+        seçilmelidir. Laminasyon merdane basıncı 0,25–0,35 MPa, soğuk
+        uygulanır. Doğrulanmış film çiftlerini teknik veri sayfasında tablo
+        hâlinde veriyoruz; onaysız bir çift, etiketin filmden kalkmaması ya da
+        transferden sonra kenardan ayrılması demektir.
+      - >-
+        MavenWhite Yüksek Opaklık — beyaz en üstte, yani transfer sonrası en
+        altta kalan katmandır ve rengin altını kapatır. Koyu ve şeffaf
+        yüzeylerde iki kat beyaz gerekir; bu, film metrekare maliyetini
+        değiştirmez ama üretim hızını üçte bir düşürür.
+      - >-
+        CrystalGloss Lak Katmanı — lak, seçilen bölgelere ayrı kanal olarak
+        basılır ve etikete tırnakla hissedilen kabartma verir. Kristal etiketi
+        düz bir çıkartmadan ayıran tek özellik budur; dosyada ayrı katman
+        olarak kurulmalıdır.
+      - >-
+        ColorMatch Profil Paketi — geçiş sınıfı "Profil gerekir". Beyaz
+        opaklığı ve lak kalınlığı değiştiği için hem hat yıkanır hem de profil
+        yeniden çıkarılır. Yarım günlük kalibrasyon ve yaklaşık 20 metre film
+        firesi planlayın.
+    disclaimer: >-
+      Yapışma, dış mekân dayanımı ve kimyasal direnç; malzemeye, yüzey
+      hazırlığına, film çiftine ve baskı parametrelerine göre değişir. Buradaki
+      değerler laboratuvar koşullarında ölçülmüştür ve bağlayıcı bir taahhüt
+      değildir. Seri üretime geçmeden önce kendi malzemenizde ve kendi
+      filminizde test edin. Ürün sorumluluğumuz teslim edilen malın bedeliyle
+      sınırlıdır. Türkçe Güvenlik Bilgi Formu (GBF) her sevkiyatla verilir.
+    faq:
+      - q: A ve B filmini istediğim markadan alabilir miyim?
+        a: >-
+          Teknik olarak evet, pratikte hayır. A filminin yüzey enerjisi
+          38–42 din/cm bandının dışına çıktığında mürekkep ya boncuklanır ya da
+          filmden ayrılmaz; B filminin yapıştırıcı sınıfı yanlış seçildiğinde
+          etiket transferden birkaç gün sonra kenardan kalkar. Doğrulanmış film
+          çiftlerinin listesi teknik veri sayfasındadır. Yeni bir markaya
+          geçmeden önce numune isteyin ve 48 saat bekleyip kontrol edin.
+      - q: Laminasyon basıncını nasıl ayarlamalıyım?
+        a: >-
+          0,25–0,35 MPa arası, soğuk. Basınç yüksek olduğunda lak katmanı
+          ezilir ve kabartma hissi kaybolur; düşük olduğunda araya hava kalır ve
+          etiket transferde parçalanır. Merdaneyi her vardiya izopropil alkolle
+          silin — laminasyon hatalarının çoğu basınçtan değil, merdanedeki toz
+          ve kuru mürekkep artığından çıkar.
+      - q: Baskı sırası neden ters?
+        a: >-
+          Çünkü etiket ters okunur şekilde basılır ve transferde çevrilir.
+          Önce lak (uygulandığında en üstte kalacak katman), sonra renk, en son
+          beyaz basılır. Dosyayı bu sıraya göre kurmayan atölyelerin en sık
+          yaptığı hata, beyazı en alta koyup transferde soluk bir etiket
+          almaktır.
+      - q: Etiketin dayanımı ne kadar?
+        a: >-
+          İç mekânda cam, metal ve boyalı düzgün yüzeylerde kalıcı kabul edin.
+          Dış mekân için beyan ettiğimiz süre 12 aydır; dikey maruziyet, Orta
+          Avrupa iklimi ve düzgün yüzey için. Bulaşık makinesine, alkol bazlı
+          yoğun temizliğe ve sürekli sürtünmeye dayanıklı değildir; bu tip
+          kullanımda müşterinizi baştan uyarın.
+      - q: Beyaz mürekkep tüketimi ne olur?
+        a: >-
+          Kapatıcı etiketlerde beyaz, toplam tüketimin yarısına yakınını alır.
+          Şeffaf ya da koyu yüzeye uygulanacak etiketlerde iki kat beyaz gerekir
+          ve üretim hızı üçte bir düşer. Küçük makinelerde beyaz kanal
+          karıştırıcılıdır, sirkülasyonlu değil — bir haftadan uzun duruşta
+          hattı yıkayın.
+      - q: MI-310'u UV flatbed makinemde kullanabilir miyim?
+        a: >-
+          Hayır. Formülasyon film üzerinde kalıp transfer edilmeye göre
+          kurulmuştur; rijit malzemeye doğrudan basıldığında yapışma ve çizilme
+          direnci yetersiz kalır. Flatbed için MI-210 UV-LED R ya da MI-220
+          UV-LED E kullanın.
+  en:
+    role: UV DTF ink for A/B film crystal label production
+    summary: >-
+      The MI-310 UV-DTF is a 395 nm ink formulated for UV DTF machines that
+      produce crystal labels on A/B film. There is no OEM ink to reference in
+      this category — compatibility is defined by the printhead and the film
+      pair instead, which is why we list no OEM equivalent. It lays white and
+      varnish alongside CMYK, in reverse order: varnish first, then colour,
+      then white. Validated on the MC-300 U1 and 30 cm class Epson-head
+      systems. Lamination pressure and film pairing are documented in a table.
+    features:
+      - >-
+        MavenCure LED 395 — the ink cures on the film under 395 nm LED. The
+        varnish layer is the critical one: under-cured varnish picks up
+        fingerprints after transfer and the label reads matt. Final hardness
+        follows the 24-hour post-cure.
+      - >-
+        ABPair Film Matching — the A film must sit in a surface energy band of
+        38–42 dyn/cm, and the adhesive class of the B film is chosen against
+        the target surface. Lamination nip pressure is 0.25–0.35 MPa, applied
+        cold. Validated film pairs are tabulated in the data sheet; an
+        unapproved pair means either a label that will not release from the
+        film or one that lifts at the edges after transfer.
+      - >-
+        MavenWhite High Opacity — white is printed last, which makes it the
+        bottom layer after transfer, backing the colour. Dark and transparent
+        surfaces need a double hit of white; that does not change the cost per
+        square metre of film, but it does cut output by a third.
+      - >-
+        CrystalGloss Varnish Layer — varnish prints as a spot channel on
+        selected areas and gives the label a raised, tactile surface. It is the
+        single property separating a crystal label from a flat sticker, and it
+        has to be built as its own layer in the artwork.
+      - >-
+        ColorMatch Profile Package — the changeover class is Switch and Match.
+        Because white opacity and varnish thickness both change, the lines are
+        flushed and the profile is rebuilt. Plan half a day of calibration and
+        roughly 20 metres of film waste.
+    disclaimer: >-
+      Adhesion, outdoor durability and chemical resistance vary with the
+      substrate, its surface preparation, the film pair and the print
+      parameters. The figures here were measured under laboratory conditions
+      and are not a binding commitment. Test on your own material and your own
+      film before committing to production. Our product liability is limited to
+      the value of the goods delivered. A Turkish safety data sheet (GBF) ships
+      with every delivery.
+    faq:
+      - q: Can I use A and B film from any supplier?
+        a: >-
+          Technically yes, in practice no. Outside a surface energy band of
+          38–42 dyn/cm the ink either beads up or refuses to release from the A
+          film, and the wrong adhesive class on the B film lifts the label at
+          the edges within days of transfer. The list of validated film pairs
+          is in the data sheet. Ask for a sample before switching brand, and
+          check it again after 48 hours.
+      - q: How should lamination pressure be set?
+        a: >-
+          Between 0.25 and 0.35 MPa, cold. Too much pressure crushes the
+          varnish layer and the tactile relief disappears; too little traps air
+          and the label breaks up during transfer. Wipe the roller with
+          isopropyl alcohol every shift — most lamination faults come from dust
+          and dried ink on the roller, not from the pressure setting.
+      - q: Why is the print order reversed?
+        a: >-
+          Because the label is printed mirrored and flipped during transfer.
+          Varnish goes down first as the layer that will end up on top, then
+          colour, then white. The most common mistake in shops that do not
+          build the file in this order is putting white at the bottom and
+          ending up with a washed-out label after transfer.
+      - q: How durable is the applied label?
+        a: >-
+          Indoors, on glass, metal and smooth painted surfaces, treat it as
+          permanent. Outdoors we state 12 months, for vertical exposure in a
+          central European climate on a smooth surface. It is not dishwasher
+          safe, does not tolerate heavy alcohol-based cleaning and will not
+          survive constant abrasion — tell your customer that up front.
+      - q: How much white does it use?
+        a: >-
+          On opaque labels, white accounts for close to half of total
+          consumption. Labels destined for transparent or dark surfaces need a
+          double hit of white, which cuts output by a third. On small machines
+          the white channel is stirred rather than circulated, so flush the
+          line for any stoppage longer than a week.
+      - q: Can I run MI-310 in my UV flatbed?
+        a: >-
+          No. The formulation is built to sit on film and then transfer;
+          printed directly onto rigid material, its adhesion and scratch
+          resistance are inadequate. Use MI-210 UV-LED R or MI-220 UV-LED E on
+          a flatbed.

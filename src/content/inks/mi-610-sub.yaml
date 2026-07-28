@@ -1,0 +1,287 @@
+sku: MI-610
+series: Maven MI-610 SUB
+family: sublimation
+type: ink
+order: 80
+featured: false
+
+oemEquivalent: [Kiian Digistar HI-PRO, J-Teck J-Next Subly, Sensient ElvaJet]
+changeover: switch-and-match
+
+channels:
+  - { code: C, sku: MI-610-C, availability: stock }
+  - { code: M, sku: MI-610-M, availability: stock }
+  - { code: Y, sku: MI-610-Y, availability: stock }
+  - { code: K, sku: MI-610-K, availability: stock }
+  - { code: Bl, sku: MI-610-BL, availability: stock }
+  - { code: Lc, sku: MI-610-LC, availability: on-request }
+  - { code: Lm, sku: MI-610-LM, availability: on-request }
+  - { code: Or, sku: MI-610-OR, availability: on-request }
+  - { code: FlP, sku: MI-610-FLP, availability: on-request }
+  - { code: FlY, sku: MI-610-FLY, availability: on-request }
+  - { code: FlB, sku: MI-610-FLB, availability: on-request }
+  - { code: FlG, sku: MI-610-FLG, availability: on-request }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note:
+      tr: "kanal başına dolum; flüor kanallar yalnızca bu ambalajda"
+      en: "per-channel fill; the fluorescent channels come in this pack only"
+  - format: bag
+    volume: 2
+    unit: L
+    note:
+      tr: "rezervuarlı beslemede standart ambalaj; litre maliyeti en düşük"
+      en: "the standard pack for reservoir-fed supply; lowest cost per litre"
+
+compat:
+  printheads: [Epson i3200-A1, Epson 5113, Epson DX5, Epson XP600]
+  dropSizePl: [2.5, 25]
+  machines: [MT-1900-A4]
+  thirdPartyPrinters: [Sublicool S-1904E, Fedar FD-1900]
+  chipIncluded: false
+
+specs:
+  # Süblimasyon mürekkebi yazıcıda kurumaz, kalenderde transfer olur. Sıcaklık ve
+  # süre aralığı kumaşa göre değişir; A–D sınıfları bu aralığın içindedir.
+  cure:
+    method: calender
+    transferTempC: [180, 220]
+    transferSeconds: [30, 180]
+  # Süblimasyonda raf ömrü 12 değil 15 aydır — dispers boya dispersiyonu
+  # eko solvent ve UV kimyalarından daha kararlıdır.
+  shelfLifeMonths: 15
+  shelfLifeNote:
+    tr: "açılmamış ambalajda ve 25 °C altında; açıldıktan sonra 6 ay içinde tüketin"
+    en: "unopened and below 25 °C; use within 6 months once opened"
+  storageTempC: [10, 25]
+  operatingTempC: [18, 30]
+  operatingHumidityPct: [35, 65]
+
+  # Süblimasyonda dış mekân ayı yerine haslık yayımlanır; tekstil alıcısının
+  # kendi müşterisine göstereceği veri budur.
+  fastness:
+    - { standard: "EN ISO 105-B02", result: "4–5" }
+    - { standard: "EN ISO 105-C10", result: "≥ 4" }
+    - { standard: "EN ISO 105-E04", result: "≥ 4" }
+
+substrates: [textile, paper]
+applications: [textile, signage]
+
+# ECO PASSPORT / ZDHC gibi belgeler üreticiye aittir ve bu seride ürün bazlı bir
+# sertifikamız yoktur. Marka denetimi belge istiyorsa sipariş öncesi konuşulur.
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-610-sub-tds-tr.pdf, bytes: 297984, version: v1.3, date: "2026-03" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-610-sub-tds-en.pdf, bytes: 291840, version: v1.3, date: "2026-03" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-610-sub-gbf-tr.pdf, bytes: 552960, version: "2026-01" }
+
+ancillaries: [mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-610-sub/hero.jpg
+    kind: detail
+    alt:
+      tr: "Bir litrelik mürekkep şişesi ve arkasında yatan iki litrelik besleme torbası"
+      en: "A one-litre ink bottle with a two-litre supply bag lying behind it"
+  - src: /img/inks/mi-610-sub/channels.jpg
+    kind: detail
+    alt:
+      tr: "Dört flüor şişenin gün ışığında sıralanışı, etiketlerinde kanal kodları görünüyor"
+      en: "Four fluorescent bottles lined up in daylight with their channel codes visible on the labels"
+    caption:
+      tr: "FluorLine kanalları"
+      en: "FluorLine channels"
+  - src: /img/inks/mi-610-sub/transfer.jpg
+    kind: application
+    alt:
+      tr: "Kalenderin çıkışında transfer kağıdının kumaştan ayrıldığı an"
+      en: "The moment the transfer paper separates from the fabric at the calender exit"
+    caption:
+      tr: "Süblimasyon Transfer"
+      en: "Sublimation transfer"
+  - src: /img/inks/mi-610-sub/app-sportswear.jpg
+    kind: application
+    alt:
+      tr: "Süblimasyon baskılı forma kumaşının dikiş öncesi kesim masasındaki hâli"
+      en: "Sublimated jersey fabric on the cutting table before it is sewn"
+    caption:
+      tr: "Süblimasyon Spor Giyim Baskı"
+      en: "Sublimated sportswear printing"
+
+# Sarf ürünlerde fiyat verilebilir; kur ve lot büyüklüğüne bağlı olduğu için
+# liste fiyatı yerine teklif veriyoruz.
+price: null
+
+i18n:
+  tr:
+    role: Epson i3200-A1 ve 5113 kafalı makineler için transfer süblimasyon mürekkebi
+    summary: >-
+      MI-610 SUB, transfer süblimasyon için üretilen su bazlı dispers mürekkeptir;
+      Kiian Digistar HI-PRO, J-Teck J-Next Subly ve Sensient ElvaJet kullanan
+      atölyeler için alternatiftir. Kalenderde 180–220 °C ve 30–180 saniye aralığında
+      transfer edilir; A'dan D'ye dört sıcaklık sınıfı kumaşa göre seçilir. CMYK'ya ek
+      olarak açık camgöbeği, açık macenta, mavi, turuncu ve dört flüor kanal bulunur.
+      Raf ömrü 25 °C altında saklandığında 15 aydır. En az %80 polyester içeren
+      kumaşlarda çalışır; MT-1900 A4 üzerinde doğrulanmıştır.
+    features:
+      - >-
+        TransferClass A–D Sıcaklık Sınıfları — Boya seti 180, 190, 200 ve 210 °C
+        transfer sıcaklıklarında karakterize edilmiştir. İnce polyester astarda düşük
+        sınıf, kaplamalı ve ağır kumaşta yüksek sınıf kullanılır; sınıf değiştiğinde
+        dwell süresi de 30–180 saniye bandında kayar. Kalender ayarını kumaşa göre
+        değiştirirken bakacağınız tablo budur.
+      - >-
+        FluorLine Dört Flüor Kanal — Flüor pembe, sarı, mavi ve yeşil ayrı kanallardır
+        ve standart CMYK gamının dışına, özellikle spor giyimdeki takım renklerine
+        ulaşır. Açık uyarı: flüor pigmentlerin ışık haslığı düşüktür, dış mekânda asılı
+        kalacak işlerde kullanmayın.
+      - >-
+        PaperMatch Kağıt Eşlemesi — Mürekkep limiti 45–120 g/m² transfer kağıtları için
+        ayrı ayrı tablolanmıştır. Düşük gramajlı kağıtta toplam mürekkep limitini
+        düşürmezseniz kağıt dalgalanır ve kalenderde kırışık transfer edersiniz; bu
+        hatanın faturasını kumaş öder, kağıt değil.
+      - >-
+        TripleFilter Üretim Hattı — Mürekkep üç kademede, son kademede 1 µm'ye kadar
+        filtrelenir ve gazı alınır. 2,5 pikolitrelik i3200-A1 kafada nozül çapı çok
+        küçüktür; süblimasyonda kafa kaybının başlıca sebebi filtresiz mürekkep ve
+        beklemede bırakılan hattır.
+      - >-
+        ColorLock Lot Tutarlılığı — Her lot referans standardına karşı ölçülür, lotlar
+        arası fark ortalama ΔE ≤ 1,0 bandında tutulur. Forma siparişleri tekrar eder;
+        aynı takımın ikinci partisinde kayan bir kırmızı, tüm partinin iadesi demektir.
+    disclaimer: >-
+      Süblimasyon sonucu kumaşın polyester oranına, kaplamasına ve kalender ayarına
+      göre değişir. Buradaki transfer değerleri ve haslık sonuçları kontrollü koşullarda
+      alınmış tipik verilerdir; taahhüt değildir ve kendi kalenderinizin sıcaklık
+      profilini yansıtmaz. Seri üretime başlamadan önce kendi kumaşınızda, kendi kağıt
+      ve kalender ayarınızla numune transfer edin. Marka denetimi kapsamında sertifikalı
+      lot gerekiyorsa bunu sipariş öncesi bildirin. Sorumluluğumuz teslim edilen malın
+      bedeliyle sınırlıdır.
+    faq:
+      - q: Hangi kumaşlarda çalışır?
+        a: >-
+          En az %80 polyester içeren kumaşlarda. %100 polyesterde renkler en doygun
+          çıkar; %65/35 karışımlarda solgunlaşır ve yıkamada belirgin şekilde açılır.
+          Pamukta çalışmaz — süblimasyon boyası pamuk lifine bağlanmaz. Pamuklu iş
+          yapıyorsanız bakacağınız teknoloji DTF'tir, bu değil.
+      - q: A–D sınıfları ne demek, hangisini seçmeliyim?
+        a: >-
+          Sınıflar transfer sıcaklığını tanımlar: A 180 °C, B 190 °C, C 200 °C, D
+          210 °C. İnce ve ısıya duyarlı kumaşta düşük sınıf, ağır ve kaplamalı kumaşta
+          yüksek sınıf kullanılır. Sıcaklığı yükseltirken dwell süresini kısaltmayı
+          unutmayın; aksi hâlde kumaş sararır ve kağıt kalenderde yapışır. Doğru
+          kombinasyonu her kumaş için bir kez numuneyle bulup kayda geçirin.
+      - q: Raf ömrü neden 15 ay, açtıktan sonra ne kadar?
+        a: >-
+          Dispers boya dispersiyonu UV ve eko solvent kimyalarına göre daha kararlı
+          olduğu için kapalı ambalajda 15 ay veriyoruz; şartı 25 °C altında ve
+          karanlıkta saklamaktır. Açılan ambalajı 6 ay içinde bitirin: hava alan
+          mürekkepte partikül büyümesi başlar ve bunu ilk fark eden 2,5 pikolitrelik
+          nozül olur.
+      - q: Dış mekânda asılı bir bayrakta ne kadar dayanır?
+        a: >-
+          Işık haslığı EN ISO 105-B02'ye göre 4–5'tir, ancak bu laboratuvar verisidir.
+          Güney cephede sürekli güneş gören bir bayrakta 6–12 ay içinde gözle görülür
+          solma beklemelisiniz; ilk giden macenta ve flüor kanallarıdır. Kalıcı dış
+          mekân işi için süblimasyon değil, solvent veya UV baskılı branda doğru
+          çözümdür.
+      - q: Flüor kanalları almalı mıyım?
+        a: >-
+          Yalnızca gerçekten ihtiyacınız varsa. Flüor kanallar spor giyimde takım
+          renklerini yakalar, ama üç bedeli vardır: ışık haslığı düşüktür, standart CMYK
+          iş akışında ICC ile doğru yönetilemez ve genişletilmiş kanal destekleyen bir
+          RIP ister (NeoStampa, Wasatch veya ONYX). Talebe bağlı üretilir, teslim süresi
+          stok kanallardan uzundur.
+      - q: ECO PASSPORT veya ZDHC belgesi veriyor musunuz?
+        a: >-
+          Bu seri için ürün bazlı bir sertifika iddiamız yok ve olmayan bir belgeyi
+          varmış gibi göstermiyoruz. Müşterinizin marka denetimi ECO PASSPORT ya da ZDHC
+          şartı koyuyorsa bunu sipariş öncesi bize söyleyin: sertifikalı lot temini ayrı
+          bir tedarik hattıdır, teslim süresi ve fiyatı farklıdır.
+  en:
+    role: Transfer sublimation ink for machines with Epson i3200-A1 and 5113 heads
+    summary: >-
+      MI-610 SUB is a water-based disperse ink for transfer sublimation, an
+      alternative for shops running Kiian Digistar HI-PRO, J-Teck J-Next Subly or
+      Sensient ElvaJet. It transfers on the calender between 180–220 °C and 30–180
+      seconds, with four temperature classes from A to D chosen to suit the fabric.
+      Alongside CMYK there are light cyan, light magenta, blue, orange and four
+      fluorescent channels. Shelf life is 15 months stored below 25 °C. It works on
+      fabrics of at least 80 % polyester and is validated on the MT-1900 A4.
+    features:
+      - >-
+        TransferClass A–D Temperature Classes — The dye set is characterised at 180,
+        190, 200 and 210 °C transfer temperatures. Thin polyester linings take the low
+        class, heavy and coated fabrics the high one, and dwell time moves within the
+        30–180 second band as the class changes. This is the table you work from when
+        setting the calender for a new fabric.
+      - >-
+        FluorLine Four Fluorescent Channels — Fluorescent pink, yellow, blue and green
+        are separate channels that reach outside the standard CMYK gamut, particularly
+        for team colours in sportswear. Stated plainly: fluorescent pigments have poor
+        light fastness, so do not use them on work that will hang outdoors.
+      - >-
+        PaperMatch Paper Pairing — Ink limits are tabulated separately for transfer
+        papers from 45 to 120 g/m². Fail to reduce total ink on a light paper and the
+        web cockles, then transfers as creases at the calender — a mistake the fabric
+        pays for, not the paper.
+      - >-
+        TripleFilter Production Line — Filtered in three stages, down to 1 µm at the
+        last, and degassed. Nozzle diameters on a 2.5 picolitre i3200-A1 are very small;
+        in sublimation, most head losses come from unfiltered ink and lines left
+        standing.
+      - >-
+        ColorLock Batch Consistency — Every batch is measured against the reference
+        standard and held at an average ΔE ≤ 1.0. Team kit orders repeat, and a red that
+        shifts on the second run means the whole run comes back.
+    disclaimer: >-
+      Sublimation results depend on the polyester content of the fabric, its coating and
+      your calender settings. The transfer figures and fastness results here are typical
+      data from controlled conditions; they are not a guarantee and do not reflect the
+      temperature profile of your own calender. Run a sample transfer on your own
+      fabric, paper and calender settings before committing to production. If a brand
+      audit requires a certified batch, tell us before you order. Our liability is
+      limited to the value of the goods supplied.
+    faq:
+      - q: Which fabrics does it work on?
+        a: >-
+          Fabrics of at least 80 % polyester. Colours are most saturated on 100 %
+          polyester; on 65/35 blends they come out weaker and wash down noticeably. It
+          does not work on cotton — disperse dye does not bond to cotton fibre. If your
+          work is cotton, the technology to look at is DTF, not this.
+      - q: What do the A–D classes mean, and which should I use?
+        a: >-
+          The classes define transfer temperature: A 180 °C, B 190 °C, C 200 °C, D
+          210 °C. Use a low class on thin, heat-sensitive fabric and a high class on
+          heavy or coated fabric. When you raise temperature, remember to shorten dwell,
+          or the fabric yellows and the paper sticks in the calender. Find the right
+          combination once per fabric with a sample and write it down.
+      - q: Why is shelf life 15 months, and how long once opened?
+        a: >-
+          Disperse dye dispersions are more stable than UV and eco-solvent chemistries,
+          so we publish 15 months in an unopened pack — stored below 25 °C and in the
+          dark. Finish an opened pack within 6 months: once air is in it, particle growth
+          starts, and the first thing to notice is a 2.5 picolitre nozzle.
+      - q: How long will an outdoor flag last?
+        a: >-
+          Light fastness is 4–5 to EN ISO 105-B02, but that is laboratory data. On a flag
+          in constant sun on a south elevation, expect visible fading within 6–12 months,
+          with magenta and the fluorescents going first. For permanent outdoor work the
+          right answer is solvent or UV-printed banner, not sublimation.
+      - q: Should I buy the fluorescent channels?
+        a: >-
+          Only if you genuinely need them. They catch team colours in sportswear, but
+          they cost you three things: poor light fastness, no proper ICC control in a
+          standard CMYK workflow, and a RIP that supports extended channels — NeoStampa,
+          Wasatch or ONYX. They are made to order, so lead times are longer than for
+          stock channels.
+      - q: Do you supply an ECO PASSPORT or ZDHC certificate?
+        a: >-
+          We make no product-level certification claim for this series, and we will not
+          present a document we do not have. If your customer's brand audit requires ECO
+          PASSPORT or ZDHC, tell us before ordering: supplying a certified batch is a
+          separate supply route with different lead times and pricing.

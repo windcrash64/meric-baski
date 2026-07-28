@@ -1,0 +1,257 @@
+sku: MD-FILM-600
+series: Maven MD-FILM 600
+family: auxiliary
+type: film
+order: 140
+featured: false
+
+oemEquivalent: []
+# Film coating changes how much ink the surface holds, so a film change is a
+# profiling job even though nothing in the ink system is touched.
+changeover: switch-and-match
+
+channels: []
+
+packaging:
+  - format: roll
+    volume: 100
+    unit: m
+    note:
+      tr: "MD-FILM 600-C · soğuk soyma · 60 cm genişlik · 75 µm · 3 inç göbek"
+      en: "MD-FILM 600-C · cold peel · 60 cm wide · 75 micron · 3 inch core"
+  - format: roll
+    volume: 100
+    unit: m
+    note:
+      tr: "MD-FILM 600-H · sıcak soyma · 60 cm genişlik · 75 µm · 3 inç göbek"
+      en: "MD-FILM 600-H · hot peel · 60 cm wide · 75 micron · 3 inch core"
+
+compat:
+  # The film is matched to the ink and the shaker, not to a printhead.
+  printheads: []
+  machines: [MD-600-A4]
+  thirdPartyPrinters:
+    - LINKO S60 Pro
+    - Audley 60 cm i3200-A1
+    - PO-TRY 60 cm 5 kafa
+  chipIncluded: false
+
+specs:
+  cure:
+    method: heat
+    transferTempC: [150, 160]
+    transferSeconds: [10, 15]
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: >-
+      Orijinal ambalajında, dik durumda ve %60 bağıl nemin altında 12 ay.
+      Kaplama nem çeker: nemli depoda bekleyen rulo kenardan dalgalanır,
+      besleme sırasında yamulur ve renk ile beyaz katman arasında kayma
+      yaratır. Ruloyu yatık istiflemeyin, göbek ezilirse film düz beslenmez.
+    en: >-
+      12 months in the original packaging, stored upright below 60 %RH. The
+      coating takes up moisture: a roll left in a damp store ripples at the
+      edge, tracks unevenly on the feed and shifts the colour layer against the
+      white. Do not stack rolls on their side — a crushed core never feeds flat.
+  storageTempC: [5, 30]
+  operatingTempC: [15, 30]
+  operatingHumidityPct: [30, 60]
+
+substrates: [film, textile]
+applications: [textile]
+
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-md-film-600-tds-tr.pdf, bytes: 214016, version: "v1.1", date: "2026-03" }
+  - { kind: tds, lang: en, file: /docs/maven-md-film-600-tds-en.pdf, bytes: 209920, version: "v1.1", date: "2026-03" }
+
+ancillaries: [mi-710-dtf, md-pwd-170]
+
+gallery:
+  - src: /img/inks/md-film-600/roll.jpg
+    kind: machine
+    alt:
+      tr: "60 cm genişliğinde PET transfer film rulosu, ucu açılmış halde dik duruyor"
+      en: "60 cm PET transfer film roll standing upright with the leading edge unwound"
+  - src: /img/inks/md-film-600/peel.jpg
+    kind: detail
+    alt:
+      tr: "Preslenmiş tişörtten filmin tek hamlede soyulduğu an, baskı kumaşta kalıyor"
+      en: "Film being peeled from a pressed garment in one movement, the print staying on the fabric"
+    caption: { tr: PeelSet sıcak soyma, en: PeelSet hot peel }
+  - src: /img/inks/md-film-600/coated-side.jpg
+    kind: detail
+    alt:
+      tr: "Filmin iki yüzünde su damlası testi: kaplı yüzde damla duruyor, ters yüzde dağılıyor"
+      en: "Water drop test on both faces: the drop holds on the coated side and spreads on the reverse"
+    caption: { tr: Kaplı yüzü ayırt etme, en: Telling the coated side apart }
+  - src: /img/inks/md-film-600/app-detail.jpg
+    kind: application
+    alt:
+      tr: "İnce yazı ve keskin kenar içeren transferin kumaş üzerindeki yakın çekimi"
+      en: "Close-up of a transfer with fine type and sharp edges on fabric"
+    caption: { tr: DTF İnce Detay Transfer, en: DTF fine-detail transfer }
+
+price: null
+
+i18n:
+  tr:
+    role: 60 cm DTF sistemleri için tek yüzü kaplı PET transfer filmi, soğuk ve sıcak soyma
+    summary: >-
+      MD-FILM 600, DTF sistemlerinde kullanılan tek yüzü kaplı PET transfer
+      filmidir. 60 cm genişliğinde, 100 metrelik rulolarda ve 75 µm kalınlıkta
+      gelir. İki varyantı vardır: soğuk soyma MD-FILM 600-C ve sıcak soyma
+      MD-FILM 600-H. Kaplama yalnızca bir yüzdedir; ters yüze basılan iş toz
+      tutmaz ve transfer olmaz. Anti-statik arka yüz, sarma sırasında filmin
+      birbirine yapışmasını ve toz çekmesini azaltır. Film markası değiştiğinde
+      mürekkep emilimi de değişir, profil yeniden çıkarılmalıdır.
+    features:
+      - >-
+        PeelSet İki Varyant — 600-H sıcak soyma, presten çıkar çıkmaz sıcakken
+        alınır ve vardiya hızını belirgin şekilde artırır; 600-C soğuk soyma,
+        film 40 °C'nin altına inmeden alınmaz ama ince yazı ve keskin kenarda
+        daha güvenlidir. İki varyantın kaplaması farklıdır, aynı işte
+        karıştırılamaz.
+      - >-
+        InkHold Tek Yüz Kaplama — mürekkep yalnızca kaplı yüzde tutunur. Kaplı
+        yüzü ayırt etmek için su damlası testi yeterlidir: damla kaplı yüzde
+        toplanır, ters yüzde dağılır. Ters yüze basılan iş toz tutmaz ve
+        fırından çıkınca anlaşılır — ilk gün en sık yapılan hata budur.
+      - >-
+        FlatFeed Kıvrılma Direnci — 75 µm PET taşıyıcı, fırın sıcaklığında
+        boyutunu korur ve sarma milinde dalga yapmaz. Isınan film uzar; taşıyıcı
+        inceldikçe bu uzama renk ile beyaz katman arasında kaymaya dönüşür.
+      - >-
+        AntiStatic Arka Yüz — arka yüz statik önleyici işlem görür. Kuru
+        atölyede statik yüklenen film hem tozu kendine çeker hem de sarmada
+        birbirine yapışır; ikisi de transferde nokta kusuru olarak görünür.
+      - >-
+        MavenMatch Profil Paketi — MD-600 A4 + MI-710 DTF + MD-PWD 170
+        kombinasyonu için ICC profili ve mürekkep limitleri hazırdır. Farklı
+        film kullanacaksanız profil yeniden çıkarılmalıdır; bu bir tercih değil,
+        zorunluluktur.
+    disclaimer: >-
+      Soyma davranışı, kenar keskinliği ve yıkama dayanımı; kullanılan mürekkep,
+      toz, fırın sıcaklığı ve pres parametrelerine göre değişir. Buradaki
+      değerler MI-710 DTF mürekkebi ve MD-PWD 170 tozuyla ölçülmüş referans
+      değerlerdir, taahhüt değildir. Rulo değişiminde ve yeni parti girişinde
+      bir metrelik deneme baskısı yapın.
+    faq:
+      - q: Soğuk soyma mı, sıcak soyma mı?
+        a: >-
+          Sıcak soyma vardiya hızını artırır: pres açılır açılmaz film alınır,
+          bekleme yok. Soğuk soyma filmin 40 °C'nin altına inmesini bekletir ama
+          ince yazıda ve keskin kenarda transfer daha temiz kalır. Karışık iş
+          yapıyorsanız her ikisinden birer rulo bulundurun; hız ile detay
+          arasında seçim yapıyorsunuz, kalite ile değil.
+      - q: Kaplı yüzü nasıl anlarım?
+        a: >-
+          Su damlası testi en hızlısı: damla kaplı yüzde toplu durur, ters yüzde
+          yayılır. Parmak ucuyla da hissedilir; kaplı yüz hafif tutucudur, ters
+          yüz kaygandır. Rulo takarken kaplı yüzün kafalara baktığından emin
+          olun — ters takılan bir rulo, fırın çıkışına kadar fark edilmez.
+      - q: Film değiştirdim, renkler tutmuyor. Neden?
+        a: >-
+          Çünkü kaplama mürekkep emilimini doğrudan belirler. Aynı mürekkep
+          limitiyle farklı bir filme basmak, ya doygunluk kaybı ya da kenarda
+          taşma verir. Marka veya parti değiştirdiğinizde profili yeniden
+          çıkarın; bu ürünün geçiş sınıfının "profil gerekir" olmasının sebebi
+          budur.
+      - q: Bu filmi UV DTF makinesinde kullanabilir miyim?
+        a: >-
+          Hayır. UV DTF, birbirine yapışan A ve B filmden oluşan iki katmanlı
+          bir sistem kullanır; MD-FILM 600 tek katmanlı su bazlı DTF filmidir.
+          MC-300 U1 için ayrı bir A/B film seti gerekir, karıştırmayın.
+      - q: 60 cm dışında genişlik var mı?
+        a: >-
+          Stokta 60 cm tutuyoruz; 30 ve 33 cm genişlikler talep üzerine
+          getiriliyor, teslim süresi daha uzundur. Ruloyu kendiniz kesmeyin —
+          kesme sırasında kaplama zedelenir ve kenar boyunca toz tutmayan bir
+          şerit kalır.
+      - q: Bu ürün için Türkçe GBF var mı?
+        a: >-
+          Yok, çünkü gerekmiyor. MD-FILM 600 kimyasal bir karışım değil, işlem
+          görmüş bir PET filmdir ve KKDİK kapsamında Güvenlik Bilgi Formu
+          zorunluluğu doğurmaz. Sattığımız mürekkep, astar ve toz ürünlerinin
+          hepsinde Türkçe GBF vardır; bu ayrımı bilerek yapıyoruz.
+  en:
+    role: Single-side coated PET transfer film for 60 cm DTF systems, cold and hot peel
+    summary: >-
+      MD-FILM 600 is the single-side coated PET transfer film used in DTF
+      systems. It ships 60 cm wide, in 100 metre rolls, at 75 micron. There are
+      two variants: MD-FILM 600-C cold peel and MD-FILM 600-H hot peel. Only one
+      face is coated — printed on the reverse, the job holds no powder and will
+      not transfer. The anti-static back face reduces blocking and dust pickup
+      on the roll. When the film changes, ink absorption changes with it and the
+      profile has to be rebuilt.
+    features:
+      - >-
+        PeelSet Two Variants — 600-H hot peel comes off the moment the press
+        opens and lifts shift throughput noticeably; 600-C cold peel waits until
+        the film is below 40 °C but holds fine type and sharp edges more
+        reliably. The two coatings differ and cannot be mixed within a job.
+      - >-
+        InkHold Single-Side Coating — ink only anchors on the coated face. A
+        water drop identifies it: the drop beads on the coated side and spreads
+        on the reverse. Printed on the wrong face the job carries no powder and
+        you only find out at the oven — the classic first-day mistake.
+      - >-
+        FlatFeed Curl Resistance — the 75 micron PET carrier holds its dimension
+        at oven temperature and does not ripple on the take-up shaft. Film
+        stretches as it heats, and the thinner the carrier, the more that
+        stretch turns into misregistration between colour and white.
+      - >-
+        AntiStatic Back Face — the reverse is treated against static build-up.
+        In a dry shop, statically charged film both attracts dust and blocks
+        against itself on the roll; either one shows up as speckling in the
+        transfer.
+      - >-
+        MavenMatch Profile Pack — ICC profiles and ink limits are ready for the
+        MD-600 A4 + MI-710 DTF + MD-PWD 170 combination. Move to another film
+        and the profile must be rebuilt — that is a requirement, not a
+        preference.
+    disclaimer: >-
+      Peel behaviour, edge definition and wash durability vary with the ink,
+      powder, oven temperature and press settings used. The figures here are
+      reference values measured with MI-710 DTF ink and MD-PWD 170 powder, not
+      a warranty. Run a one-metre test print when you change rolls or take in a
+      new batch.
+    faq:
+      - q: Cold peel or hot peel?
+        a: >-
+          Hot peel is faster: the film comes off as the press opens, with no
+          waiting. Cold peel makes you wait until the film is under 40 °C but
+          leaves cleaner fine type and sharper edges. On mixed work, keep a roll
+          of each — you are choosing between speed and detail, not between good
+          and bad.
+      - q: How do I tell which face is coated?
+        a: >-
+          The water drop test is quickest: the drop beads on the coated face and
+          spreads on the reverse. You can also feel it — the coated side has a
+          slight grip, the reverse is slippery. Check the orientation as you
+          load the roll; a roll loaded the wrong way round is not noticed until
+          the oven.
+      - q: I changed film and my colours no longer hold. Why?
+        a: >-
+          Because the coating determines how much ink the surface takes. Running
+          the same ink limits on a different film gives you either lost
+          saturation or bleeding at the edges. Rebuild the profile whenever you
+          change brand or batch — that is why this product's changeover class is
+          "profile required".
+      - q: Can I use this film on a UV DTF machine?
+        a: >-
+          No. UV DTF uses a two-layer A/B film system where the two films bond
+          to each other; MD-FILM 600 is a single-layer aqueous DTF film. The
+          MC-300 U1 needs its own A/B film set — do not mix them.
+      - q: Is it available in widths other than 60 cm?
+        a: >-
+          We stock 60 cm; 30 cm and 33 cm are brought in to order with a longer
+          lead time. Do not slit rolls yourself — slitting damages the coating
+          and leaves a strip along the edge that holds no powder.
+      - q: Is there a Turkish safety data sheet for this product?
+        a: >-
+          No, because none is required. MD-FILM 600 is a treated PET film, not a
+          chemical mixture, and does not trigger a Güvenlik Bilgi Formu
+          obligation under KKDİK. Every ink, primer and powder we sell does have
+          a Turkish GBF; we draw that distinction deliberately.

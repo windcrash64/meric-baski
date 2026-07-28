@@ -127,10 +127,10 @@ i18n:
       film eşleşmesinde yıkama haslığı ISO 105-C06'ya göre 4 ve üzerindedir.
     features:
       - >-
-        SedimentGuard Beyaz Dispersiyon — beyaz pigmentin D50 partikül boyutu
-        200–250 nm bandında tutulur, dispersiyon yüzey aktifleri çökelmeyi
-        geciktirir. Bu, altı aylık raf ömrünü uzatmaz; hafta sonu duran bir
-        makinede kafayı kurtarır.
+        SedimentGuard Beyaz Dispersiyon — renk pigmentleri 100–150 nm, beyaz
+        pigmentin D50 değeri 200–250 nm bandında tutulur; dispersiyon yüzey
+        aktifleri çökelmeyi geciktirir. Bu, altı aylık raf ömrünü uzatmaz; hafta
+        sonu duran bir makinede kafayı kurtarır.
       - >-
         AquaBase Tek Taşıyıcı — CMYK ve beyaz aynı taşıyıcı kimyasıyla üretilir.
         Renk ve beyaz aynı geçişte basıldığında katmanlar arasında ayrışma ve
@@ -213,10 +213,10 @@ i18n:
       wash fastness reaches ISO 105-C06 grade 4 or better.
     features:
       - >-
-        SedimentGuard White Dispersion — white pigment is held to a D50 of
-        200–250 nm and the dispersing surfactants slow settling. It does not
-        extend the six-month shelf life; it saves the head on a machine that
-        sits over a weekend.
+        SedimentGuard White Dispersion — colour pigments sit at 100–150 nm and
+        white is held to a D50 of 200–250 nm, with dispersing surfactants
+        slowing settling. It does not extend the six-month shelf life; it saves
+        the head on a machine that sits over a weekend.
       - >-
         AquaBase Single Carrier — CMYK and white are built on the same carrier
         chemistry, so printing colour and white in one pass produces no

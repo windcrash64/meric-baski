@@ -1,0 +1,191 @@
+key: packaging
+order: 20
+accent: cyan
+
+hero:
+  src: /img/applications/packaging/hero.jpg
+  kind: application
+  alt:
+    tr: Tasarım masasında dizili numune kutular, etiketli cam kavanozlar ve katlanmamış bıçak izi provaları
+    en: Sample cartons, labelled glass jars and flat die-line proofs laid out on a design table
+
+gallery:
+  - src: /img/applications/packaging/kisa-seri-kutu.jpg
+    kind: application
+    alt: { tr: Kısa seri kutular baskı sonrası kesim tablasında sıralanmış, en: Short-run cartons lined up on the cutting table after printing }
+    caption: { tr: UV Mukavva Kutu Baskı, en: UV printed carton }
+  - src: /img/applications/packaging/kristal-etiket.jpg
+    kind: application
+    alt: { tr: Kristal etiketin kavanoz yüzeyine elle uygulanışı, en: Crystal label being applied to a jar by hand }
+    caption: { tr: Kristal Etiket UV DTF Baskı, en: UV DTF crystal label }
+  - src: /img/applications/packaging/cam-sise.jpg
+    kind: application
+    alt: { tr: Cam şişeler baskı öncesi tabla üzerindeki aparata yerleştirilmiş, en: Glass bottles seated in a jig on the print bed before printing }
+    caption: { tr: UV Cam Şişe Baskı, en: UV printed glass bottle }
+  - src: /img/applications/packaging/teshir-standi.jpg
+    kind: application
+    alt: { tr: Mağaza reyonunda duran baskılı fotoblok teşhir standı, en: Printed foam board display stand on a shop floor }
+    caption: { tr: Fotoblok Teşhir Standı UV Baskı, en: UV printed foam board display stand }
+  - src: /img/applications/packaging/mikro-oluklu.jpg
+    kind: application
+    alt: { tr: Mikro oluklu levhaya basılmış teşhir kutusu katlanmadan önce, en: Printed micro-flute display box before it is folded }
+    caption: { tr: Mikro Oluklu Teşhir Kutusu UV Baskı, en: UV printed micro-flute display box }
+  - src: /img/applications/packaging/teneke-kutu.jpg
+    kind: application
+    alt: { tr: Paketleme tezgâhında baskılı teneke kutu kapakları, en: Printed tin lids on a packing bench }
+    caption: { tr: Teneke Kutu UV Baskı, en: UV printed tin }
+  - src: /img/applications/packaging/bicak-izi-kesim.jpg
+    kind: application
+    alt: { tr: Kesim tablası basılı levhadaki register işaretlerini okuyarak bıçak izini kesiyor, en: Cutting table reading registration marks and cutting the die line on a printed sheet }
+    caption: { tr: Bıçak İzi Kontur Kesim, en: Die-line contour cutting }
+  - src: /img/applications/packaging/ahsap-hediye-kutusu.jpg
+    kind: application
+    alt: { tr: Ahşap hediye kutusunun kapağına basılmış görsel, en: Graphic printed onto the lid of a wooden gift box }
+    caption: { tr: Ahşap Hediye Kutusu UV Baskı, en: UV printed wooden gift box }
+
+machines: [MF-2513-R8, MC-300-U1, MF-6090-U3, MF-3220-K12, MK-1612]
+inks: [mi-310-uv-dtf, mi-210-uv-led-r, mi-220-uv-led-e, mi-110-uv]
+substrates: [paper, photoblock, foamboard, pvc, film, acrylic, glass, metal, wood, ceramic]
+
+i18n:
+  tr:
+    name: Ambalaj ve Etiket
+    kicker: Kalıp beklemeden üretin
+    intro: >-
+      Ambalaj tarafında dijital baskının işi, ofset ve flekso tesisinin yerini
+      almak değil; kalıp maliyetinin anlamsız kaldığı yerde devreye girmektir.
+      Elli kutuluk bir numune serisi, on iki çeşitlik bir kampanya kutusu ya da
+      yarın müşterinin masasında olması gereken tek bir maket için kalıp ve klişe
+      açmak zaman ve para kaybıdır. UV flatbed mukavvayı ve mikro oluklu levhayı
+      doğrudan tablaya alır; kesim tablası aynı dosyadan bıçak izini keser,
+      katlama hatlarını bastırır ve kutu aynı gün masaya gelir.
+
+      İkinci hat etikettir. UV DTF; A filmi üzerine renk, beyaz ve lak basar,
+      üzerine yapışkanlı B filmini hat üstünde lamine eder. Sonuç, kavanozdan
+      termosa kadar düz olmayan yüzeylere elle uygulanabilen kristal etikettir.
+      Teşhir standı ve raf üstü ürünleri ise fotoblok, dekota ve mikro oluklu
+      üzerine basılır; burada belirleyici olan baskı değil, kesim ve katlama
+      hattının tekrarlanabilirliğidir. Sınırı da baştan söyleyelim: bu
+      mürekkepler gıdayla doğrudan temas eden yüzeyler için değil, ambalajın
+      dış yüzeyi içindir.
+    jobs:
+      - Kısa seri kutu ve karton ambalaj üretimi
+      - Ambalaj prototipi ve müşteri onayı için maket kutu
+      - Kristal etiket ve UV DTF transfer etiket
+      - Cam kavanoz, şişe ve teneke kutu üzerine doğrudan baskı
+      - Raf üstü teşhir standı ve POS ürünleri
+      - Mikro oluklu ve fotoblok üzerine teşhir kutusu
+      - Sınırlı sayı ve kişiselleştirilmiş ambalaj serileri
+      - Bıçak izi kontur kesim, oluk ve katlama hattı hazırlığı
+    faq:
+      - q: Dijital ambalaj baskısı ofsetin yerini alır mı?
+        a: >-
+          Hayır, ve bunu iddia eden satıcıya temkinli yaklaşın. Ofset ve flekso,
+          adet arttıkça kutu başı maliyeti düşen süreçlerdir; dijitalde maliyet
+          neredeyse sabit kalır. Kabaca birkaç yüz adedin altında ve çok
+          versiyonlu işlerde dijital açık ara ucuzdur, birkaç binin üzerinde ise
+          ofset kazanır. Doğru kurgu ikisini yarıştırmak değil; numuneyi,
+          prototipi ve kısa seriyi dijitale, hacmi ofsete vermektir.
+      - q: Gıda ambalajı basabilir miyim?
+        a: >-
+          Gıdayla doğrudan temas eden yüzeye hayır. Kataloğumuzdaki UV ve UV DTF
+          mürekkepleri düşük migrasyonlu değildir; gıda teması olan bir uygulama
+          bariyer katmanı ve düşük migrasyonlu bir mürekkep sistemi ister.
+          Ambalajın dış yüzeyine baskı, etiket ve teşhir kutusu tarafında böyle
+          bir kısıt yoktur. Gıda projesi konuşuluyorsa bunu ilk görüşmede söyleyin
+          — hangi katmana basılacağı, makine seçiminden önce netleşmesi gereken
+          sorudur.
+      - q: Kristal etiket makinesi günde ne kadar iş çıkarır?
+        a: >-
+          MC-300 U1, 30 cm genişlikte 4 geçişte 3,6 m²/sa üretir; bu 300 mm bantta
+          saatte yaklaşık 12 metre film demektir ve renk + beyaz + lak
+          katmanlarının tamamı bu hıza dahildir. Sekiz saatlik vardiyada 25–28 m²
+          gerçekçi bir üst sınırdır. Aylık etiket hacminiz bunu zorluyorsa 30 cm
+          sınıfı darboğaz olur; o noktada ya ikinci bir makine ya da ürüne
+          doğrudan basan bir flatbed konuşulur.
+      - q: Kutuyu ve bıçak izini kim kesecek?
+        a: >-
+          Kısa seride maket bıçağı ve şablonla başlanabilir, ama tekrarlanabilirlik
+          ilk yüz kutuda biter. MK-1612 basılı levhadaki register işaretlerini
+          okur, tangansiyel bıçakla mukavvayı keser, osilasyonlu takımla oluklu
+          mukavvaya girer ve katlama hatlarını bastırır. Osilasyonlu kesimde hız
+          10–16 m²/sa bandındadır; oluklu malzemede günlük kapasiteyi baskı değil,
+          çoğunlukla bu bant belirler.
+      - q: Kristal etiket ne kadar dayanır?
+        a: >-
+          Mürekkep tarafında yayınladığımız referans, dikey maruziyette ve Orta
+          Avrupa iklimi koşullarında düzgün yüzeye uygulanmış etiket için 12 aydır.
+          Bu bir dış mekân rakamıdır; rafta duran bir kavanoz etiketi çok daha uzun
+          yaşar. Buna karşılık kristal etiket bulaşık makinesine ve sürekli
+          sürtünmeye dayanıklı değildir — termos, matara ve mutfak ürünlerinde bunu
+          müşteriye baştan söylemek gerekir.
+  en:
+    name: Packaging & Labels
+    kicker: Produce without waiting for tooling
+    intro: >-
+      In packaging, digital printing is not there to replace an offset or flexo
+      plant. It earns its place where tooling cost stops making sense: a fifty-box
+      sample run, a campaign carton in twelve versions, or the single mock-up that
+      has to be on the client's table tomorrow. Cutting a plate or a flexo cliché
+      for any of those is lost time and money. A UV flatbed takes board and
+      micro-flute straight onto the bed, and the cutting table works from the same
+      file — die line cut, creases pressed, box finished the same day.
+
+      The second line is labels. UV DTF prints colour, white and varnish onto the
+      A-film and laminates the adhesive B-film over it inline. The result is a
+      crystal label that can be applied by hand to surfaces that are anything but
+      flat, from jars to vacuum flasks. Display stands and shelf-edge items are
+      printed on foam board, foam PVC and micro-flute, where the deciding factor
+      is not the printing but how repeatable the cutting and creasing line is. And
+      the limit, stated up front: these inks are for the outside of a pack, not
+      for a food-contact surface.
+    jobs:
+      - Short-run cartons and folding boxes
+      - Packaging prototypes and mock-ups for client approval
+      - Crystal labels and UV DTF transfer labels
+      - Direct printing on glass jars, bottles and tins
+      - Retail display stands and POS items
+      - Display boxes on micro-flute and foam board
+      - Limited-edition and personalised packaging runs
+      - Die-line contour cutting, creasing and folding preparation
+    faq:
+      - q: Does digital packaging printing replace offset?
+        a: >-
+          No — and be wary of any supplier who claims it does. Offset and flexo get
+          cheaper per box as the run grows; digital cost per box is close to flat.
+          Below roughly a few hundred units, and on heavily versioned work, digital
+          wins clearly; above a few thousand, offset does. The right setup is not to
+          make them compete: samples, prototypes and short runs go digital, volume
+          goes to offset.
+      - q: Can I print food packaging?
+        a: >-
+          Not on a surface that touches food directly. The UV and UV DTF inks in our
+          catalogue are not low-migration; a food-contact application needs a barrier
+          layer and a low-migration ink system. Printing the outside of a pack, labels
+          and display boxes carries no such restriction. If a food project is on the
+          table, say so in the first conversation — which layer gets printed has to be
+          settled before a machine is chosen.
+      - q: How much can a crystal label machine actually produce in a day?
+        a: >-
+          The MC-300 U1 runs 3.6 m²/h at four passes on a 300 mm web — about 12 linear
+          metres of film an hour, with the colour, white and varnish layers all
+          included in that figure. Over an eight-hour shift, 25–28 m² is a realistic
+          ceiling. If your monthly label volume pushes past that, the 30 cm class
+          becomes the bottleneck, and the conversation turns to a second machine or to
+          a flatbed printing the product directly.
+      - q: Who cuts the box and the die line?
+        a: >-
+          At low volume a knife and a template will do, but repeatability runs out
+          after the first hundred boxes. The MK-1612 reads the registration marks in
+          the printed sheet, cuts board with the tangential knife, goes through
+          corrugated with the oscillating tool and presses the creases. Oscillating
+          cutting runs at 10–16 m²/h; on corrugated it is usually that figure, not the
+          printer, that sets daily capacity.
+      - q: How long does a crystal label last?
+        a: >-
+          The reference we publish on the ink side is 12 months of vertical exposure in
+          a central European climate, for a label applied to a smooth surface. That is
+          an outdoor figure — a jar label living on a shelf lasts far longer. What a
+          crystal label will not survive is a dishwasher or constant abrasion, so on
+          flasks, bottles and kitchenware tell the customer that before the order, not
+          after.

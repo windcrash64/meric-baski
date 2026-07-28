@@ -1,0 +1,269 @@
+sku: MI-410
+series: Maven MI-410 ECO
+family: eco-solvent
+type: ink
+order: 50
+featured: true
+
+# What the buyer is replacing. Named as families, never as logos.
+oemEquivalent: [Mimaki SS21, Mimaki BS4, Roland ECO-SOL MAX 2]
+changeover: switch-and-swap
+
+channels:
+  - { code: C, sku: MI-410-C, availability: stock }
+  - { code: M, sku: MI-410-M, availability: stock }
+  - { code: Y, sku: MI-410-Y, availability: stock }
+  - { code: K, sku: MI-410-K, availability: stock }
+  - { code: Lc, sku: MI-410-LC, availability: stock }
+  - { code: Lm, sku: MI-410-LM, availability: stock }
+  - { code: Or, sku: MI-410-OR, availability: on-request }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note:
+      tr: "tek kanal dolumu ve deneme baskısı için"
+      en: "for single-channel top-ups and test printing"
+  - format: bag
+    volume: 2
+    unit: L
+    note:
+      tr: "toplu tank beslemesi; litre maliyeti en düşük ambalaj"
+      en: "bulk tank supply; the lowest cost per litre"
+  - format: cartridge
+    volume: 440
+    unit: ml
+    note:
+      tr: "doldurulabilir gövde, çipsiz; makinedeki çip taşınır"
+      en: "refillable body, no chip; the chip already in the machine carries over"
+  - format: cartridge
+    volume: 500
+    unit: ml
+    note:
+      tr: "doldurulabilir gövde, çipsiz"
+      en: "refillable body, no chip"
+
+compat:
+  printheads: [Epson i3200-E1, Epson DX5, Epson DX7, Epson XP600]
+  dropSizePl: [3, 25]
+  machines: [MS-1802-E4, MS-1600-PC]
+  thirdPartyPrinters: [Wit-Color Ultra 9000, Wit-Color Ultra 1902, Mimaki JV33, Mutoh VJ-1624, Roland VS-640]
+  chipIncluded: false
+
+specs:
+  # Eko solvent kürlenmez; ısıtıcı hattında çözücü uçar. postCure burada
+  # laminasyon öncesi gaz atma süresidir.
+  cure:
+    method: heat
+    postCureHours: 24
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: "açılmamış ambalajda; açıldıktan sonra 6 ay içinde tüketin"
+    en: "unopened; use within 6 months once opened"
+  storageTempC: [15, 30]
+  operatingTempC: [18, 30]
+  operatingHumidityPct: [35, 65]
+  outdoorDurabilityMonths: 24
+  outdoorDurabilityNote:
+    tr: "laminesiz, dikey maruziyet, Orta Avrupa iklimi; UV laminasyonla 36 aya çıkar"
+    en: "unlaminated, vertical exposure, central European climate; 36 months with UV lamination"
+
+substrates: [vinyl, banner, mesh, canvas, wallpaper, paper]
+applications: [signage, vehicle, interior]
+
+# Sertifika iddiası taşımıyoruz. Bir bayi, üreticinin sertifikasını kendi markası
+# gibi gösteremez; bu seri için elimizde ürün bazlı bir sertifika yoktur.
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-410-eco-tds-tr.pdf, bytes: 268288, version: v1.2, date: "2026-03" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-410-eco-tds-en.pdf, bytes: 262144, version: v1.2, date: "2026-03" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-410-eco-gbf-tr.pdf, bytes: 613376, version: "2026-01" }
+
+ancillaries: [mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-410-eco/hero.jpg
+    kind: detail
+    alt:
+      tr: "Bir litrelik mürekkep şişesi ve arkasında duran iki litrelik besleme torbası"
+      en: "A one-litre ink bottle with a two-litre supply bag standing behind it"
+  - src: /img/inks/mi-410-eco/packaging.jpg
+    kind: detail
+    alt:
+      tr: "1 litre şişe, 2 litre torba ve 440 ml kartuşun yan yana dizilişi"
+      en: "One-litre bottle, two-litre bag and 440 ml cartridge lined up side by side"
+    caption:
+      tr: "OpenPack ambalaj seçenekleri"
+      en: "OpenPack packaging options"
+  - src: /img/inks/mi-410-eco/tank.jpg
+    kind: detail
+    alt:
+      tr: "Torbadan beslenen toplu mürekkep tankının seviye göstergesi ve hat filtresi"
+      en: "Level indicator and line filter of a bag-fed bulk ink tank"
+  - src: /img/inks/mi-410-eco/app-vinyl.jpg
+    kind: application
+    alt:
+      tr: "Işıklı vinile basılmış vitrin grafiğinin yakın çekimi, harf kenarları keskin"
+      en: "Close-up of a shop-window graphic printed on backlit vinyl, letter edges crisp"
+    caption:
+      tr: "Eko Solvent Vitrin Baskı"
+      en: "Eco-solvent window graphics"
+
+# Sarf ürünlerde fiyat verilebilir; kur ve lot büyüklüğüne bağlı olduğu için
+# liste fiyatı yerine teklif veriyoruz.
+price: null
+
+i18n:
+  tr:
+    role: Epson i3200-E1, DX5, DX7 ve XP600 kafalı makineler için düşük kokulu eko solvent
+    summary: >-
+      MI-410 ECO, Epson i3200-E1, DX5, DX7 ve XP600 kafalı makineler için üretilen
+      düşük kokulu bir eko solvent mürekkeptir. Mimaki SS21, Mimaki BS4 ve Roland
+      ECO-SOL MAX 2 kullanan atölyeler için toplu ambalajlı alternatiftir: 1 litre
+      şişe, 2 litre torba, 440 ve 500 ml doldurulabilir kartuş. Renk skalası CMYK;
+      açık camgöbeği ile açık macenta stokta, turuncu talebe bağlıdır. Laminesiz
+      dikey maruziyette 24 ay dış mekân dayanımı verir. MS-1802 E4 ve MS-1600 PC
+      üzerinde doğrulanmıştır; başka bir mürekkepten geçişte hat yıkaması gerekir.
+    features:
+      - >-
+        LowOdour LO-2 Çözücü Paketi — Kapalı atölyede vardiya boyunca çalışan
+        operatör için düşük buhar basınçlı çözücülerle formüle edilmiştir. Gerçek
+        solventin kokusunu vermez; buna karşılık son ısıtıcının üzerinde yerel emiş
+        hâlâ önerilir. Koku duymamak, havalandırmanın gereksiz olduğu anlamına gelmez.
+      - >-
+        TripleFilter Üretim Hattı — Mürekkep dolumdan önce üç kademede, son kademede
+        1 µm'ye kadar filtrelenir ve gazı alınır. Kafa tıkanmalarının çoğu pigment
+        partikülünden değil, hatta kalan hava kabarcığından çıkar; degazaj bu yüzden
+        filtreleme kadar belirleyicidir.
+      - >-
+        ColorLock Lot Tutarlılığı — Her üretim lotu referans standardına karşı ölçülür
+        ve lotlar arası fark ortalama ΔE ≤ 1,0 bandında tutulur. Aynı tabelayı altı ay
+        sonra tamamlayan atölye için önemli olan tek spesifikasyon budur.
+      - >-
+        OpenPack Ambalaj Seçimi — Aynı mürekkep 1 L şişe, 2 L torba ve 440/500 ml
+        doldurulabilir kartuş gövdesinde verilir. Tanklı makinede torba, kartuşlu
+        makinede gövde kullanılır; litre maliyeti torbada en düşük, şişede en
+        yüksektir.
+      - >-
+        OutGas 24 Penceresi — Baskı sarma milinden çıktıktan sonra çözücünün büyük
+        kısmı ilk 24 saatte uçar. Laminasyonu veya araç aplikasyonunu bu süreden önce
+        yaparsanız folyo altında kabarcık ve yapışma kaybı görürsünüz.
+    disclaimer: >-
+      Yapışma, dış mekân dayanımı ve renk sonuçları malzemenin markasına, yüzey
+      kaplamasına ve baskı koşullarına göre değişir. Buradaki değerler kontrollü
+      koşullarda alınmış tipik sonuçlardır; taahhüt değildir. Seri üretime başlamadan
+      önce kendi malzemenizde, kendi baskı profilinizle ve tercihen aynı lotla test
+      edin. Başka bir mürekkepten geçişte hattın, damperlerin ve kafaların MI-910
+      FLUSH ile yıkanması şarttır. Sorumluluğumuz her hâlükârda teslim edilen malın
+      bedeliyle sınırlıdır.
+    faq:
+      - q: MI-410 ECO ile MI-420 ECO-TR arasındaki fark nedir?
+        a: >-
+          Kimya aynı ailedendir; ayrım ambalajda ve renk hedefindedir. MI-410 toplu
+          ambalajda verilir ve kendi renk hedefine göre profillenir, yani makinenizde
+          ICC profilini yeniden çıkarmanız gerekir. MI-420 ise OEM kartuş ve poşet
+          formatlarında, çipli ve OEM profiline eşlenmiş gelir. Tanklı makineniz varsa
+          MI-410, kartuşlu bir Roland veya Mutoh'unuz varsa MI-420 doğru olandır.
+      - q: Neden "Yıkama gerekir" sınıfında?
+        a: >-
+          Önceki mürekkebin reçine ve çözücü paketi farklıysa iki mürekkep hat içinde
+          karışırken jelleşebilir. Geçişte kanal başına yaklaşık 150–200 ml MI-910
+          FLUSH ile hat, damper ve kafa yıkanır; pratikte yarım günlük duruş demektir.
+          Aynı aile içinde kalıyorsanız, yani MI-410 ile MI-420 arasında geçiş
+          yapıyorsanız yıkama gerekmez.
+      - q: Bu seride beyaz mürekkep var mı?
+        a: >-
+          Yok. MS-1600 PC beyaz kanalı destekler, ancak beyazı OEM tarafından tedarik
+          etmeniz veya kanalı boş bırakmanız gerekir. Eko solvent beyazın çökelme ve
+          tıkanma davranışı, sürekli sirkülasyonu olmayan makinelerde bizim kabul
+          edeceğimiz riskin üzerinde; bu yüzden katalogda taşımıyoruz.
+      - q: Bir litre kaç metrekare basar?
+        a: >-
+          Orta kaplamalı, dört geçişlik bir işte 1 litre yaklaşık 90–120 m² kaplar.
+          Tam kaplama fotoğraf işlerinde bu rakam 60 m²'ye kadar düşer, yazı ağırlıklı
+          işlerde 150 m²'nin üzerine çıkar. Teklif hazırlarken kendi ortalama kaplama
+          oranınızı ölçün; mürekkep bütçenizin tamamını bu tek sayı belirler.
+      - q: Laminasyona ne zaman girebilirim?
+        a: >-
+          Baskıdan sonra en az 24 saat bekleyin. Çözücünün büyük kısmı ilk gün uçar;
+          erken lamine edilen işlerde folyo altında kabarcık, araç aplikasyonunda ise
+          yapışma kaybı görülür. Isıtıcı sıcaklığını yükseltmek bu süreyi kısaltmaz,
+          yalnızca yüzeyi kurutur.
+  en:
+    role: Low-odour eco-solvent for machines running Epson i3200-E1, DX5, DX7 and XP600 heads
+    summary: >-
+      MI-410 ECO is a low-odour eco-solvent ink made for machines running Epson
+      i3200-E1, DX5, DX7 and XP600 heads. For shops on Mimaki SS21, Mimaki BS4 or
+      Roland ECO-SOL MAX 2 it is the bulk-packaged alternative: 1 L bottle, 2 L bag
+      and 440 or 500 ml refillable cartridges. The set is CMYK, with light cyan and
+      light magenta held in stock and orange to order. Unlaminated vertical exposure
+      gives 24 months outdoors. Validated on the MS-1802 E4 and MS-1600 PC; switching
+      from another ink requires a line flush.
+    features:
+      - >-
+        LowOdour LO-2 Solvent Package — Formulated with low vapour-pressure solvents
+        for an operator who sits next to the machine for a whole shift. It does not
+        smell like true solvent, but local extraction over the post-heater is still
+        recommended. Not smelling it is not the same as not needing ventilation.
+      - >-
+        TripleFilter Production Line — Ink is filtered in three stages, down to 1 µm
+        at the last, and degassed before filling. Most head blockages come not from
+        pigment particles but from air left in the line, which is why degassing
+        matters as much as filtration.
+      - >-
+        ColorLock Batch Consistency — Every production batch is measured against the
+        reference standard and batch-to-batch variation is held at an average
+        ΔE ≤ 1.0. For a shop completing the same sign six months later, that is the
+        only specification that matters.
+      - >-
+        OpenPack Format Choice — The same ink ships as a 1 L bottle, a 2 L bag and a
+        440/500 ml refillable cartridge body. Tank machines take the bag, cartridge
+        machines the body; cost per litre is lowest in the bag and highest in the
+        bottle.
+      - >-
+        OutGas 24 Window — Most of the solvent leaves the print in the first 24 hours
+        after it comes off the take-up. Laminate or apply to a vehicle before that and
+        you will see bubbles under the film and a loss of adhesion.
+    disclaimer: >-
+      Adhesion, outdoor durability and colour results vary with the brand of media,
+      its surface coating and your printing conditions. The figures here are typical
+      results obtained under controlled conditions, not a guarantee. Test on your own
+      media, with your own print profile and preferably from the same batch, before
+      committing to production. When switching from another ink, flushing the lines,
+      dampers and heads with MI-910 FLUSH is mandatory. Our liability is in all cases
+      limited to the value of the goods supplied.
+    faq:
+      - q: What is the difference between MI-410 ECO and MI-420 ECO-TR?
+        a: >-
+          Same chemistry family; the difference is packaging and colour target. MI-410
+          is supplied in bulk and is profiled to its own colour target, so you rebuild
+          the ICC profile on your machine. MI-420 comes in OEM cartridge and pouch
+          formats, chipped and matched to the OEM profile. If you run a tank machine,
+          MI-410 is right; if you run a cartridge-fed Roland or Mutoh, MI-420 is.
+      - q: Why is it classed "Switch & Swap"?
+        a: >-
+          If the previous ink used a different resin and solvent package, the two can
+          gel as they mix in the line. Changeover means flushing lines, dampers and
+          heads with roughly 150–200 ml of MI-910 FLUSH per channel — in practice half
+          a day of downtime. Moving within the family, between MI-410 and MI-420, no
+          flush is needed.
+      - q: Is white available in this series?
+        a: >-
+          No. The MS-1600 PC supports a white channel, but you would have to source
+          white from the OEM or leave the channel empty. Eco-solvent white settles and
+          blocks in machines without continuous circulation, and that is more risk than
+          we are willing to put in the catalogue.
+      - q: How many square metres does a litre print?
+        a: >-
+          At moderate coverage in a four-pass job, one litre covers roughly 90–120 m².
+          On full-coverage photographic work it drops towards 60 m², and on text-led
+          work it goes past 150 m². Measure your own average coverage when quoting;
+          that single number decides your whole ink budget.
+      - q: When can I laminate?
+        a: >-
+          Wait at least 24 hours after printing. Most of the solvent leaves on the
+          first day; laminating early gives bubbles under the film and poor adhesion on
+          vehicle applications. Raising the heater temperature does not shorten the
+          wait — it only dries the surface.

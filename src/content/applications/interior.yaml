@@ -1,0 +1,198 @@
+key: interior
+order: 30
+accent: cyan
+
+hero:
+  src: /img/applications/interior/hero.jpg
+  kind: application
+  alt:
+    tr: Baskılı panel kaplamalı bir otel lobisi duvarı ve önündeki oturma grubu
+    en: Hotel lobby wall clad in printed panels with a seating group in front of it
+
+gallery:
+  - src: /img/applications/interior/mdf-dolap-kapagi.jpg
+    kind: application
+    alt: { tr: Baskılı MDF dolap kapakları montaj öncesi sehpada dizili, en: Printed MDF cabinet doors stacked on a trestle before assembly }
+    caption: { tr: UV MDF Dolap Kapağı Baskı, en: UV printed MDF cabinet door }
+  - src: /img/applications/interior/cam-tezgah-arasi.jpg
+    kind: application
+    alt: { tr: Mutfakta ocak arkasına monte edilmiş baskılı cam panel, en: Printed glass panel installed behind a kitchen hob }
+    caption: { tr: UV Cam Tezgah Arası Baskı, en: UV printed glass splashback }
+  - src: /img/applications/interior/duvar-kaplamasi.jpg
+    kind: application
+    alt: { tr: Otel koridorunda duvara uygulanan baskılı kaplama şeritleri, en: Printed wallcovering drops being hung along a hotel corridor }
+    caption: { tr: Duvar Kaplaması Eko Solvent Baskı, en: Eco-solvent printed wallcovering }
+  - src: /img/applications/interior/akustik-panel.jpg
+    kind: application
+    alt: { tr: Toplantı odası duvarındaki baskılı akustik paneller, en: Printed acoustic panels on a meeting-room wall }
+    caption: { tr: Akustik Panel UV Baskı, en: UV printed acoustic panel }
+  - src: /img/applications/interior/pleksi-panel.jpg
+    kind: application
+    alt: { tr: Arkadan aydınlatmalı pleksi dekoratif bölme paneli, en: Backlit acrylic decorative screen }
+    caption: { tr: Pleksi Dekoratif Panel UV Baskı, en: UV printed acrylic panel }
+  - src: /img/applications/interior/kanvas-tablo.jpg
+    kind: application
+    alt: { tr: Şasiye gerilmiş kanvas baskılar atölye duvarında asılı, en: Canvas prints stretched over frames and hung on a workshop wall }
+    caption: { tr: Kanvas Tablo Eko Solvent Baskı, en: Eco-solvent printed stretched canvas }
+  - src: /img/applications/interior/kapi-paneli.jpg
+    kind: application
+    alt: { tr: Ahşap doku basılmış iç kapı kanadı menteşelenirken, en: Interior door leaf with printed wood grain being hung on its hinges }
+    caption: { tr: UV Kapı Paneli Baskı, en: UV printed door panel }
+  - src: /img/applications/interior/magaza-dekor-paneli.jpg
+    kind: application
+    alt: { tr: Mağaza içi duvarı kaplayan baskılı alüminyum kompozit paneller, en: Printed aluminium composite panels lining a retail interior wall }
+    caption: { tr: Alüminyum Kompozit İç Mekân Paneli UV Baskı, en: UV printed aluminium composite interior panel }
+
+machines: [MF-2513-R8, MF-3220-K12, MF-1216-R4, MS-1802-E4, MH-3200-R12]
+inks: [mi-210-uv-led-r, mi-110-uv, mi-410-eco, mi-920-primer]
+substrates: [mdf, wood, glass, acrylic, polycarb, alucomp, pvc, metal, wallpaper, canvas]
+
+i18n:
+  tr:
+    name: Mobilya ve Dekorasyon
+    kicker: Mekânı yüzeyden kurun
+    intro: >-
+      Mobilya ve dekorasyon işi iki ayrı üretim hattına ayrılır. Panel tarafında
+      MDF, lake kapak, cam ve pleksi doğrudan UV flatbed tablasına yatar; duvar
+      tarafında ise rulodan ruloya eko solvent baskı, duvar kaplamasını ve kanvası
+      metrelerce çıkarır. Bu ikisinin ortak yanı yok gibidir ama çoğu zaman aynı
+      müşteriden gelir: bir otel projesinde aynı hafta hem kırk dolap kapağı hem
+      300 m² duvar kaplaması istenir. Makine planını bu ikili yükü taşıyacak
+      şekilde kurmak gerekir.
+
+      İkinci konu yapışmadır ve burada iyimserlik pahalıya patlar. Cam, alüminyum
+      ve toz boyalı yüzeylerde primer atlanamaz; lake ve melamin kapakta ise yüzey
+      enerjisi partiden partiye değişir, bu yüzden her yeni malzemede çapraz kesme
+      testi yapılır. UV mürekkep son yapışmasına yaklaşık 24 saatte ulaşır; aynı
+      gün paketlenip yola çıkan panel hâlâ hassastır. Yatay ve sürekli temas
+      edilen yüzeylerde baskıyı korumasız bırakmayın — koruyucu cam, vernik ya da
+      laminasyon işin parçasıdır ve bunu fiyata baştan koyun.
+    jobs:
+      - Baskılı MDF ve sunta panel, dolap kapağı üretimi
+      - Cam tezgah arası ve duş kabini camı baskısı
+      - Pleksi ve polikarbon dekoratif paneller, bölme yüzeyleri
+      - Rulodan ruloya duvar kaplaması ve duvar kağıdı
+      - Akustik panel ve keçe kaplı yüzeylerde dekoratif baskı
+      - Kanvas tablo, poster ve otel odası görselleri
+      - İç kapı kanadı, raf ve dolap içi yüzey kişiselleştirme
+      - Mağaza içi dekor panelleri ve vitrin arkası yüzeyler
+    faq:
+      - q: Cam tezgah arası baskı gerçekten dayanır mı?
+        a: >-
+          Doğru yapıldığında evet. Baskı camın arka yüzüne ayna (ters) olarak
+          yapılır ve en üste tam kapatıcı beyaz serilir; görüntü cam kalınlığının
+          arkasında kalır, temizlik bezi ve deterjan mürekkebe hiç değmez. Cam
+          yüzeyinde primer şarttır, yoksa yapışma ilk ısıl genleşmede sorun
+          çıkarır. Sınır ocak arkasıdır — sürekli yüksek sıcaklığa maruz kalan
+          bölümde temperli cam ve cihaz üreticisinin verdiği montaj mesafesi
+          sağlanmadan bu işe girmeyin.
+      - q: Lake ve melamin dolap kapağına baskı tutar mı?
+        a: >-
+          Çoğunlukla tutar, ama peşinen garanti veremezsiniz; yüzey enerjisi
+          partiden partiye değişir. Her yeni kapak tedarikçisinde ve her yeni
+          partide çapraz kesme (cross-hatch) testi yapın — beş dakikalık bir iş,
+          sonradan sökülen kırk kapaktan ucuzdur. Silikon içeren cila kullanılmış
+          kapaklarda primer bile kurtarmaz; o partiyi geri çevirmek doğru karardır.
+          UV mürekkep son yapışmasına yaklaşık 24 saatte ulaştığı için panelleri
+          aynı gün üst üste istiflemeyin.
+      - q: Duvar kaplaması için UV mi eko solvent mi?
+        a: >-
+          Rulo duvar kaplamasında eko solvent hâlâ standarttır; malzemenin
+          esnekliğini bozmaz ve ek yerleri daha iyi oturur. Buna karşılık baskı,
+          mekâna girmeden önce gazını atmalıdır — otel odası, okul ve hastane gibi
+          kapalı hacimlerde bu bir günden uzun sürebilir ve programa yazılması
+          gerekir. UV hibrit de rulo basar; avantajı anında kürlenme ve aynı
+          makinede rijit panel basabilmek, dezavantajı keskin köşe ve derin
+          kıvrımda mürekkep filminin esnekliğidir.
+      - q: Akustik panele baskı yapınca ses emilimi bozulur mu?
+        a: >-
+          Bozulabilir ve bunu genelde kimse söylemez. Emilim yüzeyin gözenekli
+          kalmasına bağlıdır; yoğun mürekkep serilen bir keçe ya da delikli panelde
+          gözenekler kapanır ve panelin yüksek frekans performansı düşer. Pratik
+          yol, kaplama oranını düşük tutmak, delik ve yarıkların denk geldiği
+          alanları boş bırakmak ve baskılı numuneyi akustik hesabı yapan kişiye
+          onaylatmaktır. Dekoratif desen isteyen proje ile ölçülü akustik hedefi
+          olan proje aynı şey değildir.
+      - q: Panel mi rulo mu, hangi makineyle başlamalı?
+        a: >-
+          Aylık metrekarenizin hangi tarafta olduğuna bakın. Ağırlık dolap kapağı,
+          cam ve panelse UV flatbed ile başlanır; MF-1216 R4 düşük hacimde,
+          MF-2513 R8 günlük 40 m² üzerinde doğru yerdedir. Duvar kaplaması ve
+          kanvas ağırlıklıysa önce MS-1802 E4 gibi bir eko solvent rulo makinesi
+          alınır. İkisini birden taşımanız gerekiyorsa MH-3200 R12 hibrit tek
+          şasede çözer; karşılığında rijit tarafta 100 mm değil, 30 mm levha
+          kalınlığı sınırıyla yaşarsınız.
+  en:
+    name: Furniture & Interiors
+    kicker: Build the room from its surfaces
+    intro: >-
+      Furniture and interior décor splits into two production lines. On the panel
+      side, MDF, lacquered doors, glass and acrylic go straight onto the bed of a
+      UV flatbed; on the wall side, a roll-to-roll eco-solvent printer turns out
+      wallcovering and canvas by the metre. The two look unrelated, yet they
+      usually come from the same customer: one hotel project asks for forty
+      cabinet doors and 300 m² of wallcovering in the same week. The equipment
+      plan has to carry both loads.
+
+      The second subject is adhesion, and optimism gets expensive here. On glass,
+      aluminium and powder-coated surfaces a primer is not optional; on lacquered
+      and melamine doors, surface energy varies from batch to batch, which is why
+      every new material gets a cross-hatch test. UV ink reaches final adhesion in
+      roughly 24 hours, so a panel packed and shipped the same day is still
+      vulnerable. On horizontal surfaces and anything handled constantly, never
+      leave the print unprotected — cover glass, varnish or lamination is part of
+      the job, and it belongs in the quote from the start.
+    jobs:
+      - Printed MDF and chipboard panels, cabinet doors
+      - Glass splashbacks and shower-enclosure glass
+      - Acrylic and polycarbonate decorative panels and screens
+      - Roll-to-roll wallcovering and wallpaper
+      - Decorative printing on acoustic and felt-faced panels
+      - Stretched canvas, posters and hotel-room artwork
+      - Interior door leaves, shelves and cabinet interiors
+      - Retail interior panels and window-back surfaces
+    faq:
+      - q: Does a printed glass splashback actually last?
+        a: >-
+          Done properly, yes. The image is printed mirrored on the back face of the
+          glass with a fully opaque white laid down last, so it sits behind the
+          thickness of the glass and neither cloth nor detergent ever touches the
+          ink. A primer on the glass is mandatory; without it, adhesion fails at the
+          first thermal cycle. The limit is the area behind a hob — where the surface
+          sees sustained high temperature, do not take the job without toughened glass
+          and the appliance maker's stated clearance.
+      - q: Will ink hold on lacquered and melamine cabinet doors?
+        a: >-
+          Usually it will, but you cannot promise it in advance; surface energy varies
+          from batch to batch. Run a cross-hatch test for every new door supplier and
+          every new batch — five minutes of work is cheaper than forty doors coming
+          back off the wall. Where the lacquer contains silicone, not even a primer
+          saves it, and refusing that batch is the right call. Because UV ink needs
+          around 24 hours to reach final adhesion, do not stack panels on the day they
+          are printed.
+      - q: UV or eco-solvent for wallcovering?
+        a: >-
+          For roll wallcovering, eco-solvent is still the standard: it leaves the
+          material's flexibility intact and the seams sit better. In exchange, the
+          print has to outgas before it enters the room — in hotel rooms, schools and
+          hospitals that can take more than a day and has to be written into the
+          schedule. A UV hybrid prints roll media too; its advantages are instant cure
+          and rigid panels on the same chassis, its drawback is the flexibility of the
+          ink film over sharp corners and deep returns.
+      - q: Does printing on an acoustic panel ruin its absorption?
+        a: >-
+          It can, and hardly anyone says so. Absorption depends on the surface staying
+          porous; heavy ink coverage on felt or a perforated panel closes the pores and
+          the panel loses high-frequency performance. The practical route is to keep
+          coverage low, leave the areas over perforations and slots unprinted, and have
+          a printed sample signed off by whoever did the acoustic calculation. A
+          project that wants a decorative pattern is not the same as a project with a
+          measured acoustic target.
+      - q: Panels or rolls — which machine comes first?
+        a: >-
+          Look at which side your monthly square metres sit on. If cabinet doors, glass
+          and panels dominate, start with a UV flatbed: the MF-1216 R4 at low volume,
+          the MF-2513 R8 above roughly 40 m² a day. If wallcovering and canvas dominate,
+          an eco-solvent roll printer such as the MS-1802 E4 comes first. If you have to
+          carry both, the MH-3200 R12 hybrid does it on one chassis — the trade-off is
+          living with 30 mm of sheet thickness on the rigid side instead of 100 mm.
