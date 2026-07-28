@@ -4,8 +4,7 @@
  *
  * The whole page is one argument: a Turkish printer chooses a supplier on what
  * happens the morning the machine stops, and every competitor answers that with
- * adjectives ("hızlı", "güvenilir", "7/24 destek" next to a phone nobody picks
- * up). So nothing here is an adjective. Every commitment is a figure taken from
+ * adjectives. Every commitment here is stated as a figure, taken from
  * SITE.commitments, and the FAQ is written as real diagnosis — a printer with a
  * banding problem at 02:00 should be able to fix it from this page without us.
  * That is also why the FAQ carries FAQPage JSON-LD: these are the queries.
@@ -357,13 +356,13 @@ const description = tr
       <div class="section__body">
         <h2 class="reveal">
           {tr
-            ? 'Altı taahhüt, altı sayı. Sıfat yok.'
-            : 'Six commitments, six numbers. No adjectives.'}
+            ? 'Servis taahhütleri'
+            : 'Service commitments'}
         </h2>
         <p class="lead muted reveal">
           {tr
-            ? 'Bu sayfadaki her satır ölçülebilir. Ölçemediğimiz bir şeyi söz vermiyoruz — “kaliteli hizmet” cümlesinin bir arıza sabahında hiçbir karşılığı yok.'
-            : 'Every line on this page can be measured. We do not promise anything we cannot measure — "quality service" is worth nothing on the morning a machine stops.'}
+            ? 'Aşağıdaki altı madde, servis kapsamının süre, yer ve içerik olarak nasıl tanımlandığını gösterir. Her madde bir ölçüye bağlıdır.'
+            : 'The six items below describe how service is defined in time, place and scope. Each one is tied to a measure.'}
         </p>
 
         <ol class="commits reveal" role="list" data-stagger>
