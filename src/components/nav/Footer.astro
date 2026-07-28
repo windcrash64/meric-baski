@@ -1,0 +1,242 @@
+---
+import { SITE, type Locale } from '../../config/site';
+import { path, type RouteKey } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import Logo from '../ui/Logo.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+
+const COLUMNS: Array<{ heading: string; links: RouteKey[] }> = [
+  {
+    heading: t('navMachines', locale),
+    links: [
+      'machines.uvFlatbed', 'machines.uvHybrid', 'machines.ecoSolvent',
+      'machines.dtf', 'machines.sublimation', 'machines.uvdtf', 'machines.cutting',
+    ],
+  },
+  {
+    heading: t('navInks', locale),
+    links: [
+      'inks.uv', 'inks.uvled', 'inks.uvdtf', 'inks.ecoSolvent', 'inks.solvent',
+      'inks.sublimation', 'inks.dtf', 'inks.textile',
+      'inks.printheads', 'inks.spares', 'inks.auxiliaries',
+    ],
+  },
+  {
+    heading: t('navAbout', locale),
+    links: ['about', 'about.references', 'about.events', 'insights', 'used'],
+  },
+  {
+    heading: t('support', locale),
+    links: [
+      'service', 'service.request', 'service.warranty',
+      'documents', 'compatibility', 'finance',
+    ],
+  },
+];
+
+const LABELS: Partial<Record<RouteKey, { tr: string; en: string }>> = {
+  'machines.uvFlatbed': { tr: 'UV Flatbed', en: 'UV Flatbed' },
+  'machines.uvHybrid': { tr: 'UV Hibrit', en: 'UV Hybrid' },
+  'machines.ecoSolvent': { tr: 'Eko Solvent', en: 'Eco-Solvent' },
+  'machines.dtf': { tr: 'DTF Sistemleri', en: 'DTF Systems' },
+  'machines.sublimation': { tr: 'Süblimasyon', en: 'Dye-Sublimation' },
+  'machines.uvdtf': { tr: 'UV DTF / Kristal Etiket', en: 'UV DTF / Crystal Label' },
+  'machines.cutting': { tr: 'Kesim Makineleri', en: 'Cutting Systems' },
+  'inks.uv': { tr: 'UV Mürekkep', en: 'UV Inks' },
+  'inks.uvled': { tr: 'UV LED Mürekkep', en: 'UV-LED Inks' },
+  'inks.uvdtf': { tr: 'UV DTF Mürekkep', en: 'UV DTF Inks' },
+  'inks.ecoSolvent': { tr: 'Eko Solvent Mürekkep', en: 'Eco-Solvent Inks' },
+  'inks.solvent': { tr: 'Solvent Mürekkep', en: 'Solvent Inks' },
+  'inks.sublimation': { tr: 'Süblimasyon Mürekkebi', en: 'Dye-Sublimation Inks' },
+  'inks.dtf': { tr: 'DTF Pigment Mürekkep', en: 'DTF Pigment Inks' },
+  'inks.textile': { tr: 'Tekstil Pigment Mürekkebi', en: 'Textile Pigment Inks' },
+  'inks.printheads': { tr: 'Baskı Kafaları', en: 'Printheads' },
+  'inks.spares': { tr: 'Yedek Parça', en: 'Spare Parts' },
+  'inks.auxiliaries': { tr: 'Yardımcı Malzemeler', en: 'Auxiliaries' },
+  about: { tr: 'Hakkımızda', en: 'About us' },
+  'about.references': { tr: 'Referanslar', en: 'References' },
+  'about.events': { tr: 'Fuarlar ve Showroom', en: 'Trade Fairs & Showroom' },
+  insights: { tr: 'Bilgi Merkezi', en: 'Insights' },
+  used: { tr: 'İkinci El Makineler', en: 'Used Machines' },
+  service: { tr: 'Teknik Servis', en: 'Technical Service' },
+  'service.request': { tr: 'Servis Talebi', en: 'Service Request' },
+  'service.warranty': { tr: 'Garanti Koşulları', en: 'Warranty Terms' },
+  documents: { tr: 'Belgeler ve GBF', en: 'Documents & SDS' },
+  compatibility: { tr: 'Uyumluluk Tablosu', en: 'Compatibility Matrix' },
+  finance: { tr: 'Ödeme ve Finansman', en: 'Payment & Financing' },
+  privacy: { tr: 'KVKK Aydınlatma Metni', en: 'Privacy Notice' },
+  cookies: { tr: 'Çerez Politikası', en: 'Cookie Policy' },
+  terms: { tr: 'Kullanım Koşulları', en: 'Terms of Use' },
+};
+
+const label = (key: RouteKey) => LABELS[key]?.[locale] ?? key;
+
+const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
+  encodeURIComponent(SITE.contact.whatsapp.prefill[locale])
+}`;
+---
+
+<!-- No rule between the closing CTA band and the footer: on ink they are one
+     continuous surface, which is what makes the page end rather than stop. -->
+<footer class="site-footer" data-ground="ink">
+  <div class="shell">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <Logo height={30} />
+        <p class="muted">{SITE.brand.tagline[locale]}</p>
+        <ul role="list" class="site-footer__contact">
+          <li>
+            <a class="link" href={`tel:${SITE.contact.phone.e164}`}>
+              {SITE.contact.phone.display[locale]}
+            </a>
+          </li>
+          <li>
+            <a class="link" href={wa} target="_blank" rel="noopener">WhatsApp</a>
+          </li>
+          <li>
+            <a class="link" href={`mailto:${SITE.contact.email.general}`}>
+              {SITE.contact.email.general}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {COLUMNS.map((col) => (
+        <nav class="site-footer__col" aria-label={col.heading}>
+          <h2 class="eyebrow">{col.heading}</h2>
+          <ul role="list">
+            {col.links.map((key) => (
+              <li><a class="link" href={path(key, locale)}>{label(key)}</a></li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+
+    <!-- TTK m.39/2 requires the trade name, MERSİS number and registered
+         address on the site. It is also the cheapest trust signal in this market. -->
+    <div class="site-footer__legal">
+      <p class="mono">
+        {SITE.legal.tradeName} · {SITE.contact.address.street},
+        {SITE.contact.address.district} / {SITE.contact.address.city} ·
+        {locale === 'tr' ? 'Vergi Dairesi' : 'Tax office'}: {SITE.legal.taxOffice}
+        · {locale === 'tr' ? 'VKN' : 'Tax no'}: {SITE.legal.taxNumber}
+        · MERSİS: {SITE.legal.mersis}
+      </p>
+      <ul role="list" class="site-footer__legal-links">
+        {(['privacy', 'cookies', 'terms'] as RouteKey[]).map((key) => (
+          <li><a class="link" href={path(key, locale)}>{label(key)}</a></li>
+        ))}
+      </ul>
+      <p class="mono site-footer__copy">
+        © {year} {SITE.brand.name}. {t('allRightsReserved', locale)}
+      </p>
+      <p class="mono site-footer__credits">{t('imageCredits', locale)}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--sp-10) var(--sp-7);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: var(--sp-8) var(--gutter);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr repeat(4, minmax(0, 1fr));
+      gap: var(--sp-9) var(--gutter);
+    }
+  }
+
+  .site-footer__brand {
+    display: grid;
+    gap: var(--sp-5);
+    align-content: start;
+    color: var(--paper);
+  }
+
+  .site-footer__brand p {
+    max-width: 34ch;
+    font-size: var(--step--1);
+  }
+
+  .site-footer__contact {
+    display: grid;
+    gap: var(--sp-2);
+    font-size: var(--step--1);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-footer__col h2 {
+    margin-block-end: var(--sp-5);
+  }
+
+  .site-footer__col ul {
+    display: grid;
+    gap: var(--sp-3);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-footer__col a,
+  .site-footer__contact a {
+    color: var(--paper);
+    font-size: var(--step--1);
+    text-decoration: none;
+  }
+
+  .site-footer__legal {
+    margin-block-start: var(--sp-10);
+    padding-block-start: var(--sp-6);
+    border-top: var(--border) solid var(--rule-dark);
+    display: grid;
+    gap: var(--sp-4);
+    color: var(--muted-dark);
+    font-size: var(--step--2);
+  }
+
+  .site-footer__legal p {
+    max-width: none;
+    line-height: 1.7;
+  }
+
+  .site-footer__legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-5);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-footer__legal-links a {
+    color: var(--muted-dark);
+    text-decoration: none;
+  }
+
+  .site-footer__legal-links a:hover {
+    color: var(--paper);
+  }
+
+  .site-footer__credits {
+    color: color-mix(in srgb, var(--muted-dark) 70%, transparent);
+  }
+</style>

@@ -1,0 +1,491 @@
+---
+/**
+ * Machines index and machine-family category page — one template, one prop.
+ *
+ * The category page is the money page, not the homepage: it carries the real
+ * editorial copy, the "what drives the price" section that serves the
+ * unavoidable Turkish "fiyat/fiyatları" modifier, and the FAQ that earns the
+ * rich result. A bare product grid under an <h1> reading "Ürünler" — which is
+ * what the reference site ships — is the failure this template exists to avoid.
+ */
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import { SITE, type Locale } from '../config/site';
+import { path, type RouteKey } from '../i18n/routes';
+import { range, t } from '../i18n/ui';
+import { HEAD_BRANDS, SPECS, type SpecKey } from '../i18n/specs';
+import { machineFamilyName, machineFamilyRoute, machineHref } from '../lib/product';
+import { renderFor } from '../lib/media';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import Picture from '../components/media/Picture.astro';
+
+export interface Props {
+  locale: Locale;
+  /** Omit for the "all machines" index. */
+  family?: string;
+}
+
+const { locale, family } = Astro.props;
+const tr = locale === 'tr';
+
+const all = (await getCollection('machines'))
+  .filter((m) => m.data.status !== 'discontinued')
+  .sort((a, b) => a.data.order - b.data.order);
+
+const machines = family ? all.filter((m) => m.data.family === family) : all;
+const routeKey: RouteKey = family ? machineFamilyRoute(family) : 'machines';
+const heading = family ? machineFamilyName(family, locale) : t('navMachines', locale);
+
+/* --- editorial copy ----------------------------------------------------- */
+const INTROS: Record<string, Record<Locale, string[]>> = {
+  'uv-flatbed': {
+    tr: [
+      'UV flatbed makineler, malzemeyi sabit bir tabla üzerinde tutup baskı kafasını üzerinde gezdirir. Rulo makinelerin aksine cam, ahşap, alüminyum kompozit, pleksi ve 100 mm kalınlığa kadar levha doğrudan basılabilir — ara transfer, folyo veya kaplama gerekmez.',
+      'Bu ailede belirleyici üç şey vardır: tabla ölçüsü, kafa sayısı ve vakum bölgesi düzeni. Tabla işinizin en büyük parçasını almalı; kafa sayısı doğrudan m²/sa hızını belirler; vakum bölgeleri ise küçük parça basarken tüm tablayı vakumlamak zorunda kalmamanızı sağlar.',
+    ],
+    en: [
+      'A UV flatbed holds the material still on a table and moves the printhead over it. Unlike a roll machine it prints directly onto glass, wood, aluminium composite, acrylic and sheet up to 100 mm thick — with no transfer step, film or coating.',
+      'Three things decide the machine in this family: bed size, head count and vacuum zoning. The bed has to take your largest piece; head count sets the m²/h; and the zones are what stop a single small panel from costing you a full table of vacuum.',
+    ],
+  },
+  'uv-hybrid': {
+    tr: [
+      'Hibrit makineler tek şasede hem rulo hem levha basar. Rulo tarafında branda, folyo ve duvar kağıdı; levha tarafında genellikle 10–50 mm kalınlığa kadar rijit malzeme çalışır.',
+      'Hibrit ile saf flatbed arasındaki kritik fark rijit taraftaki baskı yüksekliğidir: hibritlerde bu genellikle 10–50 mm ile sınırlıdır, saf flatbedlerde 100 mm’ye çıkar. Ağır rulo kapasitesi de ayrı bir seçenektir.',
+    ],
+    en: [
+      'A hybrid prints both roll and rigid material on one chassis: banner, vinyl and wallcovering on the roll side, rigid sheet — usually 10 to 50 mm — on the flat side.',
+      'The critical difference from a true flatbed is print height on the rigid side: hybrids are typically limited to 10–50 mm where a flatbed reaches 100 mm. Heavy roll capacity is a separate option.',
+    ],
+  },
+  'eco-solvent': {
+    tr: [
+      'Eko solvent makineler, dış mekân dayanımı ile düşük koku arasındaki dengeyi kuran rulo yazıcılardır. Tabela, araç giydirme, vitrin folyosu ve branda işlerinin ana makinesidir.',
+      'Baskı-kesim (print & cut) modelleri baskıdan sonra konturu aynı makinede keser; ayrı plotter, ayrı hizalama ve ikinci bir operasyon ortadan kalkar. Ayrı kesim hacminiz düzenli değilse bu modeller toplam maliyeti düşürür.',
+    ],
+    en: [
+      'Eco-solvent roll printers sit at the balance point between outdoor durability and low odour. They are the workhorse for signage, vehicle graphics, window vinyl and banner.',
+      'Print-and-cut models contour-cut on the same machine straight after printing, removing a separate plotter, a separate registration step and a second handling operation. If your cutting volume is irregular, that lowers total cost.',
+    ],
+  },
+  dtf: {
+    tr: [
+      'DTF (Direct-to-Film) sistemleri tasarımı PET filme basar, üzerine sıcak eriyik toz serper, fırında eritir ve preste kumaşa aktarır. Kumaş rengi ve cinsi fark etmez; pamuk, polyester ve karışımlarda aynı şekilde çalışır.',
+      'Sistem iki üniteden oluşur: yazıcı ve toz serpme/fırın ünitesi. Toz ünitesini ayrı almak ilk yatırımı düşürür gibi görünse de, iki ünitenin senkron çalışması üretim hızını doğrudan belirler.',
+    ],
+    en: [
+      'DTF systems print onto PET film, apply hot-melt powder, cure it in an oven and transfer it to fabric under a press. Fabric colour and fibre do not matter — cotton, polyester and blends all behave the same.',
+      'The system is two units: printer and powder shaker/oven. Buying the shaker separately looks cheaper, but how well the two units run in step is what actually sets your throughput.',
+    ],
+  },
+  sublimation: {
+    tr: [
+      'Süblimasyon, mürekkebi transfer kağıdına basıp ısı ve basınçla polyester kumaşa gaz hâlinde geçirir. Baskı kumaşın yüzeyinde değil lifin içindedir; bu yüzden elle tutulmaz ve yıkamada solmaz.',
+      'Sistem yazıcı ve kalenderden oluşur. Kalenderin tambur genişliği ve ısıtma yöntemi (yağlı/elektrikli), sonuçtaki renk tutarlılığını yazıcı kadar etkiler.',
+    ],
+    en: [
+      'Dye-sublimation prints onto transfer paper, then heat and pressure move the dye into polyester fibre as a gas. The image sits inside the fibre, not on it, so there is no hand feel and no wash-out.',
+      'The system is a printer plus a calender. The calender’s drum width and heating method — oil or electric — affect final colour consistency as much as the printer does.',
+    ],
+  },
+  'uv-dtf': {
+    tr: [
+      'UV DTF, A film üzerine UV mürekkeple basıp B filmle laminasyon yapar. Ortaya çıkan etiket cam, metal, plastik, ahşap ve kavisli yüzeylere ısı veya pres olmadan yapışır.',
+      'Kristal etiket adıyla da bilinen bu işin cazibesi düşük giriş maliyeti ve yüksek birim kârıdır; sınırı ise tekstile uygun olmamasıdır.',
+    ],
+    en: [
+      'UV DTF prints UV ink onto an A film and laminates it with a B film. The resulting label sticks to glass, metal, plastic, wood and curved surfaces with no heat and no press.',
+      'Also sold as crystal labels, the appeal is a low entry cost and a high margin per unit; the limit is that it is not a textile process.',
+    ],
+  },
+  cutting: {
+    tr: [
+      'Dijital kesim sistemleri, basılmış veya boş malzemeyi kontur, oluk ve delik hattı boyunca keser. Ambalaj prototipi, stand, tabela kesimi ve etiket işlerinin son adımıdır.',
+      'Bir kesiciyi belirleyen üç şey: kesim alanı, takım sayısı ve vakum bölgesi. Üç takımlı bir kafa, tek işte kesme-oluk açma-delme yapabildiği için malzemeyi tablada bir kez konumlandırmanız yeter.',
+    ],
+    en: [
+      'Digital cutting systems cut printed or blank material along contour, crease and perforation lines. They are the last step for packaging prototypes, displays, cut signage and labels.',
+      'Three things decide a cutter: working area, tool count and vacuum zoning. A three-tool head cuts, creases and perforates in one pass, so the material is positioned on the bed once.',
+    ],
+  },
+};
+
+const PRICE_COPY: Record<Locale, { h: string; body: string[] }> = {
+  tr: {
+    h: `${heading} fiyatları hakkında`,
+    body: [
+      'Bu sınıfta tek bir liste fiyatı yoktur; makinenin fiyatını beş kalem belirler: kafa markası ve sayısı, baskı genişliği veya tabla ölçüsü, mürekkep sistemi (kartuş mu, toplu tank mı, beyaz sirkülasyon var mı), kurulum ve eğitimin dahil olup olmadığı, ve nakliye ile elektrik altyapısı.',
+      'Bu yüzden fiyatı sayfada yayınlamıyoruz — yayınlanan bir rakam, sizin konfigürasyonunuzla neredeyse hiçbir zaman aynı olmaz. Ne bastığınızı ve günlük hacminizi yazın; 1 iş günü içinde kalem kalem ayrılmış bir teklif gönderelim.',
+    ],
+  },
+  en: {
+    h: `About ${heading.toLowerCase()} pricing`,
+    body: [
+      'There is no single list price in this class. Five things set it: printhead brand and count, print width or bed size, the ink system (cartridge, bulk tank, white circulation or not), whether installation and training are included, and freight plus electrical work.',
+      'That is why we do not publish a figure — a published number is almost never the one that matches your configuration. Tell us what you print and how much of it, and we will send an itemised quote within one business day.',
+    ],
+  },
+};
+
+const intro = family ? INTROS[family]?.[locale] ?? [] : [];
+
+/* --- card helpers -------------------------------------------------------- */
+function cardSpecs(machine: CollectionEntry<'machines'>) {
+  const d = machine.data;
+  const out: Array<{ label: string; value: string }> = [];
+  const push = (key: SpecKey) => {
+    const raw = d.specs[key];
+    if (raw === undefined) return;
+    const def = SPECS[key];
+    const value = typeof raw === 'object' && raw !== null && 'value' in raw
+      ? `${range((raw as { value: number | [number, number] }).value, locale)} ${(raw as { unit?: string }).unit ?? def.unit?.[locale] ?? ''}`.trim()
+      : String(raw);
+    out.push({ label: def[locale], value });
+  };
+  push(d.specs.printArea !== undefined ? 'printArea' : 'printWidth');
+  out.push({
+    label: SPECS.printHead[locale],
+    value: `${HEAD_BRANDS[d.printhead.brand]} ${d.printhead.model} × ${
+      Array.isArray(d.printhead.count) ? d.printhead.count.join('–') : d.printhead.count
+    }`,
+  });
+  const fastest = d.speedModes[0];
+  out.push({
+    label: `${SPECS.speedModes[locale]} @${fastest.pass}`,
+    value: `${range(fastest.value, locale)} ${tr ? 'm²/sa' : 'm²/h'}`,
+  });
+  push('colors');
+  return out.slice(0, 4);
+}
+
+const FAQ: Record<Locale, Array<{ q: string; a: string }>> = {
+  tr: [
+    {
+      q: 'Kurulum ve eğitim fiyata dahil mi?',
+      a: 'Evet. Yerinde kurulum, ilk devreye alma ve operatör eğitimi teklif fiyatına dahildir. Nakliye, forklift/vinç, elektrik altyapısı ve havalandırma dahil değildir; bunlar her sahada farklı olduğu için ayrı kalemlenir.',
+    },
+    {
+      q: 'Teslim süresi ne kadar?',
+      a: 'Stokta olan modellerde 1–2 hafta, sipariş üzerine yapılandırılan makinelerde 6–10 hafta. Kesin süre kafa sayısı ve mürekkep sistemi seçiminize bağlıdır.',
+    },
+    {
+      q: 'İkinci el makinemi takas edebilir miyim?',
+      a: 'Değerlendiriyoruz. Marka, model, çalışma saati ve kafa durumu bilgisiyle gönderin; ekspertiz sonrası takas değeri veriyoruz.',
+    },
+    {
+      q: 'Makineyi çalışırken görebilir miyim?',
+      a: 'Evet. Showroomda kendi dosyanızla demo baskı alabilirsiniz. Randevu almanızı öneriyoruz; malzemenizi getirirseniz kendi işinizle test edersiniz.',
+    },
+  ],
+  en: [
+    {
+      q: 'Are installation and training included?',
+      a: 'Yes. On-site installation, commissioning and operator training are part of the quoted price. Freight, forklift or crane, electrical infrastructure and ventilation are not — they differ on every site and are itemised separately.',
+    },
+    {
+      q: 'What is the lead time?',
+      a: 'One to two weeks for stocked models, six to ten weeks for a configured build. The exact figure depends on head count and ink system.',
+    },
+    {
+      q: 'Can I trade in my current machine?',
+      a: 'We do consider it. Send the make, model, running hours and head condition; we quote a trade-in value after inspection.',
+    },
+    {
+      q: 'Can I see the machine running?',
+      a: 'Yes. You can take a demo print with your own file in the showroom. Book ahead, and bring your material so the test is on your actual job.',
+    },
+  ],
+};
+
+const title = family
+  ? (tr ? `${heading} — Modeller ve Fiyat Teklifi | Maven` : `${heading} — Models and Pricing | Maven`)
+  : (tr ? 'Dijital Baskı Makineleri — Tüm Modeller | Maven' : 'Digital Printing Machines — All Models | Maven');
+
+const widths = machines
+  .map((m) => m.data.specs.printWidth ?? m.data.specs.printArea)
+  .filter(Boolean);
+
+const description = tr
+  ? `${machines.length} model ${heading.toLowerCase()}. Teknik özellikler, baskı kafası seçenekleri, uyumlu mürekkepler ve fiyat teklifi.`
+  : `${machines.length} models of ${heading.toLowerCase()}. Specifications, printhead options, compatible inks and pricing.`;
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey={routeKey}
+  schema={[
+    {
+      '@type': 'ItemList',
+      itemListElement: machines.map((m, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: m.data.model,
+        url: `${SITE.url}${machineHref(m, locale)}`,
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: FAQ[locale].map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ]}
+>
+  <div data-ground="paper" data-accent="cyan">
+    <div class="shell cat__crumbs">
+      <Breadcrumb
+        locale={locale}
+        crumbs={family
+          ? [{ label: t('navMachines', locale), href: path('machines', locale) }, { label: heading }]
+          : [{ label: heading }]}
+      />
+    </div>
+
+    <header class="shell cat__head">
+      <h1>{heading}</h1>
+      {intro.map((p) => <p class="lead">{p}</p>)}
+      {!family && (
+        <p class="lead">
+          {tr
+            ? 'Yedi aile, on iki model. Aşağıdaki listede her makinenin tabla ölçüsü, kafa yapılandırması ve dört geçişteki üretim hızı yan yana durur.'
+            : 'Seven families, twelve models. Bed size, head configuration and four-pass output for every machine, side by side.'}
+        </p>
+      )}
+    </header>
+
+    <section class="shell cat__grid-wrap">
+      <ul class="cards cards--2" role="list" data-stagger>
+        {machines.map((m) => {
+          const render = renderFor(m.data.sku, true);
+          return (
+            <li class="card" data-accent="cyan">
+              <a class="pcard" href={machineHref(m, locale)}>
+                <span class="pcard__media">
+                  {render
+                    ? <Picture src={render} alt={m.data.gallery[0]?.alt[locale] ?? m.data.model}
+                               ratio="card" graded={false} sizes="(min-width: 1024px) 40vw, 92vw" />
+                    : (
+                      <span class="pcard__noimg">
+                        <span class="pcard__noimg-mark code" lang="en">{m.data.sku}</span>
+                        <span class="pcard__noimg-note mono">
+                          {tr ? 'görsel hazırlanıyor' : 'imagery in production'}
+                        </span>
+                      </span>
+                    )}
+                </span>
+                <span class="pcard__body">
+                  <span class="eyebrow">{machineFamilyName(m.data.family, locale)}</span>
+                  <span class="pcard__model code" lang="en">{m.data.model}</span>
+                  <span class="pcard__tagline muted">{m.data.i18n[locale].tagline}</span>
+                  <span class="pcard__specs">
+                    {cardSpecs(m).map((s) => (
+                      <span class="pcard__spec">
+                        <span class="pcard__spec-l">{s.label}</span>
+                        <span class="pcard__spec-v mono">{s.value}</span>
+                      </span>
+                    ))}
+                  </span>
+                  <span class="pcard__cta">
+                    {t('explore', locale)} <span class="arrow" aria-hidden="true">›</span>
+                  </span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  </div>
+
+  <!-- The highest-leverage SEO surface on the site: Turkish buyers attach
+       "fiyat/fiyatları" to almost every query, and we publish no prices. -->
+  <section class="section" data-ground="bone" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">{tr ? 'FİYAT' : 'PRICING'}</p></div>
+      <div class="section__body">
+        <h2 class="reveal">{PRICE_COPY[locale].h}</h2>
+        {PRICE_COPY[locale].body.map((p) => <p class="lead reveal">{p}</p>)}
+        <a class="btn reveal" href={path('quote', locale)}>
+          {t('getQuote', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">{tr ? 'SORULAR' : 'QUESTIONS'}</p></div>
+      <div class="section__body">
+        <h2 class="reveal">{t('faq', locale)}</h2>
+        <div class="faq reveal">
+          {FAQ[locale].map((item, i) => (
+            <details name="cat-faq" open={i === 0}>
+              <summary>
+                <span>{item.q}</span>
+                <span class="accordion__chevron" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="accordion__panel"><div><p>{item.a}</p></div></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cat__crumbs {
+    padding-block: var(--sp-5) var(--sp-7);
+  }
+
+  .cat__head {
+    display: grid;
+    gap: var(--sp-5);
+    padding-block-end: var(--sp-8);
+    max-width: 78ch;
+  }
+
+  .cat__head .lead {
+    color: var(--muted);
+  }
+
+  .cat__grid-wrap {
+    padding-block-end: var(--section-pad);
+  }
+
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .pcard__media {
+    display: block;
+    flex: none;
+    background: var(--bone);
+    overflow: hidden;
+  }
+
+  /* An honest placeholder, not a fake photograph: it names the model and says
+     plainly that the imagery is still being produced. */
+  .pcard__noimg {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--sp-3);
+    aspect-ratio: 3 / 2;
+    background: var(--bone);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .pcard__noimg-mark {
+    font-size: var(--step-2);
+    color: color-mix(in srgb, var(--ink) 24%, transparent);
+    letter-spacing: 0.02em;
+  }
+
+  .pcard__noimg-note {
+    font-size: var(--step--2);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pcard__media :global(picture) {
+    transition: transform var(--d-slow) var(--e-out);
+  }
+
+  .card:hover .pcard__media :global(picture),
+  .card:focus-within .pcard__media :global(picture) {
+    transform: scale(1.03);
+  }
+
+  .pcard__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    flex: 1 1 auto;
+    padding: var(--sp-6);
+  }
+
+  .pcard__model {
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .pcard__tagline {
+    font-size: var(--step--1);
+  }
+
+  .pcard__specs {
+    display: grid;
+    gap: 0;
+    margin-block-start: var(--sp-3);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .pcard__spec {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-4);
+    padding-block: var(--sp-2);
+    border-bottom: var(--border) solid var(--hairline);
+    font-size: var(--step--2);
+  }
+
+  .pcard__spec-l {
+    color: var(--muted);
+  }
+
+  .pcard__spec-v {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pcard__cta {
+    font-size: var(--step--1);
+    font-weight: 500;
+    /* Pins the CTA to the bottom so it lines up across cards of unequal height. */
+    margin-block-start: auto;
+    padding-block-start: var(--sp-4);
+  }
+
+  .faq {
+    margin-block-start: var(--sp-7);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .faq details {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-5);
+    padding-block: var(--sp-5);
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .faq p {
+    padding-block-end: var(--sp-6);
+    color: var(--muted);
+  }
+
+  .accordion__chevron {
+    font-size: 1.4em;
+    line-height: 1;
+    color: var(--muted);
+  }
+</style>

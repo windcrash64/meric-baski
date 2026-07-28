@@ -1,0 +1,15 @@
+---
+import MachineIndex from '../../../layouts/MachineIndex.astro';
+import { FAMILY_ROUTE, ROUTES } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return Object.entries(FAMILY_ROUTE).map(([family, routeKey]) => ({
+    params: { kategori: ROUTES[routeKey].tr },
+    props: { family },
+  }));
+}
+
+const { family } = Astro.props;
+---
+
+<MachineIndex locale="tr" family={family} />

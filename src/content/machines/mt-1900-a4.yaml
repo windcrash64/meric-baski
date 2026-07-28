@@ -1,0 +1,312 @@
+sku: MT-1900-A4
+model: Maven MT-1900 A4
+family: sublimation
+tier: upper-mid
+order: 100
+featured: false
+status: active
+price: null
+leadTimeWeeks: [6, 10]
+
+headline: [printWidth, printHead, speedModes, takeUp]
+
+printhead:
+  brand: epson
+  model: i3200-A1
+  count: 4
+  dropSizePl: 2.5
+
+headOptions:
+  - { brand: epson, model: i3200-A1, count: 4, dropSizePl: 2.5 }
+  - { brand: epson, model: i3200-A1, count: 8, dropSizePl: 2.5 }
+
+specs:
+  printWidth: { value: 1900, unit: mm }
+  mediaWidth: { value: 1950, unit: mm }
+  rollWeight:
+    value: 100
+    unit: kg
+    note:
+      tr: sarma tarafı; besleme tarafında 300 kg jumbo rulo opsiyonu
+      en: take-up side; a 300 kg jumbo roll option is available on the feed side
+  resolution: "720 × 1200 · 720 × 1800 dpi"
+  dropSize:
+    value: 2.5
+    unit: pL
+    note:
+      tr: en küçük damla; VSDT değişken damla teknolojisi
+      en: minimum droplet; VSDT variable-size droplet
+  printHead: "4 × Epson i3200-A1"
+  headCount: { value: 4, unit: adet }
+  colors: "CMYK"
+  inkType: "Transfer süblimasyon (su bazlı dispers)"
+  inkSupply: "4 × 3 L rezervuar, iki kademeli negatif basınç beslemesi"
+  inkCapacity: { value: 3000, unit: ml }
+  feed: "Gergi sensörlü çubuklu besleme, rulodan ruloya"
+  takeUp: "1000 m otomatik sarma"
+  heaters: "Entegre iki kademeli sıcak hava kurutucu; harici kurutucu opsiyonu maks. 7,2 kW"
+  curing: "Fiksaj MR-1900 kalenderde: 180–220 °C, 30–180 sn"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Yarı otomatik püskürtme + manuel silme"
+  powerSupply: "Yazıcı AC 210–230 V, 50/60 Hz, tek faz — kalender ayrı 380 V 3 faz hat"
+  power:
+    value: 1.2
+    unit: kW
+    note:
+      tr: yalnızca baskı sistemi; kurutucu ve kalender hariç
+      en: print system only; dryer and calender excluded
+  current: { value: 10, unit: A }
+  environment: "18–30 °C / %35–65 BN"
+  rip: "Maintop 6.0 · PhotoPRINT · ONYX · Wasatch · NeoStampa"
+  fileFormats: "PDF · TIFF · EPS · PS · JPEG"
+  interface: "Gigabit Ethernet"
+  dimensions: "3180 × 1100 × 1700 mm (yazıcı)"
+  weight: { value: 380, unit: kg }
+  floorArea: { value: 24, unit: m2 }
+
+# Roll machines publish 2/3/4-pass, not 4/6/8. The 2-geçiş figure is a paper
+# figure at low coverage — the production row is the one to quote in a teklif.
+speedModes:
+  - { pass: 2, value: 180, mode: { tr: Hız, en: Speed } }
+  - { pass: 3, value: 120, mode: { tr: Üretim, en: Production } }
+  - { pass: 4, value: 90, mode: { tr: Kalite, en: Quality } }
+
+# The calender is the other half of the system: a sublimation printer without a
+# transfer press only prints paper.
+components:
+  - sku: MR-1900
+    name:
+      tr: MR-1900 kalender (rotatif transfer presi)
+      en: MR-1900 calender (rotary transfer press)
+    role:
+      tr: >-
+        Basılan transfer kağıdındaki boyayı ısı ve basınç altında polyester
+        kumaşa süblimleştirir. Hattın gerçek kapasitesini bu ünite belirler.
+      en: >-
+        Sublimates the dye from the printed transfer paper into polyester fabric
+        under heat and pressure. This unit sets the real capacity of the line.
+    specs:
+      mediaWidth: { value: 1900, unit: mm }
+      heaters: "600 mm çift katmanlı sert krom yağlı tambur, harici yağ tankı"
+      curing: "Transfer 180–220 °C, 30–180 sn"
+      feed: "3 besleme + 3 sarma istasyonu, geçirgen keçe bant"
+      powerSupply: "3 faz 380 V, 50 Hz"
+      power: { value: 40, unit: kW }
+      dimensions: "2450 × 1980 × 1650 mm"
+      weight: { value: 1300, unit: kg }
+
+compatibleInks: [mi-610-sub, mi-910-flush]
+applications: [textile, signage]
+substrates: [textile, paper]
+siblings: [MD-600-A4, MC-300-U1]
+rip: [Maintop 6.0, PhotoPRINT, ONYX, Wasatch, NeoStampa]
+
+installation:
+  powerPhase: 3F
+  floorAreaM2: 24
+  ceilingHeightM: 3.0
+  cratedDimensions: { w: 3450, d: 1300, h: 1500, unit: mm }
+  ventilationRequired: true
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Forklift veya vinç ile indirme
+      - Trifaze pano ve kalender besleme hattı
+      - Kalender üstü davlumbaz ve havalandırma
+      - Transfer kağıdı ve sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Forklift or crane unloading
+      - Three-phase panel and the calender supply line
+      - Extraction hood and ventilation above the calender
+      - Transfer paper and starter consumables kit
+
+gallery:
+  - src: /img/machines/mt-1900-a4/hero.jpg
+    kind: machine
+    alt:
+      tr: "1,9 m genişliğinde süblimasyon yazıcı ve arkasında duran kalender hattı"
+      en: "A 1.9 m sublimation printer with the calender line standing behind it"
+  - src: /img/machines/mt-1900-a4/carriage.jpg
+    kind: detail
+    alt:
+      tr: "Dört kafalı araba ve altından geçen transfer kağıdı"
+      en: "Four-head carriage with transfer paper running beneath it"
+    caption: { tr: 4 × Epson i3200-A1 kafa dizilimi, en: Four Epson i3200-A1 heads }
+  - src: /img/machines/mt-1900-a4/take-up.jpg
+    kind: detail
+    alt:
+      tr: "Gergi sensörü çubuğu ve sarma milindeki dolmuş kağıt rulosu"
+      en: "Tension sensor bar and a filled paper roll on the take-up shaft"
+    caption: { tr: TensionTrack gergi kontrolü, en: TensionTrack tension control }
+  - src: /img/machines/mt-1900-a4/calender.jpg
+    kind: detail
+    alt:
+      tr: "600 mm yağlı tamburlu kalenderin besleme tarafı ve keçe bandı"
+      en: "Feed side and felt belt of the 600 mm oil-drum calender"
+    caption: { tr: MR-1900 kalender, en: MR-1900 calender }
+  - src: /img/machines/mt-1900-a4/app-textile.jpg
+    kind: application
+    alt:
+      tr: "Süblimasyon baskılı polyester bayrak kumaşının kalenderden çıkışı"
+      en: "Sublimated polyester flag fabric coming off the calender"
+    caption: { tr: Süblimasyon Bayrak Baskı, en: Sublimated flag printing }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mt-1900-a4-katalog-tr.pdf, bytes: 2183168 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mt-1900-a4-teknik-tr.pdf, bytes: 462848 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mt-1900-a4-kurulum-kontrol-listesi.pdf, bytes: 226304 }
+
+i18n:
+  tr:
+    tagline: Rulodan ruloya yüksek metraj, kalenderle tamamlanan tek sistem
+    summary: >-
+      MT-1900 A4, transfer süblimasyon için 1,9 m'lik rulodan ruloya bir
+      sistemdir. Dört adet Epson i3200-A1 kafa, 2 geçişte 180 m²/sa kağıt
+      çıkarır; günlük üretimde 3 geçişte 120 m²/sa daha gerçekçidir. Gergi
+      sensörlü sarma 1000 m'ye kadar rulo alır, iki kademeli sıcak hava kurutucu
+      kağıdı sarmadan önce kurutur. Fiksaj, sistemin ikinci yarısı olan MR-1900
+      kalenderde yapılır: 600 mm yağlı tambur, 380 V trifaze ve yaklaşık 40 kW.
+      Kalenderin elektrik yükü atölyedeki en büyük tek kalemdir; kurulum öncesi
+      pano planlaması şarttır.
+    features:
+      - term: QuadArray Kafa Dizilimi
+        body: >-
+          Dört Epson i3200-A1 kafa kademeli dizilir; 2 geçişte 180 m²/sa'lık
+          kağıt hızı buradan gelir. Şasi sekiz kafaya kadar hazırdır, yükseltme
+          yerinde yapılır ve sonrasında renk profillerinin yeniden çıkarılması
+          gerekir.
+      - term: TensionTrack Gergi Kontrolü
+        body: >-
+          Besleme ve sarma milleri gergiyi sensörle sabit tutar. Süblimasyon
+          kağıdı mürekkebi aldığında genişler; gergi kaçarsa kağıt dalgalanır ve
+          kalenderde kırışık olarak transfer edilir. 1000 m'lik rulo sonuna kadar
+          aynı gergi korunur.
+      - term: DualStage Kurutma
+        body: >-
+          Kağıt, platen üstünde ve çıkışta olmak üzere iki kademede kurutulur.
+          Tek kademeli kurutmada yüksek kaplamalı işler sarma milinde birbirine
+          yapışır; ikinci kademe yoğun mavi ve siyah alanlarda fark yaratır.
+      - term: SystemMatch Kalender Eşlemesi
+        body: >-
+          Yazıcı ve MR-1900 kalender birlikte devreye alınır: kağıt genişliği,
+          tambur çapı ve hat hızı tek tabloda eşlenir. 1,9 m'lik kağıtla
+          transfer edilebilir kumaş genişliği 1,80 m civarındadır — teklif
+          aşamasında bu farkı hesaba katın.
+    faq:
+      - q: MT-1900 A4 hangi işler için doğru makine?
+        a: >-
+          Bayrak, germe branda, spor giyim ve soft signage üreten, günde 300 m²
+          üzerinde transfer basan atölyeler için. En az %80 polyester içeren
+          kumaşlarda çalışır; pamuklu iş yapıyorsanız bu teknoloji size uygun
+          değil, DTF tarafına bakın.
+      - q: Kalender olmadan çalışır mı?
+        a: >-
+          Hayır. Yazıcı tek başına yalnızca transfer kağıdı basar; boya kumaşa
+          ancak ısı ve basınç altında geçer. MR-1900 kalender sistemin ikinci
+          yarısıdır ve birlikte fiyatlanır. Elinizde uygun genişlikte bir
+          kalender varsa yalnızca yazıcı da tedarik edilebilir.
+      - q: 180 m²/sa gerçekten alınabilir mi?
+        a: >-
+          Bu, 2 geçişte ve düşük kaplama oranında kağıt tarafındaki hızdır.
+          Günlük işte 3 geçiş ve 120 m²/sa bandını esas alın. Hattın gerçek
+          kapasitesini kalender belirler: 600 mm tamburda transfer hızı
+          120–600 cm/sa aralığındadır ve dwell süresi kumaşa göre değişir.
+      - q: Elektrik altyapısı için ne hazırlamalıyım?
+        a: >-
+          Yazıcı 220 V tek fazda ve 10 A ile çalışır, sorun yaratmaz. Sorun
+          kalenderdir: 380 V trifaze ve yaklaşık 40 kW. Bu, çoğu atölyenin
+          mevcut panosunun üzerindedir. Kurulum öncesi keşifte pano kapasitesini,
+          kablo kesitini ve kaçak akım korumasını birlikte kontrol ediyoruz.
+      - q: Ortam koşulları baskıyı ne kadar etkiliyor?
+        a: >-
+          18–30 °C ve %35–65 bağıl nem aralığında çalışın. Nem düştüğünde kağıt
+          kıvrılır ve kafa çarpması riski artar; nem yükseldiğinde kağıt
+          mürekkebi tutamaz ve renkler kalenderde soluk çıkar. Kağıdı ambalajında
+          ve baskı ortamında en az 24 saat bekletin.
+      - q: Kalender kaç metre kumaşta kendini gösterir?
+        a: >-
+          600 mm tambur, 35 saniyelik dwell süresinde küçük tamburlara göre
+          belirgin şekilde hızlıdır ve uzun metrajda fark açılır. 35 m civarı kısa
+          işler için daha küçük tambur yeterlidir; sürekli üretimde 600 mm ve
+          üzeri seçilir.
+    alternateName:
+      - süblimasyon baskı makinası
+      - 1.9 m sublimasyon yazıcı
+      - transfer süblimasyon makinası
+      - kalenderli sublimasyon sistemi
+  en:
+    tagline: High-metre roll-to-roll output, completed by the calender as one system
+    summary: >-
+      The MT-1900 A4 is a 1.9 m roll-to-roll transfer sublimation system. Four
+      Epson i3200-A1 heads deliver 180 m²/h of paper at two passes; in daily
+      production three passes at 120 m²/h is the realistic figure. Tension-sensed
+      take-up handles rolls up to 1000 m, and a two-stage hot-air dryer dries the
+      paper before it winds. Fixation happens in the second half of the system,
+      the MR-1900 calender: a 600 mm oil drum on 380 V three-phase at roughly
+      40 kW — the largest single electrical load in the shop.
+    features:
+      - term: QuadArray Head Layout
+        body: >-
+          Four staggered Epson i3200-A1 heads produce the 180 m²/h paper speed at
+          two passes. The chassis is prepared for up to eight heads; the upgrade
+          is done on site and colour profiles must be rebuilt afterwards.
+      - term: TensionTrack Tension Control
+        body: >-
+          Feed and take-up shafts hold web tension with a sensor bar. Sublimation
+          paper expands as it takes ink, and lost tension puts waves in the web
+          that transfer as creases at the calender. Tension stays constant to the
+          end of a 1000 m roll.
+      - term: DualStage Drying
+        body: >-
+          Paper is dried in two stages, over the platen and at the exit. With
+          single-stage drying, heavy-coverage jobs stick to themselves on the
+          take-up; the second stage is what saves dense blues and blacks.
+      - term: SystemMatch Calender Pairing
+        body: >-
+          Printer and MR-1900 calender are commissioned together: paper width,
+          drum diameter and line speed are matched in one table. A 1.9 m paper
+          web transfers roughly 1.80 m of fabric — account for that difference at
+          quotation stage.
+    faq:
+      - q: What is the MT-1900 A4 the right machine for?
+        a: >-
+          Shops producing flags, tensioned banners, sportswear and soft signage
+          at more than 300 m² of transfer a day. It works on fabrics of at least
+          80 % polyester; if your work is cotton, this is the wrong technology
+          and you should be looking at DTF.
+      - q: Will it work without the calender?
+        a: >-
+          No. On its own the printer only prints transfer paper; the dye moves
+          into fabric under heat and pressure. The MR-1900 calender is the second
+          half of the system and is quoted with it. If you already own a calender
+          of matching width, the printer can be supplied alone.
+      - q: Is 180 m²/h actually achievable?
+        a: >-
+          That is the two-pass paper figure at low coverage. Plan production
+          around three passes and 120 m²/h. Real line capacity is set by the
+          calender: a 600 mm drum transfers at 120–600 cm/h, and dwell time
+          varies with the fabric.
+      - q: What electrical work should I prepare?
+        a: >-
+          The printer runs on single-phase 220 V at 10 A and causes no trouble.
+          The calender does: 380 V three-phase at around 40 kW, above what most
+          shops have on the existing panel. We check panel capacity, cable
+          section and residual-current protection together during the
+          pre-install survey.
+      - q: How much do ambient conditions affect the print?
+        a: >-
+          Work between 18–30 °C and 35–65 % RH. Low humidity curls the paper and
+          raises the risk of head strikes; high humidity stops the paper holding
+          ink and colours come off the calender flat. Let paper acclimatise in
+          its wrapping in the print room for at least 24 hours.
+      - q: At what run length does drum size start to matter?
+        a: >-
+          A 600 mm drum is noticeably faster than small drums at a 35-second
+          dwell, and the gap widens over long runs. For jobs of around 35 m a
+          smaller drum is enough; for continuous production 600 mm and above is
+          the choice.
+    alternateName:
+      - dye sublimation printer 1.9 m
+      - transfer sublimation printing system
+      - sublimation printer with calender

@@ -1,0 +1,267 @@
+sku: MK-1612
+model: Maven MK-1612
+family: cutting
+tier: industrial
+order: 120
+featured: false
+status: active
+price: null
+leadTimeWeeks: [8, 12]
+
+headline: [cuttingArea, cuttingSpeed, cuttingForce, cuttingAccuracy]
+
+# MK-1612 has no printheads — it is a finishing machine. The schema requires the
+# block, so it is declared empty (count 0) and no head data is rendered for this
+# family. `compatibleInks` is empty for the same reason.
+printhead:
+  brand: epson
+  model: "—"
+  count: 0
+
+specs:
+  mediaWidth: { value: 1650, unit: mm }
+  cuttingArea: "1600 × 1200 mm"
+  cuttingSpeed: { value: 1000, unit: mm/s, note: { tr: "1 G ivmeye kadar", en: "acceleration up to 1 G" } }
+  cuttingForce: "200 N"
+  cuttingAccuracy: { value: 0.05, unit: mm, note: { tr: "± tekrarlanabilirlik", en: "± repeatability" } }
+  cuttingTools: "Tek noktadan bağlantılı çok modüllü kafa · aynı anda 3 takım"
+  cutMaterials: "Yapışkanlı folyo · branda · reflektif folyo · manyetik levha · dekota · fotoblok · mukavva · oluklu mukavva · MDF · alüminyum kompozit · tekstil"
+  cutFormats: "AI · EPS · PDF · DXF · PLT (HPGL)"
+  table: "Bölgesel vakumlu kesim tablası"
+  vacuumZones: { value: 4 }
+  feed: "Kıskaçlı malzeme ilerletme ve konveyör opsiyonu; panelli kesimde 50 m'ye kadar iş boyu"
+  powerSupply: "AC 380–400 V + N, 50 Hz, 3 faz (3 × 230 V 50 Hz ve 3 × 208 V 60 Hz varyantları)"
+  power: { value: 1.3, unit: kW, note: { tr: "vakum pompası; 60 Hz'de 1,75 kW", en: "vacuum pump; 1.75 kW at 60 Hz" } }
+  current: { value: 20, unit: A, note: { tr: "3 × 400 V + N şebekede maksimum", en: "maximum on a 3 × 400 V + N supply" } }
+  environment: "18–30 °C / %35–65 BN"
+  rip: "ONYX · Caldera · SAi Flexi"
+  interface: "Gigabit Ethernet · USB"
+  dimensions: "2470 × 2200 × 1100 mm"
+  floorArea: { value: 16, unit: m2 }
+
+# A cutter has no pass ladder, so the table is indexed by tool module instead.
+# The m²/h figures are throughput on a full 1600 × 1200 tabla and depend on how
+# much cut path a square metre carries — see the SSS entry on 1000 mm/s.
+speedModes:
+  - { pass: 1, value: [40, 55], mode: { tr: "Kesim — kiss-cut folyo", en: "Cutting — kiss-cut vinyl" } }
+  - { pass: 1, value: [22, 30], mode: { tr: "Kesim — tangansiyel bıçak", en: "Cutting — tangential knife" } }
+  - { pass: 1, value: [10, 16], mode: { tr: "Kesim — osilasyonlu bıçak", en: "Cutting — oscillating tool" } }
+
+compatibleInks: []
+applications: [signage, packaging, industrial, vehicle]
+substrates: [vinyl, foamboard, pvc, alucomp, photoblock, paper, textile, leather]
+siblings: [MS-1600-PC]
+rip: [ONYX, Caldera, SAi Flexi]
+
+installation:
+  powerPhase: 3F
+  floorAreaM2: 16
+  ceilingHeightM: 2.8
+  cratedDimensions: { w: 2700, d: 2400, h: 1350, unit: mm }
+  ventilationRequired: false
+  compressedAir: "6 bar, 100 L/dk"
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Forklift veya transpalet ile indirme
+      - Elektrik altyapısı ve trifaze pano
+      - Basınçlı hava hattı
+      - Freze modülü için toz emiş ünitesi
+      - Bıçak ucu ve kesim altlığı başlangıç seti
+    en:
+      - Freight and insurance
+      - Forklift or pallet-truck unloading
+      - Electrical infrastructure and three-phase panel
+      - Compressed air line
+      - Dust extraction unit for the routing module
+      - Starter set of blades and cutting underlay
+
+gallery:
+  - src: /img/machines/mk-1612/hero.jpg
+    kind: machine
+    alt: { tr: Vakumlu tabla üzerinde dekota levha kesen dijital flatbed kesim makinesi, en: Digital flatbed cutter working through a foam PVC sheet on its vacuum bed }
+  - src: /img/machines/mk-1612/head.jpg
+    kind: detail
+    alt: { tr: Üç takım modülü takılı kesim kafasının yakın plan görüntüsü, en: Close-up of the cutting head carrying three tool modules }
+    caption: { tr: TriTool Üçlü Takım Kafası, en: TriTool three-module head }
+  - src: /img/machines/mk-1612/camera.jpg
+    kind: detail
+    alt: { tr: Kafadaki kamera basılı bir levhanın köşesindeki register işaretini okuyor, en: Head-mounted camera reading a registration mark on the corner of a printed sheet }
+    caption: { tr: MavenSight Optik İz Okuma, en: MavenSight optical mark reading }
+  - src: /img/machines/mk-1612/bed.jpg
+    kind: detail
+    alt: { tr: Dört bölgeye ayrılmış vakum tablası ve bölge kontrol vanaları, en: Four-zone vacuum bed with the zone control valves in the foreground }
+    caption: { tr: Bölgesel Vakum Kontrolü, en: Zoned vacuum control }
+  - src: /img/machines/mk-1612/app-corrugated.jpg
+    kind: application
+    alt: { tr: Osilasyonlu bıçakla kesilmiş oluklu mukavva teşhir standı parçaları tablada duruyor, en: Corrugated display parts cut with the oscillating tool resting on the bed }
+    caption: { tr: Oluklu Mukavva Stant Kesimi, en: Corrugated display cutting }
+  - src: /img/machines/mk-1612/app-vinyl.jpg
+    kind: application
+    alt: { tr: Basılı yapışkanlı folyodan kontur kesilmiş etiketler ve alınan atık folyo, en: Contour-cut labels on printed adhesive vinyl with the waste web being lifted }
+    caption: { tr: Folyo Kontur Kesim, en: Vinyl contour cutting }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mk-1612-katalog-tr.pdf, bytes: 1980416 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mk-1612-teknik-tr.pdf, bytes: 372736 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mk-1612-kurulum-kontrol-listesi.pdf, bytes: 198656 }
+
+i18n:
+  tr:
+    tagline: Kesim, oluk ve freze tek kafada, tabakadan bitmiş işe tek durakta
+    summary: >-
+      MK-1612, 1600 × 1200 mm vakumlu tablasıyla baskı sonrası bütün kesim
+      işlerini tek makinede toplar. Tangansiyel bıçak, osilasyonlu bıçak, oluk
+      açma ve freze modüllerinden üçü aynı anda kafada durur; takım değişimi
+      kalibrasyon gerektirmez. Araba 1000 mm/s hıza ve 1 G ivmeye kadar çalışır,
+      dikey kuvvet 200 N'a çıkar, tekrarlanabilirlik ± 0,05 mm'dir. Dört bağımsız
+      vakum bölgesi sayesinde tek levha da, tam tabla iş de aynı pompa yüküyle
+      sabitlenir. Optik iz okuma, baskıdaki boyut kaymasını kesim yoluna taşır.
+    features:
+      - term: Bölgesel Vakum Kontrolü
+        body: >-
+          Tabla dört bağımsız bölgeye ayrılmıştır. Tek bir 60 × 40 cm levhayı
+          sabitlemek için bütün tablayı vakumlamak zorunda kalmaz, pompa yükünü
+          ve elektrik tüketimini iş boyutuna göre ayarlarsınız.
+      - term: MavenSight Optik İz Okuma
+        body: >-
+          Kafadaki kamera baskıdaki register işaretlerini okur ve malzemedeki
+          gerilmeyi kesim yoluna X/Y ölçekleme olarak taşır. Eko solvent
+          ısıtıcılarından geçmiş bir branda veya folyoda kontur kaymasının tek
+          gerçek çözümü budur.
+      - term: TriTool Üçlü Takım Kafası
+        body: >-
+          Tangansiyel bıçak, osilasyonlu bıçak, oluk açma, freze ve V-kesim
+          modüllerinden üçü kafada aynı anda takılı durur. Tek noktadan bağlantı
+          sayesinde modül değişimi dakikalar sürer ve takım sıfır noktası korunur.
+      - term: MavenPanel Sürekli Besleme
+        body: >-
+          Kıskaçlı ilerletme ve konveyör opsiyonuyla tabla boyundan uzun işler
+          panel panel kesilir; toplam iş boyu 50 m'ye kadar çıkar. Uzun bir totem
+          gövdesini parçalara bölüp ek yeri yönetmek yerine tek dosyada bitirirsiniz.
+    faq:
+      - q: MK-1612 hangi işler için doğru makine, hangileri için değil?
+        a: >-
+          Dekota, fotoblok, oluklu mukavva ve alüminyum kompozit gibi rijit
+          malzemeleri karışık şekilde kesen atölyeler için doğru makine. Yalnızca
+          rulo folyo kesiyorsanız yanlış makine: o iş için rulo besleyen bir
+          kesici plotter hem çok daha ucuz hem daha hızlıdır. Baskı ve kesimi
+          aynı makinede istiyorsanız MS-1600 PC baskı-kesim modeline bakın.
+      - q: Trifaze elektrik şart mı?
+        a: >-
+          Pratikte evet. Makine 3 × 380–400 V + N, maksimum 20 A besleme ile
+          teslim edilir; tek fazlı varyantı vardır ancak yükün büyük bölümü vakum
+          pompasıdır ve tek fazda pompa kapasitesi sınırlanır. Panonun makineye
+          kadar çekilmesi ve kaçak akım koruması kurulum öncesi sizin
+          tarafınızdadır; ön keşifte birlikte kontrol ediyoruz.
+      - q: Gerçekten 1000 mm/s hızda mı kesiyor?
+        a: >-
+          1000 mm/s araba tepe hızıdır, ortalama kesim hızı değil. Gerçek verim
+          metrekare başına düşen kesim yolu uzunluğuna bağlıdır: 30 cm'lik
+          harflerde araba düz kenarlarda tepe hıza çıkar, 3 cm'lik etiket
+          konturlarında ivmelenme bitmeden yavaşlamaya başlar. Küçük konturlu
+          işlerde 1 G ivme, tepe hızdan daha belirleyicidir. Verdiğimiz m²/sa
+          değerleri tam tabla iş içindir.
+      - q: Freze modülü CNC router yerine geçer mi?
+        a: >-
+          Hayır. Freze modülü ince dekota, pleksi ve alüminyum kompozit levhaları
+          temiz kenarla kesmek içindir; kalın ahşap, derin paso ve 2,5 boyutlu
+          oyma işleri CNC router işidir. Freze ile çalışacaksanız toz emiş ünitesi
+          zorunludur ve fiyata dahil değildir.
+      - q: Başka marka bir baskı makinesiyle çalışır mı?
+        a: >-
+          Evet. Kesim yolu ONYX, Caldera veya SAi Flexi tarafında oluşturulur;
+          makinenin tek beklentisi baskıya register işaretlerinin doğru
+          yerleştirilmiş olmasıdır. Marka fark etmeksizin, RIP çıktısındaki işaret
+          düzeni bir kez ayarlandıktan sonra iş akışı değişmez.
+      - q: Sarf maliyeti ne kadar tutar?
+        a: >-
+          Bıçak ucu ve kesim altlığı sarf malzemedir. Oluklu mukavva ve dekotada
+          uç ömrü, yapışkanlı folyo kesimine göre belirgin biçimde kısadır;
+          osilasyonlu takımda uç değişimi rutin bir vardiya işidir. Altlık da
+          malzemeye göre yıpranır ve periyodik olarak değişir. Makine bütçesini
+          çıkarırken bu iki kalemi aylık sarf olarak hesaba katın.
+    alternateName:
+      - flatbed kesim makinası
+      - dijital kesim makinası
+      - kesici plotter
+      - flatbed kesici
+      - dijital kesim sistemi
+  en:
+    tagline: Knife, crease and router in one head, from sheet to finished part in one stop
+    summary: >-
+      The MK-1612 gathers post-print finishing onto one 1600 × 1200 mm vacuum bed.
+      Three of the tangential knife, oscillating knife, creasing and routing
+      modules sit in the head at once, and a tool change needs no recalibration.
+      The carriage runs to 1000 mm/s with acceleration up to 1 G, down-force
+      reaches 200 N, repeatability is ± 0.05 mm. Four independent vacuum zones
+      hold a single sheet at the same pump load as a full bed, and optical mark
+      reading carries print-side drift into the cut path.
+    features:
+      - term: Zoned Vacuum Control
+        body: >-
+          The bed is split into four independent zones, so holding a single
+          60 × 40 cm sheet does not require pulling vacuum across the whole table.
+          Pump load and power draw scale with the job, not the machine.
+      - term: MavenSight Optical Mark Reading
+        body: >-
+          A head-mounted camera reads the registration marks in the print and
+          carries material stretch into the cut path as X/Y scaling. On banner or
+          vinyl that has been through eco-solvent heaters, this is the only real
+          answer to contour drift.
+      - term: TriTool Three-Module Head
+        body: >-
+          Any three of the tangential knife, oscillating knife, creasing, routing
+          and V-cut modules stay fitted at the same time. Single-point fastening
+          makes a module change a matter of minutes and preserves the tool origin.
+      - term: MavenPanel Continuous Feed
+        body: >-
+          With advance clamps and the conveyor option, work longer than the bed is
+          cut panel by panel up to a total job length of 50 m. A tall totem body is
+          finished as one file instead of being split and joined.
+    faq:
+      - q: What is the MK-1612 the right machine for — and what is it wrong for?
+        a: >-
+          Shops cutting a mixed diet of rigid material: foam PVC, foam board,
+          corrugated and aluminium composite. It is the wrong machine if you only
+          cut roll vinyl — a roll-fed cutting plotter is both far cheaper and
+          faster at that. If you want printing and cutting on one machine, look at
+          the MS-1600 PC print-and-cut instead.
+      - q: Is three-phase power mandatory?
+        a: >-
+          In practice yes. The machine ships for 3 × 380–400 V + N at a maximum of
+          20 A. A single-phase variant exists, but most of the load is the vacuum
+          pump and single-phase caps pump capacity. Bringing the panel to the
+          machine and preparing residual-current protection is your responsibility
+          before installation; we walk through it at the pre-install survey.
+      - q: Does it really cut at 1000 mm/s?
+        a: >-
+          1000 mm/s is peak carriage speed, not average cutting speed. Real
+          throughput follows the length of cut path per square metre: on 30 cm
+          letters the carriage reaches peak speed along the straights, on 3 cm
+          label contours it starts decelerating before acceleration has finished.
+          On small contours the 1 G acceleration matters more than peak speed. Our
+          m²/h figures are for a full bed.
+      - q: Does the routing module replace a CNC router?
+        a: >-
+          No. The router module is for clean-edged cuts in thin foam PVC, acrylic
+          and aluminium composite; thick timber, deep passes and 2.5D carving are
+          CNC router work. If you intend to route, a dust extraction unit is
+          mandatory and is not included in the price.
+      - q: Will it work with another brand of printer?
+        a: >-
+          Yes. The cut path is produced in ONYX, Caldera or SAi Flexi; all the
+          machine expects is registration marks placed correctly in the print.
+          Whatever the printer brand, once the mark layout in the RIP output is set
+          up the workflow does not change.
+      - q: What do the consumables cost?
+        a: >-
+          Blades and the cutting underlay are consumables. Blade life on corrugated
+          and foam PVC is markedly shorter than on adhesive vinyl, and on the
+          oscillating tool a blade change is routine shift work. The underlay also
+          wears by material and is replaced periodically. Budget both as a monthly
+          consumable line, not as a one-off.
+    alternateName:
+      - flatbed cutter
+      - digital die-less cutting system
+      - flatbed cutting table

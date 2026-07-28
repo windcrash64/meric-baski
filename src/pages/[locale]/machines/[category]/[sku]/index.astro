@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+
+import MachinePage from '../../../../../layouts/MachinePage.astro';
+import { FAMILY_ROUTE, NON_DEFAULT_LOCALES, ROUTES } from '../../../../../i18n/routes';
+import type { Locale } from '../../../../../config/site';
+
+export async function getStaticPaths() {
+  const machines = (await getCollection('machines'))
+    .filter((m) => m.data.status !== 'discontinued');
+
+  return NON_DEFAULT_LOCALES.flatMap((locale) =>
+    machines.map((machine) => ({
+      params: {
+        locale,
+        category: ROUTES[FAMILY_ROUTE[machine.data.family as keyof typeof FAMILY_ROUTE]][locale],
+        sku: machine.id,
+      },
+      props: { machine, locale },
+    })),
+  );
+}
+
+const { machine, locale } = Astro.props as { machine: Parameters<typeof MachinePage>[0]['machine']; locale: Locale };
+---
+
+<MachinePage machine={machine} locale={locale} />

@@ -1,0 +1,288 @@
+sku: MI-710
+series: Maven MI-710 DTF
+family: dtf
+type: ink
+order: 90
+featured: true
+
+# DTF has no OEM ink standard. Every 60 cm system on the market is an open,
+# bulk-fed machine built around the same Epson head, so there is nothing to be
+# "equivalent" to. An invented equivalence here would be the fastest way to
+# lose a technical buyer.
+oemEquivalent: []
+changeover: switch-and-swap
+
+channels:
+  - { code: C, sku: MI-710-C, availability: stock }
+  - { code: M, sku: MI-710-M, availability: stock }
+  - { code: Y, sku: MI-710-Y, availability: stock }
+  - { code: K, sku: MI-710-K, availability: stock }
+  - { code: W, sku: MI-710-W, availability: stock }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+    note: { tr: CMYK kanalları, en: CMYK channels }
+  - format: pouch
+    volume: 900
+    unit: ml
+    note:
+      tr: >-
+        yalnızca beyaz; küçük hacim bilerek seçildi, altı aylık raf ömrüne göre
+        ölçülendirildi
+      en: >-
+        white only; the smaller volume is deliberate, sized to the six-month
+        shelf life
+
+compat:
+  printheads: [Epson i3200-A1, Epson i1600-A1, Epson XP600]
+  dropSizePl: [2.5, 12]
+  machines: [MD-600-A4]
+  thirdPartyPrinters:
+    - LINKO S60 Pro
+    - Audley 60 cm i3200-A1
+    - PO-TRY 60 cm 5 kafa
+  chipIncluded: false
+
+specs:
+  cure:
+    method: heat
+    transferTempC: [150, 160]
+    transferSeconds: [10, 15]
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: >-
+      Açılmamış ambalajda, 5–30 °C arasında ve doğrudan güneş görmeyen bir
+      depoda 12 ay. Beyaz kanal istisnadır: pigment yükü ve çökelme eğilimi
+      nedeniyle beyaz 6 ay üzerinden planlanmalıdır — 900 ml ambalaj tam olarak
+      bu yüzden vardır. Açılan ambalajı 90 gün içinde bitirin.
+    en: >-
+      12 months unopened, stored between 5 and 30 °C out of direct sunlight.
+      White is the exception: its pigment load and settling behaviour put it on
+      a 6-month clock, which is exactly why it ships in 900 ml. Once opened,
+      use a container within 90 days.
+  storageTempC: [5, 30]
+  operatingTempC: [20, 30]
+  operatingHumidityPct: [40, 60]
+  viscosityCps: { value: 4.0, tolerance: 0.5, atC: 25 }
+  surfaceTensionDyn: { value: 30, tolerance: 3 }
+  ph: { value: 9.0, tolerance: 0.5 }
+  particleSizeNm: [100, 250]
+  fastness:
+    - { standard: "ISO 105-C06", result: "≥ 4" }
+    - { standard: "ISO 105-X12", result: "4–5" }
+
+substrates: [film, textile, leather]
+applications: [textile]
+
+# ECO PASSPORT and ZDHC are issued to the producing plant, never to a dealer.
+# We send the current certificate against a batch number instead of rendering
+# a mark we do not own. See the FAQ.
+certifications: []
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-710-dtf-tds-tr.pdf, bytes: 268288, version: "v1.2", date: "2026-04" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-710-dtf-tds-en.pdf, bytes: 261120, version: "v1.2", date: "2026-04" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-710-dtf-gbf-tr.pdf, bytes: 412672, version: "2026-02" }
+
+ancillaries: [md-pwd-170, md-film-600, mi-910-flush]
+
+gallery:
+  - src: /img/inks/mi-710-dtf/bottle.jpg
+    kind: machine
+    alt:
+      tr: "Beş kanallı DTF mürekkep seti: dört adet 1 litrelik şişe ve bir 900 ml beyaz torba"
+      en: "Five-channel DTF ink set: four one-litre bottles and a 900 ml white pouch"
+  - src: /img/inks/mi-710-dtf/white-pouch.jpg
+    kind: detail
+    alt:
+      tr: "Musluklu 900 ml beyaz mürekkep torbası, tank bağlantısı takılı halde"
+      en: "900 ml white ink pouch with its tap connected to the bulk tank"
+    caption: { tr: Beyaz 900 ml — altı aylık raf ömrüne göre, en: White in 900 ml — sized to the six-month shelf life }
+  - src: /img/inks/mi-710-dtf/film-wet.jpg
+    kind: detail
+    alt:
+      tr: "PET film üzerinde henüz toz serpilmemiş, renk ve beyaz katmanı basılmış baskı"
+      en: "Colour and white layers freshly printed on PET film before powder is applied"
+  - src: /img/inks/mi-710-dtf/app-tshirt.jpg
+    kind: application
+    alt:
+      tr: "Pamuklu tişörte preslenmiş, kenarları keskin çok renkli transfer baskı"
+      en: "Multi-colour transfer pressed onto a cotton t-shirt with clean edges"
+    caption: { tr: DTF Tekstil Transfer Baskı, en: DTF textile transfer }
+
+price: null
+
+i18n:
+  tr:
+    role: Epson i3200-A1 ve i1600-A1 kafalı DTF sistemleri için su bazlı pigment mürekkep
+    summary: >-
+      MI-710, DTF sistemlerinde PET film üstüne basılan su bazlı pigment
+      mürekkeptir. 25 °C'de 4,0 cps ±0,5 viskozite ve 30 ±3 din/cm yüzey
+      gerilimi, Epson i3200-A1 kafalarda damla kararlılığını korur; pH 9,0 ±0,5
+      bandı nozül tıkanmasını geciktirir. Beyaz kanal SedimentGuard
+      dispersiyonuyla üretilir, ancak raf ömrü altı aydır ve sürekli sirkülasyon
+      şarttır. Renkler 1 litre şişede, beyaz 900 ml torbada gelir. Doğru toz ve
+      film eşleşmesinde yıkama haslığı ISO 105-C06'ya göre 4 ve üzerindedir.
+    features:
+      - >-
+        SedimentGuard Beyaz Dispersiyon — beyaz pigmentin D50 partikül boyutu
+        200–250 nm bandında tutulur, dispersiyon yüzey aktifleri çökelmeyi
+        geciktirir. Bu, altı aylık raf ömrünü uzatmaz; hafta sonu duran bir
+        makinede kafayı kurtarır.
+      - >-
+        AquaBase Tek Taşıyıcı — CMYK ve beyaz aynı taşıyıcı kimyasıyla üretilir.
+        Renk ve beyaz aynı geçişte basıldığında katmanlar arasında ayrışma ve
+        kenar taşması görülmez.
+      - >-
+        NozzleSafe Bekleme Direnci — 25 °C ve %50 bağıl nemde kapaksız 20 dakika
+        bekleyen nozüller tek temizleme darbesiyle geri döner. Gece boyu kapaksız
+        kalan bir kafa için bu geçerli değildir; kapatma istasyonu çalışmak
+        zorundadır.
+      - >-
+        SoftHand Tuşe — MD-PWD 170 yumuşak toz ve 150–160 °C / 10–15 s pres
+        penceresiyle eşleştirildiğinde transfer yıkama sonrası sertleşmez,
+        kumaşla birlikte esner.
+      - >-
+        MavenMatch Profil Paketi — MD-600 A4 + MD-FILM 600 + MD-PWD 170
+        kombinasyonu için ICC profili ve mürekkep limitleri hazır gelir. Başka
+        marka film kullanacaksanız profil yeniden çıkarılmalıdır; film kaplaması
+        mürekkep emilimini doğrudan değiştirir.
+    disclaimer: >-
+      Yapışma, esneme ve haslık değerleri kumaş cinsine, ön ve son işleme,
+      pres sıcaklığına ve basıncına göre değişir. Buradaki değerler laboratuvar
+      koşullarında MD-FILM 600 film ve MD-PWD 170 toz ile ölçülmüş referans
+      değerlerdir, taahhüt değildir. Seri üretime geçmeden önce kendi kumaşınızla
+      ve kendi pres ayarınızla test baskısı yapın.
+    faq:
+      - q: Beyaz neden 900 ml, renkler neden 1 litre?
+        a: >-
+          Çünkü beyazın raf ömrü altı ay, renklerinki on iki ay. Altı ayda
+          bitiremeyeceğiniz bir litrelik beyaz, çöpe atılacak mürekkeptir.
+          Ambalajı tüketim hızınıza göre değil, ömrüne göre ölçülendirdik. Aylık
+          beyaz tüketiminizin en fazla iki katı kadar stok tutun.
+      - q: Şu an kullandığım DTF mürekkebinden MI-710'a geçebilir miyim?
+        a: >-
+          Geçebilirsiniz ama yıkama gerekir. Farklı üreticilerin su bazlı pigment
+          reçeteleri karıştığında dispersiyon bozulur ve pigment tanecikleri
+          birleşir; sonuç filtrede ve nozülde görülür. MI-910 FLUSH su bazlı
+          varyantıyla beş kanalı da yıkayın, damperleri değiştirin, ardından
+          profili yeniden çıkarın. Bir vardiya ve yaklaşık 2 litre yıkama sıvısı
+          ayırın.
+      - q: Bu mürekkep hangi durumda yanlış tercih?
+        a: >-
+          Üç durumda: beyaz kanalında sirkülasyon olmayan makinelerde, çipe
+          kilitli kapalı besleme sistemlerinde ve ayda 50 m²'nin altında film
+          basan atölyelerde. Sonuncusunda mürekkebin kalitesiyle ilgili bir sorun
+          yok — beyazı kullanamadan raf ömrü doluyor.
+      - q: Yıkama haslığı gerçekten 4'ün üzerinde mi?
+        a: >-
+          Ölçüm %100 pamuk üzerinde, MD-PWD 170 toz ve 160 °C'de 12 saniye pres
+          ile yapıldı; ISO 105-C06 sonucu 4–5. Polyester ve karışım kumaşlarda
+          boya migrasyonu bu değeri düşürür, koyu polyesterde bariyer toz
+          kullanmanız gerekir. Kendi kumaşınızda doğrulamadan müşteriye taahhüt
+          vermeyin.
+      - q: Ne kadar mürekkep tüketirim?
+        a: >-
+          Kaplama oranına göre değişir, ama planlamayı beyaz üzerinden yapın:
+          tam kapatıcı alt katmanlı işlerde beyaz tüketimi renk toplamının 1,5–2
+          katıdır. DTF'de beyazsız iş yoktur, dolayısıyla beyaz hem en pahalı hem
+          en hızlı biten kalemdir.
+      - q: Kışın depoda donarsa ne olur?
+        a: >-
+          Mürekkep kullanılamaz hale gelir. Su bazlı pigment dispersiyonu bir kez
+          donduğunda çözüldüğünde eski haline dönmez; pigment birleşir, viskozite
+          değişir ve kafayı götürür. Isıtılmayan bir depoda kışı geçirmesine izin
+          vermeyin — bu, garanti kapsamı dışındaki en yaygın hasar sebebidir.
+      - q: ECO PASSPORT veya ZDHC belgesi var mı?
+        a: >-
+          Belgeler üretici tesis adına düzenlenir, bayi adına değil. Bu yüzden
+          sitede rozet olarak göstermiyoruz. Güncel sertifika kopyasını, sevk
+          edilen partinin numarasıyla birlikte talep üzerine gönderiyoruz;
+          markanıza tedarik denetimi yapılıyorsa bu ikisi birlikte istenir.
+  en:
+    role: Water-based pigment ink for DTF systems running Epson i3200-A1 and i1600-A1 heads
+    summary: >-
+      The MI-710 is the water-based pigment ink a DTF system lays onto PET film.
+      Viscosity of 4.0 cps ±0.5 at 25 °C and 30 ±3 dyn/cm surface tension keep
+      drop formation stable on Epson i3200-A1 heads, and the pH 9.0 ±0.5 band
+      delays nozzle blockage. White uses the SedimentGuard dispersion, but its
+      shelf life is six months and circulation is mandatory. Colours ship in
+      1 litre bottles, white in 900 ml pouches. With matched powder and film,
+      wash fastness reaches ISO 105-C06 grade 4 or better.
+    features:
+      - >-
+        SedimentGuard White Dispersion — white pigment is held to a D50 of
+        200–250 nm and the dispersing surfactants slow settling. It does not
+        extend the six-month shelf life; it saves the head on a machine that
+        sits over a weekend.
+      - >-
+        AquaBase Single Carrier — CMYK and white are built on the same carrier
+        chemistry, so printing colour and white in one pass produces no
+        separation between the layers and no white bleeding past the edge.
+      - >-
+        NozzleSafe Idle Resistance — nozzles left uncapped for 20 minutes at
+        25 °C and 50 %RH recover in a single purge. That does not extend to a
+        head left uncapped overnight; the capping station has to work.
+      - >-
+        SoftHand Feel — paired with MD-PWD 170 soft powder and a 150–160 °C /
+        10–15 s press window, the transfer stays flexible after washing instead
+        of stiffening into a plate on the garment.
+      - >-
+        MavenMatch Profile Pack — ICC profiles and ink limits ship ready for the
+        MD-600 A4 + MD-FILM 600 + MD-PWD 170 combination. Move to another brand
+        of film and the profile must be rebuilt; the film coating changes ink
+        absorption directly.
+    disclaimer: >-
+      Adhesion, stretch and fastness vary with fabric type, pre- and
+      post-treatment, and press temperature and pressure. The figures here are
+      laboratory reference values measured with MD-FILM 600 film and MD-PWD 170
+      powder, not a warranty. Run a test on your own fabric at your own press
+      settings before committing to production.
+    faq:
+      - q: Why is white 900 ml when the colours are 1 litre?
+        a: >-
+          Because white has a six-month shelf life and the colours have twelve.
+          A litre of white you cannot finish in six months is ink you will throw
+          away. The pack is sized to the shelf life, not to your consumption.
+          Hold no more than twice your monthly white usage.
+      - q: Can I switch from my current DTF ink to the MI-710?
+        a: >-
+          Yes, but the system has to be flushed. Mixing aqueous pigment recipes
+          from different makers breaks the dispersion and the pigment
+          flocculates — you see it in the filter first, then the nozzles. Flush
+          all five channels with the aqueous variant of MI-910 FLUSH, replace
+          the dampers, then rebuild the profile. Budget one shift and roughly
+          2 litres of flushing fluid.
+      - q: When is this ink the wrong choice?
+        a: >-
+          In three cases: machines with no circulation on the white channel,
+          chip-locked closed ink systems, and shops printing under 50 m² of film
+          a month. In the last case nothing is wrong with the ink — the white
+          simply expires before it is used.
+      - q: Is wash fastness really above grade 4?
+        a: >-
+          It was measured on 100 % cotton with MD-PWD 170 powder and a 12 second
+          press at 160 °C, giving ISO 105-C06 of 4–5. On polyester and blends,
+          dye migration pulls that down and dark polyester needs a barrier
+          powder. Do not promise a customer a figure you have not reproduced on
+          their fabric.
+      - q: How much ink will I use?
+        a: >-
+          It depends on coverage, but plan around white: on jobs with a fully
+          opaque underbase, white consumption runs 1.5 to 2 times the combined
+          colour total. There is no DTF work without white, which makes it both
+          the most expensive and the fastest-emptying container on the machine.
+      - q: What happens if it freezes in the store room?
+        a: >-
+          The ink is finished. Once an aqueous pigment dispersion freezes it does
+          not recover on thawing — the pigment agglomerates, viscosity shifts and
+          it takes the head with it. Do not let stock overwinter in an unheated
+          store; this is the most common damage we see outside warranty.
+      - q: Do you have ECO PASSPORT or ZDHC certification?
+        a: >-
+          Those certificates are issued to the producing plant, not to a
+          distributor, which is why we do not render them as a badge here. We
+          send the current certificate against the batch number of your shipment
+          on request — brand supply audits usually ask for both together.

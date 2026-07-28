@@ -1,0 +1,347 @@
+---
+import { SITE, type Locale } from '../../config/site';
+import { path, switchLocale, type RouteKey } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+import Logo from '../ui/Logo.astro';
+
+export interface Props {
+  locale: Locale;
+  routeKey: RouteKey;
+  routeExtra?: Partial<Record<Locale, string[]>>;
+}
+
+const { locale, routeKey, routeExtra = {} } = Astro.props;
+const other: Locale = locale === 'tr' ? 'en' : 'tr';
+
+const NAV = [
+  { key: 'machines', label: 'navMachines', accent: 'cyan' },
+  { key: 'inks', label: 'navInks', accent: 'magenta' },
+  { key: 'applications', label: 'navApplications', accent: 'cyan' },
+  { key: 'service', label: 'navService', accent: 'yellow' },
+  { key: 'about', label: 'navAbout', accent: 'cyan' },
+  { key: 'contact', label: 'navContact', accent: 'cyan' },
+] as const;
+
+const current = Astro.url.pathname;
+const isActive = (href: string) => current === href || current.startsWith(href);
+
+const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
+  encodeURIComponent(SITE.contact.whatsapp.prefill[locale])
+}`;
+---
+
+<!-- The sentinel is what the condensing header observes; scroll listeners for
+     this are the classic cause of a janky "premium" header. -->
+<div data-header-sentinel aria-hidden="true"></div>
+
+<header class="site-header" data-ground="paper" data-condensed="false">
+  <div class="site-header__inner shell">
+    <a
+      class="site-header__logo"
+      href={path('home', locale)}
+      aria-label={SITE.brand.name}
+    >
+      <Logo height={26} />
+    </a>
+
+    <nav class="site-header__nav" aria-label={t('menu', locale)}>
+      <ul role="list">
+        {NAV.map((item) => (
+          <li data-accent={item.accent}>
+            <a
+              class="link link--accent"
+              href={path(item.key, locale)}
+              aria-current={isActive(path(item.key, locale)) ? 'page' : undefined}
+            >
+              {t(item.label, locale)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="site-header__tel mono" href={`tel:${SITE.contact.phone.e164}`}>
+        {SITE.contact.phone.display[locale]}
+      </a>
+
+      <a
+        class="site-header__icon"
+        href={wa}
+        target="_blank"
+        rel="noopener"
+        aria-label={t('askWhatsApp', locale)}
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2Zm5.8 14.13c-.24.68-1.4 1.3-1.94 1.34-.5.04-.98.22-3.3-.69-2.78-1.1-4.55-3.94-4.69-4.13-.14-.19-1.13-1.5-1.13-2.87 0-1.36.71-2.03.96-2.31.25-.28.55-.35.73-.35h.52c.17 0 .4-.06.62.48.24.57.8 1.98.87 2.13.07.14.12.31.02.5-.09.19-.14.31-.28.47l-.42.49c-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.17-.19.7-.81.88-1.09.19-.28.37-.23.62-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.32.07.12.07.66-.17 1.34Z"
+          />
+        </svg>
+      </a>
+
+      <a class="btn site-header__cta" data-accent="cyan" href={path('quote', locale)}>
+        {t('getQuote', locale)}
+      </a>
+
+      <a
+        class="site-header__lang mono"
+        href={switchLocale(routeKey, other, routeExtra)}
+        hreflang={other}
+        lang={other}
+        aria-label={t(other === 'en' ? 'switchToEnglish' : 'switchToTurkish', locale)}
+      >
+        <span aria-hidden="true">{locale.toUpperCase()}</span>
+        <span class="site-header__lang-sep" aria-hidden="true">/</span>
+        <span class="site-header__lang-other" aria-hidden="true">{other.toUpperCase()}</span>
+      </a>
+
+      <button
+        class="site-header__burger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-nav-toggle
+      >
+        <span class="visually-hidden">{t('openMenu', locale)}</span>
+        <span class="site-header__burger-bar" aria-hidden="true"></span>
+        <span class="site-header__burger-bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile panel. Rendered in the document (not injected by JS) so it exists
+     and is navigable even if the enhancement script never runs. -->
+<div class="mobile-nav" id="mobile-nav" data-ground="ink" data-open="false" hidden>
+  <nav class="shell" aria-label={t('menu', locale)}>
+    <ul role="list">
+      {NAV.map((item) => (
+        <li data-accent={item.accent}>
+          <a href={path(item.key, locale)}>
+            <span>{t(item.label, locale)}</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mobile-nav__foot">
+      <a class="btn btn--outline" data-accent="cyan" href={path('quote', locale)}>
+        {t('getQuote', locale)}
+      </a>
+      <a class="mono" href={`tel:${SITE.contact.phone.e164}`}>
+        {SITE.contact.phone.display[locale]}
+      </a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    height: var(--header-h);
+    border-bottom: var(--border) solid transparent;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(12px);
+  }
+
+  .site-header__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-6);
+  }
+
+  .site-header__logo {
+    display: flex;
+    align-items: center;
+    color: var(--ink);
+    flex: none;
+  }
+
+  .site-header__nav {
+    display: none;
+    margin-inline-start: var(--sp-5);
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(var(--sp-4), 2vw, var(--sp-7));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-header__nav a {
+    font-size: var(--step--1);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .site-header__nav a[aria-current='page']::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .site-header__actions {
+    margin-inline-start: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    flex: none;
+  }
+
+  .site-header__tel,
+  .site-header__icon {
+    display: none;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .site-header__tel {
+    font-size: var(--step--1);
+    letter-spacing: 0.01em;
+  }
+
+  .site-header__icon {
+    padding: var(--sp-2);
+  }
+
+  .site-header__cta {
+    display: none;
+    min-height: 40px;
+    padding-block: var(--sp-3);
+  }
+
+  .site-header__lang {
+    display: inline-flex;
+    gap: 0.35em;
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: var(--muted);
+    padding: var(--sp-2);
+  }
+
+  .site-header__lang-other {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* The current locale reads as the active one; the target is what you click. */
+  .site-header__lang span:first-child {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .site-header__lang .site-header__lang-other {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .site-header__lang:hover .site-header__lang-other {
+    color: var(--ink);
+  }
+
+  .site-header__burger {
+    display: grid;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    place-content: center;
+  }
+
+  .site-header__burger-bar {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform var(--d-base) var(--e-out);
+  }
+
+  [data-nav-open='true'] .site-header__burger-bar:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+
+  [data-nav-open='true'] .site-header__burger-bar:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  @media (min-width: 1024px) {
+    .site-header__nav,
+    .site-header__tel,
+    .site-header__icon,
+    .site-header__cta {
+      display: flex;
+    }
+
+    .site-header__burger {
+      display: none;
+    }
+  }
+
+  /* --- mobile panel --- */
+  .mobile-nav {
+    position: fixed;
+    inset: var(--header-h) 0 0;
+    z-index: var(--z-menu);
+    overflow-y: auto;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path var(--d-slow) var(--e-out);
+  }
+
+  .mobile-nav[data-open='true'] {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: var(--sp-6) 0 0;
+  }
+
+  .mobile-nav li + li {
+    border-top: var(--border) solid var(--rule-dark);
+  }
+
+  .mobile-nav a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-5) 0;
+    min-height: 60px;
+    color: var(--paper);
+    text-decoration: none;
+    font-size: var(--step-2);
+    font-weight: 500;
+  }
+
+  .mobile-nav a:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  .mobile-nav__foot {
+    display: grid;
+    gap: var(--sp-4);
+    padding-block: var(--sp-8);
+    border-top: var(--border) solid var(--rule-dark);
+    margin-top: var(--sp-6);
+    color: var(--muted-dark);
+  }
+
+  .mobile-nav__foot a.mono {
+    color: var(--paper);
+    text-decoration: none;
+    font-size: var(--step-1);
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+</style>

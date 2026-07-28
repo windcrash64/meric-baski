@@ -1,0 +1,18 @@
+---
+import MachineIndex from '../../../../layouts/MachineIndex.astro';
+import { FAMILY_ROUTE, NON_DEFAULT_LOCALES, ROUTES } from '../../../../i18n/routes';
+import type { Locale } from '../../../../config/site';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.flatMap((locale) =>
+    Object.entries(FAMILY_ROUTE).map(([family, routeKey]) => ({
+      params: { locale, category: ROUTES[routeKey][locale] },
+      props: { family, locale },
+    })),
+  );
+}
+
+const { family, locale } = Astro.props as { family: string; locale: Locale };
+---
+
+<MachineIndex locale={locale} family={family} />

@@ -1,0 +1,238 @@
+sku: MS-1802-E4
+model: Maven MS-1802 E4
+family: eco-solvent
+tier: mid
+order: 70
+featured: false
+status: active
+price: null
+leadTimeWeeks: [3, 6]
+
+headline: [printWidth, printHead, speedModes, resolution]
+
+printhead:
+  brand: epson
+  model: i3200-E1
+  count: 4
+  dropSizePl: [3, 25]
+
+specs:
+  printWidth: { value: 1800, unit: mm }
+  mediaWidth: { value: 1820, unit: mm }
+  mediaThickness: { value: 1, unit: mm }
+  rollWeight: { value: 60, unit: kg }
+  resolution: "720 × 1440 · 1440 × 1440 · 1440 × 2400 dpi"
+  dropSize: { value: [3, 25], unit: pL }
+  printHead: "4 × Epson i3200-E1"
+  headCount: { value: 4, unit: adet }
+  colors: "CMYK (Lc · Lm talebe bağlı)"
+  inkType: "Eko solvent"
+  inkSupply: "2 L toplu tank, negatif basınç kontrollü; alt seviye sensörlü"
+  inkCapacity: { value: 2000, unit: ml }
+  feed: "Rulodan ruloya; motorlu açma, gergi kollu besleme"
+  takeUp: "Gergi sensörlü otomatik sarma, 3 inç göbek"
+  heaters: "3 kademeli — ön ısıtma · tabla · son kurutma; her bölge ayrı ayarlı"
+  curing: "Son ısıtıcı + kurutma fanı hattı"
+  antiCollision: "Malzeme kabarması ve kafa teması sensörü, otomatik duruş"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Programlı otomatik temizleme + manuel silme"
+  powerSupply: "AC 220 V, 50/60 Hz, 1 faz"
+  power: { value: 4.5, unit: kW }
+  current: { value: 25, unit: A }
+  environment: "20–30 °C / %35–65 BN"
+  ventilation: "Ortam havalandırması önerilir; zorunlu değil"
+  rip: "Maintop 6.1 · Photoprint · ONYX"
+  fileFormats: "PDF · TIFF · EPS · PS · JPEG"
+  interface: "Gigabit Ethernet · USB 2.0"
+  dimensions: "3250 × 850 × 1350 mm"
+  weight: { value: 380, unit: kg }
+  floorArea: { value: 12, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures. Production and
+# standard are the two figures the factory publishes; the 8-pass row follows the
+# same pass-to-speed curve as the rest of the range.
+speedModes:
+  - { pass: 4, value: 79, mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: 54, mode: { tr: Standart, en: Standard } }
+  - { pass: 8, value: 39, mode: { tr: Yüksek kalite, en: High quality } }
+
+compatibleInks: [mi-410-eco, mi-420-eco-tr, mi-910-flush]
+applications: [signage, interior, vehicle]
+substrates: [vinyl, banner, mesh, canvas, wallpaper, paper]
+siblings: [MS-1600-PC, MH-1800-U4]
+rip: [Maintop 6.1, Photoprint, ONYX]
+
+installation:
+  powerPhase: 1F
+  floorAreaM2: 12
+  ceilingHeightM: 2.6
+  cratedDimensions: { w: 3450, d: 1050, h: 1500, unit: mm }
+  ventilationRequired: false
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Forklift ile indirme
+      - Makineye kadar çekilecek ayrı 25 A hat ve kaçak akım koruması
+      - Baskı çıkışı için sehpa veya sarma arabası
+      - Sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Forklift unloading
+      - A dedicated 25 A line to the machine with residual-current protection
+      - Output stand or take-up trolley
+      - Starter consumables kit
+
+gallery:
+  - src: /img/machines/ms-1802-e4/hero.jpg
+    kind: machine
+    alt: { tr: 1.8 metre eko solvent rulo baskı makinesi ve sarma ünitesi, en: 1.8 metre eco-solvent roll printer with its take-up unit }
+  - src: /img/machines/ms-1802-e4/heaters.jpg
+    kind: detail
+    alt: { tr: Ön ısıtma tabla ve son kurutma bölgelerinin ayrı sıcaklık göstergeleri, en: Separate temperature readouts for pre-heat platen and post-dry zones }
+    caption: { tr: TriZone Isı Hattı, en: TriZone heat path }
+  - src: /img/machines/ms-1802-e4/carriage.jpg
+    kind: detail
+    alt: { tr: Dört Epson i3200-E1 kafalı araba ve encoder şeridi, en: Carriage with four Epson i3200-E1 heads and the encoder strip }
+  - src: /img/machines/ms-1802-e4/capping.jpg
+    kind: detail
+    alt: { tr: Kafa koruma istasyonu ve temizleme pompası hattı, en: Capping station and the cleaning pump line }
+    caption: { tr: SmartCap Kafa İstasyonu, en: SmartCap head station }
+  - src: /img/machines/ms-1802-e4/app-banner.jpg
+    kind: application
+    alt: { tr: Germe brandaya basılmış cephe afişi, en: Facade poster printed on tensioned banner }
+    caption: { tr: Eko Solvent Branda Baskı, en: Eco-solvent banner printing }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-ms-1802-e4-katalog-tr.pdf, bytes: 1654784 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-ms-1802-e4-teknik-tr.pdf, bytes: 389120 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-ms-1802-e4-kurulum-kontrol-listesi.pdf, bytes: 186368 }
+
+i18n:
+  tr:
+    tagline: Vardiyalık branda hızı, sarma öncesi tam kuruyan baskı
+    summary: >-
+      MS-1802 E4, 1,8 metre eko solvent rulo makinesidir; dört adet Epson i3200-E1
+      kafayla dört geçişte 79 m²/sa üretim, altı geçişte 54 m²/sa standart hız verir.
+      Üç kademeli ısıtma hattı — ön ısıtma, tabla ve son kurutma — brandayı ve ışıklı
+      vinili sarma öncesi kurutur, böylece rulo kendi üzerine yapışmaz. Monofaze 25 A
+      besleme ile çalışır. Bu makine bir tabela atölyesinin günlük iş makinesidir;
+      rijit levha basmaz, bunun için hibrit tarafa bakın.
+    features:
+      - term: TriZone Isı Hattı
+        body: >-
+          Ön ısıtma, tabla ve son kurutma bölgeleri ayrı ayrı ayarlanır. Branda ile
+          ışıklı vinil aynı sıcaklık profilini kaldırmaz; tek bölgeli ısıtıcılarda
+          çözüm hızı düşürmekken burada çözüm bölge sıcaklığını değiştirmektir.
+      - term: TensionLock Rulo Gergi
+        body: >-
+          Açma ve sarma motorları gergi kolundan geri besleme alır. Rulo çapı düştükçe
+          gerginlik sabit kalır; 60 kg'lık bir bobinin sonuna doğru ortaya çıkan
+          kayma ve buna bağlı kayıt hatası ortadan kalkar.
+      - term: SmartCap Kafa İstasyonu
+        body: >-
+          Makine beklemeye geçtiğinde kafalar otomatik olarak kapaklanır ve
+          nemlendirilir. Eko solvent mürekkepte tıkanmanın büyük kısmı baskı
+          sırasında değil, kapatılmadan bırakılan hafta sonlarında olur.
+      - term: MavenDrop Değişken Damla
+        body: >-
+          3–25 pL arasında değişken damla, 1440 × 2400 dpi'a kadar. Yakından okunan
+          araç yazısı ile on metreden bakılan branda aynı kafayla, farklı damla
+          profiliyle basılır — mürekkep tüketimi de bu profile göre değişir.
+    faq:
+      - q: MS-1802 E4 hangi işler için doğru, hangileri için yanlış makine?
+        a: >-
+          Branda, vinil, mesh, kanvas ve duvar kağıdı hacmi olan tabela atölyeleri
+          için doğru. Beyaz mürekkebe veya rijit levha baskısına ihtiyacınız varsa
+          yanlış: bu makine CMYK bir rulo makinesidir. Beyaz için MS-1600 PC'ye,
+          levha için MH-1800 U4'e bakın.
+      - q: 79 m²/sa hangi şartlarda ölçülüyor?
+        a: >-
+          Dört geçişte, branda üzerine, orta kaplama alanında. Sözleşme kalitesinde
+          iş için gerçek çalışma modu altı geçiş ve 54 m²/sa'dır. Sekiz geçiş,
+          yalnızca yakından okunan dekor ve araç işlerinde gereklidir; oradaki
+          39 m²/sa rakamını da tabloda açıkça yazıyoruz.
+      - q: Havalandırma zorunlu mu?
+        a: >-
+          Zorunlu değil, ama "kokusuz" da değil. Eko solvent, gerçek solvente göre
+          çok düşük emisyonludur; yine de son kurutucunun üzerine yerel emiş
+          koymanızı ve makinenin bulunduğu odada saatte birkaç kez hava değişimi
+          sağlamanızı öneriyoruz. Operatörün gün boyu oturduğu bir ofisin içine
+          koymayın.
+      - q: Isıtıcılar elektrik faturasını ne kadar etkiler?
+        a: >-
+          4,5 kW'lık toplam tüketimin yaklaşık 3 kW'ı üç ısıtıcı bölgesine aittir.
+          Isıtıcılar termostatlı çalıştığı için sürekli tam güç çekmez, ancak soğuk
+          bir atölyede kış aylarında çekiş süresi uzar. Makineyi 20 °C'nin altındaki
+          bir mekâna koyarsanız hem tüketim hem de kuruma süresi artar.
+      - q: Tank sistemi mi kartuş mu daha iyi?
+        a: >-
+          Litre başına maliyette tank açık ara önde ve bu makine tanklıdır. Bedeli
+          bakımdır: damperler yaklaşık altı ayda bir, hat filtreleri yılda bir
+          değişir ve tank hiçbir zaman tamamen boşaltılmadan doldurulmaz. Bu bakımı
+          yapmayacaksanız kartuşlu bir makine size daha ucuza gelir.
+    alternateName:
+      - ekosolvent baskı makinası
+      - 1.8 m eko solvent baskı makinesi
+      - 180 cm dijital baskı makinası
+      - 4 kafa i3200 eko solvent yazıcı
+  en:
+    tagline: A shift's worth of banner, dry before it reaches the take-up
+    summary: >-
+      The MS-1802 E4 is a 1.8 m eco-solvent roll printer: four Epson i3200-E1 heads
+      give 79 m²/h in production at four passes and 54 m²/h standard at six. A
+      three-stage heat path — pre-heat, platen and post-dry — takes banner and backlit
+      vinyl dry onto the take-up, so the roll does not block against itself. It runs
+      single-phase at 25 A. This is a sign shop's daily workhorse; it does not print
+      rigid sheet, and the hybrid range covers that.
+    features:
+      - term: TriZone Heat Path
+        body: >-
+          Pre-heat, platen and post-dry are set independently. Banner and backlit vinyl
+          do not tolerate the same temperature profile; on a single-zone heater the fix
+          is to slow down, here the fix is to change one zone.
+      - term: TensionLock Roll Tension
+        body: >-
+          Unwind and rewind motors take feedback from the dancer arm, so pull stays
+          constant as the roll loses diameter. The slip — and the registration error it
+          causes — that shows up near the end of a 60 kg reel disappears.
+      - term: SmartCap Head Station
+        body: >-
+          Heads cap and humidify automatically as soon as the machine goes idle. Most
+          eco-solvent clogging does not happen while printing; it happens over weekends
+          when the heads were left uncapped.
+      - term: MavenDrop Variable Drop
+        body: >-
+          Variable drop from 3 to 25 pL, up to 1440 × 2400 dpi. Vehicle lettering read
+          from arm's length and banner read from ten metres come off the same head with
+          different drop profiles — and different ink consumption.
+    faq:
+      - q: What is the MS-1802 E4 right for, and what is it wrong for?
+        a: >-
+          Right for sign shops with volume in banner, vinyl, mesh, canvas and
+          wallcovering. Wrong if you need white ink or rigid sheet: this is a CMYK roll
+          machine. For white look at the MS-1600 PC, for sheet at the MH-1800 U4.
+      - q: Under what conditions is 79 m²/h measured?
+        a: >-
+          Four passes, on banner, at moderate coverage. For contract-quality work the
+          real operating mode is six passes and 54 m²/h. Eight passes are only needed
+          for decor and vehicle work read close up, and we publish that 39 m²/h figure
+          in the table rather than hiding it.
+      - q: Is ventilation mandatory?
+        a: >-
+          Not mandatory — but "odourless" is not the same as low odour. Eco-solvent
+          emits far less than true solvent, yet we still recommend local extraction over
+          the post-heater and a few air changes an hour in the room. Do not put it in an
+          office where someone sits all day.
+      - q: How much do the heaters add to the electricity bill?
+        a: >-
+          Roughly 3 kW of the 4.5 kW total belongs to the three heater zones. They are
+          thermostatic, so they do not draw full power continuously, but in a cold shop
+          the duty cycle lengthens through winter. Installed below 20 °C, both
+          consumption and drying time go up.
+      - q: Bulk tank or cartridge?
+        a: >-
+          Per litre, bulk wins clearly, and this machine is bulk-fed. The price is
+          maintenance: dampers roughly every six months, line filters yearly, and never
+          topping a tank up before it has been run down. If you will not do that
+          maintenance, a cartridge machine costs you less overall.

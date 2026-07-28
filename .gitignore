@@ -1,0 +1,25 @@
+# build output
+dist/
+.astro/
+.vercel/
+
+# dependencies
+node_modules/
+
+# tooling
+tools/.venv/
+tools/.fontsrc/
+blender/**/__pycache__/
+*.blend1
+
+# generated image ladder — rebuild with `node tools/build-images.mjs`
+# (manifest.json IS committed: templates import it at build time)
+public/img/**/*.avif
+public/img/**/*.webp
+public/img/**/*.jpg
+public/img/**/*.png
+
+# scratch
+docs/_smoke/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,244 @@
+sku: MH-1800-U4
+model: Maven MH-1800 U4
+family: uv-hybrid
+tier: entry
+order: 50
+featured: false
+status: active
+price: null
+leadTimeWeeks: [4, 7]
+
+headline: [printWidth, printHead, speedModes, colors]
+
+printhead:
+  brand: epson
+  model: i3200-U1
+  count: [1, 4]
+  dropSizePl: [3, 25]
+
+specs:
+  printWidth: { value: 1800, unit: mm }
+  mediaWidth: { value: 1900, unit: mm }
+  mediaHeight:
+    value: 10
+    unit: mm
+    note: { tr: rijit levha modunda, en: in rigid sheet mode }
+  mediaThickness: { value: 1, unit: mm, note: { tr: rulo modunda, en: in roll mode } }
+  rollWeight: { value: 100, unit: kg }
+  resolution: "726 × 900 dpi"
+  dropSize: { value: [3, 25], unit: pL }
+  printHead: "1–4 × Epson i3200-U1"
+  headCount: { value: [1, 4], unit: adet }
+  colors: "CMYK · W (flüor kanal opsiyonu)"
+  inkType: "UV LED"
+  inkSupply: "1,5 L tank, negatif basınç kontrollü; beyaz kanalda sirkülasyon"
+  inkCapacity: { value: 1500, unit: ml }
+  inkConsumption: { value: [8, 25], unit: ml/m2 }
+  whiteCirculation: true
+  table: "Vakumlu besleme tablası, 2 bölge"
+  vacuumZones: { value: 2 }
+  feed: "Rulodan ruloya açma ve sarma; rijit levha için giriş-çıkış tablası"
+  takeUp: "Gergi kollu otomatik sarma, 3 inç göbek"
+  curing: "Hava soğutmalı LED-UV, 395 nm, çift yönlü kürleme"
+  heightSensor: "Otomatik malzeme yüksekliği ölçümü, 0–10 mm"
+  antiCollision: "Kafa çarpışma sensörü, otomatik duruş"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Yarı otomatik püskürtme + manuel silme"
+  powerSupply: "AC 220 V, 50/60 Hz, 1 faz"
+  power: { value: 4, unit: kW }
+  current: { value: 20, unit: A }
+  environment: "20–28 °C / %40–60 BN"
+  rip: "SAi Flexi · ONYX · Caldera"
+  fileFormats: "PDF · TIFF · EPS · JPEG"
+  interface: "Gigabit Ethernet"
+  dimensions: "3450 × 1000 × 1500 mm"
+  weight: { value: 500, unit: kg }
+  floorArea: { value: 14, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures. Figures are
+# for the four-head configuration; two heads is roughly half. The C-W-C row is
+# the one buyers forget to budget for, so it is published, not hidden.
+speedModes:
+  - { pass: 4, value: 45, mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: 30, mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: 22, mode: { tr: Yüksek kalite, en: High quality } }
+  - { pass: 4, value: 13, mode: { tr: "Renk-beyaz-renk (C-W-C)", en: "Colour-white-colour (C-W-C)" } }
+
+compatibleInks: [mi-220-uv-led-e, mi-920-primer]
+applications: [signage, interior, vehicle]
+substrates: [vinyl, banner, mesh, wallpaper, canvas, foamboard, pvc, acrylic, alucomp, photoblock]
+siblings: [MH-3200-R12, MS-1802-E4]
+rip: [SAi Flexi, ONYX, Caldera]
+
+installation:
+  powerPhase: 1F
+  floorAreaM2: 14
+  ceilingHeightM: 2.6
+  cratedDimensions: { w: 3700, d: 1200, h: 1750, unit: mm }
+  ventilationRequired: false
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Forklift ile indirme
+      - Makineye kadar çekilecek ayrı 20 A hat ve kaçak akım koruması
+      - Rulo taşıma arabası
+      - Sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Forklift unloading
+      - A dedicated 20 A line to the machine with residual-current protection
+      - Roll handling trolley
+      - Starter consumables kit
+
+gallery:
+  - src: /img/machines/mh-1800-u4/hero.jpg
+    kind: machine
+    alt: { tr: Rulo takılı 1.8 metrelik hibrit UV baskı makinesi, en: 1.8 metre hybrid UV printer with a roll loaded }
+  - src: /img/machines/mh-1800-u4/rigid-mode.jpg
+    kind: detail
+    alt: { tr: Giriş tablasından beslenen 10 mm dekota levha, en: A 10 mm foam PVC sheet fed from the infeed table }
+    caption: { tr: MavenRail Hibrit Besleme, en: MavenRail hybrid feed }
+  - src: /img/machines/mh-1800-u4/carriage.jpg
+    kind: detail
+    alt: { tr: Dört Epson kafalı araba ve LED-UV lamba bloğu, en: Four-head Epson carriage and LED-UV lamp block }
+  - src: /img/machines/mh-1800-u4/ink.jpg
+    kind: detail
+    alt: { tr: 1.5 litrelik tanklar ve beyaz kanalın sirkülasyon hattı, en: 1.5 litre tanks and the white channel circulation line }
+  - src: /img/machines/mh-1800-u4/app-vinyl.jpg
+    kind: application
+    alt: { tr: Işıklı tabela için basılmış backlit vinil rulosu, en: Printed backlit vinyl roll for a lightbox sign }
+    caption: { tr: UV Işıklı Tabela Baskı, en: UV printed lightbox graphics }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mh-1800-u4-katalog-tr.pdf, bytes: 1836032 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mh-1800-u4-teknik-tr.pdf, bytes: 412672 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mh-1800-u4-kurulum-kontrol-listesi.pdf, bytes: 198656 }
+
+i18n:
+  tr:
+    tagline: Ruloya da levhaya da tek makine, tek fazla kurulan hibrit hat
+    summary: >-
+      MH-1800 U4, rulodan ruloya baskı ile 10 mm'ye kadar rijit levha baskısını tek
+      şaside birleştiren giriş seviyesi hibrit makinedir. Bir ile dört arasında
+      yapılandırılan Epson i3200-U1 kafa dizilimi, dört geçişte 45 m²/sa renk üretimi
+      verir; renk-beyaz-renk işlerde bu değer 13 m²/sa'ya iner ve bunu baştan
+      hesaplamanız gerekir. Tek fazlı 20 A besleme ile çalışır, yani çoğu atölyede
+      trifaze pano çekmeden kurulur. Beyaz kanal makine beklerken de sirkülasyondadır.
+    features:
+      - term: MavenRail Hibrit Besleme
+        body: >-
+          Rulo grubu ile rijit besleme tablası aynı taşıyıcı üzerindedir; moda geçiş
+          bir mekanik ayar, bir kalibrasyon değil. Rulodan levhaya geçiş operatörün
+          on dakikasını alır, yarım vardiyasını değil.
+      - term: MavenFlow Beyaz Sirkülasyon
+        body: >-
+          Beyaz mürekkep, makine kapalıyken bile kanal içinde dolaşır. Beyaz
+          pigmentin çökmesi ve bunun getirdiği kafa temizleme kaybı, beyaz kullanan
+          her atölyenin en büyük gizli maliyetidir.
+      - term: AutoGap Yükseklik Sensörü
+        body: >-
+          Malzeme yüksekliği 0–10 mm arasında otomatik ölçülür ve kafa yüksekliği
+          buna göre ayarlanır. Kabaran branda ve eğilmiş dekota levha, hibrit
+          makinelerde kafa hasarının bir numaralı sebebidir.
+      - term: TensionLock Rulo Gergi
+        body: >-
+          Açma ve sarma motorları gergi kolundan geri besleme alır. 100 kg'lık bir
+          bobinde rulo çapı düştükçe gerginlik değişmez; kenar dalgalanması ve buna
+          bağlı kafa teması ortadan kalkar.
+    faq:
+      - q: MH-1800 U4 hangi işler için doğru, hangileri için yanlış makine?
+        a: >-
+          Günlük işinin çoğu rulo olan, arada 10 mm'ye kadar dekota, fotoblok veya
+          ince pleksi basan atölyeler için doğru. Levha işi toplam işinizin
+          yarısından fazlaysa veya 20 mm üzeri malzeme basıyorsanız bu makine yanlış
+          seçim olur; MF-1216 R4 veya MF-2513 R8 tarafına bakın.
+      - q: 45 m²/sa gerçek bir rakam mı?
+        a: >-
+          Dört kafalı konfigürasyonda, dört geçişte, vinil üzerine CMYK baskıda
+          gerçek. İki kafalı makinede bunun yaklaşık yarısını, tek kafalıda dörtte
+          birini hesaplayın. Renk-beyaz-renk işte üç kat mürekkep katmanı bastığınız
+          için 13 m²/sa'ya iner — bu düşüş makinenin kusuru değil, C-W-C'nin doğası.
+      - q: Trifaze elektrik şart mı?
+        a: >-
+          Hayır. Makine 220 V tek faz, 20 A ile çalışır ve bu, bu sınıftaki en somut
+          avantajıdır. Ancak hattın panodan makineye ayrı çekilmesini isteriz;
+          kompresör veya kaynak makinesiyle paylaşılan bir hatta kürleme lambaları
+          ile birlikte devreye giren yük, baskı ortasında sigorta attırır.
+      - q: 10 mm levha basıyorsa flatbed almaya gerek var mı?
+        a: >-
+          Çoğu zaman var. Hibrit, levhayı tam vakumlu tabla üzerinde değil, besleme
+          tablası ve baskı vakumu ile tutar. Eğilmiş levha, ağır malzeme, tek tablaya
+          çoklu küçük parça dizme ve kılavuz pimle tekrar eden işler flatbed işidir.
+          Hibrit levha yeteneği "arada bir levha da basarım" içindir.
+      - q: Beyaz mürekkep tüketimi ne kadar?
+        a: >-
+          Tam kapatıcı beyaz alt katman kullanıldığında toplam tüketim 8–25 ml/m²
+          bandının üst ucuna yaklaşır. Şeffaf folyo ve arkadan aydınlatmalı işlerde
+          beyaz, renk mürekkebinden daha pahalıya mal olur; teklif verirken beyazı
+          ayrı kalem olarak hesaplayın.
+    alternateName:
+      - UV hibrit baskı makinası
+      - 1.8 m hibrit uv baskı makinesi
+      - rulo ve levha uv baskı makinesi
+      - 180 cm uv baskı makinası
+  en:
+    tagline: One machine for roll and rigid, one phase to install it
+    summary: >-
+      The MH-1800 U4 is the entry point into hybrid printing: roll-to-roll media and
+      rigid sheets up to 10 mm on one chassis. An Epson i3200-U1 array configurable
+      from one to four heads delivers 45 m²/h in colour at four passes, dropping to
+      13 m²/h for colour-white-colour work — plan for that before you quote it. It
+      runs from a single-phase 20 A supply, so most shops install it without pulling
+      a three-phase panel. White circulates even while the machine idles.
+    features:
+      - term: MavenRail Hybrid Feed
+        body: >-
+          The roll gear and the rigid infeed table share one carrier, so changing
+          mode is a mechanical adjustment rather than a recalibration. Going from
+          roll to sheet costs an operator ten minutes, not half a shift.
+      - term: MavenFlow White Circulation
+        body: >-
+          White ink circulates through the channel even when the machine is idle.
+          Settled white pigment — and the head cleaning it causes — is the largest
+          hidden cost in any shop running white.
+      - term: AutoGap Height Sensor
+        body: >-
+          Media height is measured automatically between 0 and 10 mm and the head gap
+          is set from it. Lifted banner and bowed foam PVC are the number one cause of
+          head damage on hybrid machines.
+      - term: TensionLock Roll Tension
+        body: >-
+          Unwind and rewind motors take feedback from the dancer arm, so tension holds
+          steady as a 100 kg reel loses diameter. Edge waviness — and the head strikes
+          that follow it — goes away.
+    faq:
+      - q: What is the MH-1800 U4 right for, and what is it wrong for?
+        a: >-
+          Right for shops whose daily work is mostly roll, with occasional foam PVC,
+          foam board or thin acrylic up to 10 mm. Wrong if sheet work is more than
+          half your volume or you print material thicker than 20 mm — look at the
+          MF-1216 R4 or MF-2513 R8 instead.
+      - q: Is 45 m²/h a real number?
+        a: >-
+          It is real in the four-head configuration, at four passes, printing CMYK on
+          vinyl. Budget roughly half of it on a two-head machine and a quarter on a
+          single-head one. Colour-white-colour lays three ink layers and drops to
+          13 m²/h — that is the nature of C-W-C, not a fault of the machine.
+      - q: Is three-phase power mandatory?
+        a: >-
+          No. The machine runs on 220 V single phase at 20 A, which is the most
+          concrete advantage it has in this class. We do ask for a dedicated line from
+          the panel: shared with a compressor or a welder, the inrush when the curing
+          lamps kick in will trip the breaker mid-print.
+      - q: If it prints 10 mm sheet, why buy a flatbed at all?
+        a: >-
+          Usually you still should. A hybrid holds sheet on an infeed table and print
+          vacuum, not on a full vacuum bed. Bowed sheet, heavy material, ganging small
+          parts across one bed and repeat jobs indexed off registration pins are
+          flatbed work. Hybrid rigid capability is for "and occasionally a sheet".
+      - q: How much white ink does it use?
+        a: >-
+          With a fully opaque white underbase, total consumption approaches the top of
+          the 8–25 ml/m² band. On clear film and backlit work white costs more per m²
+          than colour, so quote it as a separate line item.

@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+
+import MachinePage from '../../../../layouts/MachinePage.astro';
+import { FAMILY_ROUTE, ROUTES } from '../../../../i18n/routes';
+
+export async function getStaticPaths() {
+  const machines = await getCollection('machines');
+  return machines
+    .filter((m) => m.data.status !== 'discontinued')
+    .map((machine) => ({
+      params: {
+        kategori: ROUTES[FAMILY_ROUTE[machine.data.family as keyof typeof FAMILY_ROUTE]].tr,
+        sku: machine.id,
+      },
+      props: { machine },
+    }));
+}
+
+const { machine } = Astro.props;
+---
+
+<MachinePage machine={machine} locale="tr" />

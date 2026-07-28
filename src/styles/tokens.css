@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Maven — design tokens
+   Every value here is decided in docs/research/00-SPEC.md §6. Contrast ratios
+   in the comments were computed with the WCAG 2.x relative-luminance formula;
+   do not substitute a colour without recomputing them.
+   ========================================================================== */
+
+:root {
+  /* ---- Structure — 92% of every viewport ------------------------------- */
+  --ink:        #0b0b0c;   /* near-black; not #000, which flares on OLED. 19.67:1 on paper */
+  --paper:      #ffffff;
+  --bone:       #f2f1ed;   /* warm off-white alternate ground. 17.41:1 vs ink */
+  --graphite:   #16171a;   /* raised panel on dark — 1.10:1 vs ink, ALWAYS needs a rule */
+  --rule:       #e3e1dc;
+  --rule-dark:  #26272b;
+  --muted:      #5a5f66;   /* secondary text on light — 6.43:1  AA  */
+  --muted-dark: #9ba1a9;   /* secondary text on dark  — 7.56:1  AAA */
+
+  /* ---- Process accents — taken from the logo, not a generic SWOP swatch -- */
+  --cyan:    #0081d2;      /* 4.14 on paper → UI/large only · 4.75 on ink → AA text */
+  --magenta: #e30161;      /* 4.73 on paper → AA text       · 4.16 on ink → UI/large only */
+  --yellow:  #ffe305;      /* 1.29 on paper → NEVER text on light · 15.22 on ink → AAA */
+
+  /* Accent text variants for LIGHT grounds */
+  --cyan-ink:    #005a93;  /* 7.28 AAA on paper */
+  --magenta-ink: #9e0043;  /* 8.28 AAA on paper */
+  /* There is no usable yellow text colour on light. Yellow is a mark, not a word. */
+
+  /* Accent text variants for DARK grounds */
+  --cyan-lit:    #3fa0dd;  /* 6.82 AA on ink */
+  --magenta-lit: #ea4088;  /* 5.23 AA on ink */
+
+  /* ---- Semantic --------------------------------------------------------- */
+  --accent:      var(--cyan);       /* overridden per section, see [data-accent] */
+  --accent-text: var(--cyan-ink);
+  --focus:       var(--cyan);
+  --success:     #1b7f4b;
+  --warning:     #b25a00;
+  --danger:      #b3121b;
+
+  /* Current ground, so components can adapt without knowing where they sit. */
+  --ground:      var(--paper);
+  --on-ground:   var(--ink);
+  --on-ground-muted: var(--muted);
+  --hairline:    var(--rule);
+
+  /* ---- Type ------------------------------------------------------------- */
+  --font-sans: 'Archivo', 'Archivo Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'IBM Plex Mono Fallback', ui-monospace, 'SFMono-Regular',
+               'Cascadia Mono', Menlo, monospace;
+
+  --step--2: clamp(0.69rem, 0.67rem + 0.11vw, 0.75rem);  /* 11→12  mono micro-labels */
+  --step--1: clamp(0.83rem, 0.79rem + 0.20vw, 0.94rem);  /* 13→15  captions, spec cells */
+  --step-0:  clamp(1.00rem, 0.94rem + 0.31vw, 1.19rem);  /* 16→19  body */
+  --step-1:  clamp(1.20rem, 1.10rem + 0.50vw, 1.58rem);  /* 19→25  lead */
+  --step-2:  clamp(1.44rem, 1.28rem + 0.80vw, 2.11rem);  /* 23→34  h3 */
+  --step-3:  clamp(1.73rem, 1.47rem + 1.30vw, 2.81rem);  /* 28→45  h2, hero metrics */
+  --step-4:  clamp(2.07rem, 1.66rem + 2.10vw, 3.75rem);  /* 33→60  h1 */
+  --step-5:  clamp(2.49rem, 1.83rem + 3.30vw, 5.00rem);  /* 40→80  hero statement */
+  --step-6:  clamp(2.99rem, 1.90rem + 5.40vw, 6.67rem);  /* 48→107 marquee, big number */
+
+  /* ---- Space ------------------------------------------------------------ */
+  --sp-1: 4px;   --sp-2: 8px;    --sp-3: 12px;  --sp-4: 16px;
+  --sp-5: 24px;  --sp-6: 32px;   --sp-7: 48px;  --sp-8: 64px;
+  --sp-9: 96px;  --sp-10: 128px; --sp-11: 160px; --sp-12: 200px;
+
+  --section-pad: clamp(var(--sp-9), 12vh, var(--sp-12));
+  --gutter:      clamp(16px, 2vw, 32px);
+  --page-margin: clamp(20px, 5vw, 80px);
+  --container:   1440px;
+  --measure:     68ch;
+
+  /* Machines are extruded aluminium. Nothing on this site is rounded. */
+  --radius: 0;
+  --border: 1px;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --d-instant: 90ms;  --d-fast: 160ms;   --d-base:  240ms;
+  --d-slow:    380ms; --d-slower: 560ms; --d-page:  480ms;
+
+  --e-out:      cubic-bezier(0.16, 1, 0.30, 1);     /* house curve: sharp out, long settle */
+  --e-out-soft: cubic-bezier(0.25, 1, 0.50, 1);
+  --e-in-out:   cubic-bezier(0.76, 0, 0.24, 1);
+  --e-standard: cubic-bezier(0.20, 0, 0.00, 1);
+  --e-accel:    cubic-bezier(0.30, 0, 0.80, 0.15);
+
+  /* ---- Layers ----------------------------------------------------------- */
+  --z-sticky: 40;
+  --z-header: 50;
+  --z-menu:   60;
+  --z-skip:   70;
+
+  --header-h: 88px;
+  --header-h-condensed: 60px;
+}
+
+/* --------------------------------------------------------------------------
+   Grounds. A section declares its ground; everything inside reads the semantic
+   variables and needs no knowledge of where it sits. Elevation on this site is
+   a change of ground plus a hairline — there are no box-shadows.
+   -------------------------------------------------------------------------- */
+
+[data-ground='paper'] {
+  --ground: var(--paper);
+  --on-ground: var(--ink);
+  --on-ground-muted: var(--muted);
+  --hairline: var(--rule);
+}
+
+[data-ground='bone'] {
+  --ground: var(--bone);
+  --on-ground: var(--ink);
+  --on-ground-muted: var(--muted);
+  --hairline: #dcdad4;
+}
+
+[data-ground='ink'] {
+  --ground: var(--ink);
+  --on-ground: var(--paper);
+  --on-ground-muted: var(--muted-dark);
+  --hairline: var(--rule-dark);
+  --accent-text: var(--accent);
+}
+
+[data-ground] {
+  background-color: var(--ground);
+  color: var(--on-ground);
+}
+
+/* --------------------------------------------------------------------------
+   Section accents. Exactly one process colour per section — the rotation is a
+   wayfinding system: cyan = machines, magenta = inks, yellow = service.
+   -------------------------------------------------------------------------- */
+
+[data-accent='cyan']    { --accent: var(--cyan);    --accent-text: var(--cyan-ink); }
+[data-accent='magenta'] { --accent: var(--magenta); --accent-text: var(--magenta-ink); }
+[data-accent='yellow']  { --accent: var(--yellow);  --accent-text: var(--ink); }
+
+/* On ink, accents may be text — this is where the brand is allowed to shout. */
+[data-ground='ink'][data-accent='cyan']    { --accent-text: var(--cyan-lit); }
+[data-ground='ink'][data-accent='magenta'] { --accent-text: var(--magenta-lit); }
+[data-ground='ink'][data-accent='yellow']  { --accent-text: var(--yellow); }

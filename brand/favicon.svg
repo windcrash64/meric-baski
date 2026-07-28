@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Maven">
+  <title>Maven</title>
+  <rect width="32" height="32" rx="6" fill="#0A0A0A"/>
+  <g transform="translate(3 5.1984) scale(5.3677)">
+    <path fill="#FFFFFF" d="M0 0L1.4375 0L2.4219 1.7227L3.4062 0L4.8438 0L4.8438 1L3.9598 1L2.817 3L2.0268 3L1 1.2031L1 3L0 3ZM3.8438 2L4.8438 2L4.8438 3L3.8438 3Z"/>
+  </g>
+  <rect fill="#0081D2" x="3" y="23.8016" width="8.6667" height="3"/>
+  <rect fill="#E30161" x="11.6667" y="23.8016" width="8.6667" height="3"/>
+  <rect fill="#FFE305" x="20.3333" y="23.8016" width="8.6667" height="3"/>
+</svg>

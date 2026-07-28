@@ -1,0 +1,285 @@
+---
+/**
+ * Orbit-able 3D machine viewer.
+ *
+ * <model-viewer> is self-hosted and lazy: the ~280 KB module is only fetched
+ * when the viewer scrolls near the viewport, and only after a WebGL2 probe has
+ * confirmed the browser can actually render it. It must never compete with the
+ * page's LCP image for bandwidth.
+ *
+ * Fallbacks, in order:
+ *   1. no WebGL2  → the poster image plus the hotspot list stay as they are
+ *   2. no JS      → same; the custom element never upgrades, the poster shows
+ *   3. reduced motion → auto-rotate is never enabled
+ *   4. Save-Data / 2g → an explicit "load the model (N MB)" button
+ */
+import type { Locale } from '../../config/site';
+import { t } from '../../i18n/ui';
+
+export interface Hotspot {
+  key: string;
+  position: string;
+  normal: string;
+  label: string;
+  body?: string;
+}
+
+export interface Props {
+  src: string;
+  poster: string;
+  alt: string;
+  locale: Locale;
+  hotspots?: Hotspot[];
+  bytes?: number;
+  /** Optional single configurator toggle, e.g. the DTF shaker unit. */
+  toggle?: { label: string; nodes: string[] };
+}
+
+const { src, poster, alt, locale, hotspots = [], bytes = 0, toggle } = Astro.props;
+const mb = bytes ? (bytes / 1024 / 1024).toFixed(1).replace('.', locale === 'tr' ? ',' : '.') : '';
+---
+
+<div class="mv" data-model-viewer data-src={src} data-bytes={bytes}>
+  <div class="mv__stage">
+    <img class="mv__poster" src={poster} alt={alt} width="1200" height="900" loading="lazy" />
+
+    <div class="mv__prompt" data-mv-prompt hidden>
+      <button type="button" class="btn btn--outline" data-mv-load>
+        {t('load3dManually', locale)}{mb && ` (${mb} MB)`}
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+
+    <div class="mv__progress" data-mv-progress hidden>
+      <div class="mv__progress-rule"><span></span></div>
+      <em class="mono" data-mv-percent>%0</em>
+    </div>
+  </div>
+
+  <div class="mv__bar">
+    <p class="mv__hint mono">
+      {locale === 'tr'
+        ? 'Sürükleyerek döndürün · tekerlek ile yakınlaştırın'
+        : 'Drag to rotate · scroll to zoom'}
+    </p>
+    <div class="cluster" style="--cluster-gap: var(--sp-3)">
+      {toggle && (
+        <button type="button" class="mv__chip mono" data-mv-toggle aria-pressed="true">
+          {toggle.label}
+        </button>
+      )}
+      <button type="button" class="mv__chip mono" data-mv-reset>{t('resetView', locale)}</button>
+    </div>
+  </div>
+
+  {hotspots.length > 0 && (
+    <ul class="mv__legend" role="list">
+      {hotspots.map((h, i) => (
+        <li>
+          <button type="button" class="mv__legend-item" data-mv-focus={h.key}>
+            <span class="mv__legend-n mono">{String(i + 1).padStart(2, '0')}</span>
+            <span>
+              <strong>{h.label}</strong>
+              {h.body && <span class="muted"> — {h.body}</span>}
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <template data-mv-template>
+    {hotspots.map((h, i) => (
+      <button
+        slot={`hotspot-${h.key}`}
+        data-position={h.position}
+        data-normal={h.normal}
+        class="mv-hotspot"
+        aria-label={h.label}
+      >
+        <span class="mv-hotspot__dot mono">{String(i + 1).padStart(2, '0')}</span>
+        <span class="mv-hotspot__label">{h.label}</span>
+      </button>
+    ))}
+  </template>
+</div>
+
+<script>
+  // Kept in the component so a page without a 3D model ships none of this.
+  import { mountModelViewers } from '../../scripts/model-viewer.ts';
+
+  document.addEventListener('astro:page-load', mountModelViewers);
+</script>
+
+<style>
+  .mv {
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  .mv__stage {
+    position: relative;
+    background: var(--bone);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .mv__stage :global(model-viewer) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    --poster-color: transparent;
+    background: transparent;
+  }
+
+  .mv__poster {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity var(--d-slow) var(--e-out);
+  }
+
+  .mv[data-mv-ready='true'] .mv__poster {
+    opacity: 0;
+  }
+
+  .mv__prompt {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--bone) 82%, transparent);
+  }
+
+  /* A real progress readout, not a spinner: on a 2 MB model over a phone
+     connection a spinner tells the user nothing about whether to wait. */
+  .mv__progress {
+    position: absolute;
+    inset-inline: var(--sp-6);
+    bottom: var(--sp-6);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+  }
+
+  .mv__progress-rule {
+    flex: 1;
+    height: 2px;
+    background: var(--rule);
+  }
+
+  .mv__progress-rule span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    transition: width var(--d-base) linear;
+  }
+
+  .mv__progress em {
+    font-style: normal;
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+
+  .mv__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+  }
+
+  .mv__hint {
+    font-size: var(--step--2);
+    color: var(--on-ground-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .mv__chip {
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: var(--sp-2) var(--sp-4);
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground);
+    transition: border-color var(--d-base) var(--e-out);
+  }
+
+  .mv__chip:hover,
+  .mv__chip:focus-visible {
+    border-color: var(--on-ground);
+  }
+
+  .mv__chip[aria-pressed='false'] {
+    color: var(--on-ground-muted);
+  }
+
+  .mv__legend {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .mv__legend-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--sp-4);
+    width: 100%;
+    text-align: left;
+    padding: var(--sp-4) 0;
+    border-bottom: var(--border) solid var(--hairline);
+    font-size: var(--step--1);
+    color: var(--on-ground);
+  }
+
+  .mv__legend-n {
+    font-size: var(--step--2);
+    color: var(--accent-text);
+    padding-block-start: 0.25em;
+  }
+
+  .mv :global(.mv-hotspot) {
+    --size: 26px;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: var(--sp-2);
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .mv :global(.mv-hotspot__dot) {
+    width: var(--size);
+    height: var(--size);
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .mv :global(.mv-hotspot__label) {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: var(--step--2);
+    padding: 4px 8px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity var(--d-base) var(--e-out), transform var(--d-base) var(--e-out);
+    pointer-events: none;
+  }
+
+  .mv :global(.mv-hotspot:hover .mv-hotspot__label),
+  .mv :global(.mv-hotspot:focus-visible .mv-hotspot__label),
+  .mv :global(.mv-hotspot[data-active='true'] .mv-hotspot__label) {
+    opacity: 1;
+    transform: none;
+  }
+</style>

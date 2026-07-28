@@ -1,0 +1,101 @@
+---
+/**
+ * The grouped technical specification table.
+ *
+ * A real <table>, not a styled <ul>: the reference site's `<ul class="table">`
+ * with alternating label/value list items is unreadable to a screen reader and
+ * un-copyable into a comparison spreadsheet, which is what buyers actually do
+ * with these numbers.
+ */
+import type { Locale } from '../../config/site';
+import { range } from '../../i18n/ui';
+import {
+  GROUP_ORDER, SPEC_GROUPS, SPECS, type SpecGroup, type SpecKey,
+} from '../../i18n/specs';
+
+type Measure = { value: number | [number, number]; unit?: string; note?: Record<Locale, string> };
+type Value = Measure | string | number | boolean;
+
+export interface Props {
+  specs: Record<string, Value>;
+  locale: Locale;
+  caption?: string;
+  /** Render only these groups — used by the PDP's short table. */
+  only?: SpecGroup[];
+}
+
+const { specs, locale, caption, only } = Astro.props;
+const tr = locale === 'tr';
+
+function isMeasure(v: Value): v is Measure {
+  return typeof v === 'object' && v !== null && 'value' in v;
+}
+
+/** Render a cell, resolving units and locale number formatting. */
+function render(key: string, v: Value): { text: string; note?: string } {
+  const def = SPECS[key as SpecKey];
+  if (typeof v === 'boolean') {
+    return { text: v ? (tr ? 'var' : 'yes') : (tr ? 'yok' : 'no') };
+  }
+  if (isMeasure(v)) {
+    const unit = v.unit ?? def?.unit?.[locale] ?? '';
+    return {
+      text: `${range(v.value, locale)}${unit ? ` ${unit}` : ''}`,
+      note: v.note?.[locale],
+    };
+  }
+  return { text: String(v) };
+}
+
+// Group the incoming keys, dropping any the dictionary does not know about
+// rather than rendering a raw key as a label.
+const grouped = GROUP_ORDER
+  .filter((g) => !only || only.includes(g))
+  .map((group) => ({
+    group,
+    rows: Object.entries(specs)
+      .filter(([key]) => SPECS[key as SpecKey]?.group === group)
+      .map(([key, value]) => ({ key, label: SPECS[key as SpecKey][locale], ...render(key, value) })),
+  }))
+  .filter((g) => g.rows.length > 0);
+
+const unknown = Object.keys(specs).filter((k) => !SPECS[k as SpecKey]);
+if (unknown.length && import.meta.env.DEV) {
+  console.warn(`[SpecTable] unknown spec keys ignored: ${unknown.join(', ')}`);
+}
+---
+
+<div class="table-wrap">
+  <table class="spec-table">
+    {caption && <caption class="eyebrow">{caption}</caption>}
+    {grouped.map(({ group, rows }) => (
+      <tbody>
+        <tr>
+          <th class="spec-group-head" colspan="2" scope="colgroup">
+            {SPEC_GROUPS[group][locale]}
+          </th>
+        </tr>
+        {rows.map((row) => (
+          <tr>
+            <th scope="row">{row.label}</th>
+            <td>
+              {row.text}
+              {row.note && <span class="spec-note"> — {row.note}</span>}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    ))}
+  </table>
+</div>
+
+<style>
+  .spec-note {
+    color: var(--on-ground-muted);
+    font-family: var(--font-sans);
+  }
+
+  .spec-table tbody:first-of-type .spec-group-head {
+    padding-block-start: var(--sp-3);
+  }
+</style>

@@ -1,0 +1,285 @@
+sku: MF-3220-K12
+model: Maven MF-3220 K12
+family: uv-flatbed
+tier: flagship
+order: 40
+featured: true
+status: active
+price: null
+leadTimeWeeks: [10, 16]
+
+headline: [printArea, printHead, speedModes, headCount]
+
+printhead:
+  brand: konica
+  model: KM1024i
+  count: [4, 18]
+  dropSizePl: [6, 30]
+
+headOptions:
+  - { brand: konica, model: KM1024i, count: [4, 18], dropSizePl: [6, 30] }
+  - { brand: ricoh, model: Gen6, count: [2, 16], dropSizePl: [5, 35] }
+
+specs:
+  printArea: "3200 × 2000 mm"
+  mediaHeight: { value: 100, unit: mm }
+  mediaWeight: { value: 50, unit: kg/m2 }
+  resolution: "600 · 1200 · 2400 dpi"
+  dropSize: { value: [6, 30], unit: pL }
+  printHead: "Konica Minolta KM1024i (6 pl)"
+  headCount: { value: [4, 18], unit: adet }
+  colors: "CMYK · Lc · Lm · W · Lak"
+  inkType: "UV LED"
+  inkSupply: "5 L toplu besleme, beyaz sirkülasyonlu"
+  inkCapacity: { value: 5000, unit: ml }
+  inkConsumption:
+    value: [10, 30]
+    unit: ml/m2
+    note: { tr: beyaz alt katman dahil, en: white underbase included }
+  whiteCirculation: true
+  table: "Altı bölgeli vakumlu alüminyum tabla"
+  vacuumZones: { value: 6 }
+  curing: "Su soğutmalı LED-UV, 395 nm"
+  heightSensor: "Otomatik malzeme yüksekliği ölçümü, 0–100 mm"
+  antiCollision: "Kafa çarpışma sensörü, otomatik duruş"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Otomatik püskürtme + programlı silme"
+  powerSupply: "AC 220 V, 50/60 Hz, 3 faz"
+  power: { value: 10, unit: kW }
+  current: { value: 45, unit: A }
+  environment: "20–28 °C / %40–60 BN"
+  tempGradient: { value: 10, unit: °C/sa }
+  rip: "ONYX · Caldera · SAi Flexi"
+  fileFormats: "PDF · TIFF · EPS · PS · JPEG"
+  interface: "Gigabit Ethernet"
+  dimensions: "5600 × 3100 × 1540 mm"
+  weight: { value: 2580, unit: kg }
+  floorArea: { value: 45, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures.
+speedModes:
+  - { pass: 4, value: [75, 84], mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: [59, 66], mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: [47, 54], mode: { tr: Yüksek kalite, en: High quality } }
+
+compatibleInks: [mi-210-uv-led-r, mi-110-uv]
+applications: [signage, interior, industrial, packaging]
+substrates: [alucomp, acrylic, foamboard, photoblock, pvc, glass, wood, mdf, metal, polycarb]
+siblings: [MF-6090-U3, MF-1216-R4, MF-2513-R8]
+rip: [ONYX, Caldera, SAi Flexi]
+
+installation:
+  powerPhase: 3F
+  floorAreaM2: 45
+  ceilingHeightM: 3.5
+  cratedDimensions: { w: 5900, d: 3300, h: 1900, unit: mm }
+  ventilationRequired: false
+  compressedAir: "6 bar, 300 L/dk"
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Vinç veya en az 3 tonluk forklift ile indirme
+      - Zemin düzlem kontrolü ve gerekiyorsa takviye
+      - Elektrik altyapısı ve trifaze pano
+      - Basınçlı hava hattı ve kurutuculu kompresör
+      - Sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Crane or minimum 3-tonne forklift unloading
+      - Floor flatness survey and reinforcement if required
+      - Electrical infrastructure and three-phase panel
+      - Compressed air line and a compressor with a dryer
+      - Starter consumables kit
+
+gallery:
+  - src: /img/machines/mf-3220-k12/hero.jpg
+    kind: machine
+    alt: { tr: Endüstriyel UV flatbed makinesi, tablasında tam boy alüminyum kompozit levha, en: Industrial UV flatbed with a full-size aluminium composite sheet on the bed }
+  - src: /img/machines/mf-3220-k12/carriage.jpg
+    kind: detail
+    alt: { tr: On sekiz Konica kafanın kademeli dizildiği araba ve su soğutma hortumları, en: Carriage with eighteen staggered Konica heads and the water-cooling lines }
+    caption: { tr: Su Soğutmalı LED-UV, en: Water-cooled LED-UV }
+  - src: /img/machines/mf-3220-k12/bed.jpg
+    kind: detail
+    alt: { tr: Altı bölgeye ayrılmış vakum tablası, bir yarısında levha diğerinde boş bölge, en: Six-zone vacuum bed with a sheet on one half and the other half empty }
+    caption: { tr: Bölgesel Vakum Kontrolü, en: Zoned vacuum control }
+  - src: /img/machines/mf-3220-k12/ink.jpg
+    kind: detail
+    alt: { tr: 5 litrelik mürekkep bidonları ve beyaz kanalın sirkülasyon pompası, en: Five-litre ink containers and the circulation pump on the white channel }
+  - src: /img/machines/mf-3220-k12/app-facade.jpg
+    kind: application
+    alt: { tr: Bina cephesine monte edilmiş, tek parça basılmış kompozit panel, en: Single-piece printed composite panel mounted on a building facade }
+    caption: { tr: UV Kompozit Cephe Baskı, en: UV printed composite facade panel }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mf-3220-k12-katalog-tr.pdf, bytes: 2764800 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mf-3220-k12-teknik-tr.pdf, bytes: 531456 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mf-3220-k12-kurulum-kontrol-listesi.pdf, bytes: 247808 }
+
+i18n:
+  tr:
+    tagline: Tam boy levhayı tek parçada basar, vardiyayı durdurmadan sürdürür
+    summary: >-
+      MF-3220 K12, 3200 × 2000 mm tablasıyla tam boy kompozit ve pleksi levhayı
+      ekleme yapmadan tek parçada basar. Dört ile on sekiz arasında
+      yapılandırılabilen Konica Minolta KM1024i dizilimi, 4 geçişte 75–84 m²/sa
+      üretim hızı verir. Altı bağımsız vakum bölgesi, tablanın bir yarısı
+      basarken diğer yarısının beslenmesine izin verir; makine gerçek anlamda
+      iki operatörle çalışır. Su soğutmalı LED-UV kürleme lamba sıcaklığını
+      vardiya boyunca sabit tutar, beyaz kanal sürekli sirkülasyondadır.
+    features:
+      - term: Bölgesel Vakum Kontrolü
+        body: >-
+          Tabla altı bağımsız bölgeye ayrılmıştır. Üç bölge basarken diğer üçü
+          boşaltılıp yeniden dizilebilir; 3,2 metrelik bir tablada asıl kayıp
+          baskı süresinde değil, tablanın boş beklediği dakikalardadır.
+      - term: Su Soğutmalı LED-UV
+        body: >-
+          Hava soğutmalı lambaların aksine sıcaklık vardiya boyunca sabit kalır.
+          On sekiz kafalı bir dizilimde kürleme enerjisi de yükseldiği için, su
+          soğutma bu sınıfta konfor değil çalışma şartıdır.
+      - term: MavenFlow Beyaz Sirkülasyon
+        body: >-
+          Beyaz mürekkep, makine kapalıyken bile kanal içinde dolaşır. 5 litrelik
+          toplu beslemede çöken pigmenti geri kazanmanın yolu yoktur; sirkülasyon
+          bu yüzden tank hacmi büyüdükçe daha kritik hale gelir.
+      - term: AutoGap Yükseklik Sensörü
+        body: >-
+          Malzeme yüksekliği 0–100 mm arasında otomatik ölçülür ve kafa boşluğu
+          buna göre ayarlanır. Çarpışma sensörü, 3,2 metrelik bir levhanın
+          ortasında oluşan kamburu kafa temas ettiği anda yakalar.
+      - term: MavenGuard Nozül Kurtarma
+        body: >-
+          Tıkanan bir nozül, komşu nozüller tarafından telafi edilerek iş
+          durdurulmadan tamamlanır. Kurtarma bir onarım değil, vardiyayı bitirme
+          yöntemidir: kalıcı çözüm yine kafa temizliği ve filtre bakımıdır.
+    faq:
+      - q: MF-3220 K12 kimin için doğru, kimin için değil?
+        a: >-
+          Günlük rijit baskı hacmi 60 m²'nin üzerinde olan, tabela, cephe paneli
+          ve mobilya üretimi yapan atölyeler için doğru. Bunun altındaki
+          hacimlerde makine kendini ödetmez; MF-2513 R8 hem yatırım hem işletme
+          maliyeti olarak daha akıllıcadır. 45 m² boş alan, 3,5 m tavan ve vinçli
+          giriş sağlayamıyorsanız da bu makineyi konuşmanın anlamı yok.
+      - q: 18 kafanın gerçekten karşılığı var mı?
+        a: >-
+          Yayınladığımız 75–84 m²/sa bandı 4 kafadan 18 kafaya kadar bütün
+          konfigürasyonları kapsar; bandın alt ucu düşük kafa sayısıdır. Kafa
+          sayısını artırmanın asıl getirisi ham hız değil, aynı hızı daha yüksek
+          geçiş sayısında koruyabilmektir — yani 8 geçişte 47–54 m²/sa. Ayrıca
+          şunu açıkça söyleyelim: 18 adet KM1024i, makine bedelinin önemli bir
+          bölümünü oluşturur ve arızada bütün dizilim değil, tek kafa değişir.
+      - q: Konica yerine Ricoh Gen6 kafa seçsem ne değişir?
+        a: >-
+          Hız düşer, damla küçülür. Aynı şasi Ricoh Gen6 ile 4 geçişte 60–72
+          m²/sa yapar; buna karşılık 5 pL damla, KM1024i'nin 6 pL damlasına göre
+          geçiş izlerini ve ten tonlarını daha iyi verir. Hacim işi Konica,
+          kalite kritik iş Ricoh tarafındadır.
+      - q: Su soğutmanın bakım yükü nedir?
+        a: >-
+          Kapalı devre soğutucuda deiyonize su ve antifriz karışımı yılda bir
+          değişir, filtre altı ayda bir kontrol edilir. Bu bakım atlanırsa sorun
+          soğutucuda değil LED modüllerinde çıkar ve makinedeki en pahalı
+          kalemlerden birini yenilemek zorunda kalırsınız.
+      - q: Zemin ve elektrik için ne hazırlamalıyım?
+        a: >-
+          Makine 2580 kg ve yükü dört ayağa biner; zeminin metrede ±3 mm
+          düzlemde olması ve titreşimsiz bir beton üzerine oturması gerekir.
+          Elektrik tarafında 220 V 3 faz, 45 A ve 10 kW tepe tüketimi vardır.
+          Nakliye kasası 5900 × 3300 × 1900 mm'dir; kapı ve koridor ölçülerini
+          sipariş öncesinde birlikte kontrol ediyoruz.
+      - q: Beyaz ve lak kullanınca hız ne oluyor?
+        a: >-
+          Renk-beyaz-renk işlerde üç katman basıldığı için çıktı yaklaşık üçte
+          bire iner; nokta lak eklendiğinde ayrıca bir geçiş daha gelir. Şeffaf
+          pleksi ve koyu zeminli işler ağırlıktaysa kapasite planınızı 75–84
+          m²/sa üzerinden değil, bu düşük rakam üzerinden yapın.
+    alternateName:
+      - endüstriyel uv baskı makinası
+      - 320x200 uv flatbed baskı makinesi
+      - büyük ebat uv baskı makinası
+      - konica kafalı uv baskı makinesi
+  en:
+    tagline: Full-size sheets printed in one piece, shifts that never stop
+    summary: >-
+      The MF-3220 K12 prints a full-size composite or acrylic sheet in one piece
+      on its 3200 × 2000 mm bed. A Konica Minolta KM1024i array configurable from
+      four to eighteen heads delivers 75–84 m²/h at four passes, and six
+      independent vacuum zones let one half of the table print while the other is
+      being reloaded — this is a machine that genuinely runs with two operators.
+      Water-cooled LED-UV curing holds lamp temperature steady through the shift,
+      and the white channel circulates continuously.
+    features:
+      - term: Zoned Vacuum Control
+        body: >-
+          The bed is split into six independent zones. Three can print while the
+          other three are cleared and reloaded; on a 3.2 metre table the real
+          loss is never print time, it is the minutes the bed spends empty.
+      - term: Water-Cooled LED-UV
+        body: >-
+          Unlike air-cooled lamps, temperature stays constant across a full shift.
+          With an eighteen-head array the curing energy rises with the ink laid
+          down, which makes water cooling a working condition in this class
+          rather than a comfort feature.
+      - term: MavenFlow White Circulation
+        body: >-
+          White ink circulates through the channel even when the machine is idle.
+          There is no way to recover pigment that has settled in a five-litre bulk
+          supply, which is exactly why circulation matters more as tank volume
+          grows.
+      - term: AutoGap Height Sensor
+        body: >-
+          Media height is measured automatically between 0 and 100 mm and the head
+          gap is set from it. The anti-collision sensor catches the bow in the
+          middle of a 3.2 metre sheet the instant the carriage touches it.
+      - term: MavenGuard Nozzle Recovery
+        body: >-
+          A blocked nozzle is compensated by its neighbours so the job finishes
+          without stopping the run. Recovery is a way to finish the shift, not a
+          repair — head cleaning and filter maintenance remain the actual fix.
+    faq:
+      - q: Who is the MF-3220 K12 right for, and who is it wrong for?
+        a: >-
+          It is right for shops printing more than 60 m² of rigid material a day —
+          signage, facade panels, furniture components. Below that the machine
+          does not repay itself and the MF-2513 R8 is the smarter buy on both
+          capital and running cost. If you cannot provide 45 m² of clear floor,
+          3.5 m of ceiling and crane access, there is no point discussing it.
+      - q: Are eighteen heads actually worth it?
+        a: >-
+          The published 75–84 m²/h band covers every configuration from four heads
+          to eighteen, with the lower end being the smaller array. The real return
+          on head count is not raw speed but holding that speed at a higher pass
+          count — 47–54 m²/h at eight passes. And to be plain about it: eighteen
+          KM1024i heads represent a significant share of the machine's value, and
+          a failure replaces one head, not the array.
+      - q: What changes if I choose Ricoh Gen6 heads instead of Konica?
+        a: >-
+          Speed drops, drop size shrinks. The same chassis runs 60–72 m²/h at four
+          passes with Ricoh Gen6, but the 5 pL drop handles pass banding and skin
+          tones better than the 6 pL KM1024i. Volume work belongs on Konica,
+          quality-critical work on Ricoh.
+      - q: What maintenance does the water cooling add?
+        a: >-
+          The closed-loop chiller takes a deionised water and glycol change once a
+          year, with a filter check every six months. Skip it and the problem does
+          not appear in the chiller — it appears in the LED modules, one of the
+          most expensive items on the machine.
+      - q: What do I need to prepare for floor and power?
+        a: >-
+          The machine weighs 2580 kg carried on four feet, so the slab must be
+          flat to ±3 mm per metre and free of vibration. Electrically it is 220 V
+          three-phase at 45 A with a 10 kW peak. The crate is 5900 × 3300 × 1900
+          mm — we check door and corridor dimensions with you before the order is
+          placed.
+      - q: What happens to speed with white and varnish?
+        a: >-
+          Colour-white-colour work lays down three layers, so output falls to
+          roughly a third, and spot varnish adds another pass on top. If clear
+          acrylic and dark substrates dominate your mix, plan capacity around that
+          lower figure rather than around 75–84 m²/h.
+    alternateName:
+      - industrial uv flatbed printer
+      - 3200x2000 uv flatbed printer
+      - konica km1024i uv flatbed printer

@@ -1,0 +1,91 @@
+---
+/**
+ * AVIF → WebP → JPEG, from the ladder built by tools/build-images.mjs.
+ *
+ * Deliberately an <img>, never a CSS background-image: a background is
+ * discovered late by the preload scanner and cannot be preloaded, which is the
+ * commonest way a hero fails its LCP budget.
+ */
+import manifest from '../../../public/img/manifest.json';
+
+export interface Props {
+  /** Manifest key, e.g. "machines/flatbed-uv/flatbed-uv-hero". */
+  src: string;
+  alt: string;
+  sizes?: string;
+  /** The LCP image on the page — never more than one. */
+  priority?: boolean;
+  ratio?: 'hero' | 'card' | 'inset' | 'band' | 'square' | 'none';
+  class?: string;
+  graded?: boolean;
+}
+
+const {
+  src,
+  alt,
+  sizes = '(min-width: 1024px) 50vw, 100vw',
+  priority = false,
+  ratio = 'card',
+  class: className = '',
+  graded = true,
+} = Astro.props;
+
+const entry = (manifest as Record<string, { intrinsic: { w: number; h: number }; widths: number[] }>)[src];
+
+if (!entry) {
+  // A missing image renders a visible, labelled placeholder rather than
+  // throwing. Failing the build would mean one un-produced photograph blocks
+  // every page; tools/check-budgets.mjs is what turns this into a release gate.
+  console.warn(`[Picture] "${src}" missing from public/img/manifest.json`);
+}
+
+// In dev a missing entry renders a visible placeholder rather than exploding,
+// so a half-finished content file does not block the whole page.
+const widths = entry?.widths ?? [480, 768];
+const intrinsic = entry?.intrinsic ?? { w: 1600, h: 1000 };
+const set = (ext: string) => widths.map((w) => `/img/${src}-${w}.${ext} ${w}w`).join(', ');
+const wrapClass = [
+  ratio === 'none' ? '' : `ratio-${ratio}`,
+  graded ? 'graded' : '',
+  className,
+].filter(Boolean).join(' ');
+---
+
+{entry ? (
+  <picture class={wrapClass}>
+    <source type="image/avif" srcset={set('avif')} sizes={sizes} />
+    <source type="image/webp" srcset={set('webp')} sizes={sizes} />
+    <img
+      src={`/img/${src}-${widths[widths.length - 1]}.jpg`}
+      srcset={set('jpg')}
+      sizes={sizes}
+      alt={alt}
+      width={intrinsic.w}
+      height={intrinsic.h}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding={priority ? 'sync' : 'async'}
+    />
+  </picture>
+) : (
+  <div class={`${wrapClass} picture-missing`} role="img" aria-label={alt}>
+    <span class="mono">{src}</span>
+  </div>
+)}
+
+<style>
+  .picture-missing {
+    display: grid;
+    place-items: center;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--bone) 0 12px,
+      color-mix(in srgb, var(--bone) 92%, var(--ink)) 12px 24px
+    );
+    color: var(--muted);
+    font-size: var(--step--2);
+    padding: var(--sp-4);
+    text-align: center;
+    word-break: break-all;
+  }
+</style>

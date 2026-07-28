@@ -1,0 +1,25 @@
+{
+  "name": "maven-web",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Maven — dijital baskı makineleri ve mürekkepleri kurumsal web sitesi",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "models": "node scripts/optimise-models.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.3",
+    "astro": "7.1.5",
+    "sharp": "0.35.3"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "4.2.1"
+  }
+}

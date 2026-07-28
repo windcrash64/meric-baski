@@ -1,0 +1,248 @@
+sku: MF-1216-R4
+model: Maven MF-1216 R4
+family: uv-flatbed
+tier: mid
+order: 20
+featured: false
+status: active
+price: null
+leadTimeWeeks: [5, 8]
+
+headline: [printArea, printHead, speedModes, colors]
+
+printhead:
+  brand: ricoh
+  model: Gen6
+  count: [2, 4]
+  dropSizePl: [5, 35]
+
+headOptions:
+  - { brand: ricoh, model: Gen6, count: [2, 4], dropSizePl: [5, 35] }
+  - { brand: ricoh, model: Gen5s, count: [2, 4], dropSizePl: [3.5, 35] }
+  - { brand: epson, model: i3200-U1, count: [2, 4], dropSizePl: [3, 25] }
+
+specs:
+  printArea: "1200 × 1540 mm"
+  mediaHeight: { value: 100, unit: mm }
+  mediaWeight: { value: 50, unit: kg/m2 }
+  resolution: "600 · 900 · 1200 dpi"
+  dropSize: { value: [5, 35], unit: pL }
+  printHead: "Ricoh Gen6 (5 pl)"
+  headCount: { value: [2, 4], unit: adet }
+  colors: "CMYK · Lc · Lm · W"
+  inkType: "UV LED"
+  inkSupply: "2 L toplu besleme, beyaz sirkülasyonlu"
+  inkCapacity: { value: 2000, unit: ml }
+  inkConsumption: { value: [10, 30], unit: ml/m2 }
+  whiteCirculation: true
+  table: "Bölgesel vakumlu alüminyum tabla"
+  vacuumZones: { value: 3 }
+  curing: "2 × hava soğutmalı LED-UV, 395 nm"
+  heightSensor: "Otomatik malzeme yüksekliği ölçümü, 0–100 mm"
+  antiCollision: "Kafa çarpışma sensörü, otomatik duruş"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Yarı otomatik püskürtme + manuel silme"
+  powerSupply: "AC 220 V, 50/60 Hz, 3 faz"
+  power: { value: 10, unit: kW }
+  current: { value: 45, unit: A }
+  environment: "20–28 °C / %40–60 BN"
+  tempGradient: { value: 10, unit: °C/sa }
+  rip: "ONYX · Caldera · SAi Flexi"
+  fileFormats: "PDF · TIFF · EPS · PS · JPEG"
+  interface: "Gigabit Ethernet"
+  dimensions: "3000 × 2300 × 1350 mm"
+  weight: { value: 720, unit: kg }
+  floorArea: { value: 18, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures.
+speedModes:
+  - { pass: 4, value: [22, 28], mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: [16, 22], mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: [14, 16], mode: { tr: Yüksek kalite, en: High quality } }
+
+compatibleInks: [mi-210-uv-led-r, mi-220-uv-led-e]
+applications: [signage, interior, industrial]
+substrates: [acrylic, foamboard, pvc, alucomp, photoblock, glass, wood, mdf, metal]
+siblings: [MF-6090-U3, MF-2513-R8, MF-3220-K12]
+rip: [ONYX, Caldera, SAi Flexi]
+
+installation:
+  powerPhase: 3F
+  floorAreaM2: 18
+  ceilingHeightM: 3.0
+  cratedDimensions: { w: 3200, d: 2500, h: 1550, unit: mm }
+  ventilationRequired: false
+  compressedAir: "6 bar, 150 L/dk"
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Forklift ile indirme
+      - Elektrik altyapısı ve trifaze pano
+      - Basınçlı hava hattı
+      - Sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Forklift unloading
+      - Electrical infrastructure and three-phase panel
+      - Compressed air line
+      - Starter consumables kit
+
+gallery:
+  - src: /img/machines/mf-1216-r4/hero.jpg
+    kind: machine
+    alt: { tr: Orta format UV flatbed makinesi, tablasında yarım basılmış pleksi levha, en: Mid-format UV flatbed with a half-printed acrylic sheet on the bed }
+  - src: /img/machines/mf-1216-r4/carriage.jpg
+    kind: detail
+    alt: { tr: Dört Ricoh Gen6 kafalı araba ve yanındaki LED-UV lamba bloğu, en: Carriage with four Ricoh Gen6 heads and the LED-UV lamp block beside them }
+    caption: { tr: Ricoh Gen6 kademeli dizilim, en: Staggered Ricoh Gen6 array }
+  - src: /img/machines/mf-1216-r4/bed.jpg
+    kind: detail
+    alt: { tr: Üç bölgeye ayrılmış vakum tablası ve bölge vanaları, en: Vacuum bed divided into three zones with the zone valves }
+    caption: { tr: Bölgesel Vakum Kontrolü, en: Zoned vacuum control }
+  - src: /img/machines/mf-1216-r4/ink.jpg
+    kind: detail
+    alt: { tr: 2 litrelik mürekkep tankları ve beyaz kanalın sirkülasyon hattı, en: Two-litre ink tanks and the circulation line on the white channel }
+  - src: /img/machines/mf-1216-r4/app-signage.jpg
+    kind: application
+    alt: { tr: Dekota levhaya basılmış yön bulma tabelası, en: Wayfinding sign printed on foam PVC board }
+    caption: { tr: UV Dekota Tabela Baskı, en: UV printed foam PVC sign }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mf-1216-r4-katalog-tr.pdf, bytes: 2117632 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mf-1216-r4-teknik-tr.pdf, bytes: 428032 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mf-1216-r4-kurulum-kontrol-listesi.pdf, bytes: 186368 }
+
+i18n:
+  tr:
+    tagline: Küçük atölyeye sığan üretim tablası, vardiya başına gerçek levha çıktısı
+    summary: >-
+      MF-1216 R4, 1200 × 1540 mm tablasıyla tabela ve levha üretimine giren
+      atölyeler için ara basamaktır. İki ile dört arasında yapılandırılabilen
+      Ricoh Gen6 kafa dizilimi, 4 geçişte 22–28 m²/sa verir; 100 mm baskı
+      yüksekliği pleksi, dekota, kompozit ve MDF'yi aynı tablada toplar. Üç
+      bağımsız vakum bölgesi küçük parçalarda kompresör yükünü düşürür, beyaz
+      kanal sürekli sirkülasyondadır. Şasi dört kafaya kadar hazırdır ve beyaz
+      isteyen her konfigürasyon dördüncü kafayı kullanır.
+    features:
+      - term: Bölgesel Vakum Kontrolü
+        body: >-
+          Tabla üç bağımsız bölgeye ayrılmıştır. 30 × 40 cm'lik bir levha için
+          bütün tablayı vakumlamak zorunda kalmazsınız; blower yükü ve elektrik
+          tüketimi makinenin değil, işin boyutuna göre belirlenir.
+      - term: MavenFlow Beyaz Sirkülasyon
+        body: >-
+          Beyaz mürekkep, makine kapalıyken bile kanal içinde dolaşır. Beyaz
+          pigmentin çökmesi ve bunun getirdiği kafa temizleme kaybı, beyaz
+          kullanan her atölyenin en büyük gizli maliyetidir.
+      - term: AutoGap Yükseklik Sensörü
+        body: >-
+          Malzeme yüksekliği 0–100 mm arasında otomatik ölçülür ve kafa boşluğu
+          buna göre ayarlanır. Kafa çarpışma sensörü, kalkmış bir levha köşesine
+          temas ettiği anda arabayı durdurur.
+      - term: PinLock Kayıt Pimleri
+        body: >-
+          Tabla köşesindeki mekanik pimler her levhayı aynı orijine oturtur.
+          Çift yüz baskıda ve tekrar eden panel işlerinde ikinci yüzü hizalamak
+          ölçüm değil, malzemeyi pime dayama işidir.
+    faq:
+      - q: 2 kafa mı, 4 kafa mı almalıyım?
+        a: >-
+          Yayınladığımız 22–28 m²/sa bandının alt ucu iki kafa, üst ucu dört
+          kafadır. Asıl belirleyici hız değil beyazdır: beyaz kendi kafasını
+          ister, dolayısıyla beyaz basacaksanız dört kafalı konfigürasyon
+          pratikte zorunludur. Sonradan kafa eklemek mümkündür ama renk
+          profillerinin yeniden çıkarılması gerekir.
+      - q: Epson kafalı konfigürasyon neden daha uygun fiyatlı?
+        a: >-
+          Çünkü daha yavaştır. Aynı şasi Epson i3200-U1 kafalarla 4 geçişte
+          yaklaşık 15 m²/sa yapar; Ricoh Gen6 ise 22–28 m²/sa. Düşük hacimli ve
+          fiyat odaklı bir başlangıç için mantıklı, ama iki vardiya çalışmayı
+          planlıyorsanız aradaki fark bir yıl içinde kapanır.
+      - q: Bu makinede lak (vernik) kanalı var mı?
+        a: >-
+          Hayır. Kanallar CMYK + Lc + Lm + beyaz olarak kullanılır; nokta lak,
+          kabartma lak ve mat/parlak kontrast işleri bu şasinin dışındadır. Lak
+          kanalı gerekiyorsa MF-2513 R8'e bakmalısınız.
+      - q: Trifaze elektrik şart mı?
+        a: >-
+          Evet. Makine 220 V 3 faz, 45 A besleme ister ve tepe tüketimi 10 kW'tır.
+          Panonun makineye kadar çekilmesi ile kaçak akım korumasının hazırlanması
+          kurulum öncesi sizin tarafınızdadır; ön keşifte birlikte kontrol ediyoruz.
+      - q: MF-2513 R8 yerine bunu almak ne zaman doğru olur?
+        a: >-
+          Günlük rijit baskı hacminiz 25 m²'nin altındaysa ve en büyük levhanız
+          1200 × 1540 mm'ye sığıyorsa. Bu iki koşuldan biri bozuluyorsa MF-1216
+          R4 kısa sürede darboğaza dönüşür: tabla boyu yüzünden levhayı ekleyerek
+          basmak, hız farkından kaybettiğinizden daha pahalıdır.
+    alternateName:
+      - orta format uv baskı makinası
+      - 120x150 uv flatbed baskı makinesi
+      - levha uv baskı makinası
+      - ricoh kafalı uv baskı makinesi
+  en:
+    tagline: A production bed that fits a small shop, real sheet output every shift
+    summary: >-
+      The MF-1216 R4 is the step a shop takes when signage and sheet work turns
+      into daily production: a 1200 × 1540 mm bed, 100 mm of print height and a
+      Ricoh Gen6 array configurable from two to four heads that delivers
+      22–28 m²/h at four passes. Acrylic, foam PVC, composite panel and MDF all
+      run on the same table. Three independent vacuum zones keep blower load in
+      proportion to the job, and the white channel circulates continuously.
+    features:
+      - term: Zoned Vacuum Control
+        body: >-
+          The bed is split into three independent zones. A 30 × 40 cm sheet does
+          not require pulling vacuum across the whole table, so blower load and
+          power draw follow the size of the job rather than the size of the
+          machine.
+      - term: MavenFlow White Circulation
+        body: >-
+          White ink circulates through the channel even when the machine is idle.
+          Settled white pigment — and the head cleaning it causes — is the largest
+          hidden cost in any shop running white.
+      - term: AutoGap Height Sensor
+        body: >-
+          Media height is measured automatically between 0 and 100 mm and the head
+          gap is set from it. The anti-collision sensor halts the carriage the
+          moment it touches a lifted sheet corner.
+      - term: PinLock Registration Pins
+        body: >-
+          Mechanical pins on the bed corner return every sheet to the same origin.
+          On double-sided and repeat panel work, aligning the second side becomes
+          a matter of pushing the sheet against the pins, not measuring it.
+    faq:
+      - q: Two heads or four?
+        a: >-
+          The lower end of the published 22–28 m²/h is a two-head machine, the
+          upper end four. Speed is not really the deciding factor — white is.
+          White needs a head of its own, so if you print white, four heads is
+          effectively mandatory. Heads can be added later, but colour profiles
+          have to be rebuilt afterwards.
+      - q: Why is the Epson head configuration cheaper?
+        a: >-
+          Because it is slower. The same chassis with Epson i3200-U1 heads runs
+          about 15 m²/h at four passes against 22–28 m²/h for Ricoh Gen6. It makes
+          sense as a low-volume, price-led entry, but if you plan to run two
+          shifts the difference pays for itself inside a year.
+      - q: Does this machine have a varnish channel?
+        a: >-
+          No. The channels are used as CMYK + Lc + Lm + white; spot varnish,
+          textured varnish and matt/gloss contrast work are outside this chassis.
+          If you need a varnish channel, look at the MF-2513 R8.
+      - q: Is three-phase power mandatory?
+        a: >-
+          Yes — 220 V three-phase at 45 A, with a peak draw of 10 kW. Bringing the
+          panel to the machine and preparing residual-current protection is your
+          responsibility before installation; we walk through it together during
+          the pre-install survey.
+      - q: When is this the right choice over the MF-2513 R8?
+        a: >-
+          When your daily rigid volume stays under 25 m² and your largest sheet
+          fits inside 1200 × 1540 mm. If either condition breaks, the MF-1216 R4
+          becomes a bottleneck quickly: tiling a sheet because the bed is too
+          short costs more than the speed difference ever will.
+    alternateName:
+      - mid-format uv flatbed printer
+      - 1200x1540 uv flatbed printer
+      - ricoh gen6 uv flatbed printer

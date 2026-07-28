@@ -1,0 +1,253 @@
+sku: MS-1600-PC
+model: Maven MS-1600 PC
+family: eco-solvent
+tier: upper-mid
+order: 80
+featured: false
+status: active
+price: null
+leadTimeWeeks: [5, 8]
+
+headline: [printWidth, printHead, speedModes, cuttingSpeed]
+
+printhead:
+  brand: epson
+  model: i3200-E1
+  count: 2
+  dropSizePl: 3
+
+specs:
+  printWidth: { value: 1600, unit: mm }
+  mediaWidth: { value: 1610, unit: mm }
+  mediaThickness: { value: 1, unit: mm }
+  rollWeight:
+    value: 45
+    unit: kg
+    note: { tr: tek rulo; üç rulo toplam 90 kg, en: single roll; 90 kg total across three }
+  resolution: "600 · 800 · 900 · 1200 dpi"
+  dropSize: { value: 3, unit: pL, note: { tr: en küçük damla, en: minimum drop } }
+  printHead: "2 × Epson i3200-E1, kademeli (toplam 6.400 nozül)"
+  headCount: { value: 2, unit: adet }
+  colors: "CMYK · Lc · Lm · Lk · Or · W (8 kanala kadar yapılandırma)"
+  inkType: "Eko solvent"
+  inkSupply: "2 L mürekkep paketi; beyaz 500 ml, çökelme nedeniyle küçük ambalajda"
+  inkCapacity: { value: 2000, unit: ml }
+  whiteCirculation: true
+  feed: "3 rulolu değiştirici, φ 250 mm, 2 ve 3 inç göbek"
+  takeUp: "Gergi kollu otomatik sarma + XY dilimleyici"
+  heaters: "3 bölgeli — ön ısıtma · tabla · son kurutma"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Programlı otomatik temizleme + manuel silme"
+  cuttingSpeed: { value: 300, unit: mm/s }
+  cuttingForce: { value: [10, 450], unit: gf }
+  cuttingAccuracy:
+    value: 0.2
+    unit: mm
+    note: { tr: kontur tekrarlanabilirliği, en: contour repeatability }
+  cuttingTools: "Döner bıçak tutucu, 30° · 45° · 60° uç; kalem adaptörü"
+  cutFormats: "AI · EPS · PDF (kesim yolu CutContour spot rengi ile)"
+  cutMaterials: "Folyo · ısı transfer folyosu · yansıtıcı folyo · maskeleme filmi, ≤ 0,25 mm"
+  powerSupply: "AC 100–120 / 200–240 V, 50/60 Hz, 1 faz × 2 hat"
+  power: { value: 2.9, unit: kW }
+  current:
+    value: 7
+    unit: A
+    note: { tr: hat başına; iki bağımsız besleme, en: per line; two independent supplies }
+  environment: "20–30 °C / %35–65 BN"
+  ventilation: "Ortam havalandırması önerilir; zorunlu değil"
+  rip: "SAi Flexi · ONYX · Caldera · Photoprint"
+  fileFormats: "PDF · TIFF · EPS · AI · JPEG"
+  interface: "Gigabit Ethernet · USB 2.0"
+  dimensions: "3170 × 1215 × 1305 mm"
+  weight: { value: 373, unit: kg }
+  floorArea: { value: 13, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures. The headline
+# 100 m2/h is the 2-pass draft mode and is published as such; the row a buyer
+# should actually plan around is 4-pass.
+speedModes:
+  - { pass: 2, value: 100, mode: { tr: Taslak, en: Draft } }
+  - { pass: 4, value: 49, mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: 33, mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: 24, mode: { tr: Yüksek kalite, en: High quality } }
+
+compatibleInks: [mi-410-eco, mi-420-eco-tr, mi-910-flush]
+applications: [signage, vehicle, interior]
+substrates: [vinyl, banner, mesh, canvas, wallpaper, paper]
+siblings: [MS-1802-E4, MH-1800-U4]
+rip: [SAi Flexi, ONYX, Caldera, Photoprint]
+
+installation:
+  powerPhase: 1F
+  floorAreaM2: 13
+  ceilingHeightM: 2.6
+  cratedDimensions: { w: 3450, d: 1000, h: 1500, unit: mm }
+  ventilationRequired: false
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Forklift ile indirme
+      - İki ayrı 10 A hat ve kaçak akım koruması
+      - Kesim sonrası ayıklama (weeding) masası
+      - Yedek bıçak ve kesim altlığı seti
+      - Sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Forklift unloading
+      - Two separate 10 A lines with residual-current protection
+      - A weeding table for post-cut finishing
+      - Spare blades and cutting strip set
+      - Starter consumables kit
+
+gallery:
+  - src: /img/machines/ms-1600-pc/hero.jpg
+    kind: machine
+    alt: { tr: 1.6 metre baskı-kesim makinesi ve üç rulolu değiştirici, en: 1.6 metre print-and-cut machine with its three-roll changer }
+  - src: /img/machines/ms-1600-pc/cut-head.jpg
+    kind: detail
+    alt: { tr: Döner bıçak tutucu ve kesim izini okuyan optik sensör, en: Swivel blade holder and the optical sensor reading the register mark }
+    caption: { tr: ContourSync Baskı-Kesim, en: ContourSync print and cut }
+  - src: /img/machines/ms-1600-pc/roll-changer.jpg
+    kind: detail
+    alt: { tr: Üç ayrı rulonun aynı anda takılı olduğu besleme mili, en: Feed shaft carrying three separate rolls at once }
+  - src: /img/machines/ms-1600-pc/ink.jpg
+    kind: detail
+    alt: { tr: 2 litrelik renk paketleri ve 500 ml beyaz paket yan yana, en: 2 litre colour packs beside the 500 ml white pack }
+  - src: /img/machines/ms-1600-pc/app-decal.jpg
+    kind: application
+    alt: { tr: Kontur kesilmiş araç yan yazısı folyodan ayıklanırken, en: Contour-cut vehicle lettering being weeded from the liner }
+    caption: { tr: Eko Solvent Araç Giydirme Baskı, en: Eco-solvent vehicle graphics }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-ms-1600-pc-katalog-tr.pdf, bytes: 1908736 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-ms-1600-pc-teknik-tr.pdf, bytes: 425984 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-ms-1600-pc-kurulum-kontrol-listesi.pdf, bytes: 192512 }
+
+i18n:
+  tr:
+    tagline: Tek makinede bas ve kes, atölyeden bitmiş çıkan iş
+    summary: >-
+      MS-1600 PC, 1,6 metre folyoyu basıp aynı makinede kesen bas-kes sistemidir. İki
+      kademeli Epson i3200-E1 kafa, iki geçiş taslak modunda 100 m²/sa'ya çıkar;
+      sözleşme kalitesinde dört geçişte 49 m²/sa gerçekçi rakamdır. Kesim ünitesi
+      300 mm/s hızda ve 10–450 gf arasında ayarlanan bıçak basıncıyla çalışır, kontur
+      tekrarı ±0,2 mm'dir. Üç rulolu değiştirici, gün içinde vinil ile ışıklı vinil
+      arasında geçiş yapan atölyelerde makineyi durdurmadan iş sırası kurmanızı sağlar.
+    features:
+      - term: ContourSync Baskı-Kesim
+        body: >-
+          Baskı sırasında basılan kayıt işaretleri, kesim öncesi optik sensörle tekrar
+          okunur ve bıçak yolu ölçülen sapmaya göre düzeltilir. Isıtıcıdan geçen
+          folyonun boyut değiştirmesi bu sınıfta kayıt hatasının asıl sebebidir;
+          düzeltme baskı dosyasına değil, ölçüme dayanır.
+      - term: TriZone Isı Hattı
+        body: >-
+          Ön ısıtma, tabla ve son kurutma bölgeleri ayrı ayarlanır. Kesim yapan bir
+          makinede kurutma yalnızca kalite meselesi değildir; yeterince kurumamış
+          mürekkep bıçağın altında dağılır ve kenar keskinliğini bitirir.
+      - term: MavenFlow Beyaz Sirkülasyon
+        body: >-
+          Beyaz mürekkep, makine beklerken de kanal içinde dolaşır. Beyaz 500 ml
+          ambalajda gelir; küçük ambalaj bir eksiklik değil, çökelme hızının kabulüdür.
+      - term: TensionLock Rulo Gergi
+        body: >-
+          Üç rulolu değiştiricide her bobin kendi gergisiyle çalışır. Kesim, gerginlik
+          değişimine baskıdan çok daha duyarlıdır; sabit gergi olmadan ±0,2 mm kontur
+          tekrarı kâğıt üzerinde kalan bir rakamdır.
+    faq:
+      - q: MS-1600 PC hangi işler için doğru, hangileri için yanlış makine?
+        a: >-
+          Etiket, sticker, araç yazısı, vitrin folyosu gibi kontur kesimli iş üreten
+          atölyeler için doğru. İşinizin çoğu büyük ebat branda ve afişse yanlış
+          seçim: kesim ünitesi vaktinin çoğunu boş geçirir ve aynı paraya MS-1802 E4
+          ile daha geniş, daha hızlı bir hat kurarsınız.
+      - q: 100 m²/sa gerçek mi?
+        a: >-
+          Gerçek, ama iki geçiş taslak modunda. Sözleşme kalitesinde iş için dört
+          geçiş ve 49 m²/sa'yı hesaba katın; yakından okunan araç yazısında altı
+          geçiş ve 33 m²/sa'ya inersiniz. Tabloyu bu yüzden dört satır yayımlıyoruz.
+      - q: Kesim hassasiyeti pratikte ne kadar tutuyor?
+        a: >-
+          Makine ±0,2 mm kontur tekrarı verir, ancak bu rakam boyutu sabit kalan
+          malzemede geçerlidir. Isıtıcıdan çıkan folyo soğurken çeker; uzun işlerde
+          baskıyı 20–30 dakika dinlendirip öyle kesmek, hiçbir ayarın veremeyeceği
+          kadar fark yaratır. Bu bir kusur değil, malzemenin fiziği.
+      - q: Ayrı bir kesici plotter almak yerine bunu almalı mıyım?
+        a: >-
+          Hacme bakın. Bas-kes tek makinede seri çalışır: makine keserken basmaz.
+          Günlük iş sıranız makineyi doldurmuyorsa bas-kes hem yerden hem paradan
+          kazandırır. Dolduruyorsa, ayrı bir yazıcı ve ayrı bir kesici toplam üretimi
+          gözle görülür şekilde artırır.
+      - q: Beyaz mürekkep bu makinede ne kadar iş görür?
+        a: >-
+          Şeffaf folyoya baskıda ve koyu zemine uygulanacak etiketlerde işi kurtarır,
+          ancak beyaz kanal hem hızı düşürür hem de düzenli kullanım ister. Haftada
+          bir defadan az beyaz basacaksanız kanalı hiç açmayın; atıl duran beyaz,
+          kullanılan beyazdan pahalıya mal olur.
+    alternateName:
+      - bas kes makinası
+      - print and cut baskı makinesi
+      - ekosolvent baskı kesim makinası
+      - 160 cm baskı kesim makinesi
+  en:
+    tagline: Print and cut on one machine, work that leaves the shop finished
+    summary: >-
+      The MS-1600 PC prints and contour-cuts 1.6 m vinyl on one machine. Two staggered
+      Epson i3200-E1 heads reach 100 m²/h in two-pass draft; for contract-quality work,
+      49 m²/h at four passes is the honest number. The cutting unit runs at 300 mm/s
+      with blade force settable from 10 to 450 gf and repeats a contour to within
+      ±0.2 mm. A three-roll changer lets shops that alternate between cast vinyl and
+      backlit queue jobs without stopping the machine.
+    features:
+      - term: ContourSync Print and Cut
+        body: >-
+          Register marks laid down during printing are re-read optically before cutting
+          and the blade path is corrected against the measured deviation. Vinyl that
+          changed size on its way through the heaters is the real source of register
+          error in this class; the correction comes from measurement, not from the file.
+      - term: TriZone Heat Path
+        body: >-
+          Pre-heat, platen and post-dry are set independently. On a machine that also
+          cuts, drying is not only a quality question — ink that has not set smears
+          under the blade and destroys edge definition.
+      - term: MavenFlow White Circulation
+        body: >-
+          White ink circulates through the channel even while the machine sits idle.
+          White ships in a 500 ml pack; the smaller pack is not a shortcoming, it is an
+          admission of how fast white settles.
+      - term: TensionLock Roll Tension
+        body: >-
+          Each reel in the three-roll changer runs on its own tension loop. Cutting is
+          far more sensitive to tension change than printing is; without constant pull,
+          ±0.2 mm contour repeatability is a number that lives only on paper.
+    faq:
+      - q: What is the MS-1600 PC right for, and what is it wrong for?
+        a: >-
+          Right for shops producing contour-cut work — labels, decals, vehicle
+          lettering, window graphics. Wrong if most of your volume is large-format
+          banner and poster: the cutter would idle, and the same money buys a wider,
+          faster line in the MS-1802 E4.
+      - q: Is 100 m²/h real?
+        a: >-
+          It is, in two-pass draft. For contract-quality work plan on four passes and
+          49 m²/h; close-read vehicle lettering takes you to six passes and 33 m²/h.
+          That is why we publish four rows instead of one headline figure.
+      - q: How well does the cutting accuracy hold in practice?
+        a: >-
+          The machine repeats a contour to ±0.2 mm, but that figure assumes dimensionally
+          stable material. Vinyl leaving the heaters shrinks as it cools; on long runs,
+          letting a print rest 20–30 minutes before cutting does more than any setting
+          can. That is material physics, not a defect.
+      - q: Should I buy this instead of a separate cutting plotter?
+        a: >-
+          Look at your volume. Print-and-cut is serial on one machine: while it cuts, it
+          is not printing. If your daily queue does not fill the machine, print-and-cut
+          saves both floor space and money. If it does, a separate printer and a
+          separate cutter measurably raise total output.
+      - q: How useful is white ink on this machine?
+        a: >-
+          It rescues work on clear film and labels destined for dark surfaces, but the
+          white channel both costs speed and demands regular use. If you will print
+          white less than once a week, do not open the channel at all — idle white costs
+          more than white you actually print.

@@ -1,0 +1,318 @@
+sku: MH-3200-R12
+model: Maven MH-3200 R12
+family: uv-hybrid
+tier: industrial
+order: 60
+featured: true
+status: active
+price: null
+leadTimeWeeks: [8, 12]
+
+headline: [printWidth, printHead, speedModes, colors]
+
+printhead:
+  brand: ricoh
+  model: Gen6
+  count: [2, 20]
+  dropSizePl: [5, 15]
+
+headOptions:
+  - { brand: ricoh, model: Gen6, count: [2, 20], dropSizePl: [5, 15] }
+  - { brand: konica, model: KM1024i, count: [4, 28], dropSizePl: [6, 30] }
+  - { brand: kyocera, model: KJ4B-EX, count: [2, 10] }
+
+specs:
+  printWidth: { value: 3200, unit: mm }
+  mediaWidth: { value: 3300, unit: mm }
+  mediaHeight:
+    value: 30
+    unit: mm
+    note: { tr: rijit levha modunda, en: in rigid sheet mode }
+  mediaThickness: { value: 1, unit: mm, note: { tr: rulo modunda, en: in roll mode } }
+  rollWeight:
+    value: [1000, 2000]
+    unit: kg
+    note: { tr: ağır hizmet rulo grubu opsiyonu ile, en: with the heavy-duty roll set }
+  resolution: "726 · 1200 · 2400 dpi"
+  dropSize: { value: [5, 15], unit: pL }
+  printHead: "Ricoh Gen6 (5 pl)"
+  headCount: { value: [2, 20], unit: adet }
+  colors: "CMYK · Lc · Lm · W"
+  inkType: "UV LED"
+  inkSupply: "5 L toplu besleme, degazörlü; beyaz kanalda sürekli sirkülasyon"
+  inkCapacity: { value: 5000, unit: ml }
+  inkConsumption: { value: [10, 30], unit: ml/m2 }
+  whiteCirculation: true
+  table: "Vakumlu besleme köprüsü, 4 bölge"
+  vacuumZones: { value: 4 }
+  feed: "Rulodan ruloya açma-sarma + rijit levha giriş-çıkış konveyörü"
+  takeUp: "Gergi sensörlü motorlu sarma, 3 inç göbek"
+  curing: "Su soğutmalı LED-UV, 395 nm, araba iki yanında"
+  heightSensor: "Otomatik malzeme yüksekliği ölçümü, 0–30 mm"
+  antiCollision: "Kafa çarpışma sensörü, otomatik duruş"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Otomatik püskürtme + programlı silme çevrimi"
+  powerSupply: "AC 220 V, 50/60 Hz, 3 faz"
+  power: { value: 15, unit: kW }
+  current: { value: 70, unit: A }
+  compressedAir: "6 bar, 250 L/dk"
+  environment: "20–28 °C / %40–60 BN"
+  tempGradient: { value: 10, unit: °C/sa }
+  rip: "ONYX · Caldera · SAi Flexi · Photoprint"
+  fileFormats: "PDF · TIFF · EPS · PS · JPEG"
+  interface: "Gigabit Ethernet"
+  dimensions: "5950 × 1700 × 1600 mm"
+  weight: { value: 2985, unit: kg }
+  floorArea: { value: 34, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures. The range in
+# each row is the 2 → 20 head span, not a marketing best case.
+speedModes:
+  - { pass: 4, value: [92, 111], mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: [61, 74], mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: [41, 49], mode: { tr: Yüksek kalite, en: High quality } }
+
+compatibleInks: [mi-210-uv-led-r, mi-110-uv, mi-920-primer]
+applications: [signage, interior, industrial, vehicle]
+substrates: [vinyl, banner, mesh, wallpaper, canvas, foamboard, pvc, acrylic, alucomp, photoblock]
+siblings: [MH-1800-U4, MF-3220-K12]
+rip: [ONYX, Caldera, SAi Flexi, Photoprint]
+
+installation:
+  powerPhase: 3F
+  floorAreaM2: 34
+  ceilingHeightM: 3.2
+  cratedDimensions: { w: 6250, d: 1900, h: 1850, unit: mm }
+  ventilationRequired: false
+  compressedAir: "6 bar, 250 L/dk"
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Vinç veya ağır forklift ile indirme
+      - Elektrik altyapısı ve 70 A trifaze pano
+      - Basınçlı hava hattı ve kurutuculu kompresör
+      - Ağır rulo kaldırma ekipmanı
+      - Sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Crane or heavy forklift unloading
+      - Electrical infrastructure and a 70 A three-phase panel
+      - Compressed air line and a compressor with a dryer
+      - Lifting equipment for heavy reels
+      - Starter consumables kit
+
+gallery:
+  - src: /img/machines/mh-3200-r12/hero.jpg
+    kind: machine
+    alt: { tr: 3.2 metre genişliğinde hibrit UV baskı makinesi ve yüklü bobin, en: 3.2 metre hybrid UV printer with a loaded reel }
+  - src: /img/machines/mh-3200-r12/carriage.jpg
+    kind: detail
+    alt: { tr: Yirmi kafaya kadar genişleyen araba ve su soğutmalı LED lambalar, en: Carriage scaling to twenty heads with water-cooled LED lamps }
+    caption: { tr: DualCure LED Köprü, en: DualCure LED bridge }
+  - src: /img/machines/mh-3200-r12/roll-gear.jpg
+    kind: detail
+    alt: { tr: Ağır hizmet rulo grubu ve gergi sensörlü sarma mili, en: Heavy-duty roll gear and the tension-sensed rewind shaft }
+    caption: { tr: TensionLock Rulo Gergi, en: TensionLock roll tension }
+  - src: /img/machines/mh-3200-r12/ink.jpg
+    kind: detail
+    alt: { tr: Kanal başına 5 litrelik toplu mürekkep tankları ve degazör, en: 5 litre bulk ink tanks per channel with the degasser }
+  - src: /img/machines/mh-3200-r12/app-wrap.jpg
+    kind: application
+    alt: { tr: Bina cephesine asılmış tek parça mesh baskı, en: Single-piece printed mesh hung on a building facade }
+    caption: { tr: UV Cephe Giydirme Baskı, en: UV printed building wrap }
+
+model3d:
+  glb: /models/mh-3200-r12.v1.glb
+  poster: /models/mh-3200-r12-poster.webp
+  triangles: 0
+  bytes: 0
+  hotspots:
+    - key: printhead
+      position: "-0.28 1.24 0.16"
+      normal: "0 1 0"
+      label: { tr: Baskı kafası bloğu, en: Printhead carriage }
+      body:
+        tr: 2–20 adet Ricoh Gen6 kafa, kademeli dizilim, 5–15 pL değişken damla.
+        en: 2–20 Ricoh Gen6 heads in a staggered array, 5–15 pL variable drop.
+    - key: curing
+      position: "-0.28 1.12 0.44"
+      normal: "0 0 1"
+      label: { tr: LED UV kürleme, en: LED UV curing }
+      body:
+        tr: Su soğutmalı 395 nm LED lambalar; arabanın her iki yanında kürleme.
+        en: Water-cooled 395 nm LED lamps curing on both sides of the carriage.
+    - key: media_feed
+      position: "0.62 0.58 -0.66"
+      normal: "0 0 -1"
+      label: { tr: Malzeme besleme, en: Media feed }
+      body:
+        tr: Rulodan ruloya açma-sarma; ağır hizmet grubuyla 2 tona kadar bobin.
+        en: Roll-to-roll unwind and rewind; up to two tonnes with the heavy-duty set.
+    - key: ink_supply
+      position: "-2.46 0.88 0.36"
+      normal: "-1 0 0"
+      label: { tr: Mürekkep besleme, en: Ink supply system }
+      body:
+        tr: Kanal başına 5 L toplu besleme, degazörlü; beyazda sürekli sirkülasyon.
+        en: 5 L bulk supply per channel with degassing; continuous circulation on white.
+    - key: control
+      position: "2.38 1.06 0.48"
+      normal: "0 1 0"
+      label: { tr: Kontrol paneli, en: Control station }
+      body:
+        tr: Baskı kuyruğu, kafa durumu ve kürleme gücü tek ekrandan yönetilir.
+        en: Print queue, nozzle status and curing power run from a single screen.
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mh-3200-r12-katalog-tr.pdf, bytes: 2932736 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mh-3200-r12-teknik-tr.pdf, bytes: 524288 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mh-3200-r12-kurulum-kontrol-listesi.pdf, bytes: 243712 }
+
+i18n:
+  tr:
+    tagline: 3,2 metrede endüstriyel hız, tek şasede rulo ve levha
+    summary: >-
+      MH-3200 R12, 3,2 metre genişlikte rulo ve 30 mm'ye kadar levha basan endüstriyel
+      hibrit sistemdir. İki ile yirmi arasında yapılandırılabilen Ricoh Gen6 dizilimi
+      dört geçişte 92–111 m²/sa verir; sekiz geçişte 41–49 m²/sa'da kalır ama bant izi
+      tamamen kaybolur. Kanal başına 5 litrelik toplu besleme, uzun cephe işlerinde
+      vardiya ortasında mürekkep değiştirmeyi bitirir. Ağır hizmet rulo grubu opsiyonu
+      2 tona kadar bobin taşır. 15 kW, 70 A trifaze besleme şarttır.
+    features:
+      - term: MavenRail Hibrit Besleme
+        body: >-
+          Rulo grubu ile rijit levha konveyörü aynı şasede çalışır. Cephe brandasından
+          30 mm'lik kompozit panele geçmek için ikinci bir makineye, ikinci bir
+          operatöre ve ikinci bir renk profiline ihtiyacınız olmaz.
+      - term: DualCure LED Köprü
+        body: >-
+          Su soğutmalı 395 nm lambalar arabanın her iki yanındadır; kürleme gidiş ve
+          dönüşte aynı dozu verir. Hava soğutmalı lambaların aksine lamba sıcaklığı
+          vardiya boyunca sabit kalır — 24 saat çalışan hatlarda LED ömrünü belirleyen
+          tek değişken budur.
+      - term: TensionLock Rulo Gergi
+        body: >-
+          Açma ve sarma motorları gergi sensöründen geri besleme alır. İki tonluk bir
+          bobinde çap düştükçe gerginlik sabit tutulur; 3,2 metre genişlikte kenar
+          dalgalanması, kafa temasının en yaygın sebebidir.
+      - term: MavenFlow Beyaz Sirkülasyon
+        body: >-
+          Beyaz mürekkep, makine kapalıyken bile kanal içinde dolaşır. 5 litrelik
+          tanklarda çökelme riski küçük şişelere göre çok daha yüksektir; sirkülasyon
+          bu makinede opsiyon değil, çalışma şartıdır.
+      - term: AutoGap Yükseklik Sensörü
+        body: >-
+          Malzeme yüksekliği 0–30 mm arasında otomatik ölçülür ve kafa yüksekliği buna
+          göre ayarlanır. Kafa çarpışma sensörü temas anında arabayı durdurur.
+    faq:
+      - q: MH-3200 R12 hangi ölçekteki atölye için doğru makine?
+        a: >-
+          Günlük 100 m²'nin üzerinde geniş format üreten, cephe giydirme, mesh, germe
+          branda ve büyük panel işi alan atölyeler için. Bu hacmin altındaysanız
+          makine vardiyanın çoğunu boş geçirir; 1,8 metrelik MH-1800 U4 hem yatırımı
+          hem de metrekare maliyetini düşürür.
+      - q: 92–111 m²/sa aralığı neye göre değişiyor?
+        a: >-
+          Kafa sayısına. Alt uç iki kafalı, üst uç yirmi kafalı konfigürasyondur ve
+          aradaki fark doğrusal değildir. Konica KM1024i seçerseniz dört geçişte
+          116–141 m²/sa'ya çıkarsınız, ancak sekiz geçişte iki kafa ailesi de
+          41–49 m²/sa bandında buluşur. Yani hız avantajı yalnız kaba modlarda gerçek.
+      - q: Trifaze elektrik ve basınçlı hava şart mı?
+        a: >-
+          İkisi de şart. Makine 220 V 3 faz, 70 A ister; kablo kesiti ve kaçak akım
+          koruması kurulum öncesi sizin tarafınızdadır. Basınçlı hava 6 bar, 250 L/dk
+          ve kurutuculu olmalıdır — hattaki nem doğrudan mürekkep sistemine gider.
+      - q: Ağır hizmet rulo opsiyonu gerçekten gerekli mi?
+        a: >-
+          Yalnızca 1 tonun üzerinde bobinle çalışıyorsanız. Bu opsiyon makineyi
+          pahalılaştırmakla kalmaz; atölyeye vinç veya makaslı rulo kaldırıcı, zemine
+          de o yükü taşıyacak beton gerektirir. Standart bobinlerle çalışıyorsanız
+          almayın.
+      - q: Kafa sayısını sonradan artırabilir miyim?
+        a: >-
+          Evet, şasi yirmi kafaya kadar hazırdır ve 8 kafalı bir makineyi 12 kafaya
+          çıkarmak yerinde yapılan bir yükseltmedir. Yükseltme sonrası renk
+          profillerinin sıfırdan çıkarılması gerekir; eski profillerle devam etmek
+          yükseltmenin kazandırdığı hızı renk tutarsızlığı olarak geri alır.
+      - q: Levha basma yeteneği flatbed'in yerini tutar mı?
+        a: >-
+          Hayır. 30 mm'ye kadar levha geçer ama makine levhayı konveyör üzerinde
+          taşır, tam vakumlu tablada tutmaz. Eğilmiş levha, ağır malzeme ve kılavuz
+          pimle tekrar eden çoklu dizim işleri için MF-3220 K12 doğru makinedir.
+    alternateName:
+      - 3.2 m uv hibrit baskı makinası
+      - endüstriyel hibrit uv baskı makinesi
+      - 320 cm uv baskı makinası
+      - rulodan ruloya uv baskı makinesi
+  en:
+    tagline: Industrial speed at 3.2 metres, roll and rigid on one chassis
+    summary: >-
+      The MH-3200 R12 prints 3.2 m roll media and rigid sheets up to 30 mm on one
+      industrial chassis. A Ricoh Gen6 array configurable from 2 to 20 heads delivers
+      92–111 m²/h at four passes; at eight passes it holds 41–49 m²/h and banding
+      disappears entirely. Five-litre bulk supply per channel ends mid-shift ink
+      changes on long building-wrap runs. The heavy-duty roll set carries reels up to
+      two tonnes. A 15 kW, 70 A three-phase feed is mandatory.
+    features:
+      - term: MavenRail Hybrid Feed
+        body: >-
+          Roll gear and the rigid sheet conveyor run on the same chassis. Moving from
+          facade mesh to a 30 mm composite panel does not need a second machine, a
+          second operator or a second set of colour profiles.
+      - term: DualCure LED Bridge
+        body: >-
+          Water-cooled 395 nm lamps sit on both sides of the carriage, so the cure dose
+          is identical in each direction. Unlike air-cooled lamps, temperature holds
+          steady across a full shift — on a line running around the clock that is the
+          single variable that decides LED service life.
+      - term: TensionLock Roll Tension
+        body: >-
+          Unwind and rewind motors take feedback from a tension sensor, holding
+          constant pull as a two-tonne reel loses diameter. Across 3.2 metres, edge
+          waviness is the most common cause of head strikes.
+      - term: MavenFlow White Circulation
+        body: >-
+          White ink circulates through the channel even when the machine is idle. Five
+          litre tanks settle far faster than small bottles, which makes circulation an
+          operating condition on this machine rather than an option.
+      - term: AutoGap Height Sensor
+        body: >-
+          Media height is measured automatically between 0 and 30 mm and the head gap
+          is set from it. An anti-collision sensor halts the carriage on contact.
+    faq:
+      - q: What size of shop is the MH-3200 R12 right for?
+        a: >-
+          Shops producing more than 100 m² of wide format a day — building wraps, mesh,
+          tensioned banner and large panel work. Below that the machine idles through
+          most of a shift, and the 1.8 m MH-1800 U4 lowers both the investment and the
+          cost per square metre.
+      - q: What moves the 92–111 m²/h figure?
+        a: >-
+          Head count. The low end is a two-head machine, the high end twenty, and the
+          curve between them is not linear. Konica KM1024i heads take four-pass output
+          to 116–141 m²/h, but at eight passes both head families converge on
+          41–49 m²/h — the speed advantage is real only in the coarser modes.
+      - q: Are three-phase power and compressed air mandatory?
+        a: >-
+          Both are. The machine needs 220 V three-phase at 70 A; cable sizing and
+          residual-current protection are your responsibility before installation.
+          Compressed air must be 6 bar at 250 L/min and dried — moisture in the line
+          goes straight into the ink system.
+      - q: Do I actually need the heavy-duty roll option?
+        a: >-
+          Only if you run reels above one tonne. Beyond the price, it obliges you to
+          have a crane or a scissor roll lifter in the shop and a floor rated for the
+          load. If your media comes on standard reels, skip it.
+      - q: Can I add printheads later?
+        a: >-
+          Yes — the chassis is prepared for twenty heads and taking an 8-head machine
+          to 12 is an on-site upgrade. Colour profiles have to be rebuilt from scratch
+          afterwards; running the old ones gives back the speed you bought as colour
+          inconsistency.
+      - q: Does the rigid capability replace a flatbed?
+        a: >-
+          No. Sheet up to 30 mm passes through, but the machine carries it on a
+          conveyor rather than holding it on a full vacuum bed. For bowed sheet, heavy
+          material and ganged repeat work indexed off registration pins, the
+          MF-3220 K12 is the right machine.

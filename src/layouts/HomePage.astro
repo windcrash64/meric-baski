@@ -1,0 +1,745 @@
+---
+import { getCollection } from 'astro:content';
+
+import { SITE, type Locale } from '../config/site';
+import { FAMILY_ROUTE, INK_FAMILY_ROUTE, path } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { CHANNELS, type ChannelCode } from '../i18n/specs';
+import Base from './Base.astro';
+import Picture from '../components/media/Picture.astro';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const tr = locale === 'tr';
+
+const machines = (await getCollection('machines'))
+  .filter((m) => m.data.status !== 'discontinued')
+  .sort((a, b) => a.data.order - b.data.order);
+
+const FAMILIES = [
+  {
+    key: 'uv-flatbed',
+    tr: { name: 'UV Flatbed', role: 'Rijit malzemeye doğrudan baskı' },
+    en: { name: 'UV Flatbed', role: 'Direct printing onto rigid material' },
+    chips: ['600×900 – 3200×2000 mm', 'Ricoh · Konica · Epson', '2–18 kafa'],
+  },
+  {
+    key: 'uv-hybrid',
+    tr: { name: 'UV Hibrit', role: 'Rulo ve levha, tek şasi' },
+    en: { name: 'UV Hybrid', role: 'Roll and rigid, one chassis' },
+    chips: ['1,8 – 3,2 m', 'LED-UV', '92–111 m²/sa'],
+  },
+  {
+    key: 'eco-solvent',
+    tr: { name: 'Eko Solvent', role: 'Folyo, branda, araç giydirme' },
+    en: { name: 'Eco-Solvent', role: 'Vinyl, banner, vehicle wraps' },
+    chips: ['1,6 – 1,8 m', 'Epson i3200-E1', 'Baskı + kesim'],
+  },
+  {
+    key: 'dtf',
+    tr: { name: 'DTF Sistemleri', role: 'Film transferi ile tekstil' },
+    en: { name: 'DTF Systems', role: 'Textile via film transfer' },
+    chips: ['30 – 60 cm', 'Toz serpme ünitesi', 'Duman filtresi'],
+  },
+  {
+    key: 'sublimation',
+    tr: { name: 'Süblimasyon', role: 'Bayrak, sportif tekstil, promosyon' },
+    en: { name: 'Dye-Sublimation', role: 'Flags, sportswear, promotional' },
+    chips: ['1,9 m', '180 m²/sa @2-pass', 'Kalender ile sistem'],
+  },
+  {
+    key: 'uv-dtf',
+    tr: { name: 'UV DTF / Kristal Etiket', role: 'Her yüzeye yapışan etiket' },
+    en: { name: 'UV DTF / Crystal Label', role: 'Labels that stick to anything' },
+    chips: ['30 cm', 'A/B film laminasyon', 'CMYK + W + Lak'],
+  },
+  {
+    key: 'cutting',
+    tr: { name: 'Kesim Makineleri', role: 'Dijital flatbed kesim ve plotter' },
+    en: { name: 'Cutting Systems', role: 'Digital flatbed cutting and plotters' },
+    chips: ['1600×1200 mm', '1000 mm/s', '±0,05 mm'],
+  },
+] as const;
+
+const INK_FAMILIES = [
+  { key: 'uv', tr: 'UV Mürekkep', en: 'UV Inks' },
+  { key: 'uv-led', tr: 'UV LED Mürekkep', en: 'UV-LED Inks' },
+  { key: 'uv-dtf', tr: 'UV DTF Mürekkep', en: 'UV DTF Inks' },
+  { key: 'eco-solvent', tr: 'Eko Solvent Mürekkep', en: 'Eco-Solvent Inks' },
+  { key: 'solvent', tr: 'Solvent Mürekkep', en: 'Solvent Inks' },
+  { key: 'sublimation', tr: 'Süblimasyon Mürekkebi', en: 'Dye-Sublimation Inks' },
+  { key: 'dtf', tr: 'DTF Pigment Mürekkep', en: 'DTF Pigment Inks' },
+  { key: 'textile-pigment', tr: 'Tekstil Pigment Mürekkebi', en: 'Textile Pigment Inks' },
+] as const;
+
+const CHANNEL_SET: ChannelCode[] = ['C', 'M', 'Y', 'K', 'Lc', 'Lm', 'Or', 'Gr', 'W', 'Cl'];
+
+const APPLICATIONS = [
+  { key: 'applications.signage', tr: 'Reklam ve Tabela', en: 'Signage & Advertising' },
+  { key: 'applications.packaging', tr: 'Ambalaj ve Etiket', en: 'Packaging & Labels' },
+  { key: 'applications.interior', tr: 'Mobilya ve Dekorasyon', en: 'Furniture & Interior' },
+  { key: 'applications.industrial', tr: 'Cam, Metal ve Endüstriyel', en: 'Glass, Metal & Industrial' },
+  { key: 'applications.textile', tr: 'Tekstil ve Promosyon', en: 'Textile & Promotional' },
+  { key: 'applications.vehicle', tr: 'Araç Giydirme', en: 'Vehicle Wrapping' },
+] as const;
+
+const COMMITMENTS = tr
+  ? [
+      { n: '01', h: `${SITE.commitments.responseHours} saat içinde müdahale`, b: 'Arıza kaydınız açıldığı andan itibaren en geç 24 saat içinde uzaktan bağlanır, gerekiyorsa yerinde ekip planlanır.' },
+      { n: '02', h: 'Garantiyi ikiye ayırıyoruz', b: `Elektronik aksam ${SITE.commitments.warrantyElectronicMonths} ay, mekanik aksam ${SITE.commitments.warrantyMechanicalMonths} ay. Tek bir "1 yıl garanti" cümlesi, hangi parçanın neyi kapsadığını gizler.` },
+      { n: '03', h: 'Kritik yedek parça stokta', b: 'Baskı kafası, dampers, kayış, encoder şerit ve pompa gibi üretimi durduran kalemler İstanbul deposunda tutulur.' },
+      { n: '04', h: 'Eğitimde süre sınırı yok', b: 'Operatör eğitimi, ekibiniz makineyi tek başına çalıştırana kadar devam eder. Personel değişiminde tekrarı ücretsizdir.' },
+      { n: '05', h: `${SITE.commitments.onSiteCities.length} şehirde yerinde servis`, b: SITE.commitments.onSiteCities.join(' · ') },
+      { n: '06', h: 'Kurulum öncesi keşif', b: 'Elektrik, zemin, kapı ölçüsü ve havalandırma satıştan önce kontrol edilir. Makinenin kapıdan girmemesi bizim hatamız olur, sizin değil.' },
+    ]
+  : [
+      { n: '01', h: `Response within ${SITE.commitments.responseHours} hours`, b: 'From the moment a fault is logged we connect remotely within 24 hours and schedule an on-site engineer if needed.' },
+      { n: '02', h: 'We split the warranty', b: `Electronics ${SITE.commitments.warrantyElectronicMonths} months, mechanical parts ${SITE.commitments.warrantyMechanicalMonths} months. A single "one year warranty" hides which part covers what.` },
+      { n: '03', h: 'Critical spares in stock', b: 'Printheads, dampers, belts, encoder strips and pumps — the items that stop production — are held in Istanbul.' },
+      { n: '04', h: 'Training has no time limit', b: 'Operator training continues until your team runs the machine unaided. Repeats after staff changes are free.' },
+      { n: '05', h: `On-site service in ${SITE.commitments.onSiteCities.length} cities`, b: SITE.commitments.onSiteCities.join(' · ') },
+      { n: '06', h: 'Pre-installation survey', b: 'Power, floor, door width and ventilation are checked before the sale. A machine that will not fit through your door is our mistake, not yours.' },
+    ];
+
+const familyCount = (key: string) => machines.filter((m) => m.data.family === key).length;
+
+const title = tr
+  ? 'Dijital Baskı Makineleri ve Mürekkep | Maven'
+  : 'Digital Printing Machines and Inks | Maven';
+const description = tr
+  ? 'UV flatbed, hibrit, eko solvent, DTF ve süblimasyon baskı makineleri, mürekkep ve sarf malzemeleri, 24 saat içinde teknik servis. Teklif alın.'
+  : 'UV flatbed, hybrid, eco-solvent, DTF and dye-sublimation printers, inks and consumables, technical service within 24 hours. Request a quote.';
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey="home"
+  schema={[{
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    url: SITE.url,
+    name: SITE.brand.name,
+    inLanguage: locale,
+    publisher: { '@id': `${SITE.url}/#organization` },
+  }]}
+>
+  <!-- 1 — HERO ------------------------------------------------------------ -->
+  <section class="hero" data-ground="paper" data-accent="cyan">
+    <div class="shell hero__inner">
+      <div class="hero__copy">
+        <h1 class="hero-statement">
+          <span class="stagger-line"><span>{tr ? 'Dijital baskı makineleri,' : 'Digital printing machines,'}</span></span>
+          <span class="stagger-line"><span>{tr ? 'mürekkep ve teknik servis —' : 'inks and technical service —'}</span></span>
+          <span class="stagger-line"><span>{tr ? 'tek adresten.' : 'from one place.'}</span></span>
+        </h1>
+
+        <!-- The only place all three process colours touch on this page. -->
+        <div class="hero__pixels reveal" aria-hidden="true">
+          <span style="background:var(--cyan)"></span>
+          <span style="background:var(--magenta)"></span>
+          <span style="background:var(--yellow)"></span>
+        </div>
+
+        <p class="lead reveal">
+          {tr
+            ? 'Makineyi satan, mürekkebini stoklayan ve arızasına aynı gün bakan tek firma. Yedi makine ailesi, sekiz mürekkep serisi, on iki şehirde yerinde servis.'
+            : 'One company that sells the machine, stocks its ink and answers its faults the same day. Seven machine families, eight ink series, on-site service in twelve cities.'}
+        </p>
+
+        <div class="cluster reveal">
+          <a class="btn" href={path('quote', locale)}>
+            {t('getQuote', locale)}
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="link link--accent hero__secondary" href={path('machines', locale)}>
+            {t('exploreMachines', locale)} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__media reveal-media">
+        <Picture
+          src="machines/flatbed-uv/flatbed-uv-hero"
+          alt={tr
+            ? 'Maven MF-2513 R8 endüstriyel UV flatbed baskı makinesi'
+            : 'Maven MF-2513 R8 industrial UV flatbed printer'}
+          ratio="none"
+          sizes="(min-width: 1024px) 52vw, 100vw"
+          priority
+          graded={false}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 — PROOF STRIP ------------------------------------------------------ -->
+  <section class="proof" data-ground="paper">
+    <div class="shell">
+      <dl class="proof__grid">
+        <div>
+          <dt class="eyebrow">{tr ? 'Sektörde' : 'In the trade'}</dt>
+          <dd><span class="counter" data-count-to={SITE.commitments.yearsInBusiness}>0</span> {tr ? 'yıl' : 'years'}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">{tr ? 'Kurulum' : 'Installations'}</dt>
+          <dd><span class="counter" data-count-to={SITE.commitments.installationsCount}>0</span>+</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">{tr ? 'Yerinde servis' : 'On-site service'}</dt>
+          <dd><span class="counter" data-count-to={SITE.commitments.onSiteCities.length}>0</span> {tr ? 'şehir' : 'cities'}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">{tr ? 'Müdahale' : 'Response'}</dt>
+          <dd><span class="counter" data-count-to={SITE.commitments.responseHours}>0</span> {tr ? 'saat içinde' : 'hours'}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 3 — MACHINES --------------------------------------------------------- -->
+  <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">01 — {tr ? 'MAKİNELER' : 'MACHINES'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Yedi makine ailesi, giriş seviyesinden endüstriyel hacme.'
+            : 'Seven machine families, from entry level to industrial volume.'}
+        </h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Hangi makinenin doğru olduğunu iş hacminiz ve bastığınız malzeme belirler. Her ailenin sayfasında fiyatı neyin belirlediğini de yazdık.'
+            : 'The right machine follows from your volume and your material. Each family page also explains what actually drives the price.'}
+        </p>
+
+        <ul class="cards reveal" role="list" data-stagger>
+          {FAMILIES.map((f) => (
+            <li class="card" data-accent="cyan">
+              <a class="card__link" href={path(FAMILY_ROUTE[f.key], locale)}>
+                <span class="card__head">
+                  <span class="card__title">{f[locale].name}</span>
+                  <span class="card__count mono">
+                    {familyCount(f.key)} {t('models', locale)}
+                  </span>
+                </span>
+                <span class="card__role muted">{f[locale].role}</span>
+                <span class="card__chips">
+                  {f.chips.map((c) => <span class="chip mono">{c}</span>)}
+                </span>
+                <span class="card__cta">
+                  {t('explore', locale)} <span class="arrow" aria-hidden="true">›</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — INKS ------------------------------------------------------------- -->
+  <section class="section" data-ground="bone" data-accent="magenta">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">02 — {tr ? 'MÜREKKEP & SARF' : 'INKS & SUPPLIES'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Makineyi bir kez satarız. Mürekkebi her ay.'
+            : 'We sell the machine once. The ink, every month.'}
+        </h2>
+
+        <!-- The channel strip: the site's signature component. Real swatches,
+             white and varnish as outlined/hatched chips. -->
+        <ul class="channels reveal" role="list" aria-label={t('channels', locale)}>
+          {CHANNEL_SET.map((code) => {
+            const ch = CHANNELS[code] as { tr: string; en: string; hex: string; outlined?: boolean; hatched?: boolean };
+            return (
+              <li class="channel">
+                <span
+                  class:list={['channel__swatch', { 'is-outlined': ch.outlined, 'is-hatched': ch.hatched }]}
+                  style={`--swatch:${ch.hex}`}
+                  aria-hidden="true"
+                ></span>
+                <span class="channel__code mono">{code}</span>
+                <span class="channel__name">{ch[locale]}</span>
+              </li>
+            );
+          })}
+        </ul>
+
+        <p class="lead reveal">
+          {tr
+            ? 'Sattığımız her kimyasal ürün için Türkçe Güvenlik Bilgi Formu sağlıyoruz.'
+            : 'Every chemical product we sell ships with a Turkish safety data sheet.'}
+          {' '}
+          <a class="link link--inline" href={path('documents', locale)}>
+            {tr ? 'Belgeler' : 'Documents'} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+        </p>
+
+        <ul class="ink-families reveal" role="list">
+          {INK_FAMILIES.map((f) => (
+            <li>
+              <a class="link" href={path(INK_FAMILY_ROUTE[f.key], locale)}>{f[locale]}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — COMPATIBILITY TEASER --------------------------------------------- -->
+  <section class="section section--tight" data-ground="bone" data-accent="magenta">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">03 — {tr ? 'UYUMLULUK' : 'COMPATIBILITY'}</p>
+      </div>
+      <div class="section__body">
+        <h3 class="reveal">
+          {tr
+            ? '"Bu mürekkep benim Konica 1024i kafamda çalışır mı?" — tek tıkla.'
+            : '"Will this ink run in my Konica 1024i?" — one click.'}
+        </h3>
+        <div class="table-wrap reveal">
+          <table class="spec-table compat">
+            <caption class="visually-hidden">
+              {tr ? 'Makine – mürekkep uyumluluk tablosu özeti' : 'Machine–ink compatibility excerpt'}
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">{tr ? 'Makine' : 'Machine'}</th>
+                <th scope="col">{tr ? 'Baskı Kafası' : 'Printhead'}</th>
+                <th scope="col">{tr ? 'Uyumlu Mürekkep' : 'Compatible Ink'}</th>
+                <th scope="col">{tr ? 'Geçiş' : 'Changeover'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Maven MF-2513 R8</td><td>Ricoh Gen6</td><td>MI-210 UV-LED R</td>
+                <td>{t('switchAndMatch', locale)}</td>
+              </tr>
+              <tr>
+                <td>Maven MS-1802 E4</td><td>Epson i3200-E1</td><td>MI-410 ECO</td>
+                <td>{t('switchAndSwap', locale)}</td>
+              </tr>
+              <tr>
+                <td>Maven MD-600 A4</td><td>Epson i3200-A1</td><td>MI-710 DTF</td>
+                <td>{t('switchAndPrint', locale)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <a class="link link--accent" href={path('compatibility', locale)}>
+          {t('openTable', locale)} <span class="arrow" aria-hidden="true">›</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — APPLICATIONS ------------------------------------------------------ -->
+  <section class="section section--ruled" data-ground="paper">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">04 — {tr ? 'UYGULAMALAR' : 'APPLICATIONS'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">{tr ? 'Ne bastığınıza göre.' : 'By what you print.'}</h2>
+        <ul class="tiles reveal" role="list" data-stagger>
+          {APPLICATIONS.map((a) => (
+            <li class="tile">
+              <a href={path(a.key, locale)}>
+                <span class="tile__label">{a[locale]}</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 — SERVICE ----------------------------------------------------------- -->
+  <section class="section" data-ground="ink" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">05 — {tr ? 'TEKNİK SERVİS' : 'SERVICE'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr ? 'Sıfat değil, sayı veriyoruz.' : 'We publish numbers, not adjectives.'}
+        </h2>
+        <ol class="commitments reveal" role="list" data-stagger>
+          {COMMITMENTS.map((c) => (
+            <li class="commitment">
+              <span class="commitment__n mono">{c.n}</span>
+              <div>
+                <h3 class="commitment__h">{c.h}</h3>
+                <p class="muted">{c.b}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <a class="btn btn--outline" href={path('service.request', locale)}>
+          {t('serviceRequest', locale)}
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 — CTA BAND (seamless into the footer, no rule) ---------------------- -->
+  <section class="cta" data-ground="ink" data-accent="cyan">
+    <div class="shell">
+      <h2 class="cta__h">
+        {tr ? 'Makinenizi birlikte seçelim.' : 'Let us choose your machine together.'}
+      </h2>
+      <p class="lead muted">
+        {tr
+          ? 'Ne bastığınızı ve günlük hacminizi söyleyin; hangi makinenin gerçekten gerektiğini — ve gerekmediğini — söyleyelim.'
+          : 'Tell us what you print and how much of it. We will tell you which machine you actually need, and which you do not.'}
+      </p>
+      <div class="cluster">
+        <a class="btn btn--outline" href={path('quote', locale)}>
+          {t('getQuote', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="link link--accent" href={`tel:${SITE.contact.phone.e164}`}>
+          {SITE.contact.phone.display[locale]}
+        </a>
+        <a
+          class="link link--accent"
+          href={`https://wa.me/${SITE.contact.whatsapp.e164}?text=${encodeURIComponent(SITE.contact.whatsapp.prefill[locale])}`}
+          target="_blank"
+          rel="noopener"
+        >WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* --- hero --- */
+  .hero {
+    padding-block: clamp(var(--sp-8), 9vh, var(--sp-11)) 0;
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: var(--sp-8);
+    align-items: end;
+  }
+
+  @media (min-width: 1024px) {
+    .hero__inner {
+      grid-template-columns: 48fr 52fr;
+      gap: var(--sp-9);
+    }
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: var(--sp-6);
+    align-content: start;
+  }
+
+  .hero h1 {
+    margin: 0;
+  }
+
+  .hero__pixels {
+    display: flex;
+    gap: 6px;
+  }
+
+  .hero__pixels span {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hero__secondary {
+    font-weight: 500;
+    font-size: var(--step--1);
+  }
+
+  .hero__media {
+    /* Bleeds to the right edge on desktop: the machine runs off the page,
+       which reads as scale rather than as a photo pasted in a box. */
+    margin-inline-end: calc(var(--page-margin) * -1);
+  }
+
+  @media (max-width: 1023px) {
+    .hero__media {
+      margin-inline: calc(var(--page-margin) * -1);
+    }
+  }
+
+  /* --- proof strip --- */
+  .proof {
+    padding-block: var(--sp-7);
+    border-block: var(--border) solid var(--rule);
+  }
+
+  .proof__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-6) var(--gutter);
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .proof__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .proof dt {
+    margin-block-end: var(--sp-2);
+  }
+
+  .proof dd {
+    margin: 0;
+    font-size: var(--step-3);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-variation-settings: 'wdth' 88;
+  }
+
+  .proof .counter {
+    font-weight: 500;
+  }
+
+  /* --- machine cards --- */
+  .cards {
+    margin-block-start: var(--sp-8);
+    padding: 0;
+  }
+
+  .card__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-6);
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-4);
+  }
+
+  .card__title {
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .card__count {
+    font-size: var(--step--2);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .card__role {
+    font-size: var(--step--1);
+  }
+
+  .card__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    align-content: start;
+  }
+
+  .chip {
+    font-size: var(--step--2);
+    padding: 4px 8px;
+    border: var(--border) solid var(--hairline);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .card__cta {
+    font-size: var(--step--1);
+    font-weight: 500;
+    margin-block-start: auto;
+    padding-block-start: var(--sp-3);
+  }
+
+  /* --- channel strip --- */
+  .channels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-5) var(--sp-4);
+    margin-block: var(--sp-8);
+    padding: 0;
+  }
+
+  .channel {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    gap: 2px var(--sp-2);
+    align-items: center;
+  }
+
+  .channel__swatch {
+    grid-row: span 2;
+    width: 34px;
+    height: 34px;
+    background: var(--swatch);
+  }
+
+  .channel__swatch.is-outlined {
+    box-shadow: inset 0 0 0 1px var(--rule);
+  }
+
+  .channel__swatch.is-hatched {
+    background: repeating-linear-gradient(
+      45deg, var(--swatch) 0 4px, color-mix(in srgb, var(--swatch) 70%, var(--ink)) 4px 8px
+    );
+  }
+
+  .channel__code {
+    font-size: var(--step--2);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .channel__name {
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+
+  .ink-families {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+    gap: var(--sp-3) var(--gutter);
+    margin-block-start: var(--sp-7);
+    padding: 0;
+    font-size: var(--step--1);
+  }
+
+  /* --- compatibility --- */
+  .compat {
+    margin-block: var(--sp-6);
+  }
+
+  .compat th {
+    width: auto;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* --- application tiles --- */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: 0;
+    margin-block-start: var(--sp-8);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .tile a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-6) 0;
+    border-bottom: var(--border) solid var(--hairline);
+    color: inherit;
+    text-decoration: none;
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    transition: padding-inline-start var(--d-base) var(--e-out);
+  }
+
+  .tile a:hover,
+  .tile a:focus-visible {
+    padding-inline-start: var(--sp-4);
+  }
+
+  .tile a:hover .arrow,
+  .tile a:focus-visible .arrow {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 640px) {
+    .tiles {
+      column-gap: var(--sp-8);
+    }
+  }
+
+  /* --- service commitments --- */
+  .commitments {
+    display: grid;
+    gap: 0;
+    margin-block: var(--sp-8);
+    padding: 0;
+    counter-reset: commitment;
+  }
+
+  .commitment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--sp-5);
+    padding-block: var(--sp-6);
+    border-top: var(--border) solid var(--rule-dark);
+  }
+
+  .commitment:last-child {
+    border-bottom: var(--border) solid var(--rule-dark);
+  }
+
+  .commitment__n {
+    font-size: var(--step--2);
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+    padding-block-start: 0.4em;
+  }
+
+  .commitment__h {
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-block-end: var(--sp-2);
+  }
+
+  .commitment p {
+    font-size: var(--step--1);
+    max-width: 62ch;
+  }
+
+  /* --- closing CTA --- */
+  .cta {
+    padding-block: var(--section-pad) var(--sp-9);
+  }
+
+  .cta__h {
+    font-size: var(--step-4);
+    font-variation-settings: 'wdth' 84;
+    max-width: 18ch;
+    margin-block-end: var(--sp-5);
+  }
+
+  .cta .lead {
+    margin-block-end: var(--sp-7);
+    max-width: 56ch;
+  }
+</style>

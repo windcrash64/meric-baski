@@ -1,0 +1,252 @@
+sku: MF-6090-U3
+model: Maven MF-6090 U3
+family: uv-flatbed
+tier: entry
+order: 10
+featured: false
+status: active
+price: null
+leadTimeWeeks: [3, 5]
+
+headline: [printArea, mediaHeight, printHead, speedModes]
+
+printhead:
+  brand: epson
+  model: i3200-U1
+  count: 3
+  dropSizePl: [3, 25]
+
+# One chassis, two head generations. The i1600 build is the price-led option and
+# runs roughly 2–5 m²/sa — half the nozzle count, half the throughput.
+headOptions:
+  - { brand: epson, model: i3200-U1, count: 3, dropSizePl: [3, 25] }
+  - { brand: epson, model: i1600-U1, count: 3 }
+
+specs:
+  printArea: "600 × 900 mm"
+  mediaHeight: { value: 180, unit: mm }
+  mediaWeight: { value: 20, unit: kg/m2 }
+  resolution: "720 × 1440 · 720 × 2400 dpi"
+  dropSize: { value: [3, 25], unit: pL }
+  printHead: "Epson i3200-U1"
+  headCount: { value: 3, unit: adet }
+  colors: "CMYK · W · Lak"
+  inkType: "UV LED"
+  inkSupply: "Kanal başına 3 L toplu besleme, beyaz kanalda programlı karıştırma"
+  inkCapacity: { value: 3000, unit: ml }
+  inkConsumption:
+    value: [10, 30]
+    unit: ml/m2
+    note: { tr: beyaz alt katman dahil, en: white underbase included }
+  whiteCirculation: false
+  table: "Bölgesel vakumlu alüminyum tabla"
+  vacuumZones: { value: 2 }
+  curing: "4 × hava soğutmalı LED-UV, 395 nm"
+  heightSensor: "Otomatik malzeme yüksekliği ölçümü, 0–180 mm"
+  antiCollision: "Kafa çarpışma sensörü, otomatik duruş"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Yarı otomatik püskürtme + manuel silme"
+  powerSupply: "AC 220 V ±%10, 50/60 Hz, tek faz"
+  power: { value: 3.8, unit: kW }
+  current: { value: 18, unit: A }
+  environment: "16–38 °C / %35–65 BN"
+  rip: "Maintop 6.1 · PhotoPRINT · SAi Flexi · CADlink"
+  fileFormats: "PDF · TIFF · EPS · JPEG · PSD · AI"
+  interface: "Gigabit Ethernet · USB 2.0"
+  dimensions: "1696 × 1595 × 719 mm"
+  weight: { value: 194, unit: kg }
+  floorArea: { value: 6, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures.
+speedModes:
+  - { pass: 4, value: [6.5, 8], mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: [4.4, 5.4], mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: [3.2, 3.9], mode: { tr: Yüksek kalite, en: High quality } }
+  - { pass: 12, value: [2.5, 2.8], mode: { tr: Fotoğraf kalitesi, en: Photo quality } }
+
+compatibleInks: [mi-220-uv-led-e]
+applications: [packaging, interior, industrial]
+substrates: [glass, acrylic, wood, mdf, metal, ceramic, pvc, leather, paper]
+siblings: [MF-1216-R4, MF-2513-R8, MF-3220-K12]
+rip: [Maintop 6.1, PhotoPRINT, SAi Flexi, CADlink]
+
+installation:
+  powerPhase: 1F
+  floorAreaM2: 6
+  ceilingHeightM: 2.6
+  cratedDimensions: { w: 1850, d: 1750, h: 1050, unit: mm }
+  ventilationRequired: false
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Makine sehpası veya tezgah
+      - Ayrı elektrik hattı ve topraklama
+      - Sarf başlangıç seti
+      - Renk profili için spektrofotometre
+    en:
+      - Freight and insurance
+      - Machine stand or bench
+      - Dedicated power line and earthing
+      - Starter consumables kit
+      - Spectrophotometer for colour profiling
+
+gallery:
+  - src: /img/machines/mf-6090-u3/hero.jpg
+    kind: machine
+    alt: { tr: Masaüstü UV flatbed makinesi, tablasında dizili ahşap hediyelik kutular, en: Benchtop UV flatbed with wooden gift boxes laid out on the bed }
+  - src: /img/machines/mf-6090-u3/carriage.jpg
+    kind: detail
+    alt: { tr: Üç Epson kafalı araba ve iki yanındaki LED-UV lambaları, en: Three-head Epson carriage flanked by LED-UV lamps }
+    caption: { tr: Hava soğutmalı LED-UV kürleme, en: Air-cooled LED-UV curing }
+  - src: /img/machines/mf-6090-u3/bed.jpg
+    kind: detail
+    alt: { tr: İki bölgeli vakum tablası ve köşedeki mekanik kayıt pimleri, en: Two-zone vacuum bed with mechanical registration pins at the corner }
+    caption: { tr: PinLock Kayıt Pimleri, en: PinLock registration pins }
+  - src: /img/machines/mf-6090-u3/ink.jpg
+    kind: detail
+    alt: { tr: Yan panelde sıralanmış 3 litrelik mürekkep tankları ve seviye göstergeleri, en: Three-litre ink tanks and level indicators on the side panel }
+  - src: /img/machines/mf-6090-u3/app-promo.jpg
+    kind: application
+    alt: { tr: Metal termosun üzerine basılmış kurumsal logo, en: Corporate logo printed on a metal flask }
+    caption: { tr: UV Promosyon Ürün Baskı, en: UV printed promotional item }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mf-6090-u3-katalog-tr.pdf, bytes: 1884160 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mf-6090-u3-teknik-tr.pdf, bytes: 372736 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mf-6090-u3-kurulum-kontrol-listesi.pdf, bytes: 158720 }
+
+i18n:
+  tr:
+    tagline: Masaüstüne sığan endüstriyel UV kalitesi, tek parçadan seri üretime
+    summary: >-
+      MF-6090 U3, 600 × 900 mm tablası ve 180 mm baskı yüksekliğiyle promosyon,
+      hediyelik ve kişiselleştirme işleri için kurulmuş masaüstü bir UV flatbed
+      makinesidir. Üç adet Epson i3200-U1 kafa, 4 geçişte 6,5–8 m²/sa üretim hızı
+      verir. İki bağımsız vakum bölgesi, tek parça işlerde bütün tablayı emmeyi
+      gerektirmez; kalın parçalar ara aparat olmadan doğrudan tablaya oturur.
+      Hava soğutmalı LED-UV kürleme baskıyı kafa geçer geçmez sabitler, iş
+      tabladan çıktığı anda paketlenebilir.
+    features:
+      - term: Bölgesel Vakum Kontrolü
+        body: >-
+          Tabla iki bağımsız bölgeye ayrılmıştır. 10 × 10 cm'lik tek bir parça
+          için bütün tablayı emmeye çalışmazsınız; sol bölge işi tutarken sağ
+          bölge bir sonraki partiyi dizmek için açık kalır.
+      - term: PinLock Kayıt Pimleri
+        body: >-
+          Tablanın köşesindeki mekanik pimler her işi aynı orijine oturtur. Aynı
+          kılıfı ikinci kez basarken hizayı yeniden ölçmezsiniz — tekrar eden
+          siparişlerde asıl zaman kaybı baskıda değil, kurulumda olur.
+      - term: AutoGap Yükseklik Sensörü
+        body: >-
+          Malzeme yüksekliği 0–180 mm arasında otomatik ölçülür ve kafa boşluğu
+          buna göre ayarlanır. Ölçüm tek noktadan yapıldığı için yüzeyi eğimli
+          veya kademeli parçalarda boşluğu operatörün doğrulaması gerekir.
+      - term: MavenFlow Beyaz Karıştırma
+        body: >-
+          Beyaz tank programlı olarak karıştırılır. Bu, büyük makinelerdeki
+          sürekli sirkülasyonun yerini tutmaz: makine üç günden uzun beklerse
+          beyaz hattın yıkanmasını iş planına dahil edin.
+    faq:
+      - q: MF-6090 U3 hangi işler için doğru makine?
+        a: >-
+          Promosyon ürünü, hediyelik eşya, telefon kılıfı, plaket, numune ve
+          küçük seri kişiselleştirme için tasarlandı; günlük 8–10 m²'ye kadar
+          rahat çalışır. Levha, tabela veya panel üretimi yapacaksanız yanlış
+          makine — o iş MF-1216 R4 ile başlar.
+      - q: Trifaze elektrik gerekiyor mu?
+        a: >-
+          Hayır. 220 V tek faz, 3,8 kW, 18 A yeterlidir. Buna karşılık makineye
+          ayrı bir hat çekin: kompresörle aynı sigortayı paylaşırsa, kürleme
+          lambaları devreye girdiğinde gerilim düşüşü ve baskı hatası görürsünüz.
+      - q: Cam, metal ve seramiğe doğrudan basabilir miyim?
+        a: >-
+          Çoğu durumda evet, ancak yapışma yüzeyin kendisine bağlıdır. Kaplamalı
+          cam, anodize alüminyum ve sırlı seramikte primer gerekir. Her yeni
+          malzeme partisinde numune basıp 24 saat sonra bant testi yapmanızı
+          öneririz; parti değiştiğinde yüzey kimyası da değişir.
+      - q: Beyaz mürekkep hızı ne kadar düşürür?
+        a: >-
+          Yayınladığımız 6,5–8 m²/sa değeri 4 geçiş CMYK içindir. Renk-beyaz-renk
+          (C-W-C) işlerde üç kat malzeme basıldığı için çıktı yaklaşık üçte bire
+          iner. Şeffaf ve koyu malzeme ağırlıklı çalışıyorsanız kapasiteyi bu
+          düşük rakama göre planlayın.
+      - q: Baskı kafası ne kadar dayanır?
+        a: >-
+          Tek vardiya kullanımda ve günlük kapatma prosedürüne uyulduğunda Epson
+          i3200-U1 kafalardan tipik olarak 12–18 ay alınır. UV mürekkeple çalışan
+          bir kafanın ömrünü belirleyen şey baskı saati değil, beklemede kuruyan
+          nozüllerdir; makineyi hafta sonu kapatıp temizlemeden bırakmak en pahalı
+          alışkanlıktır.
+    alternateName:
+      - masaüstü uv baskı makinası
+      - 60x90 uv baskı makinesi
+      - promosyon uv baskı makinası
+      - masaüstü uv yazıcı
+  en:
+    tagline: Industrial UV quality on a benchtop, from one-offs to short runs
+    summary: >-
+      The MF-6090 U3 is a benchtop UV flatbed built for promotional, gift and
+      personalisation work, with a 600 × 900 mm bed and 180 mm of print height.
+      Three Epson i3200-U1 heads deliver 6.5–8 m²/h at four passes. Two
+      independent vacuum zones mean a single small part does not require pulling
+      vacuum across the whole table, and thick items sit straight on the bed
+      without a spacer. Air-cooled LED-UV curing fixes the print as the carriage
+      passes, so work can be packed the moment it leaves the bed.
+    features:
+      - term: Zoned Vacuum Control
+        body: >-
+          The bed is split into two independent zones. A single 10 × 10 cm part
+          does not require vacuum across the whole table — the left zone holds
+          the job while the right stays free for laying out the next batch.
+      - term: PinLock Registration Pins
+        body: >-
+          Mechanical pins on the bed corner return every job to the same origin.
+          Reprinting the same phone case does not mean re-measuring alignment;
+          on repeat orders the time goes into setup, not printing.
+      - term: AutoGap Height Sensor
+        body: >-
+          Media height is measured automatically between 0 and 180 mm and the
+          head gap is set from it. Measurement is single-point, so on sloped or
+          stepped parts the operator still has to confirm the gap.
+      - term: MavenFlow White Agitation
+        body: >-
+          The white tank is agitated on a schedule. This is not the equivalent of
+          continuous circulation on the larger machines: if the printer stands
+          idle for more than three days, plan a white line flush.
+    faq:
+      - q: What is the MF-6090 U3 the right machine for?
+        a: >-
+          Promotional items, giftware, phone cases, awards, samples and short-run
+          personalisation — comfortably up to 8–10 m² a day. If you are producing
+          sheet goods, signage or panels it is the wrong machine; that work starts
+          at the MF-1216 R4.
+      - q: Does it need three-phase power?
+        a: >-
+          No. Single-phase 220 V, 3.8 kW, 18 A is enough. Do give it a dedicated
+          circuit, though: sharing a breaker with a compressor causes voltage dips
+          when the curing lamps kick in, and those show up as print defects.
+      - q: Can it print directly onto glass, metal and ceramic?
+        a: >-
+          Usually yes, but adhesion depends on the surface itself. Coated glass,
+          anodised aluminium and glazed ceramic need primer. Test-print each new
+          batch of material and run a tape test after 24 hours — surface chemistry
+          changes with the batch, not just with the material.
+      - q: How much does white ink cost in speed?
+        a: >-
+          The published 6.5–8 m²/h is four-pass CMYK. Colour-white-colour work
+          lays down three layers, so output drops to roughly a third. If your mix
+          is mostly clear and dark substrates, plan capacity around the lower
+          figure.
+      - q: How long do the printheads last?
+        a: >-
+          On single-shift use with the daily shutdown routine followed, expect
+          12–18 months from an Epson i3200-U1. What kills a UV head is not print
+          hours but nozzles drying while the machine stands — leaving it over a
+          weekend without capping and cleaning is the most expensive habit in the
+          shop.
+    alternateName:
+      - desktop uv printer 60x90
+      - benchtop uv flatbed printer
+      - uv printer for promotional products

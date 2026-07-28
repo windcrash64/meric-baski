@@ -1,0 +1,296 @@
+sku: MI-110
+series: Maven MI-110 UV
+family: uv
+type: ink
+order: 10
+featured: false
+
+# Cıva buharlı (Hg) lambalı kurulu park için. Nazdar 730 sınıfının Türkiye
+# karşılığı; geçiş yıkama ister, bu yüzden `switch-and-swap`.
+oemEquivalent:
+  - Nazdar 730 Serisi
+  - Fujifilm Uvijet KV
+  - Agfa Anuvia 1401
+changeover: switch-and-swap
+
+# Nazdar 730'un gerçek kanal yapısı: 10 kanal stokta, yeşil ve mor talebe bağlı.
+channels:
+  - { code: C, sku: MI-110-C, availability: stock }
+  - { code: M, sku: MI-110-M, availability: stock }
+  - { code: Y, sku: MI-110-Y, availability: stock }
+  - { code: K, sku: MI-110-K, availability: stock }
+  - { code: Lc, sku: MI-110-LC, availability: stock }
+  - { code: Lm, sku: MI-110-LM, availability: stock }
+  - { code: Lk, sku: MI-110-LK, availability: stock }
+  - { code: Or, sku: MI-110-OR, availability: stock }
+  - { code: W, sku: MI-110-W, availability: stock }
+  - { code: Cl, sku: MI-110-CL, availability: stock }
+  - { code: Gr, sku: MI-110-GR, availability: on-request }
+  - { code: Vt, sku: MI-110-VT, availability: on-request }
+
+packaging:
+  - format: bottle
+    volume: 1
+    unit: L
+  - format: bottle
+    volume: 5
+    unit: L
+    note:
+      tr: toplu besleme sistemleri için
+      en: for bulk supply systems
+  - format: bag
+    volume: 2
+    unit: L
+    note:
+      tr: MBS torba; degazörlü besleme hattı gerektirir
+      en: MBS bag; requires a degassed supply line
+
+compat:
+  printheads:
+    - Konica Minolta KM1024i
+    - Ricoh Gen5
+    - Kyocera KJ4A
+    - Fujifilm Starfire SG1024
+    - Toshiba CE4
+  dropSizePl: [6, 42]
+  # Bilerek boş. Güncel Maven flatbed ve hibrit gövdelerinin tamamı 395 nm LED
+  # kürlemelidir; cıva mürekkebi bu makinelerde kürlenmez (bkz. SSS).
+  machines: []
+  thirdPartyPrinters:
+    - Inca Onset S40i
+    - Durst Rho P10
+    - Agfa Anapurna M2050
+    - HandTop HT2500 UV
+    - DOCAN H1000 (cıva lambalı)
+  chipIncluded: false
+
+specs:
+  # Viskozite bilerek yayımlanmıyor: gerçek UV TDS'leri yayımlamaz, uyduran
+  # katalogları da bu satır ele verir. Yayımlanan şey kürleme dozudur.
+  cure:
+    method: uv-hg
+    doseMjCm2: [225, 300]
+    intensityMwCm2: 600
+  shelfLifeMonths: 12
+  shelfLifeNote:
+    tr: üretim tarihinden itibaren, açılmamış ambalajda
+    en: from date of manufacture, in unopened packaging
+  storageTempC: [18, 27]
+  operatingTempC: [18, 27]
+  operatingHumidityPct: [40, 60]
+  outdoorDurabilityMonths: 24
+  outdoorDurabilityNote:
+    tr: dikey maruziyet, Orta Avrupa iklimi, laminasyonsuz baskı
+    en: vertical exposure, central European climate, unlaminated print
+
+substrates: [glass, metal, acrylic, polycarb, pvc, foamboard, alucomp, mdf, wood, ceramic, photoblock, paper]
+applications: [signage, interior, industrial, packaging]
+
+documents:
+  - { kind: tds, lang: tr, file: /docs/maven-mi-110-uv-tds-tr.pdf, bytes: 428032, version: v1.2, date: "2026-04" }
+  - { kind: tds, lang: en, file: /docs/maven-mi-110-uv-tds-en.pdf, bytes: 421888, version: v1.2, date: "2026-04" }
+  - { kind: gbf, lang: tr, file: /docs/maven-mi-110-uv-gbf-tr.pdf, bytes: 612352, version: KKDİK-2026.1, date: "2026-02" }
+
+ancillaries: [mi-910-flush, mi-920-primer]
+
+gallery:
+  - src: /img/inks/mi-110-uv/hero.jpg
+    kind: detail
+    alt:
+      tr: "Beş litrelik siyah şişe ve önünde sıralanmış bir litrelik kanal şişeleri"
+      en: "Five litre black bottle with one litre channel bottles lined up in front of it"
+  - src: /img/inks/mi-110-uv/channels.jpg
+    kind: detail
+    alt:
+      tr: "Etiketleri okunacak şekilde dizilmiş on iki kanalın şişeleri"
+      en: "Bottles of all twelve channels arranged with their labels facing the camera"
+    caption:
+      tr: On kanal stokta, yeşil ve mor siparişe bağlı
+      en: Ten channels from stock, green and violet to order
+  - src: /img/inks/mi-110-uv/mbs-bag.jpg
+    kind: detail
+    alt:
+      tr: "İki litrelik MBS torbanın besleme hattına takılı rekor ve seviye göstergesi"
+      en: "Coupling and level indicator of a two litre MBS bag connected to the supply line"
+  - src: /img/inks/mi-110-uv/app-acrylic.jpg
+    kind: application
+    alt:
+      tr: "Pleksi levha üzerine beyaz alt katmanla basılmış turuncu kurumsal grafik"
+      en: "Orange corporate graphic printed with a white underbase on an acrylic sheet"
+    caption:
+      tr: UV Pleksi Levha Baskı
+      en: UV printed acrylic panel
+
+i18n:
+  tr:
+    role: Cıva buharlı lambalı endüstriyel flatbed makineler için UV mürekkep
+    summary: >-
+      MI-110, cıva buharlı lambalı endüstriyel flatbed ve hibrit makineler için
+      formüle edilmiş UV mürekkeptir; Nazdar 730, Fujifilm Uvijet KV ve Agfa
+      Anuvia 1401 sınıfındaki OEM mürekkeplerin yerine kullanılır. 600 mW/cm²
+      lamba şiddetinde 225–300 mJ/cm² doz ile tam kürlenir. On kanallı skala,
+      turuncu ve açık siyahla gamı genişletir; beyaz ve lak aynı seride bulunur.
+      1 ve 5 litrelik şişe ile 2 litrelik MBS torba olarak tedarik edilir. Cam
+      ve metalde tam yapışma için MI-920 primer gerekir.
+    features:
+      - >-
+        MavenCure Hg Fotobaşlatıcı Paketi — 600 mW/cm² lamba şiddetinde
+        225–300 mJ/cm² doz aralığında tam kürlenir; ölçüm EIT UviCure Plus ile
+        UVA bandında yapılır. Doz bu bandın altına düştüğünde yüzey kurur ama
+        film içi kürlenmez, yapışma birkaç gün içinde geri gider.
+      - >-
+        DeepStack Pigment Yükü — on kanallı skala turuncu ve açık siyahı da
+        içerir. Kurumsal turuncularda ve nötr grilerde CMYK'nın yaklaşamadığı
+        bölgeyi ayrı kanalla karşılar, böylece marka renkleri ikinci bir
+        deneme baskısına kalmaz.
+      - >-
+        MavenWhite Yüksek Opaklık — beyaz kanalın pigment yükü tek kat
+        kapatıcılığa göre ayarlanmıştır. Karşılığı da açık söylensin: günlük
+        sirkülasyon ve haftalık kanal kontrolü ister, boşta bırakılan bir
+        beyaz hat çöker.
+      - >-
+        FlexBond Yapışma Paketi — cam, anodize alüminyum ve toz boyalı metalde
+        MI-920 primer ile ISO 2409 çapraz kesme testinde 0–1 sınıfı verir.
+        Primersiz float camda bu sonuç alınmaz; kısa süreli iç mekân işleri
+        dışında primeri atlamayın.
+      - >-
+        SafeSwap Geçiş Protokolü — mevcut mürekkepten geçişte hat, damper ve
+        filtreler MI-910 ile yıkanır. Sistem hacmine göre 2–3 litre fire ve
+        yarım günlük duruş planlayın; ardından renk profili yeniden çıkarılır.
+    disclaimer: >-
+      Yapışma, dış mekân dayanımı ve kimyasal direnç; malzemeye, yüzey
+      hazırlığına ve baskı parametrelerine göre değişir. Buradaki değerler
+      laboratuvar koşullarında ölçülmüştür ve bağlayıcı bir taahhüt değildir.
+      Seri üretime geçmeden önce kendi malzemenizde test edin. Ürün
+      sorumluluğumuz teslim edilen malın bedeliyle sınırlıdır. Türkçe Güvenlik
+      Bilgi Formu (GBF) her sevkiyatla birlikte verilir.
+    faq:
+      - q: LED lambalı bir makinede MI-110 kullanabilir miyim?
+        a: >-
+          Hayır. MI-110'un fotobaşlatıcı sistemi cıva buharlı lambanın geniş
+          bandına göre kurulmuştur ve 395 nm LED bandında yeterince kürlenmez.
+          Güncel Maven flatbed ve hibrit makinelerinin tamamı LED kürlemelidir;
+          onlarda MI-210 UV-LED R kullanılır. Ters yön çalışır — LED mürekkep
+          cıva lambalı bir makinede kürlenir, tersi olmaz.
+      - q: Cam ve metale primer olmadan basabilir miyim?
+        a: >-
+          Kısa süreli iç mekân işlerinde tutar, kalıcı kabul etmeyin. Float cam,
+          anodize alüminyum ve toz boyalı yüzeyde primersiz yapışma birkaç hafta
+          içinde düşer; temizlik kimyasalıyla temas eden yüzeylerde daha da
+          hızlı. Doğru sıra: izopropil alkolle temizlik, MI-920 primerin ince ve
+          tek yönde uygulanması, 10 dakika uçurma, sonra baskı ve her yeni
+          malzemede çapraz kesme testi.
+      - q: Beyaz mürekkep tüketimi ve maliyeti ne olur?
+        a: >-
+          Kapatıcı beyaz alt katman kullandığınızda toplam tüketim renk işine
+          göre iki katına kadar çıkar, hız da yaklaşık üçte bire düşer. Beyaz
+          kanal her vardiya sirküle edilmeli, makine bir haftadan uzun duracaksa
+          hat yıkanmalıdır. Beyazı maliyet hesabınıza renkle aynı litre
+          fiyatından koymayın; atölyelerin en sık yaptığı fiyatlama hatası budur.
+      - q: Yeşil ve mor kanalları neden stokta tutmuyorsunuz?
+        a: >-
+          Talep düzenli olmadığı için Gr ve Vt kanallarını siparişe bağlı
+          tutuyoruz. Teslim süresi 4–6 hafta, minimum sipariş kanal başına
+          5 litre. Bu iki kanalı sürekli kullanacaksanız yıllık tahmini
+          tüketiminizi baştan bildirin, stok planına alalım.
+      - q: 24 ay dış mekân dayanımı hangi koşulda geçerli?
+        a: >-
+          Dikey maruziyet, Orta Avrupa iklimi, laminasyonsuz ve tam kürlenmiş
+          baskı için. Yatay maruziyette, Akdeniz ikliminde veya araç yüzeyinde
+          bu süre kısalır; UV kesici laminasyon belirgin uzatır. Tabela işinde
+          24 ayı garanti süresi değil, planlama süresi olarak kullanın.
+      - q: Geçiş sırasında ne kadar duruş ve fire hesaplamalıyım?
+        a: >-
+          Geçiş sınıfı "Yıkama gerekir". Hat, damper ve filtreler yıkanır, kafa
+          dolum sırasıyla doldurulur, nozzle kontrolü ve doğrusallaştırma
+          yapılır. Sistem hacmine göre 2–3 litre mürekkep firesi ve yarım
+          günlük duruş normaldir. Renk profilini yeniden çıkarmadan seri işe
+          başlamayın; gam farkı en çok turuncu ve lacivert alanlarda görülür.
+  en:
+    role: UV curable ink for mercury-vapour industrial flatbed printers
+    summary: >-
+      The MI-110 is a UV curable ink formulated for mercury-vapour industrial
+      flatbed and hybrid printers, used in place of OEM inks in the class of
+      Nazdar 730, Fujifilm Uvijet KV and Agfa Anuvia 1401. It cures fully at
+      225–300 mJ/cm² with a lamp intensity of 600 mW/cm². The ten-channel set
+      extends the gamut with orange and light black, and white and varnish come
+      from the same series. Supplied in 1 and 5 litre bottles and 2 litre MBS
+      bags. Glass and metal need MI-920 primer for full adhesion.
+    features:
+      - >-
+        MavenCure Hg Photoinitiator Package — full cure between 225 and
+        300 mJ/cm² at a lamp intensity of 600 mW/cm², measured on an EIT
+        UviCure Plus in the UVA band. Below that band the surface dries but the
+        film does not cure through, and adhesion falls away within days.
+      - >-
+        DeepStack Pigment Load — the ten-channel set includes orange and light
+        black, covering the region CMYK cannot reach in corporate oranges and
+        neutral greys. Brand colours are hit with a dedicated channel instead
+        of a second proof.
+      - >-
+        MavenWhite High Opacity — the white channel is pigmented for single-hit
+        opacity. The trade-off is stated plainly: it needs daily circulation
+        and a weekly channel check, and a white line left standing will settle.
+      - >-
+        FlexBond Adhesion Package — with MI-920 primer it reaches class 0–1 in
+        the ISO 2409 cross-hatch test on glass, anodised aluminium and
+        powder-coated metal. That result is not achievable on bare float glass,
+        so do not skip the primer outside short-life indoor work.
+      - >-
+        SafeSwap Changeover Protocol — the lines, dampers and filters are
+        flushed with MI-910 when converting from another ink. Budget 2–3 litres
+        of waste and half a day of downtime depending on system volume, then
+        rebuild the colour profile.
+    disclaimer: >-
+      Adhesion, outdoor durability and chemical resistance vary with the
+      substrate, its surface preparation and the print parameters. The figures
+      here were measured under laboratory conditions and are not a binding
+      commitment. Test on your own material before committing to production.
+      Our product liability is limited to the value of the goods delivered. A
+      Turkish safety data sheet (GBF) ships with every delivery.
+    faq:
+      - q: Can I run MI-110 on an LED machine?
+        a: >-
+          No. The photoinitiator system in MI-110 is built for the broad
+          spectrum of a mercury-vapour lamp and does not cure adequately in the
+          395 nm LED band. Every current Maven flatbed and hybrid uses LED
+          curing, so those machines take MI-210 UV-LED R. The reverse does
+          work — an LED ink cures under a mercury lamp, but not the other way
+          round.
+      - q: Can I print on glass and metal without primer?
+        a: >-
+          It will hold for short-life indoor work, but do not treat it as
+          permanent. On float glass, anodised aluminium and powder-coated
+          surfaces, unprimed adhesion drops within weeks, faster still where
+          cleaning chemicals touch the print. The correct sequence is isopropyl
+          alcohol, a thin single-direction coat of MI-920, ten minutes of
+          flash-off, then print — and a cross-hatch test on every new material.
+      - q: What does white ink cost me in consumption and speed?
+        a: >-
+          With an opaque white underbase, total consumption can double against
+          a colour-only job and output drops to roughly a third. The white
+          channel must circulate every shift, and the line should be flushed if
+          the machine will stand for more than a week. Do not cost white at the
+          same price per litre as colour; that is the most common pricing
+          mistake shops make.
+      - q: Why are green and violet not held in stock?
+        a: >-
+          Demand for Gr and Vt is irregular, so we keep them to order — 4 to 6
+          weeks lead time, minimum five litres per channel. If you use either
+          continuously, give us your estimated annual consumption up front and
+          we will put them on the stock plan.
+      - q: Under what conditions does the 24-month outdoor figure hold?
+        a: >-
+          Vertical exposure, central European climate, unlaminated and fully
+          cured. Horizontal exposure, a Mediterranean climate or a vehicle
+          surface all shorten it; a UV-blocking laminate extends it
+          appreciably. In signage work, treat 24 months as a planning figure,
+          not a warranty period.
+      - q: How much downtime and waste should I budget for the changeover?
+        a: >-
+          The changeover class is Switch and Swap. Lines, dampers and filters
+          are flushed, the heads are refilled in sequence, then a nozzle check
+          and linearisation follow. Two to three litres of ink waste and half a
+          day of downtime are normal for the system volume. Do not start
+          production before rebuilding the colour profile — the gamut
+          difference shows up first in oranges and deep blues.

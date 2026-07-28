@@ -1,0 +1,735 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+import { SITE, type Locale } from '../config/site';
+import { FAMILY_ROUTE, path } from '../i18n/routes';
+import { num, range, t } from '../i18n/ui';
+import { HEAD_BRANDS, SPECS, SUBSTRATES, type SpecKey, type SubstrateKey } from '../i18n/specs';
+import { galleryFor, renderFor } from '../lib/media';
+import { machineHref } from '../lib/product';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import Gallery from '../components/media/Gallery.astro';
+import ModelViewer from '../components/media/ModelViewer.astro';
+import SpecTable from '../components/product/SpecTable.astro';
+
+export interface Props {
+  machine: CollectionEntry<'machines'>;
+  locale: Locale;
+}
+
+const { machine, locale } = Astro.props;
+const d = machine.data;
+const copy = d.i18n[locale];
+const tr = locale === 'tr';
+
+const FAMILY_NAMES: Record<string, { tr: string; en: string }> = {
+  'uv-flatbed': { tr: 'UV Flatbed Baskı Makineleri', en: 'UV Flatbed Printers' },
+  'uv-hybrid': { tr: 'UV Hibrit Baskı Makineleri', en: 'UV Hybrid Printers' },
+  'eco-solvent': { tr: 'Eko Solvent Baskı Makineleri', en: 'Eco-Solvent Printers' },
+  dtf: { tr: 'DTF Baskı Sistemleri', en: 'DTF Printing Systems' },
+  sublimation: { tr: 'Süblimasyon Baskı Sistemleri', en: 'Dye-Sublimation Systems' },
+  'uv-dtf': { tr: 'UV DTF / Kristal Etiket Makineleri', en: 'UV DTF / Crystal Label Printers' },
+  cutting: { tr: 'Kesim Makineleri ve Plotterlar', en: 'Cutting Systems & Plotters' },
+};
+
+const familyName = FAMILY_NAMES[d.family][locale];
+const familyRoute = FAMILY_ROUTE[d.family as keyof typeof FAMILY_ROUTE];
+const familySlug = (loc: Locale) => path(familyRoute, loc).split('/').filter(Boolean).pop()!;
+const skuSlug = machine.id;
+
+const routeExtra = {
+  tr: [familySlug('tr'), skuSlug],
+  en: [familySlug('en'), skuSlug],
+};
+
+/* --- hero metrics: the four oversized numbers -------------------------- */
+type Measure = { value: number | [number, number]; unit?: string };
+const metric = (key: string) => {
+  const raw = d.specs[key] as Measure | string | number | boolean | undefined;
+  const def = SPECS[key as SpecKey];
+  if (raw === undefined || !def) return null;
+  if (typeof raw === 'object' && raw !== null && 'value' in raw) {
+    return { label: def[locale], value: range(raw.value, locale), unit: raw.unit ?? def.unit?.[locale] ?? '' };
+  }
+  if (typeof raw === 'boolean') {
+    return { label: def[locale], value: raw ? (tr ? 'var' : 'yes') : (tr ? 'yok' : 'no'), unit: '' };
+  }
+  return { label: def[locale], value: String(raw), unit: '' };
+};
+
+const heroMetrics = d.headline
+  .map((key) => (key === 'speedModes'
+    ? {
+        label: SPECS.speedModes[locale],
+        value: range(d.speedModes[0].value, locale),
+        unit: `${tr ? 'm²/sa' : 'm²/h'} @${d.speedModes[0].pass}`,
+      }
+    : metric(key)))
+  .filter(Boolean) as Array<{ label: string; value: string; unit: string }>;
+
+/* --- media -------------------------------------------------------------- */
+const slides = galleryFor(d.sku, d.gallery.map((g) => ({
+  src: g.src,
+  alt: g.alt[locale],
+  caption: g.caption?.[locale],
+})));
+const cutout = renderFor(d.sku, true);
+const has3d = Boolean(d.model3d);
+
+/* --- relations ---------------------------------------------------------- */
+const allMachines = await getCollection('machines');
+const siblings = allMachines.filter((m) => d.siblings.includes(m.data.sku));
+
+const headCount = Array.isArray(d.printhead.count)
+  ? `${d.printhead.count[0]}–${d.printhead.count[1]}`
+  : String(d.printhead.count);
+const headLabel = `${HEAD_BRANDS[d.printhead.brand]} ${d.printhead.model}`;
+
+const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${encodeURIComponent(
+  tr
+    ? `Merhaba, ${d.model} hakkında teklif almak istiyorum. ${new URL(path('machines', 'tr', [familySlug('tr'), skuSlug]), SITE.url).href}`
+    : `Hello, I would like a quote for the ${d.model}. ${new URL(path('machines', 'en', [familySlug('en'), skuSlug]), SITE.url).href}`,
+)}`;
+
+const title = `${d.model} — ${familyName} | Maven`;
+const description = tr
+  ? `${d.model}: ${heroMetrics.slice(0, 3).map((m) => `${m.value} ${m.unit}`.trim()).join(', ')}. Teknik özellikler, uyumlu mürekkepler, kurulum gereksinimleri ve fiyat teklifi.`
+  : `${d.model}: ${heroMetrics.slice(0, 3).map((m) => `${m.value} ${m.unit}`.trim()).join(', ')}. Specifications, compatible inks, installation requirements and pricing.`;
+
+const productSchema = {
+  '@type': 'Product',
+  '@id': `${SITE.url}${path('machines', locale, [familySlug(locale), skuSlug])}#product`,
+  name: d.model,
+  sku: d.sku,
+  model: d.sku,
+  category: familyName,
+  brand: { '@type': 'Brand', name: 'Maven' },
+  description: copy.summary,
+  ...(copy.alternateName?.length ? { alternateName: copy.alternateName } : {}),
+  additionalProperty: Object.entries(d.specs)
+    .filter(([key]) => SPECS[key as SpecKey])
+    .map(([key, value]) => ({
+      '@type': 'PropertyValue',
+      name: SPECS[key as SpecKey][locale],
+      value: typeof value === 'object' && value !== null && 'value' in value
+        ? range((value as Measure).value, locale)
+        : String(value),
+    })),
+};
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey="machines"
+  routeExtra={routeExtra}
+  ogType="product"
+  schema={[
+    productSchema,
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t('navMachines', locale), item: `${SITE.url}${path('machines', locale)}` },
+        { '@type': 'ListItem', position: 2, name: familyName, item: `${SITE.url}${path(familyRoute, locale)}` },
+        { '@type': 'ListItem', position: 3, name: d.model },
+      ],
+    },
+    ...(copy.faq.length ? [{
+      '@type': 'FAQPage',
+      mainEntity: copy.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }] : []),
+  ]}
+>
+  <div class="pdp" data-ground="paper" data-accent="cyan">
+    <div class="shell pdp__crumbs">
+      <Breadcrumb
+        locale={locale}
+        crumbs={[
+          { label: t('navMachines', locale), href: path('machines', locale) },
+          { label: familyName, href: path(familyRoute, locale) },
+          { label: d.model },
+        ]}
+      />
+    </div>
+
+    <!-- HERO SPLIT -------------------------------------------------------- -->
+    <section class="shell pdp__hero">
+      <div class="pdp__media">
+        {has3d ? (
+          <div class="tabs" data-tabs>
+            <div class="tabs__list" role="tablist" aria-label={d.model}>
+              <button role="tab" type="button" id="tab-gallery" aria-controls="panel-gallery"
+                      aria-selected="true" class="tabs__tab">{t('gallery', locale)}</button>
+              <button role="tab" type="button" id="tab-3d" aria-controls="panel-3d"
+                      aria-selected="false" class="tabs__tab">{t('view3d', locale)}</button>
+            </div>
+            <div role="tabpanel" id="panel-gallery" aria-labelledby="tab-gallery">
+              <Gallery slides={slides} locale={locale} label={d.model} ratio="card" id={skuSlug} />
+            </div>
+            <div role="tabpanel" id="panel-3d" aria-labelledby="tab-3d" hidden>
+              <ModelViewer
+                src={d.model3d!.glb}
+                poster={cutout ? `/img/${cutout}-768.webp` : d.model3d!.poster}
+                alt={`${d.model} — ${tr ? '360° model' : '360° model'}`}
+                locale={locale}
+                bytes={d.model3d!.bytes}
+                hotspots={d.model3d!.hotspots.map((h) => ({
+                  key: h.key,
+                  position: h.position,
+                  normal: h.normal,
+                  label: h.label[locale],
+                  body: h.body?.[locale],
+                }))}
+              />
+            </div>
+          </div>
+        ) : (
+          <Gallery slides={slides} locale={locale} label={d.model} ratio="card" id={skuSlug} />
+        )}
+      </div>
+
+      <div class="pdp__intro">
+        <p class="eyebrow">{familyName}</p>
+        <h1 lang="en">{d.model}</h1>
+        <p class="lead">{copy.tagline}</p>
+
+        <dl class="metrics">
+          {heroMetrics.map((m) => (
+            <div class="metric">
+              <dt class="eyebrow">{m.label}</dt>
+              <dd>
+                <!-- A headline metric can be a number ("50–60") or a name
+                     ("CMYK · Lc · Lm · W · Lak"). At one size the long ones
+                     swamp the column, so the scale follows the string. -->
+                <span
+                  class="metric__v mono"
+                  data-len={m.value.length > 22 ? 'long' : m.value.length > 12 ? 'mid' : 'short'}
+                >{m.value}</span>
+                {m.unit && <span class="metric__u mono">{m.unit}</span>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div class="cluster pdp__cta">
+          <a class="btn" href={path('quote', locale)}>
+            {t('getQuote', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn--outline" href={wa} target="_blank" rel="noopener">
+            {t('askWhatsApp', locale)}
+          </a>
+        </div>
+
+        <p class="muted pdp__price">{t('priceOnRequest', locale)}</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- SUMMARY + FEATURES -------------------------------------------------- -->
+  <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">01 — {tr ? 'ÖZET' : 'OVERVIEW'}</p></div>
+      <div class="section__body">
+        <p class="lead reveal">{copy.summary}</p>
+
+        <div class="features" data-stagger>
+          {copy.features.map((f, i) => (
+            <article class="feature reveal">
+              <span class="feature__n mono">{String(i + 1).padStart(2, '0')}</span>
+              <h2 class="feature__term">{f.term}</h2>
+              <p class="muted">{f.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEED + SPECS -------------------------------------------------------- -->
+  <section class="section" data-ground="bone" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">02 — {tr ? 'TEKNİK VERİLER' : 'TECHNICAL DATA'}</p></div>
+      <div class="section__body">
+        <h2 class="reveal">{t('specifications', locale)}</h2>
+
+        <!-- Speed is never one number. Publishing a single figure is the
+             clearest signal that a catalogue was invented. -->
+        <div class="table-wrap reveal">
+          <table class="spec-table speed">
+            <caption class="eyebrow">{SPECS.speedModes[locale]}</caption>
+            <thead>
+              <tr>
+                <th scope="col">{tr ? 'Mod' : 'Mode'}</th>
+                <th scope="col">{tr ? 'Geçiş' : 'Pass'}</th>
+                <th scope="col">{tr ? 'Hız' : 'Speed'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {d.speedModes.map((m) => (
+                <tr>
+                  <td class="speed__mode">{m.mode?.[locale] ?? '—'}</td>
+                  <td>{num(m.pass, locale)}</td>
+                  <td>{range(m.value, locale)} {tr ? 'm²/sa' : 'm²/h'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="reveal">
+          <SpecTable specs={d.specs} locale={locale} />
+        </div>
+
+        {d.substrates.length > 0 && (
+          <div class="reveal chips-block">
+            <h3 class="eyebrow">{t('substrates', locale)}</h3>
+            <ul class="chips" role="list">
+              {d.substrates
+                .filter((s) => SUBSTRATES[s as SubstrateKey])
+                .map((s) => <li class="chip mono">{SUBSTRATES[s as SubstrateKey][locale]}</li>)}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALLATION — the honest block ------------------------------------- -->
+  <section class="section" data-ground="ink" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">03 — {tr ? 'KURULUM' : 'INSTALLATION'}</p></div>
+      <div class="section__body">
+        <h2 class="reveal">{t('installRequirements', locale)}</h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Bu bilgileri satıştan önce yayınlıyoruz. Makinenin kapıdan girmemesi ya da elektriğin yetmemesi, öğrenilecek en pahalı sürprizdir.'
+            : 'We publish this before the sale. A machine that will not fit through the door, or a supply that cannot carry it, is the most expensive surprise there is.'}
+        </p>
+
+        <dl class="install reveal">
+          <div>
+            <dt>{tr ? 'Elektrik' : 'Power'}</dt>
+            <dd class="mono">{d.installation.powerPhase === '3F' ? (tr ? 'Trifaze (380 V)' : 'Three-phase (380 V)') : (tr ? 'Monofaze (220 V)' : 'Single-phase (220 V)')}</dd>
+          </div>
+          <div>
+            <dt>{tr ? 'Gerekli alan' : 'Floor area'}</dt>
+            <dd class="mono">{num(d.installation.floorAreaM2, locale)} m²</dd>
+          </div>
+          <div>
+            <dt>{tr ? 'Tavan yüksekliği' : 'Ceiling height'}</dt>
+            <dd class="mono">{num(d.installation.ceilingHeightM, locale, { minimumFractionDigits: 1 })} m</dd>
+          </div>
+          <div>
+            <dt>{tr ? 'Paket ölçüsü' : 'Crated size'}</dt>
+            <dd class="mono">
+              {num(d.installation.cratedDimensions.w, locale)} × {num(d.installation.cratedDimensions.d, locale)} × {num(d.installation.cratedDimensions.h, locale)} mm
+            </dd>
+          </div>
+          <div>
+            <dt>{tr ? 'Havalandırma' : 'Ventilation'}</dt>
+            <dd class="mono">{d.installation.ventilationRequired ? (tr ? 'Zorunlu' : 'Required') : (tr ? 'Gerekmez' : 'Not required')}</dd>
+          </div>
+          {d.installation.compressedAir && (
+            <div>
+              <dt>{tr ? 'Basınçlı hava' : 'Compressed air'}</dt>
+              <dd class="mono">{d.installation.compressedAir}</dd>
+            </div>
+          )}
+        </dl>
+
+        <div class="not-included reveal">
+          <h3 class="eyebrow">{t('notIncluded', locale)}</h3>
+          <ul role="list">
+            {d.installation.notIncluded[locale].map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ ------------------------------------------------------------------ -->
+  <section class="section section--ruled" data-ground="paper" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">04 — {tr ? 'SORULAR' : 'QUESTIONS'}</p></div>
+      <div class="section__body">
+        <h2 class="reveal">{t('faq', locale)}</h2>
+        <div class="faq reveal">
+          {copy.faq.map((item, i) => (
+            <details name="pdp-faq" open={i === 0}>
+              <summary>
+                <span>{item.q}</span>
+                <span class="accordion__chevron" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="accordion__panel"><div><p>{item.a}</p></div></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIBLINGS -------------------------------------------------------------- -->
+  {siblings.length > 0 && (
+    <section class="section" data-ground="bone" data-accent="cyan">
+      <div class="shell grid">
+        <div class="section__label"><p class="eyebrow">05 — {tr ? 'BENZER' : 'SIMILAR'}</p></div>
+        <div class="section__body">
+          <h2 class="reveal">{t('similarMachines', locale)}</h2>
+          <ul class="cards sibling-cards reveal" role="list">
+            {siblings.map((s) => (
+              <li class="card">
+                <a class="sibling" href={machineHref(s, locale)}>
+                  <span class="sibling__model code" lang="en">{s.data.model}</span>
+                  <span class="sibling__tagline muted">{s.data.i18n[locale].tagline}</span>
+                  <span class="sibling__cta">
+                    {t('explore', locale)} <span class="arrow" aria-hidden="true">›</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- STICKY MOBILE ACTIONS -------------------------------------------------- -->
+  <nav class="sticky-actions" aria-label={t('getQuote', locale)}>
+    <a href={path('quote', locale)}>{t('getQuote', locale)}</a>
+    <a href={wa} target="_blank" rel="noopener">WhatsApp</a>
+  </nav>
+</Base>
+
+<style>
+  .pdp__crumbs {
+    padding-block: var(--sp-5) var(--sp-6);
+  }
+
+  .pdp__hero {
+    display: grid;
+    gap: var(--sp-8);
+    padding-block-end: var(--sp-9);
+  }
+
+  @media (min-width: 1024px) {
+    .pdp__hero {
+      grid-template-columns: 55fr 45fr;
+      gap: var(--sp-9);
+      align-items: start;
+    }
+  }
+
+  .pdp__intro h1 {
+    margin-block: var(--sp-3) var(--sp-4);
+  }
+
+  .pdp__intro .lead {
+    color: var(--muted);
+    margin-block-end: var(--sp-7);
+  }
+
+  /* --- tabs --- */
+  .tabs__list {
+    display: flex;
+    gap: var(--sp-6);
+    border-bottom: var(--border) solid var(--rule);
+    margin-block-end: var(--sp-5);
+  }
+
+  .tabs__tab {
+    position: relative;
+    padding-block: var(--sp-3);
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .tabs__tab::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform var(--d-base) var(--e-out);
+  }
+
+  .tabs__tab[aria-selected='true'] {
+    color: var(--ink);
+  }
+
+  .tabs__tab[aria-selected='true']::after,
+  .tabs__tab:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* --- hero metrics --- */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-6) var(--gutter);
+    margin: 0 0 var(--sp-7);
+    padding-block-start: var(--sp-6);
+    border-top: var(--border) solid var(--rule);
+  }
+
+  .metric dt {
+    margin-block-end: var(--sp-2);
+  }
+
+  .metric dd {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4em;
+  }
+
+  .metric__v {
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+
+  .metric__v[data-len='mid'] {
+    font-size: var(--step-1);
+  }
+
+  .metric__v[data-len='long'] {
+    font-size: var(--step-0);
+    line-height: 1.3;
+  }
+
+  .metric__u {
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+
+  .pdp__price {
+    font-size: var(--step--1);
+  }
+
+  /* --- features --- */
+  .features {
+    display: grid;
+    gap: 0;
+    margin-block-start: var(--sp-8);
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'n term' '. body';
+    gap: var(--sp-2) var(--sp-5);
+    padding-block: var(--sp-6);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .feature:last-child {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .feature__n {
+    grid-area: n;
+    font-size: var(--step--2);
+    color: var(--accent-text);
+    padding-block-start: 0.5em;
+  }
+
+  .feature__term {
+    grid-area: term;
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .feature p {
+    grid-area: body;
+    font-size: var(--step--1);
+  }
+
+  /* --- speed table --- */
+  .speed th {
+    width: auto;
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .speed__mode {
+    font-family: var(--font-sans);
+  }
+
+  .chips-block {
+    margin-block-start: var(--sp-8);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-4);
+    padding: 0;
+  }
+
+  .chips .chip {
+    font-size: var(--step--2);
+    padding: 6px 10px;
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground-muted);
+  }
+
+  /* --- installation --- */
+  .install {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: var(--sp-6) var(--gutter);
+    margin-block: var(--sp-8);
+    padding-block-start: var(--sp-6);
+    border-top: var(--border) solid var(--rule-dark);
+  }
+
+  .install dt {
+    font-size: var(--step--2);
+    font-family: var(--font-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-dark);
+    margin-block-end: var(--sp-2);
+  }
+
+  .install dd {
+    margin: 0;
+    font-size: var(--step-0);
+    color: var(--paper);
+  }
+
+  .not-included {
+    border-top: var(--border) solid var(--rule-dark);
+    padding-block-start: var(--sp-6);
+  }
+
+  .not-included ul {
+    margin-block-start: var(--sp-4);
+    padding-inline-start: 1.1em;
+    color: var(--muted-dark);
+    font-size: var(--step--1);
+    display: grid;
+    gap: var(--sp-2);
+  }
+
+  /* --- faq --- */
+  .faq {
+    margin-block-start: var(--sp-7);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .faq details {
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-5);
+    padding-block: var(--sp-5);
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .faq p {
+    padding-block-end: var(--sp-6);
+    color: var(--muted);
+    max-width: 68ch;
+  }
+
+  .accordion__chevron {
+    font-size: 1.4em;
+    line-height: 1;
+    color: var(--muted);
+  }
+
+  /* --- siblings --- */
+  .sibling-cards .card {
+    grid-row: auto;
+    grid-template-rows: none;
+  }
+
+  .sibling {
+    display: grid;
+    gap: var(--sp-3);
+    align-content: start;
+    padding: var(--sp-6);
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .sibling__model {
+    font-size: var(--step-1);
+    font-weight: 500;
+  }
+
+  .sibling__tagline {
+    font-size: var(--step--1);
+  }
+
+  .sibling__cta {
+    font-size: var(--step--1);
+    font-weight: 500;
+    margin-block-start: var(--sp-3);
+  }
+
+  /* Room for the sticky mobile bar. */
+  @media (max-width: 1023px) {
+    :global(body) {
+      padding-bottom: 64px;
+    }
+  }
+</style>
+
+<script>
+  // Tab switching for the gallery / 3D pair. Bound per page-load so it survives
+  // client-side navigation.
+  function initTabs() {
+    document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+      const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+      const select = (tab: HTMLButtonElement) => {
+        tabs.forEach((other) => {
+          const selected = other === tab;
+          other.setAttribute('aria-selected', String(selected));
+          const panel = document.getElementById(other.getAttribute('aria-controls')!);
+          if (panel) panel.hidden = !selected;
+        });
+      };
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => select(tab));
+        tab.addEventListener('keydown', (e) => {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          e.preventDefault();
+          const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          next.focus();
+          select(next);
+        });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initTabs);
+</script>

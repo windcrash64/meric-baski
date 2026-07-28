@@ -1,0 +1,147 @@
+key: signage
+order: 10
+accent: cyan
+
+hero:
+  src: /img/applications/signage/hero.jpg
+  kind: application
+  alt:
+    tr: Gece aydınlatılmış bir cadde cephesinde kutu harf tabela ve ışıklı pano
+    en: Illuminated channel letters and a lightbox fascia on a street frontage at night
+
+gallery:
+  - src: /img/applications/signage/pleksi-kutu-harf.jpg
+    kind: application
+    alt: { tr: Pleksi kutu harflerin ön yüzeyleri montaj öncesi tezgâhta sıralanmış, en: Acrylic channel-letter faces laid out on a bench before assembly }
+    caption: { tr: UV Pleksi Kutu Harf Baskı, en: UV printed acrylic channel letters }
+  - src: /img/applications/signage/alucomp-cephe.jpg
+    kind: application
+    alt: { tr: Bir bina cephesine monte edilmiş baskılı alüminyum kompozit panolar, en: Printed aluminium composite panels mounted across a building facade }
+    caption: { tr: Alüminyum Kompozit Levha UV Baskı, en: UV printed aluminium composite panel }
+  - src: /img/applications/signage/totem.jpg
+    kind: application
+    alt: { tr: Otopark girişinde çift yüzlü aydınlatmalı totem direği, en: Double-sided illuminated pylon sign at a car-park entrance }
+    caption: { tr: UV Totem Yüzeyi Baskı, en: UV printed pylon sign face }
+  - src: /img/applications/signage/vitrin-cam.jpg
+    kind: application
+    alt: { tr: Mağaza vitrin camına uygulanmış kumlama görünümlü kısmi grafik, en: Frosted-effect partial graphic applied to a shop window }
+    caption: { tr: UV Cam Vitrin Baskı, en: UV printed shop window graphic }
+  - src: /img/applications/signage/cephe-brandasi.jpg
+    kind: application
+    alt: { tr: İskele üzerindeki bir binayı kaplayan gergi brandası, en: Tensioned banner covering a building under scaffolding }
+    caption: { tr: Cephe Brandası Eko Solvent Baskı, en: Eco-solvent printed building banner }
+  - src: /img/applications/signage/dekota-yonlendirme.jpg
+    kind: application
+    alt: { tr: Bir ofis koridorunda duvara monte dekota yönlendirme levhaları, en: Foam PVC wayfinding plates mounted along an office corridor }
+    caption: { tr: Dekota Yönlendirme Levhası UV Baskı, en: UV printed foam PVC wayfinding plate }
+  - src: /img/applications/signage/fuar-standi.jpg
+    kind: application
+    alt: { tr: Fuar standının arka duvarını oluşturan baskılı fotoblok paneller, en: Printed foam board panels forming the back wall of an exhibition stand }
+    caption: { tr: Fotoblok Stand Paneli UV Baskı, en: UV printed foam board stand panel }
+  - src: /img/applications/signage/raket-afis.jpg
+    kind: application
+    alt: { tr: Kaldırım kenarındaki aydınlatmalı raket vitrinine yerleştirilen afiş, en: Poster being loaded into an illuminated citylight unit at the kerbside }
+    caption: { tr: Raket Afiş Eko Solvent Baskı, en: Eco-solvent printed citylight poster }
+
+machines: [MF-2513-R8, MF-1216-R4, MH-3200-R12, MS-1802-E4, MK-1612]
+inks: [mi-210-uv-led-r, mi-110-uv, mi-410-eco, mi-510-sol]
+substrates: [acrylic, alucomp, foamboard, photoblock, pvc, glass, metal, banner, mesh, vinyl]
+
+i18n:
+  tr:
+    name: Reklam ve Tabela
+    kicker: Şehirde görün
+    intro: >-
+      Tabela işi tek bir baskı türü değildir. Aynı atölye bir gün ışıklı tabela
+      için 3 mm pleksi ve alüminyum kompozit levha basar, ertesi gün 40 m²'lik bir
+      cephe brandası çıkarır. Malzeme rijitten ruloya geçtiğinde makine de değişir:
+      UV flatbed levhayı doğrudan tablaya alıp basar, eko solvent rulo makinesi
+      brandayı ve folyoyu basar. Bu ikisini birbirinin yerine koymak, tabela
+      atölyelerinin en pahalı planlama hatasıdır.
+
+      İkinci belirleyici konu dayanımdır. Dış mekânda kalacak her iş için mürekkep,
+      malzeme ve laminasyon birlikte seçilir; UV mürekkep rijit yüzeyde çizilmeye
+      dayanır ama derin bükümlü folyoda çatlar, eko solvent folyoya yerleşir ama
+      laminasyonsuz bırakıldığında ilk yaz sonrası solmaya başlar. Bizim
+      yaklaşımımız makineyi işten önce değil, işi makineden önce konuşmaktır:
+      hangi malzemeden ayda kaç metrekare çıkıyor ve iş kaç yıl ayakta kalacak.
+    jobs:
+      - Işıklı tabela ve kutu harf yüzeyleri (pleksi, opal levha)
+      - Totem, yön bulma ve kat yönlendirme levhaları
+      - Alüminyum kompozit üzerine cephe panoları ve alınlıklar
+      - Cephe brandası, iskele brandası ve mesh
+      - Vitrin camı grafikleri, kumlama görünümlü kısmi kaplamalar
+      - Raket, CLP ve billboard afişleri
+      - Fuar standı panelleri, backdrop ve tezgâh giydirme
+      - Dekota ve fotoblok üzerine iç mekân yönlendirme
+    faq:
+      - q: Tabela atölyesi önce hangi makineyi almalı?
+        a: >-
+          İş dağılımınıza bakın. Aylık metrekarenizin yarıdan fazlası branda,
+          folyo ve afiş ise önce eko solvent rulo makinesi alınır; rijit levha
+          ağırlıklıysa sıra UV flatbed'dedir. İki makineyi aynı anda almak zorunda
+          değilsiniz — ikinci yarıyı hacim gerekçelendirene kadar fason yaptırmak,
+          düşük doluluklu bir makineyi finanse etmekten ucuzdur.
+      - q: Pleksi ve alüminyum kompozit üzerine UV baskı ne kadar dayanır?
+        a: >-
+          Mürekkep tarafında yayınladığımız referans, laminasyonsuz dikey
+          maruziyette ve Orta Avrupa iklimi koşullarında 24 aydır. Türkiye'nin
+          güney sahilinde yıllık UV dozu bu referansın üzerindedir; yatay veya
+          yukarı bakan montajlarda ömür belirgin biçimde kısalır. Uzun ömür
+          bekleniyorsa laminasyon veya vernik katmanı işin parçasıdır, opsiyon değil.
+      - q: Kesim ve şekillendirmeyi nasıl çözüyorsunuz?
+        a: >-
+          Küçük hacimde giyotin ve maket bıçağı yeter; ama fotoblok, dekota ve
+          alüminyum kompozitte kenar kalitesi ve tekrarlanabilirlik istiyorsanız
+          işin sonunda bir dijital kesim tablası vardır. MK-1612 basılı levhadaki
+          register işaretlerini okuyup kontur keser, oluk açar ve ince kompozitte
+          freze yapar; kesimi baskıdan ayırmak baskı makinesini de serbest bırakır.
+  en:
+    name: Signage & Advertising
+    kicker: Be seen in the city
+    intro: >-
+      Signage is not one kind of printing. The same shop prints 3 mm acrylic and
+      aluminium composite for an illuminated sign one day and a 40 m² building
+      banner the next. When the material goes from rigid to roll, the machine
+      changes with it: a UV flatbed takes the sheet straight onto the bed, while an
+      eco-solvent roll printer handles banner and vinyl. Treating the two as
+      interchangeable is the most expensive planning mistake a sign shop makes.
+
+      The second deciding factor is durability. For anything that stays outdoors,
+      ink, material and lamination are chosen together. UV ink resists scuffing on
+      a rigid face but cracks on deeply formed vinyl; eco-solvent sits well on
+      vinyl but starts to fade after its first summer if left unlaminated. Our
+      approach is to talk about the work before the machine: how many square metres
+      of which material per month, and how many years the job has to survive.
+    jobs:
+      - Illuminated sign and channel-letter faces (acrylic, opal sheet)
+      - Pylon signs, wayfinding and floor-directory plates
+      - Facade panels and fascias on aluminium composite
+      - Building banners, scaffold banners and mesh
+      - Shop-window graphics and frosted-effect partial films
+      - Citylight, CLP and billboard posters
+      - Exhibition stand panels, backdrops and counter wraps
+      - Interior wayfinding on foam PVC and foam board
+    faq:
+      - q: Which machine should a sign shop buy first?
+        a: >-
+          Look at your mix. If more than half your monthly square metres are
+          banner, vinyl and poster, the eco-solvent roll printer comes first; if
+          rigid sheet dominates, the UV flatbed does. You do not have to buy both
+          at once — subcontracting the other half until volume justifies it is
+          cheaper than financing a machine that runs half empty.
+      - q: How long does UV printing on acrylic and aluminium composite last?
+        a: >-
+          The reference we publish on the ink side is 24 months of unlaminated
+          vertical exposure in a central European climate. Annual UV dose on the
+          southern Turkish coast is higher than that reference, and life shortens
+          markedly on horizontal or upward-facing installations. Where long life is
+          expected, a laminate or varnish layer is part of the job, not an option.
+      - q: How do you handle cutting and shaping?
+        a: >-
+          At low volume a guillotine and a knife will do. Once you need edge
+          quality and repeatability on foam board, foam PVC and aluminium
+          composite, there is a digital cutting table at the end of the process.
+          The MK-1612 reads the registration marks in the printed sheet, contour
+          cuts, creases and routes thin composite — and taking cutting off the
+          printer frees the printer as well.

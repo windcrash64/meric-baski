@@ -1,0 +1,182 @@
+---
+/**
+ * Sliding image gallery.
+ *
+ * The rail is CSS scroll-snap: native touch momentum, free RTL through
+ * `direction`, and it degrades to a plain horizontally scrollable strip when JS
+ * never runs. The arrows, dots and position readout are added by enhance.ts and
+ * are `hidden` until it does — controls that do nothing are worse than none.
+ *
+ * No auto-rotation, ever. It removes the whole W3C APG rotation-control
+ * requirement, and moving photographs while someone reads spec numbers is
+ * user-hostile.
+ */
+import type { Locale } from '../../config/site';
+import { t } from '../../i18n/ui';
+import Picture from './Picture.astro';
+
+export interface Slide {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+export interface Props {
+  slides: Slide[];
+  locale: Locale;
+  label: string;
+  ratio?: 'card' | 'hero' | 'square' | 'inset';
+  graded?: boolean;
+  id?: string;
+}
+
+const { slides, locale, label, ratio = 'card', graded = false, id = 'gallery' } = Astro.props;
+---
+
+<div
+  class="gallery"
+  data-gallery
+  role="group"
+  aria-roledescription={t('carousel', locale)}
+  aria-label={label}
+>
+  <div class="gallery__rail rail" data-gallery-rail tabindex="0">
+    {slides.map((slide, i) => (
+      <figure
+        class="gallery__slide"
+        role="group"
+        aria-roledescription={t('slide', locale)}
+        aria-label={`${i + 1} / ${slides.length}`}
+      >
+        <Picture src={slide.src} alt={slide.alt} ratio={ratio} graded={graded}
+                 sizes="(min-width: 1024px) 46vw, 92vw" />
+        {slide.caption && <figcaption class="caption">{slide.caption}</figcaption>}
+      </figure>
+    ))}
+  </div>
+
+  <div class="gallery__controls" data-gallery-controls hidden>
+    <div class="gallery__dots" role="tablist" aria-label={label}>
+      {slides.map((slide, i) => (
+        <button
+          type="button"
+          role="tab"
+          data-gallery-dot
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`${id}-slide-${i}`}
+        >
+          <span class="visually-hidden">{`${t('slide', locale)} ${i + 1}`}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="gallery__nav">
+      <span class="gallery__status mono" data-gallery-status aria-live="polite">
+        1 / {slides.length}
+      </span>
+      <button type="button" class="gallery__arrow" data-gallery-prev>
+        <span class="visually-hidden">{t('previous', locale)}</span>
+        <span aria-hidden="true">←</span>
+      </button>
+      <button type="button" class="gallery__arrow" data-gallery-next>
+        <span class="visually-hidden">{t('next', locale)}</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gallery {
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  .gallery__rail {
+    --rail-item: 100%;
+  }
+
+  .gallery__rail:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+  }
+
+  .gallery__slide {
+    margin: 0;
+    display: grid;
+    gap: var(--sp-3);
+    align-content: start;
+  }
+
+  .gallery__slide figcaption {
+    min-height: 2.6em;
+  }
+
+  .gallery__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-5);
+  }
+
+  .gallery__dots {
+    display: flex;
+    gap: var(--sp-2);
+  }
+
+  /* A 10 px mark with a 44 px hit area: the target has to be reachable on a
+     phone even though the dot itself must stay small. */
+  .gallery__dots button {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    background: var(--hairline);
+    transition: background-color var(--d-base) var(--e-out), transform var(--d-base) var(--e-out);
+  }
+
+  .gallery__dots button::after {
+    content: '';
+    position: absolute;
+    inset: -17px;
+  }
+
+  .gallery__dots button[aria-selected='true'] {
+    background: var(--accent);
+    transform: scaleX(2.4);
+    transform-origin: left center;
+  }
+
+  .gallery__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+
+  .gallery__status {
+    font-size: var(--step--2);
+    color: var(--on-ground-muted);
+    letter-spacing: 0.08em;
+    min-width: 5ch;
+    text-align: right;
+  }
+
+  .gallery__arrow {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground);
+    transition: border-color var(--d-base) var(--e-out), background-color var(--d-base) var(--e-out);
+  }
+
+  .gallery__arrow:hover:not(:disabled),
+  .gallery__arrow:focus-visible:not(:disabled) {
+    border-color: var(--on-ground);
+  }
+
+  .gallery__arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+</style>

@@ -1,0 +1,258 @@
+sku: MF-2513-R8
+model: Maven MF-2513 R8
+family: uv-flatbed
+tier: industrial
+order: 30
+featured: true
+status: active
+price: null
+leadTimeWeeks: [6, 10]
+
+headline: [printArea, printHead, speedModes, colors]
+
+printhead:
+  brand: ricoh
+  model: Gen6
+  count: [2, 12]
+  dropSizePl: [5, 35]
+
+headOptions:
+  - { brand: ricoh, model: Gen6, count: [2, 12], dropSizePl: [5, 35] }
+  - { brand: konica, model: KM1024i, count: [4, 12], dropSizePl: [6, 30] }
+  - { brand: epson, model: i3200-U1, count: [2, 4], dropSizePl: [3, 25] }
+
+specs:
+  printArea: "2500 × 1300 mm"
+  mediaHeight: { value: 100, unit: mm }
+  mediaWeight: { value: 50, unit: kg/m2 }
+  resolution: "600 · 900 · 1200 dpi"
+  dropSize: { value: [5, 35], unit: pL }
+  printHead: "Ricoh Gen6 (5 pl)"
+  headCount: { value: [2, 12], unit: adet }
+  colors: "CMYK · Lc · Lm · W · Lak"
+  inkType: "UV LED"
+  inkSupply: "2 L toplu besleme, beyaz sirkülasyonlu"
+  inkCapacity: { value: 2000, unit: ml }
+  inkConsumption: { value: [10, 30], unit: ml/m2 }
+  whiteCirculation: true
+  table: "Bölgesel vakumlu alüminyum tabla"
+  vacuumZones: { value: 3 }
+  curing: "Su soğutmalı LED-UV, 395 nm"
+  heightSensor: "Otomatik malzeme yüksekliği ölçümü, 0–100 mm"
+  antiCollision: "Kafa çarpışma sensörü, otomatik duruş"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Yarı otomatik püskürtme + manuel silme"
+  powerSupply: "AC 220 V, 50/60 Hz, 3 faz"
+  power: { value: 10, unit: kW }
+  current: { value: 45, unit: A }
+  environment: "20–28 °C / %40–60 BN"
+  tempGradient: { value: 10, unit: °C/sa }
+  rip: "ONYX · Caldera · SAi Flexi · Photoprint"
+  fileFormats: "PDF · TIFF · EPS · PS · JPEG"
+  interface: "Gigabit Ethernet"
+  dimensions: "4400 × 2450 × 1250 mm"
+  weight: { value: 1510, unit: kg }
+  floorArea: { value: 28, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures.
+speedModes:
+  - { pass: 4, value: [50, 60], mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: [36, 42], mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: [27, 30], mode: { tr: Yüksek kalite, en: High quality } }
+
+compatibleInks: [mi-210-uv-led-r, mi-110-uv]
+applications: [signage, interior, industrial, packaging]
+substrates: [glass, wood, mdf, foamboard, pvc, acrylic, alucomp, photoblock, metal, ceramic]
+siblings: [MF-1216-R4, MF-3220-K12]
+rip: [ONYX, Caldera, SAi Flexi, Photoprint]
+
+installation:
+  powerPhase: 3F
+  floorAreaM2: 28
+  ceilingHeightM: 3.2
+  cratedDimensions: { w: 4700, d: 2600, h: 1600, unit: mm }
+  ventilationRequired: false
+  compressedAir: "6 bar, 200 L/dk"
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Forklift veya vinç ile indirme
+      - Elektrik altyapısı ve trifaze pano
+      - Basınçlı hava hattı
+      - Sarf başlangıç seti
+    en:
+      - Freight and insurance
+      - Forklift or crane unloading
+      - Electrical infrastructure and three-phase panel
+      - Compressed air line
+      - Starter consumables kit
+
+gallery:
+  - src: /img/machines/mf-2513-r8/hero.jpg
+    kind: machine
+    alt: { tr: Maven MF-2513 R8 UV flatbed baskı makinesi, en: Maven MF-2513 R8 UV flatbed printer }
+  - src: /img/machines/mf-2513-r8/carriage.jpg
+    kind: detail
+    alt: { tr: Baskı kafası arabası ve LED-UV kürleme lambaları, en: Printhead carriage and LED-UV curing lamps }
+    caption: { tr: Su soğutmalı LED-UV kürleme, en: Water-cooled LED-UV curing }
+  - src: /img/machines/mf-2513-r8/bed.jpg
+    kind: detail
+    alt: { tr: Üç bölgeli vakumlu alüminyum tabla, en: Three-zone aluminium vacuum table }
+    caption: { tr: Bölgesel Vakum Kontrolü, en: Zoned vacuum control }
+  - src: /img/machines/mf-2513-r8/ink.jpg
+    kind: detail
+    alt: { tr: 2 litrelik toplu mürekkep besleme sistemi, en: 2 litre bulk ink supply }
+  - src: /img/machines/mf-2513-r8/app-glass.jpg
+    kind: application
+    alt: { tr: UV cam kapı baskı uygulaması, en: UV printed glass door }
+    caption: { tr: UV Cam Kapı Baskı, en: UV printed glass door }
+
+model3d:
+  glb: /models/mf-2513-r8.v1.glb
+  poster: /models/mf-2513-r8-poster.webp
+  triangles: 31324
+  bytes: 0
+  hotspots:
+    - key: printhead
+      position: "-0.16 1.14 0.24"
+      normal: "0 1 0"
+      label: { tr: Baskı kafası bloğu, en: Printhead carriage }
+      body:
+        tr: 2–12 adet Ricoh Gen6 kafa, kademeli dizilim, 5–35 pL değişken damla.
+        en: 2–12 Ricoh Gen6 heads in a staggered array, 5–35 pL variable drop.
+    - key: curing
+      position: "-0.16 1.05 0.55"
+      normal: "0 0 1"
+      label: { tr: LED-UV kürleme, en: LED-UV curing }
+      body:
+        tr: Su soğutmalı 395 nm LED lambalar, her iki yönde kürleme.
+        en: Water-cooled 395 nm LED lamps curing on both strokes.
+    - key: bed
+      position: "0.4 0.9 0"
+      normal: "0 1 0"
+      label: { tr: Bölgesel vakumlu tabla, en: Zoned vacuum table }
+      body:
+        tr: 2500 × 1300 mm alüminyum tabla, 3 bağımsız vakum bölgesi.
+        en: 2500 × 1300 mm aluminium bed with three independent vacuum zones.
+    - key: ink_supply
+      position: "1.79 0.95 0.34"
+      normal: "0 1 0"
+      label: { tr: Mürekkep besleme, en: Ink supply system }
+      body:
+        tr: 2 L kanal başına toplu besleme; beyaz kanalda sürekli sirkülasyon.
+        en: 2 L bulk supply per channel; continuous circulation on the white channel.
+    - key: control
+      position: "1.78 1.05 -1.02"
+      normal: "0 0 -1"
+      label: { tr: Kontrol paneli, en: Control station }
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mf-2513-r8-katalog-tr.pdf, bytes: 2411724 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mf-2513-r8-teknik-tr.pdf, bytes: 486400 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mf-2513-r8-kurulum-kontrol-listesi.pdf, bytes: 214016 }
+
+i18n:
+  tr:
+    tagline: Her yüzeye endüstriyel kalite, her vardiyaya kesintisiz üretim
+    summary: >-
+      MF-2513 R8, 2500 × 1300 mm tablasıyla sektörün hacim makinesidir. 2 ile 12
+      arasında yapılandırılabilen Ricoh Gen6 kafa dizilimi, 4 geçişte 50–60 m²/sa
+      üretim hızı verir; üç bağımsız vakum bölgesi sayesinde tam tabla iş de,
+      tek levha da aynı verimle basılır. Beyaz kanal sürekli sirkülasyondadır,
+      su soğutmalı LED-UV kürleme ise 24 saat çalışan atölyelerde lamba ömrünü korur.
+    features:
+      - term: Bölgesel Vakum Kontrolü
+        body: >-
+          Tabla üç bağımsız bölgeye ayrılmıştır. Tek bir 60 × 40 cm levha için
+          bütün tablayı vakumlamak zorunda kalmaz, kompresör yükünü ve elektrik
+          tüketimini iş boyutuna göre ayarlarsınız.
+      - term: MavenFlow Beyaz Sirkülasyon
+        body: >-
+          Beyaz mürekkep, makine kapalıyken bile kanal içinde dolaşır. Beyaz
+          pigmentin çökmesi ve bunun getirdiği kafa temizleme kaybı, beyaz
+          kullanan her atölyenin en büyük gizli maliyetidir.
+      - term: AutoGap Yükseklik Sensörü
+        body: >-
+          Malzeme yüksekliği 0–100 mm arasında otomatik ölçülür ve kafa yüksekliği
+          buna göre ayarlanır. Kafa çarpışma sensörü temas anında arabayı durdurur.
+      - term: Su Soğutmalı LED-UV
+        body: >-
+          Hava soğutmalı lambaların aksine sıcaklık vardiya boyunca sabit kalır;
+          bu hem kürleme tutarlılığını hem de LED ömrünü doğrudan etkiler.
+    faq:
+      - q: MF-2513 R8 hangi işler için doğru makine?
+        a: >-
+          Tabela, levha, cam ve mobilya panel üretimi gibi günlük 40 m²'nin
+          üzerinde rijit malzeme basan atölyeler için tasarlandı. Daha düşük
+          hacimlerde MF-1216 R4, 3200 × 2000 mm'ye kadar levha basmanız
+          gerekiyorsa MF-3220 K12 daha doğru olur.
+      - q: Kafa sayısını sonradan artırabilir miyim?
+        a: >-
+          Evet. Şasi 12 kafaya kadar hazırdır; 4 kafalı bir konfigürasyonu sonradan
+          8 kafaya çıkarmak yerinde yapılan bir yükseltmedir. Yükseltme sonrası
+          renk profillerinin yeniden oluşturulması gerekir.
+      - q: Trifaze elektrik şart mı?
+        a: >-
+          Evet. Makine 220 V 3 faz, 45 A besleme ister. Panonun makineye kadar
+          çekilmesi ve kaçak akım korumasının hazırlanması kurulum öncesi
+          sizin tarafınızdadır; kurulum öncesi keşifte birlikte kontrol ediyoruz.
+      - q: Beyaz mürekkep tüketimi ne kadar?
+        a: >-
+          Tam kapatıcı beyaz alt katman kullanıldığında toplam tüketim 10–30 ml/m²
+          aralığının üst bandına yaklaşır. Renk + beyaz + renk (C-W-C) işlerde
+          hızın da yaklaşık üçte bire düştüğünü hesaba katın.
+    alternateName:
+      - UV flatbed baskı makinası
+      - flatbed uv baskı makinesi
+      - 2500x1300 uv baskı makinesi
+  en:
+    tagline: Industrial quality on any surface, uninterrupted output every shift
+    summary: >-
+      The MF-2513 R8 is the volume machine of the category, built around a
+      2500 × 1300 mm bed. A Ricoh Gen6 array configurable from 2 to 12 heads
+      delivers 50–60 m²/h at four passes, and three independent vacuum zones mean
+      a single sheet costs no more vacuum than a full bed. The white channel
+      circulates continuously, and water-cooled LED-UV curing holds lamp
+      temperature steady in shops that run around the clock.
+    features:
+      - term: Zoned Vacuum Control
+        body: >-
+          The bed is split into three independent zones, so a single 60 × 40 cm
+          sheet does not require pulling vacuum across the whole table. Compressor
+          load and power draw scale with the job, not the machine.
+      - term: MavenFlow White Circulation
+        body: >-
+          White ink circulates through the channel even when the machine is idle.
+          Settled white pigment — and the head cleaning it causes — is the largest
+          hidden cost in any shop running white.
+      - term: AutoGap Height Sensor
+        body: >-
+          Media height is measured automatically between 0 and 100 mm and the head
+          gap is set from it. An anti-collision sensor halts the carriage on contact.
+      - term: Water-Cooled LED-UV
+        body: >-
+          Unlike air-cooled lamps, temperature stays constant across a full shift,
+          which directly affects both cure consistency and LED service life.
+    faq:
+      - q: What is the MF-2513 R8 the right machine for?
+        a: >-
+          Shops printing more than 40 m² of rigid material a day — signage, sheet
+          goods, glass and furniture panels. Below that volume the MF-1216 R4 fits
+          better; if you need to print sheets up to 3200 × 2000 mm, look at the
+          MF-3220 K12.
+      - q: Can I add printheads later?
+        a: >-
+          Yes. The chassis is prepared for up to 12 heads, and going from a
+          4-head to an 8-head configuration is an on-site upgrade. Colour profiles
+          must be rebuilt afterwards.
+      - q: Is three-phase power mandatory?
+        a: >-
+          Yes — 220 V three-phase at 45 A. Bringing the panel to the machine and
+          preparing residual-current protection is your responsibility before
+          installation; we walk through it together during the pre-install survey.
+      - q: How much white ink does it use?
+        a: >-
+          With a fully opaque white underbase, total consumption approaches the top
+          of the 10–30 ml/m² band. Also budget for speed: colour-white-colour work
+          runs at roughly a third of single-pass colour output.

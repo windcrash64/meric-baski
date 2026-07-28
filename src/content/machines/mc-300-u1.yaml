@@ -1,0 +1,302 @@
+sku: MC-300-U1
+model: Maven MC-300 U1
+family: uv-dtf
+tier: entry
+order: 110
+featured: false
+status: active
+price: null
+leadTimeWeeks: [3, 6]
+
+headline: [printWidth, printHead, speedModes, colors]
+
+printhead:
+  brand: epson
+  model: i3200-U1HD
+  count: 1
+  dropSizePl: 2.5
+
+specs:
+  printWidth: { value: 300, unit: mm }
+  mediaWidth: { value: 320, unit: mm }
+  mediaThickness: { value: 1.5, unit: mm }
+  resolution: "720 × 1200 · 1440 × 1440 dpi"
+  dropSize:
+    value: 2.5
+    unit: pL
+    note:
+      tr: en küçük damla; VSDT değişken damla teknolojisi
+      en: minimum droplet; VSDT variable-size droplet
+  printHead: "1 × Epson i3200-U1HD"
+  headCount: { value: 1, unit: adet }
+  colors: "CMYK · W · Lak"
+  inkType: "UV DTF (UV LED)"
+  inkSupply: "1 L şişe besleme; beyaz kanalda otomatik karıştırıcı"
+  inkCapacity: { value: 1000, unit: ml }
+  whiteCirculation: false
+  feed: "Rulodan ruloya A film beslemesi, 300 mm"
+  takeUp: "Laminasyon sonrası otomatik sarma"
+  curing: "Çift sıra UV LED, 395 nm"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Otomatik temizleme + manuel silme"
+  powerSupply: "AC 220 V, 50/60 Hz, tek faz"
+  power: { value: 3.5, unit: kW }
+  current: { value: 16, unit: A }
+  environment: "15–32 °C / %35–80 BN"
+  rip: "Maintop 6.1 · PhotoPRINT · CADlink"
+  fileFormats: "PDF · TIFF · EPS · JPEG"
+  interface: "Gigabit Ethernet (RJ45) · USB 2.0"
+  dimensions: "1160 × 730 × 1380 mm (sehpa dahil)"
+  weight: { value: 100, unit: kg }
+  floorArea: { value: 4, unit: m2 }
+
+# Tek kafalı bir makinede bile hız tek sayı değildir. Aşağıdaki değerler renk +
+# beyaz + lak katmanının tamamı basılırken film tarafında ölçülen hızlardır.
+speedModes:
+  - { pass: 4, value: 3.6, mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: 2.5, mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: 1.8, mode: { tr: Yüksek kalite, en: High quality } }
+
+compatibleInks: [mi-310-uv-dtf, mi-910-flush]
+applications: [packaging, textile, industrial]
+substrates: [film, glass, metal, ceramic, acrylic, wood, leather]
+siblings: [MD-600-A4, MT-1900-A4]
+rip: [Maintop 6.1, PhotoPRINT, CADlink]
+
+installation:
+  powerPhase: 1F
+  floorAreaM2: 4
+  ceilingHeightM: 2.5
+  cratedDimensions: { w: 1350, d: 900, h: 1550, unit: mm }
+  ventilationRequired: false
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Topraklamalı priz ve 16 A hat kontrolü
+      - Kesintisiz güç kaynağı (UPS)
+      - A ve B film ile sarf başlangıç seti
+      - Etiket kesim (die-cut) veya lazer kesim ünitesi
+    en:
+      - Freight and insurance
+      - Earthed socket and a verified 16 A circuit
+      - Uninterruptible power supply (UPS)
+      - A and B film plus starter consumables kit
+      - Label die-cutting or laser cutting unit
+
+gallery:
+  - src: /img/machines/mc-300-u1/hero.jpg
+    kind: machine
+    alt:
+      tr: "Sehpalı masaüstü UV DTF makinesi ve önündeki 30 cm film rulosu"
+      en: "Desktop UV DTF machine on its stand with a 30 cm film roll at the front"
+  - src: /img/machines/mc-300-u1/carriage.jpg
+    kind: detail
+    alt:
+      tr: "Tek kafalı araba ve iki yanındaki UV LED lamba sıraları"
+      en: "Single-head carriage flanked by two rows of UV LED lamps"
+    caption: { tr: TwinCure çift LED kürleme, en: TwinCure dual LED curing }
+  - src: /img/machines/mc-300-u1/laminator.jpg
+    kind: detail
+    alt:
+      tr: "A ve B filmini birleştiren laminasyon merdanesi ve kesim bıçağı"
+      en: "Lamination roller joining the A and B film with the cut-off blade beside it"
+    caption: { tr: ABFlow otomatik laminasyon, en: ABFlow automatic lamination }
+  - src: /img/machines/mc-300-u1/ink.jpg
+    kind: detail
+    alt:
+      tr: "Altı kanallı 1 litrelik şişeler ve beyaz kanaldaki karıştırıcı"
+      en: "Six 1 litre ink bottles with the stirrer on the white channel"
+  - src: /img/machines/mc-300-u1/app-glass.jpg
+    kind: application
+    alt:
+      tr: "Cam şişeye soğuk transferle uygulanmış kabartmalı kristal etiket"
+      en: "Embossed crystal label cold-transferred onto a glass bottle"
+    caption: { tr: UV DTF Cam Şişe Etiket, en: UV DTF label on glass }
+
+model3d:
+  glb: /models/mc-300-u1.v1.glb
+  poster: /models/mc-300-u1-poster.webp
+  triangles: 0
+  bytes: 0
+  hotspots:
+    - key: printhead
+      position: "0.02 1.06 0.18"
+      normal: "0 1 0"
+      label: { tr: Baskı kafası bloğu, en: Printhead carriage }
+      body:
+        tr: Tek Epson i3200-U1HD kafa; CMYK + beyaz + lak tek geçişte basılır.
+        en: A single Epson i3200-U1HD head laying CMYK, white and varnish in one pass.
+    - key: curing
+      position: "0.16 1.02 0.20"
+      normal: "0 0 1"
+      label: { tr: UV LED kürleme, en: UV LED curing }
+      body:
+        tr: Arabanın iki yanında 395 nm LED sıraları; her iki yönde kürleme.
+        en: 395 nm LED rows on both sides of the carriage, curing on both strokes.
+    - key: laminator
+      position: "-0.34 0.92 0.26"
+      normal: "0 0 1"
+      label: { tr: Otomatik laminasyon, en: Automatic laminator }
+      body:
+        tr: B filmi baskı üstüne makine içinde lamine edilir; ayrı pres gerekmez.
+        en: The B film is laminated over the print in line; no separate press is needed.
+    - key: ink_supply
+      position: "0.46 0.84 0.12"
+      normal: "1 0 0"
+      label: { tr: Mürekkep besleme, en: Ink supply system }
+      body:
+        tr: Kanal başına 1 L şişe; beyaz kanalda otomatik karıştırıcı çalışır.
+        en: 1 L bottle per channel, with an automatic stirrer on the white.
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-mc-300-u1-katalog-tr.pdf, bytes: 1642496 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-mc-300-u1-teknik-tr.pdf, bytes: 384000 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-mc-300-u1-kurulum-kontrol-listesi.pdf, bytes: 172032 }
+
+i18n:
+  tr:
+    tagline: Isısız soğuk transfer, tek makinede baskı ve laminasyon
+    summary: >-
+      MC-300 U1, 30 cm genişliğinde UV DTF kristal etiket üretimi için
+      tasarlanmış masaüstü bir sistemdir. Tek Epson i3200-U1HD kafa CMYK'nın
+      yanına beyaz ve lak basar; çift sıra UV LED, mürekkebi film üzerinde anında
+      kürler. A ve B filmi makine içinde otomatik lamine edilir, ayrı bir
+      laminasyon presi gerekmez. 4 geçişte 3,6 m²/sa film çıkarır. Etiketler cam,
+      metal, ahşap ve kavisli yüzeylere soğuk transferle uygulanır; ısı ya da
+      pres gerekmez. Beyaz kanalda sirkülasyon yerine otomatik karıştırıcı
+      vardır; günlük kısa bir bakım rutini ister.
+    features:
+      - term: ABFlow Otomatik Laminasyon
+        body: >-
+          B filmi, baskı çıkışında merdane ile A filmine lamine edilir ve rulo
+          hâlinde sarılır. Ayrı laminasyon presi kullanan kurulumlarda toz ve
+          hava kabarcığı en sık görülen fire sebebidir; hat içinde laminasyon bu
+          adımı tamamen ortadan kaldırır.
+      - term: TwinCure Çift LED Kürleme
+        body: >-
+          Arabanın iki yanındaki 395 nm LED sıraları her iki yönde kürleme yapar.
+          Lak katmanı yeterince kürlenmediğinde etiket transferden sonra parmak
+          izi tutar; çift sıra, tek yönlü kürlemenin bıraktığı bu farkı kapatır.
+      - term: MavenFlow Beyaz Karıştırma
+        body: >-
+          Beyaz kanalda sürekli sirkülasyon yerine otomatik karıştırıcı bulunur.
+          Bu sınıfın gerçeği budur: karıştırıcı çökelmeyi geciktirir, ortadan
+          kaldırmaz. Makineyi bir haftadan uzun süre boş bırakacaksanız beyaz
+          hattı yıkamayı planlayın.
+      - term: CrystalGloss Lak Katmanı
+        body: >-
+          Lak, seçilen bölgelere ayrı kanal olarak basılır; etikete kabartma
+          hissi ve tırnakla hissedilen bir yüzey verir. Kristal etiketi düz bir
+          çıkartmadan ayıran tek özellik budur ve dosya hazırlarken lak kanalının
+          ayrı katman olarak kurulması gerekir.
+    faq:
+      - q: MC-300 U1 hangi işler için doğru makine?
+        a: >-
+          Küçük adetli kristal etiket, promosyon ve kişiselleştirme işi yapan
+          atölyeler için. 30 cm web ve 3,6 m²/sa ile bu bir hacim makinesi değil;
+          günde 5 m²'nin üzerine çıkıyorsanız 60 cm'lik bir UV DTF sistemine
+          bakın. Düz levha ya da rijit malzemeye doğrudan basacaksanız doğru
+          makine UV flatbed.
+      - q: A ve B filmini istediğim markadan alabilir miyim?
+        a: >-
+          Teknik olarak evet, pratikte hayır. A filminin yüzey enerjisi ile B
+          filminin yapıştırıcı sınıfı birbirine ve mürekkebe göre seçilir;
+          eşleşmeyen film çiftinde etiket ya filmden kalkmaz ya da transfer
+          sonrası kenardan ayrılır. Yeni bir film markasına geçmeden önce numune
+          isteyin.
+      - q: Etiketin dayanımı ne kadar?
+        a: >-
+          İç mekânda, cam ve metal gibi düzgün yüzeylerde kalıcı kabul edilir.
+          Dış mekân için beyan ettiğimiz süre 12 aydır; bu değer dikey maruziyet
+          ve Orta Avrupa iklimi içindir. Yatay maruziyet, araç dış yüzeyi veya
+          Akdeniz ikliminde bu süre kısalır — bu tip işlerde laminasyonlu folyo
+          hâlâ daha doğru çözümdür.
+      - q: Havalandırma gerekiyor mu?
+        a: >-
+          Zorunlu değil. UV LED kürlemede solvent buharı yoktur, koku düşüktür.
+          Yine de makinenin bulunduğu odada normal hava sirkülasyonu olsun ve
+          temizleme solüsyonunu kapalı kapta saklayın; asıl koku kaynağı mürekkep
+          değil, temizlik sarfıdır.
+      - q: Bakım rutini nedir?
+        a: >-
+          Her vardiya sonunda nozzle kontrol baskısı ve kaptop temizliği; haftada
+          bir beyaz hattın kontrolü ve wiper temizliği. Damper yaklaşık altı ayda
+          bir değişir. Tek kafalı bir makinede kafa tıkanması doğrudan üretim
+          durması demektir — bu rutin isteğe bağlı değildir.
+    alternateName:
+      - UV DTF baskı makinası
+      - kristal etiket makinası
+      - uv dtf soğuk transfer baskı makinesi
+      - 30 cm uvdtf yazıcı
+  en:
+    tagline: Cold transfer without heat, printing and lamination in one machine
+    summary: >-
+      The MC-300 U1 is a desktop system for 30 cm UV DTF crystal label work. A
+      single Epson i3200-U1HD head lays white and varnish alongside CMYK, and two
+      rows of UV LED cure the ink on the film immediately. A and B film are
+      laminated automatically inside the machine, so no separate press is needed.
+      Output is 3.6 m²/h of film at four passes. Labels transfer cold onto glass,
+      metal, wood and curved surfaces. White is stirred rather than circulated,
+      which asks for a short daily routine.
+    features:
+      - term: ABFlow Automatic Lamination
+        body: >-
+          The B film is roller-laminated onto the A film at the print exit and
+          wound as a finished roll. On setups using a separate laminating press,
+          dust and trapped air are the most common source of waste; laminating
+          in line removes the step entirely.
+      - term: TwinCure Dual LED Curing
+        body: >-
+          395 nm LED rows on both sides of the carriage cure on both strokes.
+          An under-cured varnish layer shows fingerprints after transfer, and
+          the second row closes exactly that gap left by single-direction curing.
+      - term: MavenFlow White Stirring
+        body: >-
+          The white channel is stirred automatically rather than circulated. That
+          is the honest picture in this class: stirring delays settling, it does
+          not prevent it. If the machine will stand idle for more than a week,
+          plan to flush the white line.
+      - term: CrystalGloss Varnish Layer
+        body: >-
+          Varnish prints as its own channel on selected areas, giving the label a
+          raised, tactile surface. It is the single property that separates a
+          crystal label from a flat sticker, and the varnish channel has to be
+          built as a separate layer in the artwork.
+    faq:
+      - q: What is the MC-300 U1 the right machine for?
+        a: >-
+          Shops doing short-run crystal labels, promotional items and
+          personalisation. At a 30 cm web and 3.6 m²/h this is not a volume
+          machine; past about 5 m² a day, look at a 60 cm UV DTF system. If you
+          need to print directly onto flat rigid sheets, the right machine is a
+          UV flatbed.
+      - q: Can I use A and B film from any supplier?
+        a: >-
+          Technically yes, in practice no. The surface energy of the A film and
+          the adhesive class of the B film are chosen against each other and
+          against the ink; a mismatched pair either refuses to release from the
+          film or lifts at the edges after transfer. Ask for a sample before
+          changing film brand.
+      - q: How durable is the applied label?
+        a: >-
+          Indoors, on smooth substrates such as glass and metal, treat it as
+          permanent. Outdoors we state 12 months, and that figure is for vertical
+          exposure in a Central European climate. Horizontal exposure, vehicle
+          exteriors or a Mediterranean climate shorten it — for that work a
+          laminated vinyl is still the better answer.
+      - q: Does it need extraction?
+        a: >-
+          Not mandatory. UV LED curing releases no solvent vapour and odour is
+          low. Still, keep normal air movement in the room and store cleaning
+          fluid in a closed container; the smell comes from the cleaning
+          consumables, not the ink.
+      - q: What is the maintenance routine?
+        a: >-
+          A nozzle check and capping-station clean at the end of every shift; a
+          white-line check and wiper clean weekly. Dampers are replaced roughly
+          every six months. On a single-head machine a blocked head means
+          production stops outright — this routine is not optional.
+    alternateName:
+      - UV DTF printer 30 cm
+      - crystal label printing machine
+      - cold transfer UV DTF system

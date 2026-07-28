@@ -1,0 +1,168 @@
+key: vehicle
+order: 60
+accent: cyan
+
+hero:
+  src: /img/applications/vehicle/hero.jpg
+  kind: application
+  alt:
+    tr: Tam kaplanmış bir ticari minibüsün yan yüzeyi atölye önünde
+    en: Side of a fully wrapped commercial van standing outside a workshop
+
+gallery:
+  - src: /img/applications/vehicle/filo-kaplama.jpg
+    kind: application
+    alt: { tr: Aynı grafikle kaplanmış üç ticari araç yan yana park etmiş, en: Three commercial vehicles wrapped in the same graphic parked side by side }
+    caption: { tr: Araç Folyosu Eko Solvent Baskı, en: Eco-solvent printed vehicle vinyl }
+  - src: /img/applications/vehicle/kaput-uygulama.jpg
+    kind: application
+    alt: { tr: Uygulamacı ısı tabancasıyla kaput üzerindeki folyoyu bastırıyor, en: Installer working printed film onto a bonnet with a heat gun }
+    caption: { tr: Döküm Folyo Kaput Uygulaması, en: Cast film applied to a bonnet }
+  - src: /img/applications/vehicle/one-way-vision.jpg
+    kind: application
+    alt: { tr: Arka cama uygulanmış delikli folyonun dışarıdan ve içeriden görünümü, en: Perforated window film on a rear window seen from outside and inside }
+    caption: { tr: One Way Vision Cam Folyo Baskı, en: One-way vision window film }
+  - src: /img/applications/vehicle/dorse-brandasi.jpg
+    kind: application
+    alt: { tr: Otoyolda ilerleyen bir tırın baskılı yan perde brandası, en: Printed curtain-side tarpaulin on a truck travelling on a motorway }
+    caption: { tr: Dorse Brandası Solvent Baskı, en: Solvent printed curtain-side tarpaulin }
+  - src: /img/applications/vehicle/kontur-kesim.jpg
+    kind: application
+    alt: { tr: Basılı folyodan kesilmiş logo ve yazıların atık folyosu alınıyor, en: Waste vinyl being weeded from contour-cut logos and lettering }
+    caption: { tr: Folyo Kontur Kesim, en: Vinyl contour cutting }
+  - src: /img/applications/vehicle/manyetik-levha.jpg
+    kind: application
+    alt: { tr: Bir kapı paneline yerleştirilen sökülebilir manyetik reklam levhası, en: Removable magnetic advertising panel being placed on a vehicle door }
+    caption: { tr: Manyetik Levha Baskı, en: Printed magnetic panel }
+  - src: /img/applications/vehicle/otobus-kampanya.jpg
+    kind: application
+    alt: { tr: Şehir içi bir otobüsün tamamını kaplayan kampanya grafiği, en: Campaign graphic covering the full side of a city bus }
+    caption: { tr: Toplu Taşıma Araç Giydirme, en: Public-transport vehicle wrap }
+  - src: /img/applications/vehicle/tekne-grafik.jpg
+    kind: application
+    alt: { tr: Marinada bir teknenin bordasına uygulanmış isim ve şerit grafiği, en: Name and stripe graphics applied to a boat hull in a marina }
+    caption: { tr: Tekne Bordası Folyo Baskı, en: Printed film on a boat hull }
+
+machines: [MS-1600-PC, MS-1802-E4, MK-1612]
+inks: [mi-410-eco, mi-420-eco-tr, mi-510-sol]
+substrates: [vinyl, mesh, banner]
+
+i18n:
+  tr:
+    name: Araç Giydirme
+    kicker: Filoyu yolda çalıştırın
+    intro: >-
+      Araç giydirme, baskıdan çok uygulama disiplinidir. İş; tam kaplama, kısmi
+      kaplama, yazı-logo uygulaması, cam üstü delikli folyo ve dorse brandası
+      olarak beş ayrı üretim akışına ayrılır. Bunların üçü rulodan ruloya baskı ve
+      kontur kesim ister; biri yalnızca kesim, biri ise ağır branda baskısıdır.
+      Makine seçimi de buradan çıkar: eko solvent rulo makinesi hacmi taşır,
+      baskı-kesim modeli kısa işlerde tek makinede bitirir, kesim tablası basılı
+      panelleri ve manyetik levhaları temiz kenarla ayırır.
+
+      Sonucu belirleyen asıl karar folyo ve laminasyondur. Derin bükümlü yüzeyler,
+      kapı çıtaları ve bagaj girintileri döküm (cast) folyo ister; kalenderlenmiş
+      folyo bu yüzeylerde birkaç ay içinde geri çeker ve kenardan kalkar. Baskı
+      çıktısı laminasyondan önce gazını atmalıdır — bu adımı atlayan işler
+      araçtayken kabarır. Cam üstü delikli folyoda ise arka cam rezistans hatları
+      ve silecek süpürme alanı ayrı planlanır. Biz makineyi konuşmadan önce filo
+      büyüklüğünü, aracın geometrisini ve kaç yıl kalacağını konuşuruz.
+    jobs:
+      - Ticari araç ve filo tam kaplama
+      - Kısmi kaplama, yazı ve logo uygulaması
+      - Cam üstü one way vision (delikli folyo) uygulamaları
+      - Tır, kamyon ve dorse brandası giydirme
+      - Manyetik levha ve sökülebilir araç tabelaları
+      - Toplu taşıma araçları için kampanya kaplamaları
+      - Karavan, tekne ve iş makinesi grafikleri
+    faq:
+      - q: UV baskı ile araç folyosu basılabilir mi?
+        a: >-
+          Sınırlı olarak. Düz panellerde ve kısa ömürlü kampanya işlerinde UV
+          baskılı folyo iş görür. Ancak derin bükümlü yüzeylerde ve ısıyla
+          şekillendirilen uygulamalarda UV mürekkep filmi folyo kadar uzayamaz;
+          çıtalarda ve girintilerde çatlar. Kalıcı araç kaplamasının doğru yolu
+          döküm folyo, eko solvent baskı ve laminasyondur.
+      - q: Araç kaplaması ne kadar dayanır?
+        a: >-
+          Mürekkep tarafında yayınladığımız referans, laminasyonsuz dikey
+          maruziyette ve Orta Avrupa iklimi koşullarında 24 aydır. Folyo
+          üreticisinin döküm folyo için verdiği ömür daha uzundur, ama o rakam da
+          laminasyonlu ve dikey yüzey içindir. Kaput ve tavan gibi yatay
+          yüzeylerde ömür belirgin biçimde kısalır; Türkiye'nin güney sahilinde
+          yıllık UV dozu Orta Avrupa referansının üzerindedir.
+      - q: Baskıdan hemen sonra laminasyon yapabilir miyim?
+        a: >-
+          Hayır. Eko solvent ve solvent baskı, laminasyondan önce en az bir gün
+          gazını atmalıdır; ağır mürekkep seren işlerde bu süre uzar. Erken
+          laminasyon çözücüyü film altında hapseder ve sorun atölyede değil,
+          haftalar sonra araç üzerinde kabarcık ve kenar kalkması olarak ortaya
+          çıkar. Şartlandırma için sıcak ve havalandırılmış bir alan ayırın.
+      - q: Kontur kesimi baskı makinesi mi yapmalı, ayrı kesici mi?
+        a: >-
+          Hacme bağlı. Baskı-kesim (bas-kes) modeli kısa işlerde tek dosyada
+          bitirir, ama kesim sürerken makine baskı yapamaz — günlük 30–40 m²'nin
+          üzerinde bu darboğaz olur. Ayrı kesim tablası baskı ile kesimi
+          paralelleştirir ve manyetik levha, reflektif folyo gibi kalın
+          malzemelerde daha rahattır; karşılığında register işaretlerinin baskıya
+          doğru yerleştirilmesi gerekir.
+  en:
+    name: Vehicle Graphics
+    kicker: Put the fleet to work on the road
+    intro: >-
+      Vehicle graphics is an installation discipline more than a printing one. The
+      work splits into five production flows: full wraps, partial wraps, lettering
+      and logos, perforated window film, and curtain-side tarpaulin. Three of them
+      need roll-to-roll printing plus contour cutting, one needs cutting only, and
+      one is heavy banner printing. Machine choice follows from that: an
+      eco-solvent roll printer carries the volume, a print-and-cut model finishes
+      short jobs on one machine, and a cutting table separates printed panels and
+      magnetic sheet with a clean edge.
+
+      The decision that really sets the outcome is film and lamination. Deeply
+      curved panels, door mouldings and tailgate recesses need cast film;
+      calendered film shrinks back and lifts at the edges within months on those
+      surfaces. Prints must outgas before lamination — jobs that skip that step
+      blister once they are on the vehicle. On perforated window film, rear-screen
+      heater lines and the wiper sweep are planned separately. So we talk about
+      fleet size, vehicle geometry and expected years on the road before we talk
+      about a machine.
+    jobs:
+      - Full wraps for commercial vehicles and fleets
+      - Partial wraps, lettering and logo application
+      - One-way vision perforated window film
+      - Truck, trailer and curtain-side tarpaulin graphics
+      - Magnetic panels and removable vehicle signs
+      - Campaign wraps for public-transport vehicles
+      - Motorhome, boat and plant-machinery graphics
+    faq:
+      - q: Can vehicle film be printed with UV ink?
+        a: >-
+          Within limits. On flat panels and short-life campaign work, UV-printed
+          film does the job. But on deeply curved surfaces and heat-formed
+          applications the UV ink film cannot stretch as far as the vinyl, and it
+          cracks over mouldings and in recesses. The right route for a permanent
+          wrap is cast film, eco-solvent printing and lamination.
+      - q: How long does a wrap last?
+        a: >-
+          The reference we publish on the ink side is 24 months of unlaminated
+          vertical exposure in a central European climate. The film maker's rating
+          for cast vinyl is longer, but that figure is also for laminated, vertical
+          surfaces. Life shortens markedly on horizontal panels such as bonnets and
+          roofs, and annual UV dose on the southern Turkish coast runs above the
+          central European reference.
+      - q: Can I laminate straight after printing?
+        a: >-
+          No. Eco-solvent and solvent prints need at least a day to outgas before
+          lamination, longer where ink lay-down is heavy. Laminating early traps
+          solvent under the film, and the problem shows up not in the shop but
+          weeks later on the vehicle as blisters and lifting edges. Set aside a
+          warm, ventilated area for conditioning.
+      - q: Should contour cutting be done on the printer or on a separate cutter?
+        a: >-
+          It depends on volume. A print-and-cut machine finishes short jobs in one
+          file, but it cannot print while it cuts — above roughly 30–40 m² a day
+          that becomes the bottleneck. A separate cutting table runs printing and
+          cutting in parallel and copes better with thicker material such as
+          magnetic sheet and reflective film; in exchange, registration marks have
+          to be placed correctly in the print.

@@ -1,0 +1,71 @@
+---
+import type { Locale } from '../../config/site';
+import { t } from '../../i18n/ui';
+import { path } from '../../i18n/routes';
+
+export interface Crumb {
+  label: string;
+  href?: string;
+}
+
+export interface Props {
+  locale: Locale;
+  crumbs: Crumb[];
+}
+
+const { locale, crumbs } = Astro.props;
+const all: Crumb[] = [{ label: t('home', locale), href: path('home', locale) }, ...crumbs];
+---
+
+<nav class="crumbs" aria-label={t('breadcrumb', locale)}>
+  <ol role="list">
+    {all.map((crumb, i) => (
+      <li>
+        {crumb.href && i < all.length - 1 ? (
+          <a class="link" href={crumb.href}>{crumb.label}</a>
+        ) : (
+          <span aria-current="page">{crumb.label}</span>
+        )}
+        {i < all.length - 1 && <span class="crumbs__sep" aria-hidden="true">›</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .crumbs li {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .crumbs {
+    font-family: var(--font-mono);
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-ground-muted);
+  }
+
+  .crumbs a {
+    color: var(--on-ground-muted);
+  }
+
+  .crumbs [aria-current='page'] {
+    color: var(--on-ground);
+  }
+
+  .crumbs__sep {
+    color: var(--hairline);
+  }
+</style>

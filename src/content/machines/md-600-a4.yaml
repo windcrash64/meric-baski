@@ -1,0 +1,353 @@
+sku: MD-600-A4
+model: Maven MD-600 A4
+family: dtf
+tier: mid
+order: 90
+featured: true
+status: active
+price: null
+leadTimeWeeks: [4, 8]
+
+headline: [printWidth, printHead, speedModes, colors]
+
+printhead:
+  brand: epson
+  model: i3200-A1
+  count: 4
+  dropSizePl: 2.5
+
+headOptions:
+  - { brand: epson, model: i3200-A1, count: 2, dropSizePl: 2.5 }
+  - { brand: epson, model: i3200-A1, count: 4, dropSizePl: 2.5 }
+  - { brand: epson, model: i3200-A1, count: 5, dropSizePl: 2.5 }
+
+specs:
+  printWidth: { value: 620, unit: mm }
+  mediaWidth: { value: 650, unit: mm }
+  resolution: "720 × 1200 · 720 × 2400 dpi"
+  dropSize:
+    value: 2.5
+    unit: pL
+    note:
+      tr: en küçük damla; VSDT değişken damla teknolojisi
+      en: minimum droplet; VSDT variable-size droplet
+  printHead: "4 × Epson i3200-A1"
+  headCount: { value: 4, unit: adet }
+  colors: "CMYK · W"
+  inkType: "DTF pigment (su bazlı)"
+  inkSupply: "2 L toplu besleme, beyaz kanal sürekli sirkülasyonlu"
+  inkCapacity: { value: 2000, unit: ml }
+  whiteCirculation: true
+  feed: "Motorlu film besleme, gergi kollu"
+  takeUp: "Fırın çıkışında otomatik sarma"
+  heaters: "Ön ve platen ısıtıcı, film kabarmasını önler"
+  curing: "Dikey toz serpme + eritme fırını, 2000–5200 W"
+  capping: "Otomatik kafa koruma ve nemlendirme istasyonu"
+  cleaning: "Otomatik püskürtme + nozzle kontrol baskısı"
+  powerSupply: "AC 220 V ±%10, 50/60 Hz, tek faz — yazıcı ve toz serpme ünitesi ayrı hatlardan"
+  power:
+    value: [3.2, 6.4]
+    unit: kW
+    note:
+      tr: yazıcı ve toz serpme ünitesi toplamı; fırın rejime girerken üst bant
+      en: printer and shaker combined; the upper figure is the oven coming up to temperature
+  current:
+    value: 20
+    unit: A
+    note:
+      tr: toz serpme ünitesi hattı; yazıcı kendi 16 A hattından beslenir
+      en: shaker circuit; the printer runs from its own 16 A supply
+  environment: "20–35 °C / %40–60 BN"
+  ventilation: "Zorunlu — entegre duman filtresi ve dış atım bağlantısı"
+  rip: "Maintop 6.1 · PhotoPRINT · PrintFactory"
+  fileFormats: "PDF · TIFF · EPS · PS · JPEG"
+  interface: "Gigabit Ethernet (RJ45)"
+  dimensions: "1160 × 610 × 500 mm (yazıcı gövdesi)"
+  floorArea: { value: 9, unit: m2 }
+
+# Always a table. A single speed number is the clearest tell of a fabricated
+# catalogue — every real manufacturer publishes per-pass figures.
+speedModes:
+  - { pass: 4, value: 12, mode: { tr: Üretim, en: Production } }
+  - { pass: 6, value: 8, mode: { tr: Kalite, en: Quality } }
+  - { pass: 8, value: 6, mode: { tr: Yüksek kalite, en: High quality } }
+
+# DTF is sold as a system, never as a bare printer. The shaker is part of the
+# machine, not an accessory — so it lives here, not as a separate SKU.
+components:
+  - sku: MD-600-SH
+    name:
+      tr: MD-600 SH dikey toz serpme ünitesi
+      en: MD-600 SH vertical powder shaker
+    role:
+      tr: >-
+        Basılan filme sıcak eriyik tozu serper, fazlasını eleyip geri kazanır ve
+        tozu dikey fırında eritir. Filmi yazıcıdan sarma miline kesintisiz taşır.
+      en: >-
+        Applies hot-melt powder to the printed film, sieves and recovers the
+        excess, then melts it in the vertical oven before the take-up shaft.
+    specs:
+      dimensions: "1652 × 1066 × 902 mm"
+      powerSupply: "AC 220 V, 50/60 Hz, 20 A"
+      power: { value: [2, 5.2], unit: kW }
+      weight: { value: 70, unit: kg }
+      curing: "Dikey eritme fırını, sıcaklık kontrollü"
+      ventilation: "Entegre duman filtresi, dış atım kanalına bağlanır"
+
+compatibleInks: [mi-710-dtf, md-pwd-170, md-film-600, mi-910-flush]
+applications: [textile]
+substrates: [film, textile, leather]
+siblings: [MT-1900-A4, MC-300-U1]
+rip: [Maintop 6.1, PhotoPRINT, PrintFactory]
+
+installation:
+  powerPhase: 1F
+  floorAreaM2: 9
+  ceilingHeightM: 2.6
+  cratedDimensions: { w: 1800, d: 1200, h: 1050, unit: mm }
+  ventilationRequired: true
+  notIncluded:
+    tr:
+      - Nakliye ve sigorta
+      - Transpalet veya forklift ile indirme
+      - Elektrik altyapısı ve toz serpme ünitesi için ayrı 20 A hat
+      - Fırın çıkışının dış atım kanalı ve baca bağlantısı
+      - Sarf başlangıç seti (mürekkep, PU toz, PET film)
+    en:
+      - Freight and insurance
+      - Pallet truck or forklift unloading
+      - Electrical infrastructure and a dedicated 20 A circuit for the shaker
+      - Extraction duct and outlet for the oven exhaust
+      - Starter consumables kit (ink, PU powder, PET film)
+
+gallery:
+  - src: /img/machines/md-600-a4/hero.jpg
+    kind: machine
+    alt:
+      tr: "Atölyede yan yana kurulmuş DTF yazıcı ve dikey toz serpme ünitesi"
+      en: "DTF printer and vertical powder shaker installed side by side in a workshop"
+  - src: /img/machines/md-600-a4/carriage.jpg
+    kind: detail
+    alt:
+      tr: "Dört kafalı araba ve altından geçen 60 cm PET film"
+      en: "Four-head carriage with 60 cm PET film passing beneath it"
+    caption: { tr: 4 × Epson i3200-A1 kafa dizilimi, en: Four Epson i3200-A1 heads }
+  - src: /img/machines/md-600-a4/shaker.jpg
+    kind: detail
+    alt:
+      tr: "Toz haznesi ve elek bandı açık haldeki dikey serpme ünitesi"
+      en: "Vertical shaker with the powder hopper and sieve belt exposed"
+    caption: { tr: PowderLine dikey serpme, en: PowderLine vertical shaker }
+  - src: /img/machines/md-600-a4/ink.jpg
+    kind: detail
+    alt:
+      tr: "Beş kanallı 2 litrelik toplu mürekkep tankları ve sirkülasyon hortumları"
+      en: "Five-channel 2 litre bulk ink tanks with circulation lines"
+  - src: /img/machines/md-600-a4/app-textile.jpg
+    kind: application
+    alt:
+      tr: "Pamuklu tişörte preslenmiş çok renkli DTF transfer baskı"
+      en: "Multi-colour DTF transfer pressed onto a cotton t-shirt"
+    caption: { tr: DTF Tekstil Transfer Baskı, en: DTF textile transfer }
+
+model3d:
+  glb: /models/md-600-a4.v1.glb
+  poster: /models/md-600-a4-poster.webp
+  triangles: 0
+  bytes: 0
+  hotspots:
+    - key: printhead
+      position: "-0.42 1.02 0.08"
+      normal: "0 1 0"
+      label: { tr: Baskı kafası bloğu, en: Printhead carriage }
+      body:
+        tr: 4 adet Epson i3200-A1 kafa, CMYK + beyaz; beyaz kanal iki kafaya paylaştırılır.
+        en: Four Epson i3200-A1 heads, CMYK plus white; the white channel is split across two heads.
+    - key: media_feed
+      position: "-0.95 0.78 0.30"
+      normal: "0 0 1"
+      label: { tr: Film besleme, en: Film feed }
+      body:
+        tr: 60 cm PET film rulosu, gergi kollu motorlu besleme.
+        en: 60 cm PET film roll on a motorised feed with a tension arm.
+    - key: shaker
+      position: "0.88 1.05 0.02"
+      normal: "0 1 0"
+      label: { tr: Toz serpme ünitesi, en: Powder shaker }
+      body:
+        tr: Dikey toz serpme ve eritme fırını; fazla toz elenip hazneye geri döner.
+        en: Vertical powder application and melting oven; excess powder is sieved back into the hopper.
+    - key: ink_supply
+      position: "-0.10 0.72 0.34"
+      normal: "0 0 1"
+      label: { tr: Mürekkep besleme, en: Ink supply system }
+      body:
+        tr: Kanal başına 2 L toplu besleme; beyaz kanalda sürekli sirkülasyon.
+        en: 2 L bulk supply per channel; continuous circulation on the white channel.
+    - key: control
+      position: "0.34 1.06 -0.28"
+      normal: "0 0 -1"
+      label: { tr: Kontrol paneli, en: Control station }
+      body:
+        tr: Yazıcı ve fırın sıcaklıkları tek ekrandan izlenir.
+        en: Printer and oven temperatures are monitored from a single screen.
+
+documents:
+  - { kind: catalog, lang: tr, file: /docs/maven-md-600-a4-katalog-tr.pdf, bytes: 1968128 }
+  - { kind: datasheet, lang: tr, file: /docs/maven-md-600-a4-teknik-tr.pdf, bytes: 421888 }
+  - { kind: install-checklist, lang: tr, file: /docs/maven-md-600-a4-kurulum-kontrol-listesi.pdf, bytes: 198656 }
+
+i18n:
+  tr:
+    tagline: Baskıdan fırına tek hat, vardiya boyunca aynı transfer kalitesi
+    summary: >-
+      MD-600 A4, baskı, toz serpme ve fırını tek hatta toplayan 60 cm'lik bir DTF
+      sistemidir. Dört adet Epson i3200-A1 kafa, 4 geçişte 12 m²/sa film çıkarır;
+      6 geçişte 8, 8 geçişte 6 m²/sa. Beyaz kanal sürekli sirkülasyondadır. Dikey
+      toz serpme ünitesi fazla tozu geri kazanır, entegre duman filtresi fırın
+      çıkışını atölye havasından ayırır. Rulodan ruloya çalışır; vardiya boyunca
+      operatör müdahalesi film değişimiyle sınırlıdır. Sistem 220 V tek fazla
+      çalışır, ancak fırın hattı için ayrı 20 A besleme ister.
+    features:
+      - term: QuadArray Kafa Dizilimi
+        body: >-
+          Dört Epson i3200-A1 kafa, beyaz iki kafaya paylaştırılacak şekilde
+          dizilir. Beyazın tek kafada toplandığı iki kafalı makinelerde alt katman
+          hızı yarıya düşer; burada renk ve beyaz aynı geçişte tamamlanır.
+      - term: MavenFlow Beyaz Sirkülasyon
+        body: >-
+          Beyaz mürekkep, makine kapalıyken bile kanal içinde dolaşır. DTF beyazı
+          pigment yükü en yüksek mürekkeptir; çökeldiğinde önce nozül kaybı,
+          sonra damper ve kafa değişimi olarak geri döner.
+      - term: PowderLine Dikey Serpme
+        body: >-
+          Toz, filme dikey hatta serpilir; fazlası elenip hazneye geri döner.
+          Yatay serpme ünitelerinde film kenarında biriken toz, transferde
+          görünen sert kenar izinin en yaygın sebebidir.
+      - term: CleanCure Duman Filtresi
+        body: >-
+          Fırın çıkışı filtreden geçirilir ve dış atım kanalına verilir. Filtre
+          kartuşu sarf malzemedir; üç vardiya çalışan bir atölyede ortalama
+          dört ayda bir değişir.
+      - term: TensionTrack Gergi Kontrolü
+        body: >-
+          Besleme ve sarma milleri gergiyi sabit tutar. PET film ısındığında
+          uzar; gergi sabit değilse renk ile beyaz katman arasında kayma olur ve
+          transferde beyaz kenar taşar.
+    faq:
+      - q: MD-600 A4 hangi işler için doğru makine?
+        a: >-
+          Günde 200–800 arası transfer çıkaran, karışık ve küçük adetli tekstil
+          işi yapan atölyeler için. Günde 100 transferin altındaysanız 30 cm'lik
+          bir sistem daha doğru; tek desenden binlerce adet basıyorsanız serigrafi
+          hâlâ daha ucuz. DTF, adet başına maliyeti değil kurulum süresini
+          sıfırlayan bir teknolojidir.
+      - q: Yazıcıyı toz serpme ünitesi olmadan alabilir miyim?
+        a: >-
+          Hayır. Toz serpme ve eritme olmadan basılan film transfer edilemez;
+          yazıcı tek başına yarım makinedir. Ünite ayrı bir SKU olarak değil,
+          sistemin parçası olarak fiyatlandırılır ve birlikte kurulur.
+      - q: Havalandırma şart mı?
+        a: >-
+          Evet. Entegre duman filtresi kokuyu azaltır ama dış atımın yerini
+          tutmaz; fırın çıkışı mutlaka dışarı verilmelidir. Kanal ve baca işi
+          size aittir, kurulum öncesi keşifte birlikte planlıyoruz. Penceresi
+          olmayan bir bodrumda bu sistemi kurmayın.
+      - q: Beyaz mürekkebi ne kadar sürede tüketmeliyim?
+        a: >-
+          DTF beyazının raf ömrü açılmamış hâlde 6 aydır — renklerin yarısı.
+          Aylık tüketiminizin en fazla iki katı kadar stok tutun. Makine hafta
+          sonu kapalı kalacaksa sirkülasyonu açık bırakın; kapalı bir sistemde
+          beyaz iki günde çökmeye başlar.
+      - q: 12 m²/sa gerçek üretim hızı mı?
+        a: >-
+          Bu, film tarafındaki 4 geçiş hızıdır. Gerçek hat hızını fırın ve toz
+          eritme belirler; kalın toz ve yüksek kaplama oranında hat 8–9 m²/sa'ya
+          iner. Ayrıca her işte beyaz alt katman basıldığını unutmayın — DTF'de
+          beyazsız iş yoktur.
+      - q: Toz serpme ünitesini nasıl yerleştirmeliyim?
+        a: >-
+          Ünite yaklaşık 70 kg ve 1652 × 1066 × 902 mm; iki kişi kaldıramaz,
+          transpalet gerekir. Yazıcı ile arasında film hattı düz kalmalı, bu
+          yüzden ikisi aynı hizada ve aynı zemin kotunda durmalıdır. Toplam
+          9 m² alan ve arkada 60 cm servis boşluğu planlayın.
+    alternateName:
+      - DTF baskı makinası
+      - 60 cm dtf yazıcı
+      - film transfer baskı makinesi
+      - toz serpme üniteli dtf makinası
+  en:
+    tagline: One line from print to oven, the same transfer quality every shift
+    summary: >-
+      The MD-600 A4 is a 60 cm DTF system that puts printer, powder shaker and
+      oven on a single line. Four Epson i3200-A1 heads produce 12 m²/h of film at
+      four passes, 8 m²/h at six and 6 m²/h at eight. The white channel
+      circulates continuously, the vertical shaker recovers excess powder, and an
+      integrated fume filter keeps the oven exhaust out of the shop air. It runs
+      roll to roll on single-phase 220 V, but the shaker needs its own 20 A feed.
+    features:
+      - term: QuadArray Head Layout
+        body: >-
+          Four Epson i3200-A1 heads are arranged so white is split across two of
+          them. On two-head machines where white sits on a single head, underbase
+          speed halves; here colour and white finish in the same pass.
+      - term: MavenFlow White Circulation
+        body: >-
+          White ink circulates through the channel even when the machine is idle.
+          DTF white carries the heaviest pigment load of any ink here — once it
+          settles you pay for it in nozzles first, then dampers and heads.
+      - term: PowderLine Vertical Shaker
+        body: >-
+          Powder is applied on a vertical path and the excess is sieved back into
+          the hopper. Powder building up at the film edge — the usual failure of
+          horizontal shakers — is what leaves a hard visible edge on the transfer.
+      - term: CleanCure Fume Filter
+        body: >-
+          Oven exhaust passes through a filter before it reaches the duct. The
+          cartridge is a consumable; in a three-shift shop budget for a change
+          roughly every four months.
+      - term: TensionTrack Tension Control
+        body: >-
+          Feed and take-up shafts hold web tension constant. PET film stretches
+          as it heats, and inconsistent tension shifts the colour layer against
+          the white — which shows up as white bleeding past the edge of the print.
+    faq:
+      - q: What is the MD-600 A4 the right machine for?
+        a: >-
+          Shops running 200–800 transfers a day across mixed, short-run apparel
+          work. Below 100 transfers a day a 30 cm system fits better; above a few
+          thousand pieces of one design, screen printing is still cheaper. DTF
+          removes setup time, not unit cost.
+      - q: Can I buy the printer without the shaker?
+        a: >-
+          No. Film printed without powder application and melting cannot be
+          transferred, so the printer alone is half a machine. The shaker is
+          priced and commissioned as part of the system, not as a separate SKU.
+      - q: Is extraction mandatory?
+        a: >-
+          Yes. The integrated fume filter reduces odour but does not replace
+          extraction — the oven exhaust must be ducted outside. Ducting is your
+          scope, planned together during the pre-install survey. Do not put this
+          system in a basement with no outside wall.
+      - q: How fast should I turn over white ink?
+        a: >-
+          DTF white has a 6-month unopened shelf life, half that of the colours.
+          Hold no more than twice your monthly usage. If the machine sits over a
+          weekend, leave circulation running; in a static system white starts to
+          settle within two days.
+      - q: Is 12 m²/h a real production figure?
+        a: >-
+          It is the four-pass figure on the film side. Real line speed is set by
+          the powder melt: at heavy coverage with coarse powder the line drops to
+          8–9 m²/h. Remember every job carries a white underbase — there is no
+          DTF work without it.
+      - q: How should the shaker be positioned?
+        a: >-
+          It weighs about 70 kg at 1652 × 1066 × 902 mm — a pallet truck job, not
+          a two-person lift. The film path between printer and shaker must stay
+          straight, so both units sit in line and at the same floor level. Plan
+          9 m² in total plus 60 cm of service access behind.
+    alternateName:
+      - DTF printer 60 cm
+      - direct to film printing system
+      - DTF printer with powder shaker

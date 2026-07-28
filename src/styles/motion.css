@@ -1,0 +1,454 @@
+/* ==========================================================================
+   Maven — motion
+   No springs, no overshoot, no bounce anywhere. A machine that overshoots is a
+   broken machine; nothing on this site travels past its endpoint.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE SIGNATURE — sliding underline.
+
+   The whole trick is that `transform-origin` is swapped but NEVER transitioned.
+   On enter the line grows from the left; on leave it retreats to the right, so
+   it reads as one continuous line travelling through the word rather than a bar
+   that grows and shrinks.
+
+   Never animate `width` (layout thrash on every frame), and never put
+   transform-origin in the transition list (it destroys the effect entirely).
+   -------------------------------------------------------------------------- */
+
+.link {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  padding-block: 0.1em;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center; /* governs the EXIT */
+  transition: transform var(--d-base) var(--e-out);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center; /* governs the ENTER */
+}
+
+/* Accent variant — 2 px, in the section's process colour. */
+.link--accent::after {
+  height: 2px;
+  bottom: -4px;
+  background: var(--accent);
+}
+
+/* Permanently underlined variant (body copy links) — the sweep reverses:
+   the rule is there at rest and the accent travels through it on hover. */
+.link--inline {
+  color: var(--accent-text);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+
+.link--inline::after {
+  bottom: -1px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   2. Buttons — the same mechanic scaled to a box.
+   -------------------------------------------------------------------------- */
+
+.btn {
+  --btn-fg: var(--paper);
+  --btn-bg: var(--ink);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-6);
+  min-height: 48px;
+  border: var(--border) solid var(--btn-bg);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: color var(--d-fast) var(--e-out), border-color var(--d-base) var(--e-out);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--d-slow) var(--e-out);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--accent);
+}
+
+/* Yellow always carries ink on it, never white. */
+[data-accent='yellow'] .btn:hover,
+[data-accent='yellow'] .btn:focus-visible {
+  color: var(--ink);
+}
+
+/* Outline variant — the sweep fills it. */
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-fg: var(--on-ground);
+  border-color: var(--on-ground);
+}
+
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  color: var(--paper);
+}
+
+[data-accent='yellow'] .btn--outline:hover,
+[data-accent='yellow'] .btn--outline:focus-visible {
+  color: var(--ink);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--on-ground);
+  border-color: transparent;
+  padding-inline: var(--sp-3);
+}
+
+/* 3. Arrow shift on CTAs. */
+.btn__arrow,
+.arrow {
+  display: inline-block;
+  transition: transform var(--d-base) var(--e-out);
+}
+
+.btn:hover .btn__arrow,
+.btn:focus-visible .btn__arrow,
+a:hover > .arrow,
+a:focus-visible > .arrow {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   4-6. Scroll reveals.
+   Progressive enhancement only. `.reveal` is authored in its FINAL state so
+   that with no JS and no scroll-timeline support the content is simply visible;
+   `[data-reveal-armed]` is added by JS only once it is able to un-arm it again.
+   -------------------------------------------------------------------------- */
+
+[data-reveal-armed] .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--d-slower) var(--e-out),
+    transform var(--d-slower) var(--e-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal-armed] .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Image clip reveal — the frame opens, the picture inside settles from a
+   slight overscale. Two properties, one gesture. */
+[data-reveal-armed] .reveal-media {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 900ms var(--e-out);
+}
+
+[data-reveal-armed] .reveal-media > :is(img, picture, video) {
+  transform: scale(1.06);
+  transition: transform 1200ms var(--e-out);
+}
+
+[data-reveal-armed] .reveal-media.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+[data-reveal-armed] .reveal-media.is-visible > :is(img, picture, video) {
+  transform: none;
+}
+
+/* Staggered line reveal — each line rides up out of an overflow mask. */
+.stagger-line {
+  display: block;
+  overflow: hidden;
+}
+
+[data-reveal-armed] .stagger-line > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 640ms var(--e-out);
+  transition-delay: calc(var(--line-index, 0) * 70ms);
+}
+
+[data-reveal-armed] .stagger-line.is-visible > span {
+  transform: none;
+}
+
+/* Rule draw-in. */
+.rule {
+  height: 1px;
+  background: var(--hairline);
+  transform-origin: left center;
+}
+
+.rule--accent {
+  height: 2px;
+  background: var(--accent);
+}
+
+[data-reveal-armed] .rule.reveal {
+  opacity: 1;
+  transform: scaleX(0);
+  transition: transform var(--d-slower) var(--e-out);
+}
+
+[data-reveal-armed] .rule.reveal.is-visible {
+  transform: scaleX(1);
+}
+
+/* --------------------------------------------------------------------------
+   8. Marquee. A visible pause control ships regardless of reduced-motion —
+   prefers-reduced-motion alone does not satisfy WCAG 2.2.2.
+   -------------------------------------------------------------------------- */
+
+.marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee__track {
+  display: flex;
+  gap: var(--sp-9);
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+
+.marquee[data-paused='true'] .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9-10. Header.
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  transition:
+    height var(--d-base) var(--e-standard),
+    transform var(--d-base) var(--e-in-out),
+    background-color var(--d-base) var(--e-out),
+    border-color var(--d-base) var(--e-out);
+}
+
+.site-header[data-condensed='true'] {
+  height: var(--header-h-condensed);
+  border-bottom-color: var(--hairline);
+}
+
+.site-header[data-hidden='true'] {
+  transform: translateY(-100%);
+}
+
+.site-header__logo {
+  transition: transform var(--d-base) var(--e-standard);
+  transform-origin: left center;
+}
+
+.site-header[data-condensed='true'] .site-header__logo {
+  transform: scale(0.82);
+}
+
+/* --------------------------------------------------------------------------
+   12. Card hover — border, thumbnail scale, accent rule sweep.
+   -------------------------------------------------------------------------- */
+
+.card {
+  position: relative;
+  border: var(--border) solid var(--hairline);
+  background: var(--ground);
+  transition: border-color var(--d-base) var(--e-out);
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--on-ground);
+}
+
+.card__media {
+  overflow: hidden;
+}
+
+.card__media > :is(img, picture) {
+  transition: transform var(--d-slow) var(--e-out), filter 500ms var(--e-out);
+}
+
+.card:hover .card__media > :is(img, picture),
+.card:focus-within .card__media > :is(img, picture) {
+  transform: scale(1.03);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--d-slow) var(--e-out);
+}
+
+.card:hover::after,
+.card:focus-within::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* --------------------------------------------------------------------------
+   15. Accordion. grid-template-rows 0fr→1fr is the only way to animate an
+   auto height without measuring it in JS.
+   -------------------------------------------------------------------------- */
+
+.accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 340ms var(--e-standard);
+}
+
+details[open] > .accordion__panel,
+.accordion__panel[data-open='true'] {
+  grid-template-rows: 1fr;
+}
+
+.accordion__panel > div {
+  overflow: hidden;
+}
+
+.accordion__chevron {
+  transition: transform 340ms var(--e-standard);
+}
+
+details[open] .accordion__chevron {
+  transform: rotate(180deg);
+}
+
+summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   13. Page transitions.
+   -------------------------------------------------------------------------- */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: vt-out var(--d-page) var(--e-in-out) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-in var(--d-page) var(--e-in-out) both;
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — selective, not a sledgehammer.
+
+   `*{animation:none}` is wrong: it breaks loading states and anything whose
+   state is conveyed only by motion. Opacity is not a vestibular trigger;
+   travel, scale, parallax and rotation are.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal-armed] :is(.reveal, .reveal-media, .stagger-line > span, .rule.reveal) {
+    animation: none !important;
+    transform: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+    transition: opacity 200ms linear !important;
+  }
+
+  .marquee__track {
+    animation: none !important;
+  }
+
+  .marquee {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  @view-transition {
+    navigation: none;
+  }
+}

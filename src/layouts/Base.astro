@@ -1,0 +1,152 @@
+---
+import { ClientRouter } from 'astro:transitions';
+
+import { SITE, type Locale } from '../config/site';
+import { alternates, path, type RouteKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import Header from '../components/nav/Header.astro';
+import Footer from '../components/nav/Footer.astro';
+
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/layout.css';
+import '../styles/motion.css';
+
+export interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Route key of THIS page, so hreflang and the language switch resolve themselves. */
+  routeKey: RouteKey;
+  /** Extra path segments per locale, for dynamic routes (category, sku, …). */
+  routeExtra?: Partial<Record<Locale, string[]>>;
+  ogImage?: string;
+  ogType?: 'website' | 'article' | 'product';
+  /** Additional JSON-LD graph nodes contributed by the page. */
+  schema?: unknown[];
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  locale,
+  title,
+  description,
+  routeKey,
+  routeExtra = {},
+  ogImage = '/img/og/default.png',
+  ogType = 'website',
+  schema = [],
+  noindex = false,
+  bodyClass = '',
+} = Astro.props;
+
+const origin = SITE.url;
+const self = path(routeKey, locale, routeExtra[locale] ?? []);
+const canonical = new URL(self, origin).href;
+const links = alternates(routeKey, routeExtra);
+
+// Organization ships on every page; pages add their own nodes to the graph.
+const organization = {
+  '@type': 'Organization',
+  '@id': `${origin}/#organization`,
+  name: SITE.brand.name,
+  legalName: SITE.legal.tradeName,
+  url: origin,
+  logo: new URL('/img/og/logo.png', origin).href,
+  foundingDate: String(SITE.brand.foundedYear),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.contact.address.street,
+    addressLocality: SITE.contact.address.district,
+    addressRegion: SITE.contact.address.city,
+    postalCode: SITE.contact.address.postalCode,
+    addressCountry: 'TR',
+  },
+  contactPoint: [{
+    '@type': 'ContactPoint',
+    telephone: SITE.contact.phone.e164,
+    contactType: 'sales',
+    areaServed: 'TR',
+    availableLanguage: ['tr', 'en'],
+  }],
+  ...(Object.values(SITE.social).some(Boolean)
+    ? { sameAs: Object.values(SITE.social).filter(Boolean) }
+    : {}),
+};
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': [organization, ...schema] };
+---
+
+<!doctype html>
+<!--
+  lang is load-bearing, not decoration: with the wrong value
+  `text-transform: uppercase` renders ISTANBUL instead of İSTANBUL, and every
+  all-caps label on the page is silently misspelled.
+-->
+<html lang={locale} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    {links.map((alt) => (
+      <link rel="alternate" hreflang={alt.locale} href={new URL(alt.href, origin).href} />
+    ))}
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(links.find((a) => a.xDefault)!.href, origin).href}
+    />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.brand.name} />
+    <meta property="og:locale" content={locale === 'tr' ? 'tr_TR' : 'en_GB'} />
+    <meta property="og:image" content={new URL(ogImage, origin).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/img/og/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0B0B0C" />
+
+    <!-- Exactly two files. Plex Mono 500 is used only in a handful of labels
+         and must not compete with the two that render the first screen. -->
+    <link
+      rel="preload" href="/fonts/archivo-var.woff2"
+      as="font" type="font/woff2" crossorigin
+    />
+    <link
+      rel="preload" href="/fonts/ibm-plex-mono-400.woff2"
+      as="font" type="font/woff2" crossorigin
+    />
+
+    <ClientRouter />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </head>
+
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">{t('skipToContent', locale)}</a>
+    <Header locale={locale} routeKey={routeKey} routeExtra={routeExtra} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+
+    <script>
+      // Progressive enhancement, bound to astro:page-load so it survives
+      // client-side navigation. DOMContentLoaded fires once and everything
+      // initialised there dies on the second page view.
+      import '../scripts/enhance.ts';
+    </script>
+  </body>
+</html>

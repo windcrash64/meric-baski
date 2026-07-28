@@ -1,0 +1,82 @@
+{
+  "machines/dtf/cutout/dtf-hero": {
+    "intrinsic": {
+      "w": 984,
+      "h": 641
+    },
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "machines/dtf/dtf-hero": {
+    "intrinsic": {
+      "w": 1100,
+      "h": 673
+    },
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "machines/eco-solvent/cutout/eco-solvent-hero": {
+    "intrinsic": {
+      "w": 997,
+      "h": 620
+    },
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "machines/eco-solvent/eco-solvent-hero": {
+    "intrinsic": {
+      "w": 1100,
+      "h": 654
+    },
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "machines/flatbed-uv/cutout/flatbed-uv-hero": {
+    "intrinsic": {
+      "w": 1031,
+      "h": 573
+    },
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "machines/flatbed-uv/flatbed-uv-hero": {
+    "intrinsic": {
+      "w": 1100,
+      "h": 614
+    },
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "machines/roll-uv/cutout/roll-uv-hero": {
+    "intrinsic": {
+      "w": 997,
+      "h": 523
+    },
+    "widths": [
+      480,
+      768
+    ]
+  },
+  "machines/roll-uv/roll-uv-hero": {
+    "intrinsic": {
+      "w": 1100,
+      "h": 611
+    },
+    "widths": [
+      480,
+      768
+    ]
+  }
+}

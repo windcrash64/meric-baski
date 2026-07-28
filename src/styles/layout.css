@@ -1,0 +1,324 @@
+/* ==========================================================================
+   Maven — layout
+   Asymmetry is the whole game: a mono label hanging in columns 1–2 with the
+   content in 4–12 does more for "engineered" than any animation.
+   ========================================================================== */
+
+.shell {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+}
+
+/* Full-bleed escape from inside a .shell, without wrapper divs. */
+.bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+.section {
+  padding-block: var(--section-pad);
+  position: relative;
+}
+
+.section--tight {
+  padding-block: calc(var(--section-pad) * 0.55);
+}
+
+.section--flush {
+  padding-block-end: 0;
+}
+
+/* Hard edges at every boundary — never a gradient fade. */
+.section--ruled {
+  border-top: var(--border) solid var(--hairline);
+}
+
+/* --------------------------------------------------------------------------
+   The 12-column grid
+   -------------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* The hanging label column. Below 1024 the label simply stacks above. */
+.section__label {
+  grid-column: 1 / -1;
+  margin-block-end: var(--sp-5);
+}
+
+.section__body {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1024px) {
+  .section__label {
+    grid-column: 1 / 3;
+    margin-block-end: 0;
+    position: sticky;
+    top: calc(var(--header-h-condensed) + var(--sp-7));
+    align-self: start;
+  }
+
+  .section__body {
+    grid-column: 4 / -1;
+  }
+
+  .section__body--wide {
+    grid-column: 3 / -1;
+  }
+
+  .section__body--full {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Column span helpers, 12-col only. */
+@media (min-width: 1024px) {
+  .col-3 { grid-column: span 3; }
+  .col-4 { grid-column: span 4; }
+  .col-5 { grid-column: span 5; }
+  .col-6 { grid-column: span 6; }
+  .col-7 { grid-column: span 7; }
+  .col-8 { grid-column: span 8; }
+  .col-9 { grid-column: span 9; }
+  .col-12 { grid-column: span 12; }
+}
+
+/* --------------------------------------------------------------------------
+   Card grids. Container queries so one card component works in a 3-up grid,
+   a 2-up rail and a full-width feature without variants.
+   -------------------------------------------------------------------------- */
+
+.cards {
+  display: grid;
+  gap: var(--gutter);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.cards--2 {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+}
+
+/* Deliberately flex, not subgrid. Row subgrid only works when the PARENT
+   declares its rows; under `grid-auto-flow` the track collapses and any child
+   with `overflow: hidden` — a card thumbnail — silently renders at zero height
+   while the image itself loads perfectly. A column flex with an auto-margin on
+   the last row aligns the CTAs just as well and cannot fail that way. */
+.card {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+}
+
+.card > * {
+  flex: 1 1 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Stacks & clusters
+   -------------------------------------------------------------------------- */
+
+.stack > * + * {
+  margin-block-start: var(--stack-gap, var(--sp-5));
+}
+
+.stack--tight { --stack-gap: var(--sp-3); }
+.stack--loose { --stack-gap: var(--sp-7); }
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap, var(--sp-4));
+}
+
+.split {
+  display: grid;
+  gap: var(--sp-8);
+}
+
+@media (min-width: 1024px) {
+  .split {
+    grid-template-columns: var(--split, 1fr 1fr);
+    gap: var(--sp-9);
+    align-items: start;
+  }
+
+  .split--55-45 { --split: 55fr 45fr; }
+  .split--60-40 { --split: 60fr 40fr; }
+  .split--40-60 { --split: 40fr 60fr; }
+}
+
+/* --------------------------------------------------------------------------
+   Media ratios. Three crops only, plus a texture band — five photographers
+   must not look like a ransom note.
+   -------------------------------------------------------------------------- */
+
+.ratio-hero   { aspect-ratio: 21 / 9; }
+.ratio-card   { aspect-ratio: 3 / 2; }
+.ratio-inset  { aspect-ratio: 4 / 5; }
+.ratio-band   { aspect-ratio: 32 / 9; }
+.ratio-square { aspect-ratio: 1; }
+
+@media (max-width: 639px) {
+  .ratio-hero { aspect-ratio: 4 / 5; }
+  .ratio-band { aspect-ratio: 16 / 9; }
+}
+
+.ratio-hero > img,
+.ratio-card > img,
+.ratio-inset > img,
+.ratio-band > img,
+.ratio-square > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* One grading pipeline for every photograph. Colour arrives only on hover,
+   which is what makes the CMYK identity read as a signal, not decoration. */
+.graded > img {
+  filter: grayscale(1) contrast(1.12) brightness(0.97);
+  transition: filter 500ms var(--e-out);
+}
+
+.graded:hover > img,
+.graded:focus-within > img,
+.card:hover .graded > img {
+  filter: grayscale(0) contrast(1.02) brightness(1);
+}
+
+/* --------------------------------------------------------------------------
+   Sticky mobile action bar
+   -------------------------------------------------------------------------- */
+
+.sticky-actions {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  background: var(--ink);
+  border-top: var(--border) solid var(--rule-dark);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.sticky-actions a {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  color: var(--paper);
+  text-decoration: none;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.sticky-actions a + a {
+  border-inline-start: var(--border) solid var(--rule-dark);
+}
+
+@media (min-width: 1024px) {
+  .sticky-actions {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll-snap rail — the gallery/strip primitive. Native momentum, free RTL,
+   and it degrades to a plain scrollable strip with no JS at all.
+   -------------------------------------------------------------------------- */
+
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--rail-item, min(84%, 460px));
+  gap: var(--gutter);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-block-end: var(--sp-2);
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail > * {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 1024px) {
+  .rail {
+    --rail-item: min(46%, 560px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tables — spec sheets are the product here, so they get real styling.
+   -------------------------------------------------------------------------- */
+
+.table-wrap {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.spec-table {
+  font-size: var(--step--1);
+  text-align: left;
+}
+
+.spec-table th,
+.spec-table td {
+  padding: var(--sp-4) var(--sp-4) var(--sp-4) 0;
+  border-bottom: var(--border) solid var(--hairline);
+  vertical-align: baseline;
+}
+
+.spec-table th {
+  font-weight: 400;
+  color: var(--on-ground-muted);
+  width: 42%;
+  font-family: var(--font-sans);
+}
+
+.spec-table td {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.spec-table caption {
+  text-align: left;
+  padding-block-end: var(--sp-4);
+}
+
+.spec-table tbody:not(:first-of-type) th[scope='colgroup'],
+.spec-group-head {
+  padding-block-start: var(--sp-7);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-ground);
+}
