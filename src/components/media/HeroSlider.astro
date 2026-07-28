@@ -129,11 +129,39 @@ const tr = locale === 'tr';
     position: relative;
     padding-block: 0;
     overflow: hidden;
+    display: grid;
+    /* A DEFINITE height, not a min-height. A minimum is only a floor: the grid
+       still sizes to its content, so the flexible media row never has a reason
+       to shrink and the block runs past the fold anyway. A definite height is
+       what gives `minmax(0, 1fr)` something to divide.
+       svh = the viewport with the browser chrome VISIBLE, which is the state a
+       phone is in when the page first paints; vh measures the expanded viewport
+       and hands back roughly 150 px that are not actually on screen. */
+    height: calc(100vh - var(--header-h));
+    height: calc(100svh - var(--header-h));
+    /* A floor, so a pathologically short screen pushes the block past the fold
+       instead of clipping it against overflow: hidden.
+
+       NOT min-content: when a grid container's min-content height is resolved,
+       a `1fr` row is measured as though it were `auto`, so the image reports
+       its full intrinsic height and the floor lands at the very number this
+       whole rule exists to avoid. A plain length is the only floor that does
+       not defeat the definite height above it. */
+    min-height: 380px;
   }
 
   .hero__grid {
     display: grid;
     gap: 0;
+    /* The media row takes whatever the copy does not. minmax(0, 1fr) is what
+       allows it to shrink below the image's intrinsic height instead of
+       pushing the block past the fold. */
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-content: stretch;
+    /* This is itself a grid item, and a grid item's automatic minimum size is
+       its content. Without this it refuses to shrink to the height its parent
+       was just given, and the section clips its own controls instead. */
+    min-height: 0;
   }
 
   .hero__copy {
@@ -271,7 +299,10 @@ const tr = locale === 'tr';
     display: grid;
     position: relative;
     align-items: center;
-    height: clamp(150px, 30vh, 250px);
+    /* No fixed height: the row sizes it, and min-height 0 is what lets a grid
+       item actually shrink. Without it the item's automatic minimum size is
+       its content, and the whole point is lost. */
+    min-height: 0;
     padding: var(--sp-3) 0;
     margin-inline: calc(var(--page-margin) * -1);
   }
@@ -279,6 +310,7 @@ const tr = locale === 'tr';
   .hero__frame {
     grid-area: 1 / 1;
     height: 100%;
+    min-height: 0;
     opacity: 0;
     transform: scale(1.02);
     transition: opacity var(--d-slower) var(--e-out), transform var(--d-slower) var(--e-out);
@@ -347,7 +379,6 @@ const tr = locale === 'tr';
     }
 
     .hero__media {
-      height: clamp(130px, 26vh, 210px);
       padding-block: var(--sp-2);
     }
 
@@ -374,8 +405,14 @@ const tr = locale === 'tr';
      A 740 x 360 screen is wide but has ~300 px of usable height, so it needs
      the side-by-side layout far more than a portrait tablet does. */
   @media (min-width: 1024px), (min-width: 560px) and (max-height: 620px) {
+    .hero {
+      height: auto;
+      min-height: 0;
+    }
+
     .hero__grid {
       grid-template-columns: 44fr 56fr;
+      grid-template-rows: auto;
       align-items: stretch;
       min-height: min(64vh, 620px);
     }
@@ -386,7 +423,6 @@ const tr = locale === 'tr';
       }
 
       .hero__media {
-        height: auto;
         padding-block: var(--sp-3);
       }
     }
