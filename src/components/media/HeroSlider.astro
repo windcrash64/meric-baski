@@ -89,7 +89,7 @@ const tr = locale === 'tr';
       </div>
     </div>
 
-    <div class="hero__media" data-ground="ink">
+    <div class="hero__media" data-ground="ink" aria-hidden="false">
       {slides.map((slide, i) => (
         <div class="hero__frame" data-hero-frame data-active={i === 0 ? 'true' : 'false'}>
           <Picture
@@ -102,6 +102,12 @@ const tr = locale === 'tr';
           />
         </div>
       ))}
+
+      <!-- Legibility scrim. The one gradient on the site, and it is functional:
+           on a phone the copy sits over the render, and the render's lower area
+           is not reliably dark enough on every slide to carry white type. It is
+           inert to pointers so it cannot swallow a swipe. -->
+      <div class="hero__scrim" aria-hidden="true"></div>
 
       <!-- Both arrows sit on the ink panel, at its left and right edges: they
            frame the machine, they take one colour instead of two, and they can
@@ -156,7 +162,11 @@ const tr = locale === 'tr';
     /* The media row takes whatever the copy does not. minmax(0, 1fr) is what
        allows it to shrink below the image's intrinsic height instead of
        pushing the block past the fold. */
-    grid-template-rows: minmax(0, 1fr) auto;
+    /* One cell. The copy is layered ON the image rather than stacked under it:
+       stacking makes the section's height the SUM of two blocks and a phone
+       only ever has room for one, so it could never fit by construction. */
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-content: stretch;
     /* This is itself a grid item, and a grid item's automatic minimum size is
        its content. Without this it refuses to shrink to the height its parent
@@ -165,10 +175,30 @@ const tr = locale === 'tr';
   }
 
   .hero__copy {
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 2;
     display: grid;
-    gap: var(--sp-4);
-    align-content: center;
-    padding-block: var(--sp-5) var(--sp-7);
+    gap: var(--sp-3);
+    align-content: end;
+    padding-block: var(--sp-5) var(--sp-6);
+    /* Sitting on the render now, so the semantic colours flip with it. */
+    --on-ground: var(--paper);
+    --on-ground-muted: var(--muted-dark);
+    --hairline: var(--rule-dark);
+    color: var(--paper);
+  }
+
+  /* A black button on a dark render is a button nobody sees. */
+  .hero__slide .btn {
+    background: var(--paper);
+    border-color: var(--paper);
+    color: var(--ink);
+  }
+
+  .hero__slide .btn:hover,
+  .hero__slide .btn:focus-visible {
+    color: var(--paper);
   }
 
   /* The page title is deliberately quiet: the model name is the loud element,
@@ -295,7 +325,7 @@ const tr = locale === 'tr';
 
   /* --- media panel (stacked default) --- */
   .hero__media {
-    order: -1;
+    grid-area: 1 / 1;
     display: grid;
     position: relative;
     align-items: center;
@@ -326,6 +356,22 @@ const tr = locale === 'tr';
     width: 100%;
     height: 100%;
     object-fit: contain;
+    /* High in the frame, so the machine clears the copy stacked over it. */
+    object-position: center 32%;
+  }
+
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgb(11 11 12 / 0.94) 0%,
+      rgb(11 11 12 / 0.74) 30%,
+      rgb(11 11 12 / 0.18) 62%,
+      rgb(11 11 12 / 0) 84%
+    );
   }
 
   /* --- edge arrows ---
@@ -345,6 +391,10 @@ const tr = locale === 'tr';
     color: var(--paper);
     font-size: var(--step--1);
     transition: background-color var(--d-base) var(--e-out), color var(--d-base) var(--e-out);
+  }
+
+  .hero__edge {
+    top: 32%;
   }
 
   .hero__edge--prev { left: var(--sp-3); }
@@ -415,6 +465,39 @@ const tr = locale === 'tr';
       grid-template-rows: auto;
       align-items: stretch;
       min-height: min(64vh, 620px);
+    }
+
+    /* Side by side: the copy is back on paper and out from under the image. */
+    .hero__copy {
+      grid-area: auto;
+      align-content: center;
+      gap: var(--sp-5);
+      color: var(--ink);
+      --on-ground: var(--ink);
+      --on-ground-muted: var(--muted);
+      --hairline: var(--rule);
+    }
+
+    .hero__media {
+      grid-area: auto;
+    }
+
+    .hero__scrim {
+      display: none;
+    }
+
+    .hero__frame :global(img) {
+      object-position: center center;
+    }
+
+    .hero__slide .btn {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+    }
+
+    .hero__edge {
+      top: 50%;
     }
 
     @media (max-height: 700px) {

@@ -92,8 +92,8 @@ const HERO_SLIDES = [
       ROUTES['machines.uvFlatbed'][locale], 'mf-2513-r8',
     ]),
     body: tr
-      ? '2500 × 1300 mm vakumlu tabla, 2–12 Ricoh Gen6 baskı kafası. Cam, ahşap, alüminyum kompozit ve 100 mm kalınlığa kadar levhaya doğrudan UV baskı; 4 geçişte 50–60 m²/sa.'
-      : 'A 2500 × 1300 mm vacuum bed with 2–12 Ricoh Gen6 printheads. Prints directly onto glass, wood, aluminium composite and sheet up to 100 mm thick; 50–60 m²/h at four passes.',
+      ? '2500 × 1300 mm tabla · 2–12 Ricoh Gen6 kafa · 4 geçişte 50–60 m²/sa'
+      : '2500 × 1300 mm bed · 2–12 Ricoh Gen6 heads · 50–60 m²/h at 4 passes',
     alt: tr
       ? 'Maven MF-2513 R8 UV flatbed baskı makinesi'
       : 'Maven MF-2513 R8 UV flatbed printer',
@@ -106,8 +106,8 @@ const HERO_SLIDES = [
       ROUTES['machines.uvHybrid'][locale], 'mh-3200-r12',
     ]),
     body: tr
-      ? '3200 mm baskı genişliği, 2–20 Ricoh Gen6 kafa. Rulo ve levha aynı şasede çalışır; branda, folyo ve duvar kağıdında 4 geçişte 92–111 m²/sa.'
-      : '3200 mm print width with 2–20 Ricoh Gen6 heads. Roll and rigid on one chassis; 92–111 m²/h at four passes on banner, vinyl and wallcovering.',
+      ? '3200 mm baskı genişliği · rulo ve levha · 4 geçişte 92–111 m²/sa'
+      : '3200 mm print width · roll and rigid · 92–111 m²/h at 4 passes',
     alt: tr
       ? 'Maven MH-3200 R12 UV hibrit rulodan ruloya baskı makinesi'
       : 'Maven MH-3200 R12 UV hybrid roll-to-roll printer',
@@ -120,8 +120,8 @@ const HERO_SLIDES = [
       ROUTES['machines.ecoSolvent'][locale], 'ms-1802-e4',
     ]),
     body: tr
-      ? '1800 mm rulo genişliği, 4 × Epson i3200-E1 kafa ve üç kademeli ısıtıcı. Folyo, branda ve araç giydirme malzemelerinde üretim modunda 79 m²/sa.'
-      : '1800 mm roll width, 4 × Epson i3200-E1 heads and three-stage heaters. 79 m²/h in production mode on vinyl, banner and vehicle wrap media.',
+      ? '1800 mm rulo · 4 × Epson i3200-E1 · üretim modunda 79 m²/sa'
+      : '1800 mm roll width · 4 × Epson i3200-E1 · 79 m²/h in production',
     alt: tr
       ? 'Maven MS-1802 E4 eko solvent rulo baskı makinesi'
       : 'Maven MS-1802 E4 eco-solvent roll printer',
@@ -134,8 +134,8 @@ const HERO_SLIDES = [
       ROUTES['machines.dtf'][locale], 'md-600-a4',
     ]),
     body: tr
-      ? '600 mm film genişliği, 4 × Epson i3200-A1 kafa; toz serpme ve fırın ünitesi dahil. Pamuk, polyester ve karışımlara kumaş rengi fark etmeden transfer.'
-      : '600 mm film width with 4 × Epson i3200-A1 heads, powder shaker and oven included. Transfers onto cotton, polyester and blends regardless of fabric colour.',
+      ? '600 mm film · 4 × Epson i3200-A1 · toz serpme ve fırın ünitesi dahil'
+      : '600 mm film · 4 × Epson i3200-A1 · powder shaker and oven included',
     alt: tr
       ? 'Maven MD-600 A4 DTF baskı sistemi ve toz serpme ünitesi'
       : 'Maven MD-600 A4 DTF printing system with powder shaker',
@@ -218,8 +218,8 @@ const description = tr
         <h2 class="reveal">{tr ? 'Kullanım Alanları' : 'Applications'}</h2>
         <p class="lead muted reveal">
           {tr
-            ? 'Altı sektör, farklı malzeme ve farklı baskı yöntemi kullanır. Her sayfada o işi yapan makineler, kullanılan mürekkepler ve basılan malzemeler listelenir.'
-            : 'Six sectors, each with its own materials and printing process. Every page lists the machines that do that work, the inks they use and the materials they print.'}
+            ? 'Altı sektör. Her sayfada o işi yapan makineler ve mürekkepler listelenir.'
+            : 'Six sectors. Each page lists the machines and inks that do that work.'}
         </p>
         <ul class="tiles reveal" role="list" data-stagger>
           {APPLICATIONS.map((a) => (
@@ -250,8 +250,8 @@ const description = tr
         </h2>
         <p class="lead muted reveal">
           {tr
-            ? 'Katalog yedi makine ailesine ayrılır. Her aile farklı bir baskı yöntemi kullanır; kullanılan mürekkep, basılabilen malzeme ve kurulum gereksinimleri buna göre değişir.'
-            : 'The catalogue is divided into seven machine families. Each uses a different printing process, and the ink, the printable material and the installation requirements follow from it.'}
+            ? 'Yedi aile, yedi baskı yöntemi. Mürekkep ve malzeme aileye göre değişir.'
+            : 'Seven families, seven processes. Ink and material follow from the process.'}
         </p>
 
         <ul class="cards reveal" role="list" data-stagger>
@@ -414,8 +414,8 @@ const description = tr
       </h2>
       <p class="lead muted">
         {tr
-          ? 'Bastığınız malzeme ve günlük hacim bilgisiyle yapılandırma, kurulum gereksinimleri ve fiyat kalemleri çıkarılır. Teknik sorular için doğrudan telefon veya WhatsApp kullanılabilir.'
-          : 'Given the material and the daily volume, the configuration, installation requirements and price items can be worked out. Technical questions can go straight to phone or WhatsApp.'}
+          ? 'Malzeme ve günlük hacim bilgisiyle yapılandırma ve fiyat kalemleri çıkarılır.'
+          : 'Configuration and price items follow from the material and the daily volume.'}
       </p>
       <div class="cluster">
         <a class="btn btn--outline" href={path('quote', locale)}>
