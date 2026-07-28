@@ -76,17 +76,14 @@ const FAMILY_SHORT: Record<(typeof FAMILIES)[number], Record<Locale, string>> = 
   cutting: { tr: 'Kesim', en: 'Cutting' },
 };
 
-const familyRouteKey = (family: (typeof FAMILIES)[number]): RouteKey => {
-  const KEYS: Record<(typeof FAMILIES)[number], RouteKey> = {
-    'uv-flatbed': 'machines.uvFlatbed',
-    'uv-hybrid': 'machines.uvHybrid',
-    'eco-solvent': 'machines.ecoSolvent',
-    dtf: 'machines.dtf',
-    sublimation: 'machines.sublimation',
-    'uv-dtf': 'machines.uvdtf',
-    cutting: 'machines.cutting',
-  };
-  return KEYS[family];
+const FAMILY_ROUTE_KEY: Record<(typeof FAMILIES)[number], RouteKey> = {
+  'uv-flatbed': 'machines.uvFlatbed',
+  'uv-hybrid': 'machines.uvHybrid',
+  'eco-solvent': 'machines.ecoSolvent',
+  dtf: 'machines.dtf',
+  sublimation: 'machines.sublimation',
+  'uv-dtf': 'machines.uvdtf',
+  cutting: 'machines.cutting',
 };
 
 /* --- one mono fact per machine, so the list stays a list ------------------ */
@@ -486,7 +483,7 @@ const schema = app
                     <td class="matrix__corner"></td>
                     {FAMILIES.map((f) => (
                       <th scope="col">
-                        <a class="link" href={path(familyRouteKey(f), locale)}>{FAMILY_SHORT[f][locale]}</a>
+                        <a class="link" href={path(FAMILY_ROUTE_KEY[f], locale)}>{FAMILY_SHORT[f][locale]}</a>
                       </th>
                     ))}
                   </tr>

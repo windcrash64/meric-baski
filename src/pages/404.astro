@@ -1,0 +1,139 @@
+---
+/**
+ * 404 — one file, both locales.
+ *
+ * A static build has no request context: Astro emits a single `404.html` that
+ * the host serves for every missing path, Turkish or English. There is nothing
+ * to detect the locale from, so the page does not guess — it renders the
+ * Turkish text first (the primary market) with the English underneath, and
+ * both sets of links point at their own locale's routes.
+ *
+ * `routeKey="home"` only feeds the canonical and hreflang tags; the page is
+ * noindex, so pointing them at the homepage is the least wrong option
+ * available to a page that has no URL of its own.
+ */
+import { SITE, type Locale } from '../config/site';
+import { path, type RouteKey } from '../i18n/routes';
+import { t, type UIKey } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+
+const DESTINATIONS: Array<{ key: RouteKey; label: UIKey }> = [
+  { key: 'machines', label: 'navMachines' },
+  { key: 'inks', label: 'navInks' },
+  { key: 'applications', label: 'navApplications' },
+  { key: 'service', label: 'navService' },
+  { key: 'about', label: 'navAbout' },
+  { key: 'contact', label: 'navContact' },
+];
+
+/* Turkish first and as the H1: one page, one document outline. */
+const BLOCKS: Locale[] = ['tr', 'en'];
+---
+
+<Base
+  locale="tr"
+  title={`${t('notFoundTitle', 'tr')} · ${t('notFoundTitle', 'en')} | ${SITE.brand.name}`}
+  description={`${t('notFoundBody', 'tr')} ${t('notFoundBody', 'en')}`}
+  routeKey="home"
+  noindex
+>
+  <section class="section nf" data-ground="ink" data-accent="cyan">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">HTTP 404</p>
+        <p class="nf__code mono" aria-hidden="true">404</p>
+      </div>
+
+      <div class="section__body">
+        {BLOCKS.map((locale) => (
+          <div class="nf__block" lang={locale}>
+            {locale === 'tr'
+              ? <h1 class="nf__h">{t('notFoundTitle', locale)}</h1>
+              : <h2 class="nf__h">{t('notFoundTitle', locale)}</h2>}
+            <p class="lead muted">{t('notFoundBody', locale)}</p>
+
+            <nav class="nf__nav" aria-label={t('menu', locale)}>
+              <ul role="list">
+                {DESTINATIONS.map((d) => (
+                  <li>
+                    <a href={path(d.key, locale)}>
+                      <span>{t(d.label, locale)}</span>
+                      <span class="arrow" aria-hidden="true">→</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <a class="btn btn--outline" href={path('home', locale)}>
+              {t('home', locale)}
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* The only piece of display type on the page: the status code itself,
+     set in the mono face at marquee scale and read as an instrument label. */
+  .nf__code {
+    margin-block-start: var(--sp-4);
+    font-size: var(--step-6);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--accent-text);
+  }
+
+  .nf__block + .nf__block {
+    margin-block-start: var(--sp-10);
+    padding-block-start: var(--sp-8);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .nf__h {
+    font-size: var(--step-3);
+    letter-spacing: -0.02em;
+    margin-block-end: var(--sp-4);
+  }
+
+  .nf__block .lead {
+    max-width: 54ch;
+  }
+
+  .nf__nav {
+    margin-block: var(--sp-7) var(--sp-8);
+  }
+
+  .nf__nav ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 0 var(--sp-8);
+    margin: 0;
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .nf__nav a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-4);
+    padding-block: var(--sp-4);
+    border-bottom: var(--border) solid var(--hairline);
+    color: inherit;
+    text-decoration: none;
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: padding-inline-start var(--d-base) var(--e-out);
+  }
+
+  .nf__nav a:hover,
+  .nf__nav a:focus-visible {
+    padding-inline-start: var(--sp-4);
+  }
+</style>

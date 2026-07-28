@@ -1,0 +1,138 @@
+---
+import LegalPage from '../../../layouts/LegalPage.astro';
+import { SITE, type Locale } from '../../../config/site';
+import { NON_DEFAULT_LOCALES, path } from '../../../i18n/routes';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+
+const UPDATED = '2026-07-28';
+const domain = SITE.url.replace(/^https?:\/\//, '');
+---
+
+<!--
+  ============================================================================
+  REQUIRES LEGAL REVIEW BEFORE LAUNCH.
+  Written for the site as it stands: a promotional corporate site with no
+  online sales, no payment and no user accounts. The moment a basket, an online
+  payment or a membership appears, a distance sales contract, a pre-information
+  form and return/delivery terms become mandatory and this document alone is no
+  longer enough. Turkish law governs and the Turkish version is the binding one;
+  the choice of forum (section 10) and any dealership claims must be checked
+  against the client's actual agreements by their legal counsel.
+  ============================================================================
+-->
+<LegalPage
+  locale={locale}
+  routeKey="terms"
+  title="Terms of Use"
+  updated={UPDATED}
+  description="The terms governing use of this website: how binding the content is, that specifications may change, intellectual property, limitation of liability and governing law."
+  lede={`These terms govern use of the website published at ${domain}. By continuing to use the site you accept them.`}
+>
+  <h2>Scope</h2>
+  <p>
+    The site is operated by <strong>{SITE.legal.tradeName}</strong> (“{SITE.brand.name}”). These
+    terms apply to the whole of it. If you do not accept them, please do not use the site.
+  </p>
+
+  <h2>Purpose of the site</h2>
+  <p>
+    The site exists to present and explain what we sell. No sale is concluded on it: there is no
+    online ordering, no payment is taken, and there are no user accounts.
+  </p>
+  <p>
+    The product information published here is an <strong>invitation to treat</strong>, not a binding
+    offer within the meaning of article 8 of the Turkish Code of Obligations. A request sent through
+    a form is a request for information or a quotation, not an order. A sale comes into being only
+    on acceptance of a written quotation and/or a contract signed by both parties.
+  </p>
+
+  <h2>Accuracy of content, and specifications that change</h2>
+  <p>
+    Technical information on this site comes from manufacturer data and our own measurements and is
+    prepared to be correct on the date it is published. Even so, the specifications, configurations
+    and supply conditions of machines and inks <strong>may change without notice</strong>, and the
+    content may contain errors or information that has since been superseded.
+  </p>
+  <p>
+    What binds us is the specification set out in the written quotation and order confirmation given
+    to you. Published print speeds are figures measured at a stated pass count on a stated material
+    under stated conditions; real production speed depends on the file, the substrate, the pass
+    count and the working environment. Outdoor durability figures depend on climate and exposure. No
+    prices are published on the site; prices depend on configuration and are given by quotation.
+  </p>
+
+  <h2>Intellectual property and third-party marks</h2>
+  <p>
+    All content on the site — text, images, technical drawings, three-dimensional models, design,
+    layout and software — belongs to {SITE.brand.name} or to the respective rights holders and is
+    protected under Law no. 5846 on Intellectual and Artistic Works and related legislation.
+    Copying, reproducing, adapting, distributing or commercially exploiting the content in whole or
+    in part without permission is prohibited. The right to short quotation with attribution is
+    reserved.
+  </p>
+  <p>
+    Third-party brand, model and technology names appearing on the site are used solely for
+    identification and compatibility purposes and belong to their respective owners. Such use does
+    not imply any partnership, endorsement or authorisation; distributorship and authorised-dealer
+    relationships apply only where the site states them expressly, and only to the extent stated.
+  </p>
+
+  <h2>Rules for using the site</h2>
+  <p>When using the site you must not:</p>
+  <ul>
+    <li>do anything that damages the site, its infrastructure or its security, or that disrupts the service;</li>
+    <li>harvest or copy the content in bulk by automated means, or republish it elsewhere;</li>
+    <li>carry out unauthorised security testing, attempt unauthorised access or transmit malicious code;</li>
+    <li>complete the forms with false, misleading or other people’s information.</li>
+  </ul>
+
+  <h2>Linked sites</h2>
+  <p>
+    The site may link to third-party websites. {SITE.brand.name} is not responsible for their
+    content, their privacy and cookie practices or the services they provide. A link does not mean
+    the site or its content is endorsed.
+  </p>
+
+  <h2>Limitation of liability</h2>
+  <p>
+    We do not warrant that the site will be uninterrupted, error-free or always available; access
+    may pause temporarily for maintenance, technical failure or reasons originating with the
+    hosting provider.
+  </p>
+  <p>
+    Save for mandatory provisions of law, {SITE.brand.name} is not liable for decisions taken in
+    reliance on information published here, nor for indirect damage, loss of profit or loss of
+    production arising from use of, or inability to use, the site. Before committing to a machine or
+    a consumable we recommend confirming its fitness for your work with a demo print on your own
+    material and a written quotation. Liability for intent and gross negligence is reserved in all
+    cases under article 115 of the Turkish Code of Obligations.
+  </p>
+
+  <h2>Personal data and cookies</h2>
+  <p>
+    How personal data submitted through the forms is processed is set out in the
+    <a class="link link--inline" href={path('privacy', locale)}>Privacy Notice</a>; what the site
+    does and does not store in your browser is set out in the
+    <a class="link link--inline" href={path('cookies', locale)}>Cookie Policy</a>.
+  </p>
+
+  <h2>Changes to these terms</h2>
+  <p>
+    These terms may be amended without prior notice. Amendments take effect when published on the
+    site, and the date at the top of this page is the date of the last revision. Continued use of
+    the site means you accept the terms then in force.
+  </p>
+
+  <h2>Governing law and jurisdiction</h2>
+  <p>
+    These terms and the use of the site are governed by Turkish law. The courts and enforcement
+    offices of {SITE.contact.address.city} have jurisdiction over any dispute. For persons acting as
+    consumers, the mandatory provisions on the jurisdiction of consumer arbitration committees and
+    consumer courts are reserved.
+  </p>
+</LegalPage>

@@ -735,7 +735,25 @@ const description = tr
   }
 
   .faq details {
+    position: relative;
     border-bottom: var(--border) solid var(--hairline);
+  }
+
+  /* The accent on this light ground is a 32 px rule that travels out along the
+     divider as an answer opens — never the type, which yellow can never be. */
+  .faq details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width var(--d-base) var(--e-out);
+  }
+
+  .faq details[open]::before {
+    width: 32px;
   }
 
   .faq summary {
