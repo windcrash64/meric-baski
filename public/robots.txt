@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Thin and duplicated across every form's success path.
+Disallow: /tesekkurler/
+Disallow: /en/thank-you/
+
+Sitemap: https://meric-baski.vercel.app/sitemap-index.xml
