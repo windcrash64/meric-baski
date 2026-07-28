@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+
+import InkPage from '../../../../../layouts/InkPage.astro';
+import { INK_FAMILY_ROUTE, NON_DEFAULT_LOCALES, ROUTES } from '../../../../../i18n/routes';
+import type { Locale } from '../../../../../config/site';
+
+export async function getStaticPaths() {
+  const inks = await getCollection('inks');
+  return NON_DEFAULT_LOCALES.flatMap((locale) =>
+    inks.map((ink) => ({
+      params: {
+        locale,
+        family: ROUTES[INK_FAMILY_ROUTE[ink.data.family as keyof typeof INK_FAMILY_ROUTE]][locale],
+        product: ink.id,
+      },
+      props: { ink, locale },
+    })),
+  );
+}
+
+const { ink, locale } = Astro.props as { ink: any; locale: Locale };
+---
+
+<InkPage ink={ink} locale={locale} />

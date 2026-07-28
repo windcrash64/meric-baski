@@ -1,0 +1,286 @@
+---
+import { getCollection } from 'astro:content';
+
+import { SITE, type Locale } from '../config/site';
+import { INK_FAMILY_ROUTE, path, type RouteKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { CHANNELS, type ChannelCode } from '../i18n/specs';
+import { inkFamilyName, inkFamilyRoute, inkHref } from '../lib/product';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+
+export interface Props {
+  locale: Locale;
+  family?: string;
+}
+
+const { locale, family } = Astro.props;
+const tr = locale === 'tr';
+
+const all = (await getCollection('inks')).sort((a, b) => a.data.order - b.data.order);
+const inks = family ? all.filter((i) => i.data.family === family) : all;
+
+const routeKey: RouteKey = family ? inkFamilyRoute(family) : 'inks';
+const heading = family ? inkFamilyName(family, locale) : t('navInks', locale);
+
+const FAMILY_ORDER = [
+  'uv', 'uv-led', 'uv-dtf', 'eco-solvent', 'solvent',
+  'sublimation', 'dtf', 'textile-pigment', 'auxiliary',
+] as const;
+
+const INTRO: Record<Locale, string[]> = {
+  tr: [
+    'Bir baskı makinesi bir kez satılır; mürekkebi her ay alınır. Bu yüzden mürekkep, bizim için makinenin yanına iliştirilen bir kalem değil, kataloğun yarısıdır.',
+    'Her ürün, hangi baskı kafasında çalıştığı ve hangi makinelerde doğrulandığı ile birlikte listelenir. Marka değiştirirken sistemi yıkamanız gerekip gerekmediğini de sayfanın en üstünde, tek bir etiketle söylüyoruz.',
+  ],
+  en: [
+    'A press is bought once; its ink is bought every month. That is why ink is half this catalogue rather than a line item bolted onto the machine.',
+    'Every product is listed with the printheads it runs in and the machines it has been validated on. Whether changing to it requires flushing the system is stated at the top of the page, in one label.',
+  ],
+};
+
+const CHANGEOVER_KEY = {
+  'switch-and-print': 'switchAndPrint',
+  'switch-and-swap': 'switchAndSwap',
+  'switch-and-match': 'switchAndMatch',
+} as const;
+
+const title = family
+  ? (tr ? `${heading} — Uyumlu Makineler ve Fiyat | Maven` : `${heading} — Compatible Equipment | Maven`)
+  : (tr ? 'Dijital Baskı Mürekkepleri ve Sarf Malzemeleri | Maven' : 'Digital Printing Inks and Supplies | Maven');
+
+const description = tr
+  ? `${inks.length} ürün. Uyumlu baskı kafaları ve makineler, ambalaj seçenekleri, Türkçe Güvenlik Bilgi Formu. Teklif isteyin.`
+  : `${inks.length} products. Compatible printheads and equipment, packaging options, safety data sheets. Request a quote.`;
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey={routeKey}
+  schema={[{
+    '@type': 'ItemList',
+    itemListElement: inks.map((i, n) => ({
+      '@type': 'ListItem', position: n + 1, name: i.data.series,
+      url: `${SITE.url}${inkHref(i, locale)}`,
+    })),
+  }]}
+>
+  <div data-ground="paper" data-accent="magenta">
+    <div class="shell ink-idx__crumbs">
+      <Breadcrumb
+        locale={locale}
+        crumbs={family
+          ? [{ label: t('navInks', locale), href: path('inks', locale) }, { label: heading }]
+          : [{ label: heading }]}
+      />
+    </div>
+
+    <header class="shell ink-idx__head">
+      <h1>{heading}</h1>
+      {!family && INTRO[locale].map((p) => <p class="lead">{p}</p>)}
+      {family && (
+        <p class="lead">
+          {inks[0]?.data.i18n[locale].role ?? ''}
+        </p>
+      )}
+    </header>
+
+    {!family && (
+      <nav class="shell fam-nav" aria-label={heading}>
+        <ul role="list">
+          {FAMILY_ORDER.map((key) => {
+            const count = all.filter((i) => i.data.family === key).length;
+            if (!count) return null;
+            return (
+              <li>
+                <a class="link link--accent" href={path(INK_FAMILY_ROUTE[key], locale)}>
+                  {inkFamilyName(key, locale)}
+                  <span class="fam-nav__n mono"> {count}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    )}
+
+    <section class="shell ink-idx__list">
+      <ul role="list" class="ink-rows" data-stagger>
+        {inks.map((ink) => (
+          <li class="ink-row reveal">
+            <a href={inkHref(ink, locale)}>
+              <span class="ink-row__main">
+                <span class="eyebrow">{inkFamilyName(ink.data.family, locale)}</span>
+                <span class="ink-row__series code" lang="en">{ink.data.series}</span>
+                <span class="ink-row__role muted">{ink.data.i18n[locale].role}</span>
+              </span>
+
+              <span class="ink-row__swatches" aria-hidden="true">
+                {ink.data.channels.slice(0, 10).map((ch) => {
+                  const def = CHANNELS[ch.code as ChannelCode];
+                  if (!def) return null;
+                  return (
+                    <span
+                      class:list={['ink-row__sw', {
+                        'is-outlined': (def as { outlined?: boolean }).outlined,
+                        'is-hatched': (def as { hatched?: boolean }).hatched,
+                      }]}
+                      style={`--swatch:${def.hex}`}
+                    ></span>
+                  );
+                })}
+              </span>
+
+              <span class="ink-row__meta">
+                <span class="ink-row__badge mono">{t(CHANGEOVER_KEY[ink.data.changeover], locale)}</span>
+                <span class="ink-row__heads mono">{ink.data.compat.printheads.slice(0, 2).join(' · ')}</span>
+              </span>
+
+              <span class="ink-row__cta">
+                {t('explore', locale)} <span class="arrow" aria-hidden="true">›</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <section class="section" data-ground="bone" data-accent="magenta">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">{tr ? 'GÜVENLİK' : 'SAFETY'}</p></div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Sattığımız her kimyasal ürün için Türkçe Güvenlik Bilgi Formu sağlıyoruz.'
+            : 'Every chemical product we sell ships with a Turkish safety data sheet.'}
+        </h2>
+        <p class="lead reveal">
+          {tr
+            ? 'GBF, ithal ürünlerde çoğu zaman yalnızca İngilizce verilir. Türkçe olmayan bir güvenlik formu, iş güvenliği denetiminde işinize yaramaz ve operatörünüz de okumaz.'
+            : 'Safety data sheets for imported products usually arrive in English only. A sheet your operator cannot read is no use in an inspection, and no use to your operator.'}
+        </p>
+        <a class="link link--accent reveal" href={path('documents', locale)}>
+          {tr ? 'Belgeler ve GBF' : 'Documents and safety sheets'} <span class="arrow" aria-hidden="true">›</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ink-idx__crumbs { padding-block: var(--sp-5) var(--sp-7); }
+
+  .ink-idx__head {
+    display: grid;
+    gap: var(--sp-5);
+    padding-block-end: var(--sp-7);
+    max-width: 78ch;
+  }
+
+  .ink-idx__head .lead { color: var(--muted); }
+
+  .fam-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-6);
+    margin: 0 0 var(--sp-8);
+    padding-block-end: var(--sp-6);
+    border-bottom: var(--border) solid var(--rule);
+    list-style: none;
+    font-size: var(--step--1);
+  }
+
+  .fam-nav__n { font-size: var(--step--2); color: var(--muted); }
+
+  .ink-idx__list { padding-block-end: var(--section-pad); }
+
+  .ink-rows {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--border) solid var(--rule);
+  }
+
+  .ink-row a {
+    display: grid;
+    gap: var(--sp-4);
+    padding-block: var(--sp-6);
+    border-bottom: var(--border) solid var(--rule);
+    color: inherit;
+    text-decoration: none;
+    transition: padding-inline-start var(--d-base) var(--e-out);
+  }
+
+  .ink-row a:hover,
+  .ink-row a:focus-visible {
+    padding-inline-start: var(--sp-4);
+  }
+
+  .ink-row a:hover .arrow,
+  .ink-row a:focus-visible .arrow {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 1024px) {
+    .ink-row a {
+      grid-template-columns: 30fr 22fr 26fr auto;
+      align-items: center;
+      gap: var(--gutter);
+    }
+  }
+
+  .ink-row__main { display: grid; gap: var(--sp-2); }
+
+  .ink-row__series {
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .ink-row__role { font-size: var(--step--1); }
+
+  .ink-row__swatches {
+    display: flex;
+    gap: 3px;
+  }
+
+  .ink-row__sw {
+    width: 22px;
+    height: 22px;
+    background: var(--swatch);
+  }
+
+  .ink-row__sw.is-outlined { box-shadow: inset 0 0 0 1px var(--hairline); }
+
+  .ink-row__sw.is-hatched {
+    background: repeating-linear-gradient(
+      45deg, var(--swatch) 0 3px, color-mix(in srgb, var(--swatch) 62%, var(--ink)) 3px 6px
+    );
+    box-shadow: inset 0 0 0 1px var(--hairline);
+  }
+
+  .ink-row__meta { display: grid; gap: var(--sp-2); }
+
+  .ink-row__badge {
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+  }
+
+  .ink-row__heads {
+    font-size: var(--step--2);
+    color: var(--muted);
+  }
+
+  .ink-row__cta {
+    font-size: var(--step--1);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+</style>

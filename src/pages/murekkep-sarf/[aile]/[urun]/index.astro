@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+
+import InkPage from '../../../../layouts/InkPage.astro';
+import { INK_FAMILY_ROUTE, ROUTES } from '../../../../i18n/routes';
+
+export async function getStaticPaths() {
+  const inks = await getCollection('inks');
+  return inks.map((ink) => ({
+    params: {
+      aile: ROUTES[INK_FAMILY_ROUTE[ink.data.family as keyof typeof INK_FAMILY_ROUTE]].tr,
+      urun: ink.id,
+    },
+    props: { ink },
+  }));
+}
+
+const { ink } = Astro.props;
+---
+
+<InkPage ink={ink} locale="tr" />

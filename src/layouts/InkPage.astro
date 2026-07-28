@@ -1,0 +1,521 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+import { SITE, type Locale } from '../config/site';
+import { path } from '../i18n/routes';
+import { num, t } from '../i18n/ui';
+import { INK_SPECS, SUBSTRATES, type SubstrateKey } from '../i18n/specs';
+import { inkFamilyName, inkFamilyRoute, inkRouteExtra, machineHref } from '../lib/product';
+import Base from './Base.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import ChannelStrip from '../components/product/ChannelStrip.astro';
+
+export interface Props {
+  ink: CollectionEntry<'inks'>;
+  locale: Locale;
+}
+
+const { ink, locale } = Astro.props;
+const d = ink.data;
+const copy = d.i18n[locale];
+const tr = locale === 'tr';
+
+const familyName = inkFamilyName(d.family, locale);
+const familyRoute = inkFamilyRoute(d.family);
+
+const CHANGEOVER: Record<string, { key: 'switchAndPrint' | 'switchAndSwap' | 'switchAndMatch'; note: Record<Locale, string> }> = {
+  'switch-and-print': {
+    key: 'switchAndPrint',
+    note: {
+      tr: 'Kimyasal ve renk uyumu tam. Mevcut mürekkebin üzerine doğrudan geçebilirsiniz.',
+      en: 'Full chemical and colour compatibility. Change over and print immediately.',
+    },
+  },
+  'switch-and-swap': {
+    key: 'switchAndSwap',
+    note: {
+      tr: 'Geçiş öncesi sistemin yıkanması gerekir. Kimyasal karışım kafayı riske atar.',
+      en: 'The system must be flushed before changeover. Mixing chemistries risks the head.',
+    },
+  },
+  'switch-and-match': {
+    key: 'switchAndMatch',
+    note: {
+      tr: 'Renk eşleşmesi için ICC profillerinin yeniden oluşturulması gerekir.',
+      en: 'ICC profiles must be rebuilt to match colour.',
+    },
+  },
+};
+
+const changeover = CHANGEOVER[d.changeover];
+
+const CURE_METHODS: Record<string, Record<Locale, string>> = {
+  'uv-hg': { tr: 'Cıva buharlı UV', en: 'Mercury-vapour UV' },
+  'uv-led': { tr: 'UV LED', en: 'UV LED' },
+  heat: { tr: 'Isı ile kurutma', en: 'Heat cure' },
+  calender: { tr: 'Kalender transferi', en: 'Calender transfer' },
+  air: { tr: 'Havada kuruma', en: 'Air dry' },
+  none: { tr: 'Kürleme gerekmez', en: 'No curing' },
+};
+
+const PACK_FORMATS: Record<string, Record<Locale, string>> = {
+  bottle: { tr: 'şişe', en: 'bottle' },
+  bag: { tr: 'torba', en: 'bag' },
+  'bag-in-box': { tr: 'kutuda torba', en: 'bag-in-box' },
+  cartridge: { tr: 'kartuş', en: 'cartridge' },
+  pouch: { tr: 'poşet', en: 'pouch' },
+  drum: { tr: 'varil', en: 'drum' },
+  sack: { tr: 'çuval', en: 'sack' },
+  roll: { tr: 'rulo', en: 'roll' },
+};
+
+const machines = (await getCollection('machines'))
+  .filter((m) => d.compat.machines.includes(m.data.sku));
+
+/* --- spec rows ---------------------------------------------------------- */
+const rows: Array<{ label: string; value: string; note?: string }> = [];
+const add = (label: string, value: string | undefined | null, note?: string) => {
+  if (value) rows.push({ label, value, note });
+};
+
+add(INK_SPECS.cureMethod[locale], CURE_METHODS[d.specs.cure.method]?.[locale]);
+if (d.specs.cure.doseMjCm2) {
+  add(INK_SPECS.cureDose[locale], `${num(d.specs.cure.doseMjCm2[0], locale)}–${num(d.specs.cure.doseMjCm2[1], locale)} mJ/cm²`);
+}
+if (d.specs.cure.intensityMwCm2) {
+  add(INK_SPECS.cureIntensity[locale], `${num(d.specs.cure.intensityMwCm2, locale)} mW/cm²`);
+}
+if (d.specs.cure.wavelengthNm) {
+  add(INK_SPECS.wavelength[locale], `${num(d.specs.cure.wavelengthNm, locale)} nm`);
+}
+if (d.specs.cure.postCureHours) {
+  add(INK_SPECS.postCure[locale], `${num(d.specs.cure.postCureHours, locale)} ${tr ? 'saat' : 'h'}`);
+}
+if (d.specs.cure.transferTempC) {
+  add(INK_SPECS.transferTemp[locale], `${num(d.specs.cure.transferTempC[0], locale)}–${num(d.specs.cure.transferTempC[1], locale)} °C`);
+}
+if (d.specs.cure.transferSeconds) {
+  add(INK_SPECS.transferTime[locale], `${num(d.specs.cure.transferSeconds[0], locale)}–${num(d.specs.cure.transferSeconds[1], locale)} s`);
+}
+if (d.specs.cure.fixationC) {
+  add(INK_SPECS.fixation[locale], `${num(d.specs.cure.fixationC, locale)} °C`);
+}
+add(
+  INK_SPECS.shelfLife[locale],
+  `${num(d.specs.shelfLifeMonths, locale)} ${tr ? 'ay' : 'months'}`,
+  d.specs.shelfLifeNote?.[locale],
+);
+add(INK_SPECS.storageTemp[locale], `${num(d.specs.storageTempC[0], locale)}–${num(d.specs.storageTempC[1], locale)} °C`);
+if (d.specs.operatingTempC) {
+  add(INK_SPECS.operatingTemp[locale], `${num(d.specs.operatingTempC[0], locale)}–${num(d.specs.operatingTempC[1], locale)} °C`);
+}
+if (d.specs.outdoorDurabilityMonths) {
+  // The scoping note is mandatory in the schema — an unscoped durability claim
+  // reads as invented to anyone who has read a real technical data sheet.
+  add(
+    INK_SPECS.outdoorDurability[locale],
+    `${num(d.specs.outdoorDurabilityMonths, locale)} ${tr ? 'ay' : 'months'}`,
+    d.specs.outdoorDurabilityNote?.[locale],
+  );
+}
+if (d.specs.viscosityCps) {
+  add(INK_SPECS.viscosity[locale], `${num(d.specs.viscosityCps.value, locale, { minimumFractionDigits: 1 })} ± ${num(d.specs.viscosityCps.tolerance, locale, { minimumFractionDigits: 1 })} cps @ ${num(d.specs.viscosityCps.atC, locale)} °C`);
+}
+if (d.specs.surfaceTensionDyn) {
+  add(INK_SPECS.surfaceTension[locale], `${num(d.specs.surfaceTensionDyn.value, locale)} ± ${num(d.specs.surfaceTensionDyn.tolerance, locale)} ${tr ? 'din/cm' : 'dyn/cm'}`);
+}
+if (d.specs.ph) {
+  add(INK_SPECS.ph[locale], `${num(d.specs.ph.value, locale, { minimumFractionDigits: 1 })} ± ${num(d.specs.ph.tolerance, locale, { minimumFractionDigits: 1 })}`);
+}
+add(INK_SPECS.chipIncluded[locale], d.compat.chipIncluded ? (tr ? 'var' : 'yes') : (tr ? 'yok' : 'no'));
+
+const gbf = d.documents.find((doc) => doc.kind === 'gbf' && doc.lang === 'tr');
+
+const title = tr
+  ? `${d.series} — ${d.compat.printheads[0] ?? familyName} uyumlu | Maven`
+  : `${d.series} — for ${d.compat.printheads[0] ?? familyName} | Maven`;
+const description = tr
+  ? `${d.series}: ${d.channels.map((c) => c.code).join(' ')} kanal seti, ${d.packaging.map((p) => `${p.volume} ${p.unit}`).join(' / ')} ambalaj. Uyumlu kafalar: ${d.compat.printheads.join(', ')}. TDS ve Türkçe Güvenlik Bilgi Formu.`
+  : `${d.series}: ${d.channels.map((c) => c.code).join(' ')} channel set, ${d.packaging.map((p) => `${p.volume} ${p.unit}`).join(' / ')} packaging. Compatible heads: ${d.compat.printheads.join(', ')}. TDS and safety data sheet.`;
+---
+
+<Base
+  locale={locale}
+  title={title}
+  description={description}
+  routeKey="inks"
+  routeExtra={inkRouteExtra(ink)}
+  ogType="product"
+  schema={[{
+    '@type': 'Product',
+    name: d.series,
+    sku: d.sku,
+    brand: { '@type': 'Brand', name: 'Maven' },
+    category: familyName,
+    description: copy.summary,
+    additionalProperty: rows.map((r) => ({
+      '@type': 'PropertyValue', name: r.label, value: r.value,
+    })),
+  }]}
+>
+  <div data-ground="paper" data-accent="magenta">
+    <div class="shell ink__crumbs">
+      <Breadcrumb
+        locale={locale}
+        crumbs={[
+          { label: t('navInks', locale), href: path('inks', locale) },
+          { label: familyName, href: path(familyRoute, locale) },
+          { label: d.series },
+        ]}
+      />
+    </div>
+
+    <section class="shell ink__hero">
+      <div class="ink__intro">
+        <p class="eyebrow">{familyName}</p>
+        <!-- Each word is its own nowrap span so "MI-210" cannot break at the
+             hyphen, but the spaces between words stay real break opportunities. -->
+        <h1 class="model" lang="en">
+          {d.series.split(' ').map((w, i) => <>{i > 0 ? ' ' : ''}<span>{w}</span></>)}
+        </h1>
+        <p class="lead">{copy.role}</p>
+
+        <p class="badge">
+          <span class="badge__dot" aria-hidden="true"></span>
+          <span class="badge__label mono">{t(changeover.key, locale)}</span>
+        </p>
+        <p class="muted badge__note">{changeover.note[locale]}</p>
+
+        <div class="cluster ink__cta">
+          <a class="btn" href={path('quote', locale)}>
+            {t('requestQuote', locale)}<span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="link link--accent" href={path('compatibility', locale)}>
+            {tr ? 'Uyumluluk kontrolü' : 'Check compatibility'} <span class="arrow" aria-hidden="true">›</span>
+          </a>
+        </div>
+
+        {d.price && (
+          <p class="ink__price mono">
+            {num(d.price.amount, locale)} USD <span class="muted">/ {t('vatExcluded', locale)}</span>
+          </p>
+        )}
+      </div>
+
+      <div class="ink__channels">
+        <h2 class="eyebrow">{t('channels', locale)}</h2>
+        <ChannelStrip channels={d.channels} locale={locale} />
+      </div>
+    </section>
+  </div>
+
+  <section class="section section--ruled" data-ground="paper" data-accent="magenta">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">01 — {tr ? 'ÜRÜN' : 'PRODUCT'}</p></div>
+      <div class="section__body">
+        <p class="lead reveal">{copy.summary}</p>
+
+        <ul class="features reveal" role="list" data-stagger>
+          {copy.features.map((f) => <li class="feature-line">{f}</li>)}
+        </ul>
+
+        {d.oemEquivalent.length > 0 && (
+          <div class="oem reveal">
+            <h3 class="eyebrow">{INK_SPECS.oemEquivalent[locale]}</h3>
+            <p class="mono">{d.oemEquivalent.join(' · ')}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ground="bone" data-accent="magenta">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">02 — {tr ? 'UYUMLULUK' : 'COMPATIBILITY'}</p></div>
+      <div class="section__body">
+        <div class="compat-grid reveal">
+          <div>
+            <h3 class="eyebrow">{INK_SPECS.printheads[locale]}</h3>
+            <ul role="list" class="plain mono">
+              {d.compat.printheads.map((h) => <li>{h}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3 class="eyebrow">{INK_SPECS.machines[locale]}</h3>
+            <ul role="list" class="plain">
+              {machines.length > 0
+                ? machines.map((m) => (
+                    <li><a class="link" href={machineHref(m, locale)} lang="en">{m.data.model}</a></li>
+                  ))
+                : <li class="muted mono">—</li>}
+            </ul>
+          </div>
+          {d.compat.thirdPartyPrinters.length > 0 && (
+            <div>
+              <h3 class="eyebrow">{tr ? 'Diğer Makineler' : 'Other Equipment'}</h3>
+              <!-- Text only, never a logo: we do not hold those marks. -->
+              <ul role="list" class="plain mono">
+                {d.compat.thirdPartyPrinters.map((p) => <li>{p}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ground="paper" data-accent="magenta">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">03 — {tr ? 'TEKNİK VERİLER' : 'TECHNICAL DATA'}</p></div>
+      <div class="section__body">
+        <div class="table-wrap reveal">
+          <table class="spec-table">
+            <tbody>
+              {rows.map((r) => (
+                <tr>
+                  <th scope="row">{r.label}</th>
+                  <td>
+                    {r.value}
+                    {r.note && <span class="spec-note"> — {r.note}</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="reveal chips-block">
+          <h3 class="eyebrow">{t('packaging', locale)}</h3>
+          <ul class="chips" role="list">
+            {d.packaging.map((p) => (
+              <li class="chip mono">
+                {num(p.volume, locale)} {p.unit} {PACK_FORMATS[p.format]?.[locale] ?? p.format}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {d.substrates.length > 0 && (
+          <div class="reveal chips-block">
+            <h3 class="eyebrow">{t('surfaces', locale)}</h3>
+            <ul class="chips" role="list">
+              {d.substrates
+                .filter((s) => SUBSTRATES[s as SubstrateKey])
+                .map((s) => <li class="chip mono">{SUBSTRATES[s as SubstrateKey][locale]}</li>)}
+            </ul>
+          </div>
+        )}
+
+        {d.certifications.length > 0 && (
+          <div class="reveal chips-block">
+            <h3 class="eyebrow">{INK_SPECS.certifications[locale]}</h3>
+            <!-- Always attributed to the certificate holder, never rendered as a Maven mark. -->
+            <ul class="plain" role="list">
+              {d.certifications.map((c) => (
+                <li class="muted">
+                  <span class="mono">{c.mark.replace(/-/g, ' ').toUpperCase()}</span>
+                  <span> — {c.issuedTo}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-ground="ink" data-accent="yellow">
+    <div class="shell grid">
+      <div class="section__label"><p class="eyebrow">04 — {tr ? 'BELGELER' : 'DOCUMENTS'}</p></div>
+      <div class="section__body">
+        <h2 class="reveal">
+          {tr
+            ? 'Her kimyasal ürün Türkçe Güvenlik Bilgi Formu ile gelir.'
+            : 'Every chemical product ships with a Turkish safety data sheet.'}
+        </h2>
+        <ul class="docs reveal" role="list">
+          {d.documents.map((doc) => (
+            <li>
+              <a class="doc" href={doc.file} download>
+                <span class="doc__kind mono">
+                  {doc.kind === 'gbf' ? 'GBF' : doc.kind === 'tds' ? 'TDS' : doc.kind.toUpperCase()}
+                </span>
+                <span class="doc__name">{d.series}</span>
+                <span class="doc__meta mono">
+                  PDF · {(doc.bytes / 1024 / 1024).toFixed(1).replace('.', tr ? ',' : '.')} MB · {doc.lang.toUpperCase()}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        {!gbf && (
+          <p class="muted mono">
+            {tr ? 'Türkçe GBF hazırlanıyor.' : 'Turkish safety data sheet in preparation.'}
+          </p>
+        )}
+        <p class="disclaimer">{copy.disclaimer}</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="sticky-actions" aria-label={t('requestQuote', locale)}>
+    <a href={path('quote', locale)}>{t('requestQuote', locale)}</a>
+    <a
+      href={`https://wa.me/${SITE.contact.whatsapp.e164}?text=${encodeURIComponent(`${d.series} — ${SITE.contact.whatsapp.prefill[locale]}`)}`}
+      target="_blank" rel="noopener"
+    >WhatsApp</a>
+  </nav>
+</Base>
+
+<style>
+  .ink__crumbs { padding-block: var(--sp-5) var(--sp-7); }
+
+  .ink__hero {
+    display: grid;
+    gap: var(--sp-8);
+    padding-block-end: var(--sp-9);
+  }
+
+  @media (min-width: 1024px) {
+    .ink__hero {
+      grid-template-columns: 45fr 55fr;
+      gap: var(--sp-9);
+      align-items: start;
+    }
+  }
+
+  .ink__intro h1 { margin-block: var(--sp-3) var(--sp-4); }
+  .ink__intro .lead { color: var(--muted); margin-block-end: var(--sp-6); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-2) var(--sp-4);
+    border: var(--border) solid var(--accent);
+    margin-block-end: var(--sp-3);
+  }
+
+  .badge__dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+  }
+
+  .badge__label {
+    font-size: var(--step--2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .badge__note {
+    font-size: var(--step--1);
+    margin-block-end: var(--sp-7);
+    max-width: 46ch;
+  }
+
+  .ink__price {
+    margin-block-start: var(--sp-5);
+    font-size: var(--step-1);
+  }
+
+  .ink__channels h2 { margin-block-end: var(--sp-5); }
+
+  .features {
+    display: grid;
+    gap: 0;
+    margin-block-start: var(--sp-7);
+    padding: 0;
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .feature-line {
+    padding-block: var(--sp-4);
+    border-bottom: var(--border) solid var(--hairline);
+    font-size: var(--step--1);
+  }
+
+  .oem { margin-block-start: var(--sp-7); }
+  .oem p { margin-block-start: var(--sp-3); font-size: var(--step--1); }
+
+  .compat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: var(--sp-7) var(--gutter);
+  }
+
+  .plain {
+    list-style: none;
+    margin: var(--sp-4) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-2);
+    font-size: var(--step--1);
+  }
+
+  .chips-block { margin-block-start: var(--sp-8); }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .chips .chip {
+    font-size: var(--step--2);
+    padding: 6px 10px;
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground-muted);
+  }
+
+  .spec-note { color: var(--on-ground-muted); font-family: var(--font-sans); }
+
+  .docs {
+    display: grid;
+    gap: 0;
+    margin-block: var(--sp-7);
+    padding: 0;
+    list-style: none;
+    border-top: var(--border) solid var(--rule-dark);
+  }
+
+  .doc {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: var(--sp-5);
+    padding-block: var(--sp-5);
+    border-bottom: var(--border) solid var(--rule-dark);
+    color: var(--paper);
+    text-decoration: none;
+  }
+
+  .doc__kind {
+    font-size: var(--step--2);
+    letter-spacing: 0.12em;
+    color: var(--yellow);
+  }
+
+  .doc__name { font-size: var(--step-0); }
+
+  .doc__meta {
+    font-size: var(--step--2);
+    color: var(--muted-dark);
+  }
+
+  .doc:hover .doc__name { text-decoration: underline; }
+
+  .disclaimer {
+    font-size: var(--step--1);
+    color: var(--muted-dark);
+    max-width: 72ch;
+  }
+
+  @media (max-width: 1023px) {
+    :global(body) { padding-bottom: 64px; }
+  }
+</style>

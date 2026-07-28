@@ -197,7 +197,11 @@ const productSchema = {
 
       <div class="pdp__intro">
         <p class="eyebrow">{familyName}</p>
-        <h1 lang="en">{d.model}</h1>
+        <!-- Each word is its own nowrap span so "MF-2513" cannot break at the
+             hyphen, but the spaces between words stay real break opportunities. -->
+        <h1 class="model" lang="en">
+          {d.model.split(' ').map((w, i) => <>{i > 0 ? ' ' : ''}<span>{w}</span></>)}
+        </h1>
         <p class="lead">{copy.tagline}</p>
 
         <dl class="metrics">

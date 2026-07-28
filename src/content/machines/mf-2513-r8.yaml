@@ -14,7 +14,7 @@ printhead:
   brand: ricoh
   model: Gen6
   count: [2, 12]
-  dropSizePl: [5, 35]
+  dropSizePl: [5, 15]
 
 headOptions:
   - { brand: ricoh, model: Gen6, count: [2, 12], dropSizePl: [5, 35] }
@@ -26,7 +26,7 @@ specs:
   mediaHeight: { value: 100, unit: mm }
   mediaWeight: { value: 50, unit: kg/m2 }
   resolution: "600 · 900 · 1200 dpi"
-  dropSize: { value: [5, 35], unit: pL }
+  dropSize: { value: [5, 15], unit: pL }
   printHead: "Ricoh Gen6 (5 pl)"
   headCount: { value: [2, 12], unit: adet }
   colors: "CMYK · Lc · Lm · W · Lak"
@@ -64,7 +64,7 @@ speedModes:
 compatibleInks: [mi-210-uv-led-r, mi-110-uv]
 applications: [signage, interior, industrial, packaging]
 substrates: [glass, wood, mdf, foamboard, pvc, acrylic, alucomp, photoblock, metal, ceramic]
-siblings: [MF-1216-R4, MF-3220-K12]
+siblings: [MF-6090-U3, MF-1216-R4, MF-3220-K12]
 rip: [ONYX, Caldera, SAi Flexi, Photoprint]
 
 installation:
@@ -160,7 +160,9 @@ i18n:
       arasında yapılandırılabilen Ricoh Gen6 kafa dizilimi, 4 geçişte 50–60 m²/sa
       üretim hızı verir; üç bağımsız vakum bölgesi sayesinde tam tabla iş de,
       tek levha da aynı verimle basılır. Beyaz kanal sürekli sirkülasyondadır,
-      su soğutmalı LED-UV kürleme ise 24 saat çalışan atölyelerde lamba ömrünü korur.
+      su soğutmalı LED-UV kürleme ise 24 saat çalışan atölyelerde lamba ömrünü
+      ve renk tutarlılığını korur. 100 mm baskı yüksekliği ile cam, ahşap, kompozit
+      ve kalın levha aynı tablada, ara işlem olmadan çalışılır.
     features:
       - term: Bölgesel Vakum Kontrolü
         body: >-
