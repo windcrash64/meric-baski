@@ -1,0 +1,62 @@
+---
+/**
+ * Application-sector icons.
+ *
+ * Drawn on a 24-unit grid with a single 1.5 stroke and, wherever the object
+ * allows, straight lines only — the mark is entirely straight-edged and the
+ * site's radius is 0, so a set of soft rounded pictograms would read as
+ * bought-in clip art sitting on someone else's design.
+ *
+ * Each one draws the OBJECT the sector prints, not an abstraction of it: a
+ * sign, a carton, a cabinet front, a glass pane, a shirt, a van.
+ */
+export interface Props {
+  name: 'signage' | 'packaging' | 'interior' | 'industrial' | 'textile' | 'vehicle';
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 34, class: className = '' } = Astro.props;
+
+const PATHS: Record<Props['name'], string> = {
+  // Billboard on a post, with a rule of print across it.
+  signage: 'M2 3h20v11H2zM12 14v7M8 21h8M5 6h9M5 9h6',
+  // Carton with its top flaps open and a label on the face.
+  packaging: 'M3 8h18v13H3zM3 8l3-5h12l3 5M12 3v5M6 12h5v4H6z',
+  // Cabinet front: two doors, two handles, a plinth.
+  interior: 'M2 3h20v16H2zM12 3v16M9 10v3M15 10v3M4 19v2M20 19v2',
+  // Glass pane held in a frame, with the corner mark that says "sheet".
+  industrial: 'M3 3h18v18H3zM3 3l7 7M21 3l-7 7M7 21v-6h10v6M3 15h4M17 15h4',
+  // Shirt: shoulders, sleeves, body.
+  textile: 'M9 3l3 2 3-2 6 4-2.5 3.5L17 9v12H7V9l-1.5 1.5L3 7z',
+  // Panel van, with the wrapped side clearly a printable field.
+  vehicle: 'M1 6h13v9H1zM14 9h4l4 4v2h-8zM1 15h21M6 15a2 2 0 104 0 2 2 0 10-4 0M15 15a2 2 0 104 0 2 2 0 10-4 0',
+};
+---
+
+<svg
+  class={`appicon ${className}`}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="square"
+  stroke-linejoin="miter"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={PATHS[name]} />
+</svg>
+
+<style>
+  .appicon {
+    /* The draw-in runs on hover from the tile, see HomePage's .tile rules. */
+    overflow: visible;
+  }
+
+  .appicon path {
+    vector-effect: non-scaling-stroke;
+  }
+</style>

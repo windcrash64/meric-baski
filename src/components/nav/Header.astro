@@ -157,6 +157,9 @@ const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
   .site-header__logo {
     display: flex;
     align-items: center;
+    /* The mark is 26 px tall; the target around it has to be 44. */
+    min-height: 44px;
+    padding-inline-end: var(--sp-2);
     color: var(--ink);
     flex: none;
   }
@@ -207,7 +210,10 @@ const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
   }
 
   .site-header__icon {
-    padding: var(--sp-2);
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
   }
 
   .site-header__cta {
@@ -218,12 +224,14 @@ const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
 
   .site-header__lang {
     display: inline-flex;
+    align-items: center;
     gap: 0.35em;
+    min-height: 44px;
     font-size: var(--step--2);
     letter-spacing: 0.1em;
     text-decoration: none;
     color: var(--muted);
-    padding: var(--sp-2);
+    padding-inline: var(--sp-2);
   }
 
   .site-header__lang-other {

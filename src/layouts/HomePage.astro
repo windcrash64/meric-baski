@@ -7,6 +7,7 @@ import { t } from '../i18n/ui';
 import { CHANNELS, type ChannelCode } from '../i18n/specs';
 import Base from './Base.astro';
 import HeroSlider from '../components/media/HeroSlider.astro';
+import ApplicationIcon from '../components/ui/ApplicationIcon.astro';
 
 export interface Props {
   locale: Locale;
@@ -144,12 +145,12 @@ const HERO_SLIDES = [
 const CHANNEL_SET: ChannelCode[] = ['C', 'M', 'Y', 'K', 'Lc', 'Lm', 'Or', 'Gr', 'W', 'Cl'];
 
 const APPLICATIONS = [
-  { key: 'applications.signage', tr: 'Reklam ve Tabela', en: 'Signage & Advertising' },
-  { key: 'applications.packaging', tr: 'Ambalaj ve Etiket', en: 'Packaging & Labels' },
-  { key: 'applications.interior', tr: 'Mobilya ve Dekorasyon', en: 'Furniture & Interior' },
-  { key: 'applications.industrial', tr: 'Cam, Metal ve Endüstriyel', en: 'Glass, Metal & Industrial' },
-  { key: 'applications.textile', tr: 'Tekstil ve Promosyon', en: 'Textile & Promotional' },
-  { key: 'applications.vehicle', tr: 'Araç Giydirme', en: 'Vehicle Wrapping' },
+  { key: 'applications.signage', icon: 'signage', tr: 'Reklam ve Tabela', en: 'Signage & Advertising' },
+  { key: 'applications.packaging', icon: 'packaging', tr: 'Ambalaj ve Etiket', en: 'Packaging & Labels' },
+  { key: 'applications.interior', icon: 'interior', tr: 'Mobilya ve Dekorasyon', en: 'Furniture & Interior' },
+  { key: 'applications.industrial', icon: 'industrial', tr: 'Cam, Metal ve Endüstriyel', en: 'Glass, Metal & Industrial' },
+  { key: 'applications.textile', icon: 'textile', tr: 'Tekstil ve Promosyon', en: 'Textile & Promotional' },
+  { key: 'applications.vehicle', icon: 'vehicle', tr: 'Araç Giydirme', en: 'Vehicle Wrapping' },
 ] as const;
 
 const COMMITMENTS = tr
@@ -206,27 +207,34 @@ const description = tr
     slides={HERO_SLIDES}
   />
 
-  <!-- 2 — PROOF STRIP ------------------------------------------------------ -->
-  <section class="proof" data-ground="paper">
-    <div class="shell">
-      <dl class="proof__grid">
-        <div>
-          <dt class="eyebrow">{tr ? 'Sektörde' : 'In the trade'}</dt>
-          <dd><span class="counter" data-count-to={SITE.commitments.yearsInBusiness}>0</span> {tr ? 'yıl' : 'years'}</dd>
-        </div>
-        <div>
-          <dt class="eyebrow">{tr ? 'Kurulum' : 'Installations'}</dt>
-          <dd><span class="counter" data-count-to={SITE.commitments.installationsCount}>0</span>+</dd>
-        </div>
-        <div>
-          <dt class="eyebrow">{tr ? 'Yerinde servis' : 'On-site service'}</dt>
-          <dd><span class="counter" data-count-to={SITE.commitments.onSiteCities.length}>0</span> {tr ? 'şehir' : 'cities'}</dd>
-        </div>
-        <div>
-          <dt class="eyebrow">{tr ? 'Müdahale' : 'Response'}</dt>
-          <dd><span class="counter" data-count-to={SITE.commitments.responseHours}>0</span> {tr ? 'saat içinde' : 'hours'}</dd>
-        </div>
-      </dl>
+
+  <!-- 2 — APPLICATIONS ------------------------------------------------------ -->
+  <section class="section section--ruled" data-ground="paper">
+    <div class="shell grid">
+      <div class="section__label">
+        <p class="eyebrow">01 — {tr ? 'UYGULAMALAR' : 'APPLICATIONS'}</p>
+      </div>
+      <div class="section__body">
+        <h2 class="reveal">{tr ? 'Kullanım Alanları' : 'Applications'}</h2>
+        <p class="lead muted reveal">
+          {tr
+            ? 'Altı sektör, farklı malzeme ve farklı baskı yöntemi kullanır. Her sayfada o işi yapan makineler, kullanılan mürekkepler ve basılan malzemeler listelenir.'
+            : 'Six sectors, each with its own materials and printing process. Every page lists the machines that do that work, the inks they use and the materials they print.'}
+        </p>
+        <ul class="tiles reveal" role="list" data-stagger>
+          {APPLICATIONS.map((a) => (
+            <li class="tile">
+              <a href={path(a.key, locale)}>
+                <span class="tile__icon">
+                  <ApplicationIcon name={a.icon} />
+                </span>
+                <span class="tile__label">{a[locale]}</span>
+                <span class="tile__go arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -234,7 +242,7 @@ const description = tr
   <section class="section section--ruled" data-ground="paper" data-accent="cyan">
     <div class="shell grid">
       <div class="section__label">
-        <p class="eyebrow">01 — {tr ? 'MAKİNELER' : 'MACHINES'}</p>
+        <p class="eyebrow">02 — {tr ? 'MAKİNELER' : 'MACHINES'}</p>
       </div>
       <div class="section__body">
         <h2 class="reveal">
@@ -275,7 +283,7 @@ const description = tr
   <section class="section" data-ground="bone" data-accent="magenta">
     <div class="shell grid">
       <div class="section__label">
-        <p class="eyebrow">02 — {tr ? 'MÜREKKEP & SARF' : 'INKS & SUPPLIES'}</p>
+        <p class="eyebrow">03 — {tr ? 'MÜREKKEP & SARF' : 'INKS & SUPPLIES'}</p>
       </div>
       <div class="section__body">
         <h2 class="reveal">
@@ -326,7 +334,7 @@ const description = tr
   <section class="section section--tight" data-ground="bone" data-accent="magenta">
     <div class="shell grid">
       <div class="section__label">
-        <p class="eyebrow">03 — {tr ? 'UYUMLULUK' : 'COMPATIBILITY'}</p>
+        <p class="eyebrow">04 — {tr ? 'UYUMLULUK' : 'COMPATIBILITY'}</p>
       </div>
       <div class="section__body">
         <h3 class="reveal">
@@ -368,27 +376,6 @@ const description = tr
     </div>
   </section>
 
-  <!-- 6 — APPLICATIONS ------------------------------------------------------ -->
-  <section class="section section--ruled" data-ground="paper">
-    <div class="shell grid">
-      <div class="section__label">
-        <p class="eyebrow">04 — {tr ? 'UYGULAMALAR' : 'APPLICATIONS'}</p>
-      </div>
-      <div class="section__body">
-        <h2 class="reveal">{tr ? 'Kullanım Alanları' : 'Applications'}</h2>
-        <ul class="tiles reveal" role="list" data-stagger>
-          {APPLICATIONS.map((a) => (
-            <li class="tile">
-              <a href={path(a.key, locale)}>
-                <span class="tile__label">{a[locale]}</span>
-                <span class="arrow" aria-hidden="true">→</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
 
   <!-- 7 — SERVICE ----------------------------------------------------------- -->
   <section class="section" data-ground="ink" data-accent="yellow">
@@ -613,44 +600,115 @@ const description = tr
     color: var(--muted);
   }
 
-  /* --- application tiles --- */
+  /* --- application tiles ---------------------------------------------------
+     Icon card, not a list row: the icon is what makes six sectors scannable at
+     a glance, and it is the element the motion hangs off. */
   .tiles {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-    gap: 0;
     margin-block-start: var(--sp-8);
-    padding: 0;
-    border-top: var(--border) solid var(--hairline);
   }
 
   .tile a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--sp-4);
-    padding: var(--sp-6) 0;
-    border-bottom: var(--border) solid var(--hairline);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: var(--sp-5);
+    height: 100%;
+    min-height: 172px;
+    padding: var(--sp-5);
+    border: var(--border) solid var(--hairline);
     color: inherit;
     text-decoration: none;
-    font-size: var(--step-2);
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    transition: padding-inline-start var(--d-base) var(--e-out);
+    transition:
+      border-color var(--d-base) var(--e-out),
+      transform var(--d-fast) var(--e-out);
+  }
+
+  /* The accent wipes in from behind the content — the same mechanic as .btn,
+     so the tile presses like every other control on the site. */
+  .tile a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform var(--d-slow) var(--e-out);
   }
 
   .tile a:hover,
   .tile a:focus-visible {
-    padding-inline-start: var(--sp-4);
+    border-color: var(--ink);
   }
 
-  .tile a:hover .arrow,
-  .tile a:focus-visible .arrow {
+  .tile a:hover::before,
+  .tile a:focus-visible::before {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* Press: settles 0.6% down and completes the wipe instantly, so a tap is
+     acknowledged before the navigation starts. Nothing overshoots. */
+  .tile a:active {
+    transform: scale(0.994);
+  }
+
+  .tile a:active::before {
+    transform: scaleX(1);
+    transition-duration: var(--d-instant);
+  }
+
+  .tile__icon {
+    display: block;
+    color: var(--muted);
+    transition: color var(--d-base) var(--e-out), transform var(--d-base) var(--e-out);
+  }
+
+  .tile a:hover .tile__icon,
+  .tile a:focus-visible .tile__icon {
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+
+  .tile__label {
+    align-self: end;
+    font-size: var(--step-0);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .tile__go {
+    justify-self: start;
+    font-size: var(--step--1);
+    color: var(--muted);
+    transition: color var(--d-base) var(--e-out), transform var(--d-base) var(--e-out);
+  }
+
+  .tile a:hover .tile__go,
+  .tile a:focus-visible .tile__go {
+    color: var(--paper);
     transform: translateX(4px);
   }
 
-  @media (min-width: 640px) {
-    .tiles {
-      column-gap: var(--sp-8);
+  .tile a:hover .tile__label,
+  .tile a:focus-visible .tile__label {
+    color: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile a,
+    .tile a::before,
+    .tile__icon,
+    .tile__go {
+      transition-duration: 1ms;
+    }
+
+    .tile a:active {
+      transform: none;
     }
   }
 

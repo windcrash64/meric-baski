@@ -302,6 +302,23 @@ small,
   transform: translateY(0);
 }
 
+/* --------------------------------------------------------------------------
+   Target size.
+
+   WCAG 2.2 SC 2.5.8 wants 24 x 24 CSS px for anything that is not inline prose.
+   A link sitting in a list is a discrete control, not running text, so nav and
+   footer links get vertical padding rather than relying on the line box — at
+   15 px type that is an 18 px target, which is a miss on a phone.
+   -------------------------------------------------------------------------- */
+
+li > .link,
+.site-footer__col a,
+.site-footer__contact a,
+.site-footer__legal-links a {
+  display: inline-block;
+  padding-block: 5px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

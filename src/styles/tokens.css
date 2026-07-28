@@ -49,7 +49,10 @@
   --font-mono: 'IBM Plex Mono', 'IBM Plex Mono Fallback', ui-monospace, 'SFMono-Regular',
                'Cascadia Mono', Menlo, monospace;
 
-  --step--2: clamp(0.69rem, 0.67rem + 0.11vw, 0.75rem);  /* 11→12  mono micro-labels */
+  /* Floor is 12 px, not 11: at 360 px the old clamp bottomed out at 11.04 px,
+     which is below what a legal band or a spec unit can be read at on a phone
+     held at arm's length. */
+  --step--2: clamp(0.75rem, 0.72rem + 0.13vw, 0.8125rem);  /* 12→13 mono micro-labels */
   --step--1: clamp(0.83rem, 0.79rem + 0.20vw, 0.94rem);  /* 13→15  captions, spec cells */
   --step-0:  clamp(1.00rem, 0.94rem + 0.31vw, 1.19rem);  /* 16→19  body */
   --step-1:  clamp(1.20rem, 1.10rem + 0.50vw, 1.58rem);  /* 19→25  lead */

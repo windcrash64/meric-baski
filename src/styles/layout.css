@@ -112,6 +112,17 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
 }
 
+/* Icon tile grid. Defined here, not in a component, so the small-screen rail
+   below can actually override it — an Astro-scoped rule carries an extra
+   attribute selector and would outrank a global media query. */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
+  gap: var(--gutter);
+  padding: 0;
+  list-style: none;
+}
+
 .cards--2 {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
 }
@@ -129,6 +140,60 @@
 
 .card > * {
   flex: 1 1 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Card grids on small screens become horizontal rails.
+
+   Stacked vertically, six product cards are six screenfuls of scrolling before
+   the next section — the reader never learns the section had six items. As a
+   snapped rail the set is one gesture wide, the peeking next card says so, and
+   the page below stays reachable. The rail bleeds to the page edges so the
+   first and last card can sit flush while the content keeps its margin.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .cards,
+  .tiles {
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    /* A DEFINITE track size, not minmax(0, …): with a zero minimum the track
+       sizing algorithm is free to shrink every column to make the set fit the
+       container, so six tiles compress to 44 px each and nothing ever scrolls. */
+    grid-auto-columns: var(--rail-item, 80%);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--page-margin);
+    scrollbar-width: none;
+    margin-inline: calc(var(--page-margin) * -1);
+    padding-inline: var(--page-margin);
+    padding-block-end: var(--sp-3);
+  }
+
+  .cards > *,
+  .tiles > * {
+    scroll-snap-align: start;
+  }
+
+  .cards::-webkit-scrollbar,
+  .tiles::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Icon tiles are small — two and a bit fit, which reads as a set. */
+  .tiles {
+    --rail-item: 47%;
+  }
+
+  /* A product card carries a picture and a spec list; one at a time. */
+  .cards {
+    --rail-item: 82%;
+  }
+
+  .cards--2 {
+    --rail-item: 88%;
+  }
 }
 
 /* --------------------------------------------------------------------------
