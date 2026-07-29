@@ -1,0 +1,45 @@
+---
+/**
+ * The accordion chevron.
+ *
+ * Drawn, not typed. It used to be the glyph U+2304, and two thirds of that
+ * character's ink sits below the baseline: on a `align-items: baseline` row the
+ * mark rendered ~10 px low, and because `rotate(180deg)` turns a box about the
+ * box's centre rather than the ink's, opening a row threw the chevron 25 px down
+ * the page — a jump, where the design calls for a turn in place.
+ *
+ * A symmetric viewBox puts the ink on the centre of rotation, so the same
+ * `transform: rotate(180deg)` in motion.css now does what it reads like.
+ */
+export interface Props {
+  size?: number;
+  class?: string;
+}
+
+const { size = 14, class: className = '' } = Astro.props;
+---
+
+<svg
+  class={`accordion__chevron ${className}`}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="square"
+  stroke-linejoin="miter"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d="M4 9l8 8 8-8" />
+</svg>
+
+<style>
+  .accordion__chevron {
+    flex: none;
+    color: var(--muted);
+    /* The stroke keeps its weight when the row's font-size changes. */
+    vector-effect: non-scaling-stroke;
+  }
+</style>

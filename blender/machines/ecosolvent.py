@@ -251,7 +251,7 @@ def assemble(accent: str = shading.MAGENTA, cutter_x: float = 0.56):
 def camera_shots():
     """Named stills — azimuth, elevation, lens."""
     return {
-        "hero": (38, 15, 72),
+        "hero": (38, 14, 72),
         "three-quarter": (60, 18, 86),
         "front": (0, 8, 92),
         "detail-cut": (-30, 19, 128),

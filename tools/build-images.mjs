@@ -29,6 +29,20 @@ const LADDERS = {
 
 const QUALITY = { avif: 55, webp: 74, jpeg: 78 };
 
+/**
+ * What a transparent source is flattened onto for the JPEG rung.
+ *
+ * JPEG has no alpha and sharp's default matte is black, so the cutouts — which
+ * ARE transparent — came out as black rectangles: mean luminance 194 → 39, with
+ * 71% of the pixels below L 32. Only a browser with neither AVIF nor WebP ever
+ * sees that file, but "renders as a black box" is not an acceptable fallback.
+ *
+ * One colour, not two. Cards sit on bone and the product page on white; bone
+ * splits the difference at ΔL* ≈ 4.6 against white, which is far less visible
+ * than doubling the JPEG count for a path almost nobody takes.
+ */
+const JPEG_MATTE = '#f2f1ed'; // --bone
+
 async function walk(dir) {
   if (!existsSync(dir)) return [];
   const out = [];
@@ -113,7 +127,12 @@ async function build(file, { role = 'machine', dest }) {
     ]) {
       const out = path.join(OUT, `${base}-${w}.${fmt === 'jpeg' ? 'jpg' : fmt}`);
       if (!FORCE && existsSync(out)) continue;
-      const info = await resized.clone()[fmt](opts).toFile(out);
+      // Flatten on the format clone, never on `resized` — the same pipeline
+      // feeds AVIF and WebP, and flattening upstream would strip their alpha too.
+      const encoder = fmt === 'jpeg' && meta.hasAlpha
+        ? resized.clone().flatten({ background: JPEG_MATTE })
+        : resized.clone();
+      const info = await encoder[fmt](opts).toFile(out);
       results.push({ file: path.relative(OUT, out), bytes: info.size, width: w, fmt });
     }
   }

@@ -252,7 +252,7 @@ def assemble(accent: str = shading.CYAN, carriage_x: float = 0.48):
 def camera_shots():
     """Named stills — azimuth, elevation, lens."""
     return {
-        "hero": (36, 13, 72),
+        "hero": (36, 14, 72),
         "three-quarter": (58, 18, 82),
         "front": (0, 7, 88),
         "detail-web": (-25, 18, 118),

@@ -17,6 +17,7 @@ import { SITE, type Locale } from '../config/site';
 import { path } from '../i18n/routes';
 import { num, t } from '../i18n/ui';
 import Base from './Base.astro';
+import Chevron from '../components/ui/Chevron.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 
 export interface Props {
@@ -479,7 +480,7 @@ const description = tr
             <details name="svc-faq" open={i === 0}>
               <summary>
                 <span>{item.q}</span>
-                <span class="accordion__chevron" aria-hidden="true">⌄</span>
+                <Chevron />
               </summary>
               <div class="accordion__panel"><div><p>{item.a}</p></div></div>
             </details>
@@ -758,7 +759,7 @@ const description = tr
   .faq summary {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: var(--sp-5);
     padding-block: var(--sp-5);
     font-size: var(--step-1);
@@ -771,11 +772,6 @@ const description = tr
     max-width: 74ch;
   }
 
-  .accordion__chevron {
-    font-size: 1.4em;
-    line-height: 1;
-    color: var(--muted);
-  }
 
   /* --- 6. foot --- */
   .svc-foot {

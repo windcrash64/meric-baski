@@ -198,13 +198,55 @@ def add_camera(target: Vector, distance: float, azimuth_deg: float = 38.0,
 
 
 def frame_subject(cam, objs, margin: float = 1.12) -> None:
-    """Dolly the camera back until the subject fits, keeping the angle."""
+    """Dolly the camera back until the subject fits, keeping the angle.
+
+    Both axes, not just the wide one. The frame is 16:10, so the vertical field
+    of view is the narrower of the two; solving only for the horizontal put a
+    tall subject outside the frame while the arithmetic said it fitted. On the
+    DTF system — the tallest of the set, with a shaker as high as the printer —
+    that cut the chassis off at the bottom edge of the canvas.
+    """
     from .build import bounds
     lo, hi = bounds(objs)
     centre = (lo + hi) / 2
-    radius = (hi - lo).length / 2
-    fov = 2 * math.atan(cam.data.sensor_width / (2 * cam.data.lens))
-    dist = radius / math.tan(fov / 2) * margin
+
+    scn = bpy.context.scene
+    render_w = scn.render.resolution_x * scn.render.pixel_aspect_x
+    render_h = scn.render.resolution_y * scn.render.pixel_aspect_y
+    # Blender's AUTO sensor fit puts the sensor width on the LONGER axis.
+    sensor_w = cam.data.sensor_width
+    fit = cam.data.sensor_fit
+    if fit == "VERTICAL" or (fit == "AUTO" and render_h > render_w):
+        sensor_h, sensor_w = sensor_w, sensor_w * (render_w / render_h)
+    else:
+        sensor_h = sensor_w * (render_h / render_w)
+
+    tan_h = sensor_w / (2 * cam.data.lens)
+    tan_v = sensor_h / (2 * cam.data.lens)
+
+    # Fit the actual bounding BOX, projected into camera space — not the
+    # bounding sphere. The sphere is wildly conservative for a machine that is
+    # long and low: a 4.4 m flatbed's diagonal is far bigger than anything the
+    # camera ever sees of it, and fitting that against the narrow vertical field
+    # pushed the camera back until the machine filled two fifths of the frame.
+    forward = (centre - cam.location).normalized()
+    world_up = Vector((0.0, 0.0, 1.0))
+    right = forward.cross(world_up).normalized()
+    if right.length < 1e-6:                     # camera straight down
+        right = Vector((1.0, 0.0, 0.0))
+    up = right.cross(forward).normalized()
+
+    dist = 0.0
+    for cx in (lo.x, hi.x):
+        for cy in (lo.y, hi.y):
+            for cz in (lo.z, hi.z):
+                p = Vector((cx, cy, cz)) - centre
+                depth = p.dot(forward)
+                # z = depth + d must satisfy |x| <= tan * z on both axes.
+                dist = max(dist,
+                           abs(p.dot(right)) / tan_h - depth,
+                           abs(p.dot(up)) / tan_v - depth)
+    dist *= margin
     direction = (cam.location - centre).normalized()
     cam.location = centre + direction * dist
     cam.rotation_euler = (centre - cam.location).to_track_quat("-Z", "Y").to_euler()

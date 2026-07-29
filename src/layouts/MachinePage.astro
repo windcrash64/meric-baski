@@ -9,6 +9,7 @@ import { HEAD_BRANDS, SPECS, SUBSTRATES, type SpecKey, type SubstrateKey } from 
 import { galleryFor, model3dFile, renderFor } from '../lib/media';
 import { machineHref } from '../lib/product';
 import Base from './Base.astro';
+import Chevron from '../components/ui/Chevron.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import Gallery from '../components/media/Gallery.astro';
 import ModelViewer from '../components/media/ModelViewer.astro';
@@ -379,7 +380,7 @@ const productSchema = {
             <details name="pdp-faq" open={i === 0}>
               <summary>
                 <span>{item.q}</span>
-                <span class="accordion__chevron" aria-hidden="true">⌄</span>
+                <Chevron />
               </summary>
               <div class="accordion__panel"><div><p>{item.a}</p></div></div>
             </details>
@@ -659,7 +660,7 @@ const productSchema = {
   .faq summary {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: var(--sp-5);
     padding-block: var(--sp-5);
     font-size: var(--step-1);
@@ -673,11 +674,6 @@ const productSchema = {
     max-width: 68ch;
   }
 
-  .accordion__chevron {
-    font-size: 1.4em;
-    line-height: 1;
-    color: var(--muted);
-  }
 
   /* --- siblings --- */
   .sibling-cards .card {

@@ -19,6 +19,7 @@ import { range, t } from '../i18n/ui';
 import { SUBSTRATES, type SubstrateKey } from '../i18n/specs';
 import { inkFamilyName, inkHref, machineFamilyName, machineHref } from '../lib/product';
 import Base from './Base.astro';
+import Chevron from '../components/ui/Chevron.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 
 type Application = CollectionEntry<'applications'>;
@@ -422,7 +423,7 @@ const schema = app
                 <details name="app-faq" open={i === 0}>
                   <summary>
                     <span>{item.q}</span>
-                    <span class="accordion__chevron" aria-hidden="true">⌄</span>
+                    <Chevron />
                   </summary>
                   <div class="accordion__panel"><div><p>{item.a}</p></div></div>
                 </details>
@@ -940,7 +941,7 @@ const schema = app
   .faq summary {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: var(--sp-5);
     padding-block: var(--sp-5);
     font-size: var(--step-1);
@@ -952,11 +953,6 @@ const schema = app
     color: var(--muted);
   }
 
-  .accordion__chevron {
-    font-size: 1.4em;
-    line-height: 1;
-    color: var(--muted);
-  }
 
   /* --- closing CTA --- */
   .cta {

@@ -211,7 +211,7 @@ def assemble(accent: str = shading.CYAN, gantry_x: float = -0.42):
 def camera_shots():
     """Named hero angles for the stills gallery — azimuth, elevation, lens."""
     return {
-        "hero": (38, 14, 70),
+        "hero": (38, 14, 72),
         "three-quarter": (58, 20, 85),
         "front": (0, 8, 85),
         "detail-carriage": (-46, 26, 135),

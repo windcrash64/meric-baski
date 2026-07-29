@@ -17,6 +17,7 @@ import { HEAD_BRANDS, SPECS, type SpecKey } from '../i18n/specs';
 import { machineFamilyName, machineFamilyRoute, machineHref } from '../lib/product';
 import { renderFor } from '../lib/media';
 import Base from './Base.astro';
+import Chevron from '../components/ui/Chevron.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import Picture from '../components/media/Picture.astro';
 import RailHead from '../components/ui/RailHead.astro';
@@ -399,7 +400,7 @@ const description = tr
             <details name="cat-faq" open={i === 0}>
               <summary>
                 <span>{item.q}</span>
-                <span class="accordion__chevron" aria-hidden="true">⌄</span>
+                <Chevron />
               </summary>
               <div class="accordion__panel"><div><p>{item.a}</p></div></div>
             </details>
@@ -591,7 +592,7 @@ const description = tr
   .faq summary {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: var(--sp-5);
     padding-block: var(--sp-5);
     font-size: var(--step-1);
@@ -603,9 +604,4 @@ const description = tr
     color: var(--muted);
   }
 
-  .accordion__chevron {
-    font-size: 1.4em;
-    line-height: 1;
-    color: var(--muted);
-  }
 </style>
