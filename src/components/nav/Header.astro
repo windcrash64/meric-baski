@@ -278,16 +278,46 @@ const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
     transform: translateY(-3.25px) rotate(-45deg);
   }
 
+  /* Staged, not all at once. At exactly 1024 the row needs 1195 px to lay out
+     — logo 62 + nav 559 + actions 408 + gaps + margins — so the actions block
+     was pushed 158 px past the viewport and took the whole document with it.
+     The menu and the quote button earn their place first; the phone number and
+     the WhatsApp icon wait until there is room for them. */
   @media (min-width: 1024px) {
     .site-header__nav,
-    .site-header__tel,
-    .site-header__icon,
     .site-header__cta {
       display: flex;
     }
 
     .site-header__burger {
       display: none;
+    }
+  }
+
+  /* 1024 is the tightest width the full row runs at — 1054 px of content in a
+     1009 px line — so the spacing compresses there and opens back up at 1280,
+     rather than the menu disappearing on a small laptop. */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .site-header__inner {
+      gap: var(--sp-5);
+    }
+
+    .site-header__nav {
+      margin-inline-start: 0;
+    }
+
+    .site-header__nav ul {
+      gap: var(--sp-4);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .site-header__tel {
+      display: flex;
+    }
+
+    .site-header__icon {
+      display: grid;
     }
   }
 

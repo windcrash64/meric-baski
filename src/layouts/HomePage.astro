@@ -214,14 +214,27 @@ const description = tr
       <div class="section__label">
         <p class="eyebrow">01 — {tr ? 'UYGULAMALAR' : 'APPLICATIONS'}</p>
       </div>
-      <div class="section__body">
+      <div class="section__body" data-rail-group>
         <h2 class="reveal">{tr ? 'Kullanım Alanları' : 'Applications'}</h2>
         <p class="lead muted reveal">
           {tr
             ? 'Altı sektör. Her sayfada o işi yapan makineler ve mürekkepler listelenir.'
             : 'Six sectors. Each page lists the machines and inks that do that work.'}
         </p>
-        <ul class="tiles reveal" role="list" data-stagger>
+        <div class="rail-head">
+          <p class="rail-hint mono">{tr ? 'Kaydırın' : 'Swipe'}</p>
+          <div class="rail-nav" data-rail-nav hidden>
+            <button type="button" class="rail-btn" data-rail-prev>
+              <span class="visually-hidden">{tr ? 'Önceki' : 'Previous'}</span>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button type="button" class="rail-btn" data-rail-next>
+              <span class="visually-hidden">{tr ? 'Sonraki' : 'Next'}</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+        <ul class="tiles reveal" role="list" data-stagger data-rail>
           {APPLICATIONS.map((a) => (
             <li class="tile">
               <a href={path(a.key, locale)}>
@@ -244,7 +257,7 @@ const description = tr
       <div class="section__label">
         <p class="eyebrow">02 — {tr ? 'MAKİNELER' : 'MACHINES'}</p>
       </div>
-      <div class="section__body">
+      <div class="section__body" data-rail-group>
         <h2 class="reveal">
           {tr ? 'Makineler' : 'Machines'}
         </h2>
@@ -254,7 +267,20 @@ const description = tr
             : 'Seven families, seven processes. Ink and material follow from the process.'}
         </p>
 
-        <ul class="cards reveal" role="list" data-stagger>
+        <div class="rail-head">
+          <p class="rail-hint mono">{tr ? 'Kaydırın' : 'Swipe'}</p>
+          <div class="rail-nav" data-rail-nav hidden>
+            <button type="button" class="rail-btn" data-rail-prev>
+              <span class="visually-hidden">{tr ? 'Önceki' : 'Previous'}</span>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button type="button" class="rail-btn" data-rail-next>
+              <span class="visually-hidden">{tr ? 'Sonraki' : 'Next'}</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+        <ul class="cards reveal" role="list" data-stagger data-rail>
           {FAMILIES.map((f) => (
             <li class="card" data-accent="cyan">
               <a class="card__link" href={path(FAMILY_ROUTE[f.key], locale)}>
@@ -285,7 +311,7 @@ const description = tr
       <div class="section__label">
         <p class="eyebrow">03 — {tr ? 'MÜREKKEP & SARF' : 'INKS & SUPPLIES'}</p>
       </div>
-      <div class="section__body">
+      <div class="section__body" data-rail-group>
         <h2 class="reveal">
           {tr ? 'Mürekkep ve Sarf Malzemeleri' : 'Inks and Consumables'}
         </h2>
@@ -336,7 +362,7 @@ const description = tr
       <div class="section__label">
         <p class="eyebrow">04 — {tr ? 'UYUMLULUK' : 'COMPATIBILITY'}</p>
       </div>
-      <div class="section__body">
+      <div class="section__body" data-rail-group>
         <h3 class="reveal">
           {tr ? 'Makine – Mürekkep Uyumluluğu' : 'Machine – Ink Compatibility'}
         </h3>
@@ -383,7 +409,7 @@ const description = tr
       <div class="section__label">
         <p class="eyebrow">05 — {tr ? 'TEKNİK SERVİS' : 'SERVICE'}</p>
       </div>
-      <div class="section__body">
+      <div class="section__body" data-rail-group>
         <h2 class="reveal">
           {tr ? 'Teknik Servis' : 'Technical Service'}
         </h2>
@@ -433,6 +459,83 @@ const description = tr
 </Base>
 
 <style>
+  /* --- rail navigation -------------------------------------------------------
+     A snapped rail is swipeable, but a swipe is invisible — nothing on the page
+     says the row continues. The buttons say it, and they are the only way to
+     move the row with a keyboard. JS hides the pair whenever the rail is not
+     actually scrollable, so the same markup serves the phone rail and the
+     desktop grid. */
+  .rail-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-block: var(--sp-6) var(--sp-3);
+    min-height: 40px;
+  }
+
+  .rail-hint {
+    font-size: var(--step--2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-ground-muted);
+  }
+
+  .rail-nav[hidden] {
+    display: none;
+  }
+
+  .rail-nav {
+    display: flex;
+    gap: var(--sp-2);
+    margin-inline-start: auto;
+  }
+
+  .rail-btn {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground);
+    font-size: var(--step--1);
+    transition:
+      border-color var(--d-base) var(--e-out),
+      background-color var(--d-base) var(--e-out),
+      color var(--d-base) var(--e-out),
+      opacity var(--d-base) var(--e-out);
+  }
+
+  .rail-btn:hover:not(:disabled),
+  .rail-btn:focus-visible:not(:disabled) {
+    background: var(--on-ground);
+    color: var(--ground);
+    border-color: var(--on-ground);
+  }
+
+  .rail-btn:disabled {
+    opacity: 0.28;
+    cursor: default;
+  }
+
+  /* Where the row is a grid rather than a rail there is nothing to navigate,
+     so the whole control line collapses instead of leaving a band of air
+     between the heading and the cards. */
+  .rail-head:has(.rail-nav[hidden]) {
+    min-height: 0;
+    margin-block: var(--sp-6) 0;
+  }
+
+  .rail-head:has(.rail-nav[hidden]) .rail-hint {
+    display: none;
+  }
+
+  /* The rail already carries its own top spacing from .rail-head. */
+  .tiles,
+  .cards {
+    margin-block-start: 0;
+  }
+
   /* --- proof strip --- */
   .proof {
     padding-block: var(--sp-7);

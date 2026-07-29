@@ -272,6 +272,67 @@ function galleries(): Cleanup {
 }
 
 /* -------------------------------------------------------------------------
+   Rail navigation.
+
+   A snapped rail is swipeable, but a swipe is invisible: nothing on the page
+   says the row continues. The buttons make it explicit, and they are the only
+   way to move it with a keyboard or a trackpad that does not scroll sideways.
+   They are hidden whenever the rail is not actually scrollable, so the same
+   markup can serve a phone rail and a desktop grid.
+   ------------------------------------------------------------------------- */
+function rails(): Cleanup {
+  const disposers: Cleanup[] = [];
+
+  document.querySelectorAll<HTMLElement>('[data-rail-group]').forEach((group) => {
+    const rail = group.querySelector<HTMLElement>('[data-rail]');
+    const nav = group.querySelector<HTMLElement>('[data-rail-nav]');
+    const prev = group.querySelector<HTMLButtonElement>('[data-rail-prev]');
+    const next = group.querySelector<HTMLButtonElement>('[data-rail-next]');
+    if (!rail || !nav || !prev || !next) return;
+
+    const step = () => {
+      const first = rail.firstElementChild as HTMLElement | null;
+      if (!first) return rail.clientWidth * 0.8;
+      const gap = parseFloat(getComputedStyle(rail).columnGap || '0') || 0;
+      return first.getBoundingClientRect().width + gap;
+    };
+
+    const sync = () => {
+      const scrollable = rail.scrollWidth > rail.clientWidth + 4;
+      nav.hidden = !scrollable;
+      if (!scrollable) return;
+      prev.disabled = rail.scrollLeft <= 2;
+      next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+    };
+
+    const go = (dir: number) => rail.scrollBy({
+      left: step() * dir,
+      behavior: reduced() ? 'auto' : 'smooth',
+    });
+
+    const onPrev = () => go(-1);
+    const onNext = () => go(1);
+
+    prev.addEventListener('click', onPrev);
+    next.addEventListener('click', onNext);
+    rail.addEventListener('scroll', sync, { passive: true });
+
+    const ro = 'ResizeObserver' in window ? new ResizeObserver(sync) : null;
+    ro?.observe(rail);
+    sync();
+
+    disposers.push(() => {
+      prev.removeEventListener('click', onPrev);
+      next.removeEventListener('click', onNext);
+      rail.removeEventListener('scroll', sync);
+      ro?.disconnect();
+    });
+  });
+
+  return () => disposers.forEach((d) => d());
+}
+
+/* -------------------------------------------------------------------------
    Hero slider.
 
    Autoplays because the design calls for a rotating hero, which makes the
@@ -281,8 +342,8 @@ function galleries(): Cleanup {
    taken over, moving the content under them is hostile.
    ------------------------------------------------------------------------- */
 function heroSlider(): Cleanup {
-  const root = document.querySelector<HTMLElement>('[data-hero]');
-  const hero = root?.closest('.hero');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const root = hero;
   if (!root || !hero) return () => {};
 
   const slides = [...root.querySelectorAll<HTMLElement>('[data-hero-slide]')];
@@ -330,7 +391,9 @@ function heroSlider(): Cleanup {
   const setPaused = (value: boolean) => {
     stopped = value;
     pause?.setAttribute('aria-pressed', String(value));
-    if (pauseIcon) pauseIcon.textContent = value ? '▶' : '❚❚';
+    // CSS reads this to freeze the meter's fill.
+    hero.setAttribute('data-hero-paused', String(value));
+    if (pauseIcon) pauseIcon.textContent = value ? 'play' : 'pause';
     if (pauseLabel) {
       pauseLabel.textContent = value
         ? (document.documentElement.lang === 'tr' ? 'Oynat' : 'Play')
@@ -401,7 +464,7 @@ function boot() {
   cleanups.forEach((c) => c());
   cleanups = [
     reveals(), header(), mobileNav(), counters(),
-    galleries(), marquees(), heroSlider(),
+    galleries(), marquees(), heroSlider(), rails(),
   ];
 }
 

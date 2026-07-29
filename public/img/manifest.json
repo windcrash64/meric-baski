@@ -1,8 +1,8 @@
 {
   "machines/dtf/cutout/dark/dtf-hero": {
     "intrinsic": {
-      "w": 1731,
-      "h": 1118
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,
@@ -13,8 +13,8 @@
   },
   "machines/dtf/cutout/light/dtf-hero": {
     "intrinsic": {
-      "w": 1795,
-      "h": 1118
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,
@@ -35,8 +35,8 @@
   },
   "machines/eco-solvent/cutout/dark/eco-solvent-hero": {
     "intrinsic": {
-      "w": 1731,
-      "h": 1079
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,
@@ -47,8 +47,8 @@
   },
   "machines/eco-solvent/cutout/light/eco-solvent-hero": {
     "intrinsic": {
-      "w": 1829,
-      "h": 1079
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,
@@ -69,8 +69,8 @@
   },
   "machines/flatbed-uv/cutout/dark/flatbed-uv-hero": {
     "intrinsic": {
-      "w": 1799,
-      "h": 993
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,
@@ -81,8 +81,8 @@
   },
   "machines/flatbed-uv/cutout/light/flatbed-uv-hero": {
     "intrinsic": {
-      "w": 1871,
-      "h": 993
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,
@@ -103,8 +103,8 @@
   },
   "machines/roll-uv/cutout/dark/roll-uv-hero": {
     "intrinsic": {
-      "w": 1767,
-      "h": 851
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,
@@ -115,8 +115,8 @@
   },
   "machines/roll-uv/cutout/light/roll-uv-hero": {
     "intrinsic": {
-      "w": 1821,
-      "h": 903
+      "w": 2000,
+      "h": 1250
     },
     "widths": [
       480,

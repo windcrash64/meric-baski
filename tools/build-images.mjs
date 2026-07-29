@@ -22,6 +22,7 @@ const FORCE = process.argv.includes('--force');
 const LADDERS = {
   hero: [640, 960, 1280, 1600, 1920, 2560],
   machine: [480, 768, 1200, 1800],
+  stage: [480, 768, 1200, 1800],
   card: [400, 640, 960],
   thumb: [200, 400],
 };
@@ -39,7 +40,17 @@ async function walk(dir) {
   return out;
 }
 
-/** A render on a light sweep is mostly background; trim it so the machine fills the frame. */
+/**
+ * A render on a light sweep is mostly background; trim it so the machine fills
+ * the frame.
+ *
+ * NOT for the cutouts. Blender composes every machine on one 2000×1250 canvas
+ * with a common camera and floor, and trimming each to its own content box
+ * throws that away: the four hero slides came back at aspect ratios from 1.61
+ * to 2.02, so the row sized itself to the tallest, the shorter ones hung from
+ * its top edge, and the machine changed size on every rotation. Keeping the
+ * composed canvas is the shared stage.
+ */
 async function normalise(file, role) {
   let img = sharp(file);
   if (role === 'machine') {
@@ -92,7 +103,7 @@ async function main() {
     const rel = path.relative(path.join(ROOT, 'assets', 'renders'), file).replace(/\\/g, '/');
     jobs.push({
       file,
-      role: 'machine',
+      role: rel.includes('/cutout/') ? 'stage' : 'machine',
       dest: path.posix.join('machines', rel.replace(/\.[^.]+$/, '')),
     });
   }
