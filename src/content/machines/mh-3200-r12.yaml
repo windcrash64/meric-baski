@@ -129,36 +129,36 @@ model3d:
   bytes: 0
   hotspots:
     - key: printhead
-      position: "-0.28 1.24 0.16"
+      position: "0.48 1.19 0.2"
       normal: "0 1 0"
       label: { tr: Baskı kafası bloğu, en: Printhead carriage }
       body:
         tr: 2–20 adet Ricoh Gen6 kafa, kademeli dizilim, 5–15 pL değişken damla.
         en: 2–20 Ricoh Gen6 heads in a staggered array, 5–15 pL variable drop.
     - key: curing
-      position: "-0.28 1.12 0.44"
-      normal: "0 0 1"
+      position: "0.48 1.07 0.375"
+      normal: "0 1 0"
       label: { tr: LED UV kürleme, en: LED UV curing }
       body:
         tr: Su soğutmalı 395 nm LED lambalar; arabanın her iki yanında kürleme.
         en: Water-cooled 395 nm LED lamps curing on both sides of the carriage.
     - key: media_feed
-      position: "0.62 0.58 -0.66"
+      position: "0 0.56 -0.49"
       normal: "0 0 -1"
       label: { tr: Malzeme besleme, en: Media feed }
       body:
         tr: Rulodan ruloya açma-sarma; ağır hizmet grubuyla 2 tona kadar bobin.
         en: Roll-to-roll unwind and rewind; up to two tonnes with the heavy-duty set.
     - key: ink_supply
-      position: "-2.46 0.88 0.36"
-      normal: "-1 0 0"
+      position: "-1.48 1.03 -0.13"
+      normal: "0 1 0"
       label: { tr: Mürekkep besleme, en: Ink supply system }
       body:
         tr: Kanal başına 5 L toplu besleme, degazörlü; beyazda sürekli sirkülasyon.
         en: 5 L bulk supply per channel with degassing; continuous circulation on white.
     - key: control
-      position: "2.38 1.06 0.48"
-      normal: "0 1 0"
+      position: "2.251 1.173 0.662"
+      normal: "0 0 1"
       label: { tr: Kontrol paneli, en: Control station }
       body:
         tr: Baskı kuyruğu, kafa durumu ve kürleme gücü tek ekrandan yönetilir.

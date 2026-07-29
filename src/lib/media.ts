@@ -7,9 +7,33 @@
  * Blender render — which is always available, because we make it ourselves.
  */
 
+import { existsSync, statSync } from 'node:fs';
+import path from 'node:path';
+
 import manifest from '../../public/img/manifest.json';
 
 const KNOWN = new Set(Object.keys(manifest as Record<string, unknown>));
+
+// From the working directory, not from import.meta.url: this module is bundled
+// before it runs, so its own URL points at a chunk somewhere under .astro and
+// every path derived from it misses. `astro build` runs at the project root.
+const PUBLIC = path.resolve(process.cwd(), 'public');
+
+/**
+ * A declared 3D model that is actually on disk.
+ *
+ * `model3d:` in a content file is an intention; the GLB is a build artefact
+ * produced separately by Blender. MC-300-U1 declared one for a machine that has
+ * no model yet, and the product page duly offered a "360° model" tab that
+ * fetched a 404 — worse than no tab at all. This runs at build time against the
+ * real file, so the tab exists only when the model does.
+ */
+export function model3dFile(glb: string | undefined): { bytes: number } | null {
+  if (!glb) return null;
+  const file = path.join(PUBLIC, glb.replace(/^\//, ''));
+  if (!existsSync(file)) return null;
+  return { bytes: statSync(file).size };
+}
 
 /**
  * Blender renders, mapped ONLY to the machine each one actually is.

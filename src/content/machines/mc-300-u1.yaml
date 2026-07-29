@@ -113,40 +113,9 @@ gallery:
       en: "Embossed crystal label cold-transferred onto a glass bottle"
     caption: { tr: UV DTF Cam Şişe Etiket, en: UV DTF label on glass }
 
-model3d:
-  glb: /models/mc-300-u1.v1.glb
-  poster: /models/mc-300-u1-poster.webp
-  triangles: 0
-  bytes: 0
-  hotspots:
-    - key: printhead
-      position: "0.02 1.06 0.18"
-      normal: "0 1 0"
-      label: { tr: Baskı kafası bloğu, en: Printhead carriage }
-      body:
-        tr: Tek Epson i3200-U1HD kafa; CMYK + beyaz + lak tek geçişte basılır.
-        en: A single Epson i3200-U1HD head laying CMYK, white and varnish in one pass.
-    - key: curing
-      position: "0.16 1.02 0.20"
-      normal: "0 0 1"
-      label: { tr: UV LED kürleme, en: UV LED curing }
-      body:
-        tr: Arabanın iki yanında 395 nm LED sıraları; her iki yönde kürleme.
-        en: 395 nm LED rows on both sides of the carriage, curing on both strokes.
-    - key: laminator
-      position: "-0.34 0.92 0.26"
-      normal: "0 0 1"
-      label: { tr: Otomatik laminasyon, en: Automatic laminator }
-      body:
-        tr: B filmi baskı üstüne makine içinde lamine edilir; ayrı pres gerekmez.
-        en: The B film is laminated over the print in line; no separate press is needed.
-    - key: ink_supply
-      position: "0.46 0.84 0.12"
-      normal: "1 0 0"
-      label: { tr: Mürekkep besleme, en: Ink supply system }
-      body:
-        tr: Kanal başına 1 L şişe; beyaz kanalda otomatik karıştırıcı çalışır.
-        en: 1 L bottle per channel, with an automatic stirrer on the white.
+# No model3d block: MC-300-U1 has no Blender model yet. Declaring one gave
+# the product page a "360° model" tab that fetched a 404 — the page now
+# simply shows the gallery until the model exists.
 
 documents:
   - { kind: catalog, lang: tr, file: /docs/maven-mc-300-u1-katalog-tr.pdf, bytes: 1642496 }

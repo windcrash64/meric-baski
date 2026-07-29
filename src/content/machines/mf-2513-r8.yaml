@@ -115,36 +115,36 @@ model3d:
   bytes: 0
   hotspots:
     - key: printhead
-      position: "-0.16 1.14 0.24"
+      position: "-0.16 1.145 -0.24"
       normal: "0 1 0"
       label: { tr: Baskı kafası bloğu, en: Printhead carriage }
       body:
         tr: 2–12 adet Ricoh Gen6 kafa, kademeli dizilim, 5–35 pL değişken damla.
         en: 2–12 Ricoh Gen6 heads in a staggered array, 5–35 pL variable drop.
     - key: curing
-      position: "-0.16 1.05 0.55"
-      normal: "0 0 1"
+      position: "-0.16 1.02 -0.04"
+      normal: "0 1 0"
       label: { tr: LED-UV kürleme, en: LED-UV curing }
       body:
         tr: Su soğutmalı 395 nm LED lambalar, her iki yönde kürleme.
         en: Water-cooled 395 nm LED lamps curing on both strokes.
     - key: bed
-      position: "0.4 0.9 0"
+      position: "0 0.887 0"
       normal: "0 1 0"
       label: { tr: Bölgesel vakumlu tabla, en: Zoned vacuum table }
       body:
         tr: 2500 × 1300 mm alüminyum tabla, 3 bağımsız vakum bölgesi.
         en: 2500 × 1300 mm aluminium bed with three independent vacuum zones.
     - key: ink_supply
-      position: "1.79 0.95 0.34"
+      position: "1.79 1 -0.34"
       normal: "0 1 0"
       label: { tr: Mürekkep besleme, en: Ink supply system }
       body:
         tr: 2 L kanal başına toplu besleme; beyaz kanalda sürekli sirkülasyon.
         en: 2 L bulk supply per channel; continuous circulation on the white channel.
     - key: control
-      position: "1.78 1.05 -1.02"
-      normal: "0 0 -1"
+      position: "1.758 1.008 1.105"
+      normal: "0 0 1"
       label: { tr: Kontrol paneli, en: Control station }
 
 documents:

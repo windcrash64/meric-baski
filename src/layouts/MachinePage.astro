@@ -6,7 +6,7 @@ import { SITE, type Locale } from '../config/site';
 import { FAMILY_ROUTE, path } from '../i18n/routes';
 import { num, range, t } from '../i18n/ui';
 import { HEAD_BRANDS, SPECS, SUBSTRATES, type SpecKey, type SubstrateKey } from '../i18n/specs';
-import { galleryFor, renderFor } from '../lib/media';
+import { galleryFor, model3dFile, renderFor } from '../lib/media';
 import { machineHref } from '../lib/product';
 import Base from './Base.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
@@ -77,7 +77,9 @@ const slides = galleryFor(d.sku, d.gallery.map((g) => ({
   caption: g.caption?.[locale],
 })));
 const cutout = renderFor(d.sku, true);
-const has3d = Boolean(d.model3d);
+// Declared is not the same as built — see model3dFile.
+const model3d = model3dFile(d.model3d?.glb);
+const has3d = Boolean(d.model3d && model3d);
 
 /* --- relations ---------------------------------------------------------- */
 const allMachines = await getCollection('machines');
@@ -181,7 +183,7 @@ const productSchema = {
                 poster={cutout ? `/img/${cutout}-768.webp` : d.model3d!.poster}
                 alt={`${d.model} — ${tr ? '360° model' : '360° model'}`}
                 locale={locale}
-                bytes={d.model3d!.bytes}
+                bytes={model3d!.bytes}
                 hotspots={d.model3d!.hotspots.map((h) => ({
                   key: h.key,
                   position: h.position,

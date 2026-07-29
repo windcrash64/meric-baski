@@ -103,6 +103,60 @@ gallery:
     alt: { tr: Germe brandaya basılmış cephe afişi, en: Facade poster printed on tensioned banner }
     caption: { tr: Eko Solvent Branda Baskı, en: Eco-solvent banner printing }
 
+# Anchors measured from the built GLB with tools/glb-anchors.mjs — Blender is
+# Z-up and glTF is Y-up, so a hand conversion drops the sign on one axis and
+# mirrors every marker to the far side of the machine.
+model3d:
+  glb: /models/ms-1802-e4.v1.glb
+  poster: /models/ms-1802-e4-poster.webp
+  triangles: 25864
+  bytes: 158892
+  hotspots:
+    - key: printhead
+      position: "-0.34 1.105 0.323"
+      normal: "0 0 1"
+      label: { tr: Baskı kafası arabası, en: Printhead carriage }
+      body:
+        tr: 2 adet Epson i3200-E1 kafa, 3 pL sabit damla, çift yönlü baskı.
+        en: Two Epson i3200-E1 heads, fixed 3 pL drop, bidirectional printing.
+    - key: heaters
+      position: "-0.1 0.906 0.285"
+      normal: "0 0 1"
+      label: { tr: Üçlü ısıtıcı hattı, en: Three-zone heater }
+      body:
+        tr: Ön, baskı ve son ısıtıcı ayrı ayrı ayarlanır; mürekkep medyaya
+          girmeden ve sarılmadan önce kurur.
+        en: Pre-, print- and post-heater set independently, so the ink dries
+          before the media reaches the take-up.
+    - key: media_feed
+      position: "-0.05 0.52 -0.3"
+      normal: "0 0 -1"
+      label: { tr: Medya besleme mili, en: Media feed shaft }
+      body:
+        tr: 1900 mm genişliğe kadar rulo; arka milde otomatik gerginlik.
+        en: Rolls up to 1900 mm wide, with automatic tension on the rear shaft.
+    - key: take_up
+      position: "0 0.49 0.32"
+      normal: "0 0 1"
+      label: { tr: Sarma mili, en: Take-up shaft }
+      body:
+        tr: Baskı biten medyayı sarar; uzun işlerde operatörsüz çalışır.
+        en: Winds the finished print so long runs can go unattended.
+    - key: ink_supply
+      position: "1.005 1.14 0.398"
+      normal: "0 0 1"
+      label: { tr: Kartuş yuvası, en: Cartridge bay }
+      body:
+        tr: Sekiz kanal, öndeki yuvadan değiştirilir; makine durmadan takılır.
+        en: Eight channels, changed from the front bay without stopping the machine.
+    - key: control
+      position: "0.995 1.255 0.381"
+      normal: "0 0 1"
+      label: { tr: Kontrol paneli, en: Control panel }
+      body:
+        tr: Isıtıcı sıcaklıkları, besleme miktarı ve kafa bakımı bu panelden.
+        en: Heater temperatures, feed amount and head maintenance from this panel.
+
 documents:
   - { kind: catalog, lang: tr, file: /docs/maven-ms-1802-e4-katalog-tr.pdf, bytes: 1654784 }
   - { kind: datasheet, lang: tr, file: /docs/maven-ms-1802-e4-teknik-tr.pdf, bytes: 389120 }

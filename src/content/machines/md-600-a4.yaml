@@ -157,36 +157,36 @@ model3d:
   bytes: 0
   hotspots:
     - key: printhead
-      position: "-0.42 1.02 0.08"
-      normal: "0 1 0"
+      position: "-0.55 1 0.403"
+      normal: "0 0 1"
       label: { tr: Baskı kafası bloğu, en: Printhead carriage }
       body:
         tr: 4 adet Epson i3200-A1 kafa, CMYK + beyaz; beyaz kanal iki kafaya paylaştırılır.
         en: Four Epson i3200-A1 heads, CMYK plus white; the white channel is split across two heads.
     - key: media_feed
-      position: "-0.95 0.78 0.30"
-      normal: "0 0 1"
+      position: "-1.06 0.83 -0.08"
+      normal: "0 0 -1"
       label: { tr: Film besleme, en: Film feed }
       body:
         tr: 60 cm PET film rulosu, gergi kollu motorlu besleme.
         en: 60 cm PET film roll on a motorised feed with a tension arm.
     - key: shaker
-      position: "0.88 1.05 0.02"
-      normal: "0 1 0"
+      position: "0.75 0.96 0.42"
+      normal: "0 0 1"
       label: { tr: Toz serpme ünitesi, en: Powder shaker }
       body:
         tr: Dikey toz serpme ve eritme fırını; fazla toz elenip hazneye geri döner.
         en: Vertical powder application and melting oven; excess powder is sieved back into the hopper.
     - key: ink_supply
-      position: "-0.10 0.72 0.34"
+      position: "-0.5 0.45 0.46"
       normal: "0 0 1"
       label: { tr: Mürekkep besleme, en: Ink supply system }
       body:
         tr: Kanal başına 2 L toplu besleme; beyaz kanalda sürekli sirkülasyon.
         en: 2 L bulk supply per channel; continuous circulation on the white channel.
     - key: control
-      position: "0.34 1.06 -0.28"
-      normal: "0 0 -1"
+      position: "-0.06 1.08 0.44"
+      normal: "0 0 1"
       label: { tr: Kontrol paneli, en: Control station }
       body:
         tr: Yazıcı ve fırın sıcaklıkları tek ekrandan izlenir.
