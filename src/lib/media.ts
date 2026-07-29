@@ -36,6 +36,21 @@ export function model3dFile(glb: string | undefined): { bytes: number } | null {
 }
 
 /**
+ * Whether a declared document has actually been produced.
+ *
+ * The content files name 43 datasheets — TDS and, for every chemical product, a
+ * Turkish GBF — and none of the PDFs exist yet, so 28 pages offered a download
+ * that 404s. For a technical data sheet that is merely broken; for a safety data
+ * sheet it is worse than broken, because the page asserts a document that is not
+ * there. The rows stay (a buyer needs to know what paperwork comes with the
+ * product) but they only become links once the file is on disk.
+ */
+export function docExists(file: string | undefined): boolean {
+  if (!file) return false;
+  return existsSync(path.join(PUBLIC, file.replace(/^\//, '')));
+}
+
+/**
  * Blender renders, mapped ONLY to the machine each one actually is.
  *
  * It is tempting to fall back to a family-mate's render so every card has a

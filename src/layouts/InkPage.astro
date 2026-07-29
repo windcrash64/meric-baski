@@ -7,6 +7,7 @@ import { path } from '../i18n/routes';
 import { num, t } from '../i18n/ui';
 import { INK_SPECS, SUBSTRATES, type SubstrateKey } from '../i18n/specs';
 import { inkFamilyName, inkFamilyRoute, inkRouteExtra, machineHref } from '../lib/product';
+import { docExists } from '../lib/media';
 import Base from './Base.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import ChannelStrip from '../components/product/ChannelStrip.astro';
@@ -335,19 +336,32 @@ const description = tr
             : 'Every chemical product ships with a Turkish safety data sheet.'}
         </h2>
         <ul class="docs reveal" role="list">
-          {d.documents.map((doc) => (
-            <li>
-              <a class="doc" href={doc.file} download>
-                <span class="doc__kind mono">
-                  {doc.kind === 'gbf' ? 'GBF' : doc.kind === 'tds' ? 'TDS' : doc.kind.toUpperCase()}
+          {d.documents.map((doc) => {
+            const ready = docExists(doc.file);
+            const kind = doc.kind === 'gbf' ? 'GBF' : doc.kind === 'tds' ? 'TDS' : doc.kind.toUpperCase();
+            const size = `PDF · ${(doc.bytes / 1024 / 1024).toFixed(1).replace('.', tr ? ',' : '.')} MB · ${doc.lang.toUpperCase()}`;
+            /* A row that is not yet a file says so. Linking a safety data sheet
+               that 404s asserts a document the company does not have. */
+            return ready ? (
+              <li>
+                <a class="doc" href={doc.file} download>
+                  <span class="doc__kind mono">{kind}</span>
+                  <span class="doc__name">{d.series}</span>
+                  <span class="doc__meta mono">{size}</span>
+                </a>
+              </li>
+            ) : (
+              <li>
+                <span class="doc doc--pending">
+                  <span class="doc__kind mono">{kind}</span>
+                  <span class="doc__name">{d.series}</span>
+                  <span class="doc__meta mono">
+                    {tr ? 'talep üzerine' : 'on request'} · {doc.lang.toUpperCase()}
+                  </span>
                 </span>
-                <span class="doc__name">{d.series}</span>
-                <span class="doc__meta mono">
-                  PDF · {(doc.bytes / 1024 / 1024).toFixed(1).replace('.', tr ? ',' : '.')} MB · {doc.lang.toUpperCase()}
-                </span>
-              </a>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
         {!gbf && (
           <p class="muted mono">
@@ -492,6 +506,11 @@ const description = tr
     border-bottom: var(--border) solid var(--rule-dark);
     color: var(--paper);
     text-decoration: none;
+  }
+
+  .doc--pending {
+    color: var(--on-ground-muted);
+    cursor: default;
   }
 
   .doc__kind {

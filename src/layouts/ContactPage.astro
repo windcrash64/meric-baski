@@ -77,8 +77,12 @@ const CHANNELS = [
     note: tr
       ? 'Teklif ve sipariş yazışmaları. Dosya ekleyebilirsiniz.'
       : 'Quotes and orders. Attachments welcome.',
-    cta: null,
-    href: null,
+    // The value row carries the address; this row carries the action, exactly
+    // as the telephone card repeats its number as a tel: link. Without it this
+    // was the one card of four with no bottom line, 114 px of air under it
+    // against the others' 33.
+    cta: tr ? 'E-posta gönderin' : 'Send an e-mail',
+    href: `mailto:${SITE.contact.email.general}`,
     external: false,
   },
   {
@@ -694,8 +698,10 @@ const schema = variant === 'contact'
   }
 
   .chan__value--mail {
-    font-size: var(--step-0);
-    word-break: break-word;
+    /* Not a step down: at var(--step-0) the address read as a lesser rank than
+       the phone number beside it. Same size, and the address breaks instead. */
+    overflow-wrap: anywhere;
+    letter-spacing: -0.02em;
   }
 
   .chan__note {

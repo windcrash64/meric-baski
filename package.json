@@ -12,9 +12,10 @@
     "images": "node tools/build-images.mjs",
     "fonts": "bash tools/fonts.sh",
     "brand": "tools/.venv/Scripts/python.exe tools/build_brand.py",
-    "build": "node tools/build-images.mjs && astro build",
+    "build": "node tools/build-images.mjs && node tools/build-og.mjs && astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "og": "node tools/build-og.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.3",
