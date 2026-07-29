@@ -158,12 +158,13 @@ const tr = locale === 'tr';
     max-width: 560px;
   }
 
-  /* One stage, every slide. The pipeline crops all four cutouts to one shared
-     box, so they arrive the same size and the frame needs no declared ratio:
-     the image itself is the stage, the machine keeps its size and position
-     through a rotation, and there is nothing left to letterbox. */
+  /* One stage, every slide — matching the canvas Blender composes on, so the
+     machine keeps its size and position through a rotation and `contain` has
+     nothing to letterbox. (The image pipeline deliberately does not trim the
+     cutouts; see tools/build-images.mjs.) */
   .hero__frame {
     grid-area: 1 / 1;
+    aspect-ratio: 16 / 10;
     min-height: 0;
     opacity: 0;
     transform: scale(1.015);
@@ -185,7 +186,7 @@ const tr = locale === 'tr';
   .hero__frame :global(picture),
   .hero__frame :global(img) {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: contain;
     object-position: center center;
   }
@@ -339,16 +340,17 @@ const tr = locale === 'tr';
     .hero__media {
       grid-row: 1;
       grid-column: 1;
-      /* Width-driven and centred against the type. The shared crop took 19% of
-         empty canvas out of the source, so the machine now fills the box it is
-         given and the band of nothing above it is gone. */
+      /* Width-driven and centred against the type. The renders fill their
+         canvas — on DTF the machine itself reaches the last row of pixels — so
+         the floor would be cut off square at the frame; the image pipeline
+         fades it out instead, and only where it is already semi-transparent, so
+         the machine passes through untouched and the box can float. */
       height: auto;
-      max-height: 78svh;
+      max-height: 68svh;
       max-width: none;
       align-self: center;
-      /* Left edge clears the 40ch copy column — the crop keeps a 4% margin
-         inside the image, so the machine itself stops well short of the text. */
-      padding: 0 0 0 36%;
+      /* Left edge clears the 40ch copy column; right edge runs to the bleed. */
+      padding: 0 0 0 40%;
     }
 
     .hero__inner {

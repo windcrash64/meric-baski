@@ -50,18 +50,16 @@ async function walk(dir) {
  * from 1.61 to 2.02, so the row sized itself to the tallest, the shorter ones
  * hung from its top edge, and the machine changed size on every rotation.
  *
- * But the composed canvas also carries a lot of nothing — 13% of the width to
- * the left of the widest machine, up to 28% above the tallest — and that dead
- * band is what makes the hero image read as small and low. So the cutouts get
- * ONE crop, computed from the union of all of them (see stageCrop), applied
- * identically. The shared stage survives; the emptiness does not.
+ * A shared crop across all four was tried and reverted: it made the machine
+ * noticeably bigger but cost the composition the air around it, and the calmer
+ * framing reads better. The cutouts keep the canvas Blender composed them on.
  */
-async function normalise(file, role, crop) {
+async function normalise(file, role) {
   let img = sharp(file);
   if (role === 'machine') {
     img = sharp(await img.trim({ threshold: 12 }).toBuffer());
-  } else if (role === 'stage' && crop) {
-    img = sharp(await fadeFloor(await img.extract(crop).toBuffer()));
+  } else if (role === 'stage') {
+    img = sharp(await fadeFloor(await img.toBuffer()));
   }
   return img;
 }
@@ -93,61 +91,13 @@ async function fadeFloor(buffer, band = 0.14, solid = 200) {
   return sharp(data, { raw: { width, height, channels } }).png().toBuffer();
 }
 
-/** Opaque bounding box of one RGBA image, in pixels. */
-async function opaqueBox(file) {
-  const { data, info } = await sharp(file).ensureAlpha().raw()
-    .toBuffer({ resolveWithObject: true });
-  const { width: w, height: h, channels: c } = info;
-  let left = w, right = -1, top = h, bottom = -1;
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      if (data[(y * w + x) * c + 3] <= 200) continue;
-      if (x < left) left = x;
-      if (x > right) right = x;
-      if (y < top) top = y;
-      if (y > bottom) bottom = y;
-    }
-  }
-  return { left, right, top, bottom, w, h };
-}
-
-/**
- * The single crop shared by every cutout.
- *
- * Computed rather than hard-coded so it stays correct when a machine is
- * re-rendered or a new one lands. Padded, because the shadow and the floor
- * fade past the opaque silhouette; and the bottom edge is never cropped — on
- * DTF the machine itself reaches the last row of pixels, and that edge is what
- * the hero stands the machine on.
- */
-async function stageCrop(files, pad = 0.04) {
-  if (!files.length) return null;
-  const boxes = await Promise.all(files.map(opaqueBox));
-  const { w, h } = boxes[0];
-  if (boxes.some((b) => b.w !== w || b.h !== h)) {
-    console.log('[stage] cutouts differ in size; skipping the shared crop');
-    return null;
-  }
-  const px = Math.round(w * pad);
-  const py = Math.round(h * pad);
-  const left = Math.max(0, Math.min(...boxes.map((b) => b.left)) - px);
-  const right = Math.min(w - 1, Math.max(...boxes.map((b) => b.right)) + px);
-  const top = Math.max(0, Math.min(...boxes.map((b) => b.top)) - py);
-  const crop = { left, top, width: right - left + 1, height: h - top };
-  console.log(
-    `[stage] shared crop ${crop.width}×${crop.height} from ${w}×${h} ` +
-    `(${(100 - (100 * crop.width * crop.height) / (w * h)).toFixed(0)}% of the canvas was empty)`,
-  );
-  return crop;
-}
-
-async function build(file, { role = 'machine', dest, crop }) {
+async function build(file, { role = 'machine', dest }) {
   const widths = LADDERS[role] ?? LADDERS.machine;
   const base = dest ?? path.basename(file).replace(/\.[^.]+$/, '');
   const dir = path.join(OUT, path.dirname(dest ?? ''));
   await mkdir(dir, { recursive: true });
 
-  const src = await normalise(file, role, crop);
+  const src = await normalise(file, role);
   const meta = await src.metadata();
   const results = [];
   const emitted = [];
@@ -199,21 +149,6 @@ async function main() {
   if (!jobs.length) {
     console.log('no source images found under assets/renders or assets/photos');
     return;
-  }
-
-  // One crop for every cutout, from the union of all of them. Grouped by look:
-  // the light and dark rigs frame the machine identically, but they are separate
-  // sets and a union across both would only ever be looser than either.
-  const looks = new Map();
-  for (const job of jobs.filter((j) => j.role === 'stage')) {
-    const look = job.dest.split('/cutout/')[1]?.split('/')[0] ?? 'default';
-    if (!looks.has(look)) looks.set(look, []);
-    looks.get(look).push(job);
-  }
-  for (const [look, group] of looks) {
-    const crop = await stageCrop(group.map((j) => j.file));
-    for (const job of group) job.crop = crop;
-    if (crop) console.log(`[stage]   applied to ${group.length} ${look} cutouts`);
   }
 
   const manifest = {};
