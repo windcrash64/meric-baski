@@ -145,13 +145,16 @@ const HERO_SLIDES = [
 
 const CHANNEL_SET: ChannelCode[] = ['C', 'M', 'Y', 'K', 'Lc', 'Lm', 'Or', 'Gr', 'W', 'Cl'];
 
+/* One process colour per sector, cycled through the three the brand already
+   owns. Inventing a sixth hue for a sixth tile would be the moment this stops
+   looking like one company's identity and starts looking like a colour picker. */
 const APPLICATIONS = [
-  { key: 'applications.signage', icon: 'signage', tr: 'Reklam ve Tabela', en: 'Signage & Advertising' },
-  { key: 'applications.packaging', icon: 'packaging', tr: 'Ambalaj ve Etiket', en: 'Packaging & Labels' },
-  { key: 'applications.interior', icon: 'interior', tr: 'Mobilya ve Dekorasyon', en: 'Furniture & Interior' },
-  { key: 'applications.industrial', icon: 'industrial', tr: 'Cam, Metal ve Endüstriyel', en: 'Glass, Metal & Industrial' },
-  { key: 'applications.textile', icon: 'textile', tr: 'Tekstil ve Promosyon', en: 'Textile & Promotional' },
-  { key: 'applications.vehicle', icon: 'vehicle', tr: 'Araç Giydirme', en: 'Vehicle Wrapping' },
+  { key: 'applications.signage', icon: 'signage', accent: 'cyan', tr: 'Reklam ve Tabela', en: 'Signage & Advertising' },
+  { key: 'applications.packaging', icon: 'packaging', accent: 'magenta', tr: 'Ambalaj ve Etiket', en: 'Packaging & Labels' },
+  { key: 'applications.interior', icon: 'interior', accent: 'yellow', tr: 'Mobilya ve Dekorasyon', en: 'Furniture & Interior' },
+  { key: 'applications.industrial', icon: 'industrial', accent: 'cyan', tr: 'Cam, Metal ve Endüstriyel', en: 'Glass, Metal & Industrial' },
+  { key: 'applications.textile', icon: 'textile', accent: 'magenta', tr: 'Tekstil ve Promosyon', en: 'Textile & Promotional' },
+  { key: 'applications.vehicle', icon: 'vehicle', accent: 'yellow', tr: 'Araç Giydirme', en: 'Vehicle Wrapping' },
 ] as const;
 
 const COMMITMENTS = tr
@@ -225,7 +228,7 @@ const description = tr
         <RailHead locale={locale} />
         <ul class="tiles reveal" role="list" data-stagger data-rail>
           {APPLICATIONS.map((a) => (
-            <li class="tile">
+            <li class="tile" data-accent={a.accent}>
               <a href={path(a.key, locale)}>
                 <span class="tile__icon">
                   <ApplicationIcon name={a.icon} />
@@ -647,9 +650,27 @@ const description = tr
     transition: transform var(--d-slow) var(--e-out);
   }
 
+  /* At rest the colour is a 3px rule along the top edge — enough for the six
+     tiles to read as a CMYK set on a white page, not enough to shout. */
+  .tile a::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0.999);
+    transform-origin: left center;
+    transition: height var(--d-base) var(--e-out);
+  }
+
   .tile a:hover,
   .tile a:focus-visible {
-    border-color: var(--ink);
+    border-color: var(--accent);
+  }
+
+  .tile a:hover::after,
+  .tile a:focus-visible::after {
+    height: 0;
   }
 
   .tile a:hover::before,
@@ -677,8 +698,28 @@ const description = tr
 
   .tile a:hover .tile__icon,
   .tile a:focus-visible .tile__icon {
-    color: var(--paper);
+    color: var(--on-accent);
     transform: translateY(-2px);
+  }
+
+  /* The icon draws itself in as the colour arrives. Its paths are one continuous
+     stroke, so a dash the length of the path plus an offset of the same length
+     hides it entirely; animating the offset to zero draws it. The length is a
+     generous constant rather than a measured one — every icon here is well
+     under 200 units, and an over-long dash simply finishes early. */
+  .tile__icon :global(path) {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 0;
+  }
+
+  .tile a:hover .tile__icon :global(path),
+  .tile a:focus-visible .tile__icon :global(path) {
+    animation: tile-draw 620ms var(--e-out);
+  }
+
+  @keyframes tile-draw {
+    from { stroke-dashoffset: 200; }
+    to   { stroke-dashoffset: 0; }
   }
 
   .tile__label {
@@ -699,21 +740,28 @@ const description = tr
 
   .tile a:hover .tile__go,
   .tile a:focus-visible .tile__go {
-    color: var(--paper);
+    color: var(--on-accent);
     transform: translateX(4px);
   }
 
   .tile a:hover .tile__label,
   .tile a:focus-visible .tile__label {
-    color: var(--paper);
+    color: var(--on-accent);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .tile a,
     .tile a::before,
+    .tile a::after,
     .tile__icon,
     .tile__go {
       transition-duration: 1ms;
+    }
+
+    /* The draw-in is decoration; the colour change already carries the state. */
+    .tile a:hover .tile__icon :global(path),
+    .tile a:focus-visible .tile__icon :global(path) {
+      animation: none;
     }
 
     .tile a:active {

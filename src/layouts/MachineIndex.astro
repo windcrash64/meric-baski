@@ -340,7 +340,8 @@ const description = tr
                     <span class="pcard__media">
                       {render
                         ? <Picture src={render} alt={m.data.gallery[0]?.alt[locale] ?? m.data.model}
-                                   ratio="card" graded={false} sizes="(min-width: 1024px) 40vw, 92vw" />
+                                   ratio="card" graded={false} fit="contain"
+                                   sizes="(min-width: 1024px) 40vw, 92vw" />
                         : (
                           <span class="pcard__noimg">
                             <span class="pcard__noimg-mark code" lang="en">{m.data.sku}</span>

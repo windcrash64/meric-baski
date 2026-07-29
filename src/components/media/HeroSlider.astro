@@ -43,13 +43,13 @@ const { slides, locale, heading, intro } = Astro.props;
 const tr = locale === 'tr';
 ---
 
-<section class="hero" data-ground="paper" data-accent="cyan" aria-labelledby="hero-title">
+<section class="hero" data-ground="paper" data-accent="cyan" data-hero aria-labelledby="hero-title">
   <div class="shell hero__grid">
     <div class="hero__copy">
       <h1 id="hero-title" class="hero__h1">{heading}</h1>
       <p class="hero__intro muted">{intro}</p>
 
-      <div class="hero__slides" data-hero>
+      <div class="hero__slides">
         {slides.map((slide, i) => (
           <article
             class="hero__slide"
@@ -405,6 +405,41 @@ const tr = locale === 'tr';
 
   .hero__edge--prev { left: var(--sp-3); }
   .hero__edge--next { right: var(--sp-3); }
+
+  /* On a phone the machine spans the full width, so a solid 44 px button lands
+     ON it. The touch target stays 44 px — the drawn part shrinks to a hairline
+     mark that reads as an affordance without covering the product. The thumb is
+     the primary control here anyway; these are the visible hint that it works. */
+  @media (max-width: 767px) {
+    .hero__edge {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      background: none;
+      backdrop-filter: none;
+      color: color-mix(in srgb, var(--ink) 45%, transparent);
+      font-size: var(--step-0);
+      transition: color var(--d-base) var(--e-out);
+    }
+
+    .hero__edge::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      background: color-mix(in srgb, var(--paper) 55%, transparent);
+      backdrop-filter: blur(4px);
+      z-index: -1;
+    }
+
+    .hero__edge:hover,
+    .hero__edge:focus-visible {
+      background: none;
+      color: var(--ink);
+    }
+
+    .hero__edge--prev { left: 0; }
+    .hero__edge--next { right: 0; }
+  }
 
   .hero__edge:hover,
   .hero__edge:focus-visible {

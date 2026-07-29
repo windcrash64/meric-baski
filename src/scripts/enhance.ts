@@ -399,7 +399,9 @@ function heroSlider(): Cleanup {
     pause?.setAttribute('aria-pressed', String(value));
     // CSS reads this to freeze the meter's fill.
     hero.setAttribute('data-hero-paused', String(value));
-    if (pauseIcon) pauseIcon.textContent = value ? 'play' : 'pause';
+    // A glyph, not a word: the label beside it is the accessible name and is
+    // visually hidden, so writing "pause" here printed the word on the button.
+    if (pauseIcon) pauseIcon.textContent = value ? '▶' : '❚❚';
     if (pauseLabel) {
       pauseLabel.textContent = value
         ? (document.documentElement.lang === 'tr' ? 'Oynat' : 'Play')
@@ -430,6 +432,41 @@ function heroSlider(): Cleanup {
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   motion.addEventListener('change', onMotion);
 
+  /* --- swipe ---------------------------------------------------------------
+     A slider on a phone is expected to answer the thumb. Pointer events cover
+     touch and pen with one path, and the gesture is only claimed once it is
+     clearly horizontal — otherwise a diagonal flick meant for the page would be
+     swallowed and the hero would trap the scroll. */
+  const swipeArea = hero.querySelector<HTMLElement>('.hero__media') ?? hero;
+  const SWIPE_MIN = 45;      // px of travel before it counts as a swipe
+  const SWIPE_SLOPE = 1.2;   // how much more horizontal than vertical it must be
+  let startX = 0;
+  let startY = 0;
+  let tracking = false;
+
+  const onPointerDown = (e: PointerEvent) => {
+    if (e.pointerType === 'mouse') return;   // a mouse has the arrows
+    tracking = true;
+    startX = e.clientX;
+    startY = e.clientY;
+  };
+
+  const onPointerUp = (e: PointerEvent) => {
+    if (!tracking) return;
+    tracking = false;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) < Math.abs(dy) * SWIPE_SLOPE) return;
+    setPaused(true);
+    show(index + (dx < 0 ? 1 : -1));
+  };
+
+  const onPointerCancel = () => { tracking = false; };
+
+  swipeArea.addEventListener('pointerdown', onPointerDown, { passive: true });
+  swipeArea.addEventListener('pointerup', onPointerUp, { passive: true });
+  swipeArea.addEventListener('pointercancel', onPointerCancel, { passive: true });
+
   show(0);
   setPaused(stopped);
 
@@ -442,6 +479,9 @@ function heroSlider(): Cleanup {
     hero.removeEventListener('focusout', onLeave);
     document.removeEventListener('visibilitychange', onVisibility);
     motion.removeEventListener('change', onMotion);
+    swipeArea.removeEventListener('pointerdown', onPointerDown);
+    swipeArea.removeEventListener('pointerup', onPointerUp);
+    swipeArea.removeEventListener('pointercancel', onPointerCancel);
   };
 }
 

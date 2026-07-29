@@ -67,6 +67,7 @@ const tr = locale === 'tr';
         aria-label={`${i + 1} / ${slides.length}`}
       >
         <Picture src={slide.src} alt={slide.alt} ratio={ratio} graded={graded}
+                 fit={slide.src.includes('/cutout/') ? 'contain' : 'cover'}
                  sizes="(min-width: 1024px) 46vw, 92vw" />
         {slide.caption && <figcaption class="caption">{slide.caption}</figcaption>}
       </figure>

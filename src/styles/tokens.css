@@ -39,6 +39,7 @@
   /* ---- Semantic --------------------------------------------------------- */
   --accent:      var(--cyan);       /* overridden per section, see [data-accent] */
   --accent-text: var(--cyan-ink);
+  --on-accent:   var(--paper);
   --focus:       var(--cyan);
   --success:     #1b7f4b;
   --warning:     #b25a00;
@@ -151,9 +152,13 @@
    wayfinding system: cyan = machines, magenta = inks, yellow = service.
    -------------------------------------------------------------------------- */
 
-[data-accent='cyan']    { --accent: var(--cyan);    --accent-text: var(--cyan-ink); }
-[data-accent='magenta'] { --accent: var(--magenta); --accent-text: var(--magenta-ink); }
-[data-accent='yellow']  { --accent: var(--yellow);  --accent-text: var(--ink); }
+/* --accent-text is the accent used AS text on the page ground.
+   --on-accent is the opposite question: what reads on top of a filled accent.
+   Yellow is 1.29:1 against paper and 15.22:1 against ink, so a yellow fill is
+   the one case that must carry ink rather than paper. */
+[data-accent='cyan']    { --accent: var(--cyan);    --accent-text: var(--cyan-ink);    --on-accent: var(--paper); }
+[data-accent='magenta'] { --accent: var(--magenta); --accent-text: var(--magenta-ink); --on-accent: var(--paper); }
+[data-accent='yellow']  { --accent: var(--yellow);  --accent-text: var(--ink);         --on-accent: var(--ink); }
 
 /* On ink, accents may be text — this is where the brand is allowed to shout. */
 [data-ground='ink'][data-accent='cyan']    { --accent-text: var(--cyan-lit); }

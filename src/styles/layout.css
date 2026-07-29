@@ -334,6 +334,13 @@
   object-fit: cover;
 }
 
+/* A product cutout is never cropped: the machine IS the content, and `cover`
+   took about a fifth off each end of it inside the 3:2 card box. Declared after
+   the ratio rules above — same specificity, so source order is what decides. */
+.fit-contain > img {
+  object-fit: contain;
+}
+
 /* One grading pipeline for every photograph. Colour arrives only on hover,
    which is what makes the CMYK identity read as a signal, not decoration. */
 .graded > img {

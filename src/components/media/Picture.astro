@@ -18,6 +18,14 @@ export interface Props {
   ratio?: 'hero' | 'card' | 'inset' | 'band' | 'square' | 'none';
   class?: string;
   graded?: boolean;
+  /**
+   * `cover` fills the ratio box and crops what does not fit — right for a
+   * photograph. `contain` fits the whole frame inside it — the only correct
+   * option for a product cutout, where cropping means hiding part of the
+   * machine. The renders are 1.875:1 and the card box is 3:2, so `cover` was
+   * cutting roughly a fifth off each end of every machine.
+   */
+  fit?: 'cover' | 'contain';
 }
 
 const {
@@ -28,6 +36,7 @@ const {
   ratio = 'card',
   class: className = '',
   graded = true,
+  fit = 'cover',
 } = Astro.props;
 
 const entry = (manifest as Record<string, { intrinsic: { w: number; h: number }; widths: number[] }>)[src];
@@ -46,6 +55,7 @@ const intrinsic = entry?.intrinsic ?? { w: 1600, h: 1000 };
 const set = (ext: string) => widths.map((w) => `/img/${src}-${w}.${ext} ${w}w`).join(', ');
 const wrapClass = [
   ratio === 'none' ? '' : `ratio-${ratio}`,
+  fit === 'contain' ? 'fit-contain' : '',
   graded ? 'graded' : '',
   className,
 ].filter(Boolean).join(' ');
