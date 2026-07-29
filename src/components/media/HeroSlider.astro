@@ -1,25 +1,23 @@
 ---
 /**
- * Homepage hero.
+ * Homepage hero slider.
  *
- * Image and type, nothing else. The previous version carried a bordered arrow
- * box on each side, a boxed counter and a bordered pause button — four pieces
- * of furniture competing with the one picture the section exists to show. What
- * is left is the machine, the words, and a hairline meter that is at once the
- * timer, the position indicator and the slide picker.
+ * Structure follows the reference site: one machine per slide, its model name,
+ * one descriptive sentence carrying the real figures, and a link to the product.
  *
- * That meter is also the WCAG 2.2.2 answer: the hero autoplays, so a visible
- * way to stop it is not optional. Making the control and the indicator the same
- * object keeps the number of visible controls at one.
+ * Ground is split — paper under the copy, ink under the machine. A hero that is
+ * black edge to edge flattens the render into its own background and loses the
+ * one thing it exists to show; crisp type on white beside a machine on black is
+ * the maximum contrast available, and the hard vertical edge between the two is
+ * the same section boundary rule the rest of the site uses.
  *
- * The section is exactly one screen tall and splits into an image row and a
- * copy row. On a phone the image row is capped as a fraction of the viewport so
- * the machine stays a contained, centred object rather than a backdrop the type
- * has to fight; on a wide screen the machine moves right and the type takes the
- * empty left of the field.
+ * The page's <h1> is rendered ONCE, outside the slides. A slider whose slides
+ * each contain an <h1> gives the document four of them; the reference site
+ * solves this by having no <h1> at all, which is worse. Model names are <h2>.
  *
- * The page's <h1> is rendered ONCE, outside the slides — four slides each
- * carrying an <h1> would give the document four of them.
+ * It autoplays, because the client asked for a sliding hero — so it also ships
+ * a visible pause control. WCAG 2.2.2 requires one for anything that moves for
+ * more than five seconds, and prefers-reduced-motion alone does not satisfy it.
  */
 import type { Locale } from '../../config/site';
 import { t } from '../../i18n/ui';
@@ -41,38 +39,17 @@ export interface Props {
   intro: string;
 }
 
-const { slides, locale, heading } = Astro.props;
+const { slides, locale, heading, intro } = Astro.props;
 const tr = locale === 'tr';
 ---
 
-<section
-  class="hero"
-  data-ground="panel"
-  data-accent="cyan"
-  data-hero
-  data-hero-paused="false"
-  aria-labelledby="hero-title"
->
-  <div class="hero__media">
-    {slides.map((slide, i) => (
-      <div class="hero__frame" data-hero-frame data-active={i === 0 ? 'true' : 'false'}>
-        <Picture
-          src={slide.image}
-          alt={slide.alt}
-          ratio="none"
-          graded={false}
-          priority={i === 0}
-          sizes="(min-width: 900px) 62vw, 92vw"
-        />
-      </div>
-    ))}
-  </div>
-
-  <div class="shell hero__inner">
+<section class="hero" data-ground="paper" data-accent="cyan" aria-labelledby="hero-title">
+  <div class="shell hero__grid">
     <div class="hero__copy">
       <h1 id="hero-title" class="hero__h1">{heading}</h1>
+      <p class="hero__intro muted">{intro}</p>
 
-      <div class="hero__slides">
+      <div class="hero__slides" data-hero>
         {slides.map((slide, i) => (
           <article
             class="hero__slide"
@@ -81,140 +58,156 @@ const tr = locale === 'tr';
             aria-hidden={i === 0 ? undefined : 'true'}
             inert={i === 0 ? undefined : ''}
           >
-            <p class="eyebrow hero__eyebrow">{slide.eyebrow}</p>
+            <p class="eyebrow">{slide.eyebrow}</p>
             <h2 class="hero__model model" lang="en">
               {slide.model.split(' ').map((w, n) => <>{n > 0 ? ' ' : ''}<span>{w}</span></>)}
             </h2>
             <p class="hero__body">{slide.body}</p>
-            <a class="link link--accent hero__cta" href={slide.href}>
+            <a class="btn" href={slide.href}>
               {tr ? 'Ürünü İncele' : 'View product'}
-              <span class="arrow" aria-hidden="true">→</span>
+              <span class="btn__arrow" aria-hidden="true">→</span>
             </a>
           </article>
         ))}
       </div>
 
-      <!-- One control. Each bar is a slide, the active bar fills across the
-           interval, and pressing any bar both jumps to it and stops the
-           rotation — so the pause mechanism IS the indicator. -->
-      <div class="hero__meter" role="tablist" aria-label={t('carousel', locale)}>
-        {slides.map((slide) => (
-          <button type="button" role="tab" data-hero-dot aria-selected="false">
-            <span class="visually-hidden">{slide.model}</span>
-          </button>
-        ))}
+      <div class="hero__controls">
+        <div class="hero__dots" role="tablist" aria-label={t('carousel', locale)}>
+          {slides.map((slide) => (
+            <button type="button" role="tab" data-hero-dot aria-selected="false" aria-label={slide.model}>
+              <span class="visually-hidden">{slide.model}</span>
+            </button>
+          ))}
+        </div>
+        <span class="hero__count mono" data-hero-count>
+          01 / {String(slides.length).padStart(2, '0')}
+        </span>
+        <button type="button" class="hero__pause" data-hero-pause aria-pressed="false">
+          <span class="visually-hidden" data-hero-pause-label>{t('pause', locale)}</span>
+          <span aria-hidden="true" data-hero-pause-icon>❚❚</span>
+        </button>
       </div>
     </div>
-  </div>
 
-  <!-- Arrows and pause exist for keyboard and assistive tech; they are not part
-       of the picture, and they surface only when focused. -->
-  <button type="button" class="hero__kbd" data-hero-prev>
-    <span>{t('previous', locale)}</span>
-  </button>
-  <button type="button" class="hero__kbd" data-hero-next>
-    <span>{t('next', locale)}</span>
-  </button>
-  <button type="button" class="hero__kbd" data-hero-pause aria-pressed="false">
-    <span data-hero-pause-label>{t('pause', locale)}</span>
-    <span class="visually-hidden" data-hero-pause-icon></span>
-  </button>
+    <div class="hero__media" data-ground="panel" aria-hidden="false">
+      {slides.map((slide, i) => (
+        <div class="hero__frame" data-hero-frame data-active={i === 0 ? 'true' : 'false'}>
+          <Picture
+            src={slide.image}
+            alt={slide.alt}
+            ratio="none"
+            graded={false}
+            priority={i === 0}
+            sizes="(min-width: 1024px) 56vw, 100vw"
+          />
+        </div>
+      ))}
+
+      <!-- Legibility scrim. The one gradient on the site, and it is functional:
+           on a phone the copy sits over the render, and the render's lower area
+           is not reliably dark enough on every slide to carry white type. It is
+           inert to pointers so it cannot swallow a swipe. -->
+      <div class="hero__scrim" aria-hidden="true"></div>
+
+      <!-- Both arrows sit on the ink panel, at its left and right edges: they
+           frame the machine, they take one colour instead of two, and they can
+           never collide with the copy as the page margin narrows. -->
+      <button type="button" class="hero__edge hero__edge--prev" data-hero-prev>
+        <span class="visually-hidden">{t('previous', locale)}</span>
+        <span aria-hidden="true">←</span>
+      </button>
+      <button type="button" class="hero__edge hero__edge--next" data-hero-next>
+        <span class="visually-hidden">{t('next', locale)}</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
 </section>
 
 <style>
+  /* Mobile-first. The stacked band-over-copy layout is the BASE; the two-column
+     layout is opted into when the viewport is genuinely wide — either a real
+     desktop, or a landscape phone, which is wide but only ~300 px tall and
+     cannot afford to stack anything. Sizing the hero off width alone is what
+     put a 500 px image band on a 360 px-tall screen. */
+
   .hero {
     position: relative;
-    display: grid;
-    /* Image and copy are one centred block, not a row pinned to the top and a
-       row pinned to the bottom — that left a hole down the middle of the phone
-       screen wide enough to read as a mistake. */
-    grid-template-rows: auto auto;
-    align-content: center;
+    padding-block: 0;
     overflow: hidden;
-    /* Definite height so the section is exactly one screen. svh is the viewport
-       with the browser chrome showing, which is the state a phone paints in;
-       vh would hand back ~150 px that are not on screen. */
+    display: grid;
+    /* A DEFINITE height, not a min-height. A minimum is only a floor: the grid
+       still sizes to its content, so the flexible media row never has a reason
+       to shrink and the block runs past the fold anyway. A definite height is
+       what gives `minmax(0, 1fr)` something to divide.
+       svh = the viewport with the browser chrome VISIBLE, which is the state a
+       phone is in when the page first paints; vh measures the expanded viewport
+       and hands back roughly 150 px that are not actually on screen. */
     height: calc(100vh - var(--header-h));
     height: calc(100svh - var(--header-h));
-    min-height: 400px;
+    /* A floor, so a pathologically short screen pushes the block past the fold
+       instead of clipping it against overflow: hidden.
+
+       NOT min-content: when a grid container's min-content height is resolved,
+       a `1fr` row is measured as though it were `auto`, so the image reports
+       its full intrinsic height and the floor lands at the very number this
+       whole rule exists to avoid. A plain length is the only floor that does
+       not defeat the definite height above it. */
+    min-height: 380px;
   }
 
-  /* --- image ---------------------------------------------------------------- */
-  .hero__media {
-    grid-row: 1;
+  .hero__grid {
     display: grid;
+    gap: 0;
+    /* The media row takes whatever the copy does not. minmax(0, 1fr) is what
+       allows it to shrink below the image's intrinsic height instead of
+       pushing the block past the fold. */
+    /* One cell. The copy is layered ON the image rather than stacked under it:
+       stacking makes the section's height the SUM of two blocks and a phone
+       only ever has room for one, so it could never fit by construction. */
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    align-content: stretch;
+    /* This is itself a grid item, and a grid item's automatic minimum size is
+       its content. Without this it refuses to shrink to the height its parent
+       was just given, and the section clips its own controls instead. */
     min-height: 0;
-    /* Capped as a fraction of the screen so the machine reads as a contained
-       object, centred, rather than a backdrop the type has to fight. */
-    height: auto;
-    max-height: 34svh;
-    align-self: center;
-    justify-self: center;
-    width: 100%;
-    /* Runs to the screen edges on a phone: inset by the page margin, the
-       render's own studio floor ends in a visible rectangle a few shades off
-       the ground it sits on. At the viewport edge there is nothing to compare
-       it against, and the machine gets the extra width. */
-    max-width: 560px;
-  }
-
-  /* One stage, every slide — matching the canvas Blender composes on, so the
-     machine keeps its size and position through a rotation and `contain` has
-     nothing to letterbox. (The image pipeline deliberately does not trim the
-     cutouts; see tools/build-images.mjs.) */
-  .hero__frame {
-    grid-area: 1 / 1;
-    aspect-ratio: 16 / 10;
-    min-height: 0;
-    opacity: 0;
-    transform: scale(1.015);
-    transition: opacity 700ms var(--e-out), transform 900ms var(--e-out);
-  }
-
-  .hero__frame[data-active='true'] {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* <picture> is inline by default, which leaves a text-baseline gap under the
-     image and — worse — gives the <img> an auto-height containing block, so any
-     percentage height on the image silently resolves to auto. */
-  .hero__frame :global(picture) {
-    display: block;
-  }
-
-  .hero__frame :global(picture),
-  .hero__frame :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
-  }
-
-  /* --- type ----------------------------------------------------------------- */
-  .hero__inner {
-    grid-row: 2;
-    display: grid;
-    align-content: start;
-    padding-block: var(--sp-5) 0;
   }
 
   .hero__copy {
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 2;
     display: grid;
     gap: var(--sp-3);
-    max-width: 46ch;
+    align-content: end;
+    padding-block: var(--sp-5) var(--sp-6);
+    /* Sitting on a light render, so it keeps the ink palette. */
+    --on-ground: var(--ink);
+    --on-ground-muted: var(--muted);
+    --hairline: var(--rule);
+    color: var(--ink);
   }
 
+  /* The page title is deliberately quiet: the model name is the loud element,
+     and a slider that shouts two headings at once reads as a template. */
   .hero__h1 {
-    font-size: var(--step--1);
-    font-weight: 500;
+    font-size: var(--step-1);
+    font-weight: 400;
     font-variation-settings: 'wdth' 100;
-    letter-spacing: 0.01em;
-    line-height: 1.4;
-    color: var(--muted);
-    max-width: 36ch;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+    max-width: 30ch;
   }
 
+  .hero__intro {
+    font-size: var(--step--1);
+    max-width: 46ch;
+    padding-block-end: var(--sp-4);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  /* Slides stack in one cell so the block never changes height mid-rotation. */
   .hero__slides {
     display: grid;
   }
@@ -224,9 +217,8 @@ const tr = locale === 'tr';
     display: grid;
     gap: var(--sp-2);
     align-content: start;
-    justify-items: start;
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
     transition: opacity var(--d-slow) var(--e-out), transform var(--d-slow) var(--e-out);
     pointer-events: none;
   }
@@ -237,180 +229,349 @@ const tr = locale === 'tr';
     pointer-events: auto;
   }
 
-  .hero__eyebrow {
-    color: var(--accent-text);
-  }
-
   .hero__model {
     font-size: var(--step-2);
     font-weight: 600;
-    font-variation-settings: 'wdth' 84;
-    letter-spacing: -0.025em;
-    line-height: 1;
+    font-variation-settings: 'wdth' 86;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
   }
 
   .hero__body {
     font-size: var(--step--1);
-    color: var(--muted);
-    max-width: 44ch;
-  }
-
-  .hero__cta {
-    font-size: var(--step-0);
-    font-weight: 500;
-    margin-block-start: var(--sp-1);
-  }
-
-  /* --- the one control ------------------------------------------------------- */
-  .hero__meter {
-    display: flex;
-    gap: var(--sp-2);
-    margin-block-start: var(--sp-3);
-  }
-
-  .hero__meter button {
-    position: relative;
-    width: clamp(32px, 9vw, 56px);
-    height: 2px;
-    background: color-mix(in srgb, var(--ink) 20%, transparent);
+    color: var(--on-ground-muted);
+    max-width: 48ch;
+    /* Slide copy varies by a line or two between machines; clamping keeps the
+       block a fixed height so the layout cannot jump mid-rotation. */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
+  .hero__slide .btn {
+    justify-self: stretch;
+    justify-content: center;
+    min-height: 46px;
+    margin-block-start: var(--sp-1);
+  }
+
+  .hero__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding-block-start: var(--sp-3);
+    border-top: var(--border) solid var(--hairline);
+  }
+
+  .hero__dots {
+    display: flex;
+    gap: var(--sp-2);
+    margin-inline-end: auto;
+  }
+
+  .hero__dots button {
+    position: relative;
+    width: 26px;
+    height: 2px;
+    /* Mixed from the current ground rather than set to --hairline: a 2 px mark
+       in the hairline tone is invisible on paper, which makes the control read
+       as decoration until it is already active. */
+    background: color-mix(in srgb, var(--on-ground) 26%, transparent);
+    transition: background-color var(--d-base) var(--e-out), height var(--d-base) var(--e-out);
+  }
+
+  .hero__dots button:hover {
+    background: color-mix(in srgb, var(--on-ground) 55%, transparent);
+  }
+
   /* 2 px mark, 44 px target. */
-  .hero__meter button::before {
+  .hero__dots button::after {
     content: '';
     position: absolute;
     inset: -21px 0;
   }
 
-  .hero__meter button::after {
-    content: '';
+  .hero__dots button[aria-selected='true'] {
+    background: var(--accent);
+    height: 3px;
+  }
+
+  .hero__count {
+    font-size: var(--step--2);
+    color: var(--on-ground-muted);
+    letter-spacing: 0.1em;
+  }
+
+  .hero__pause {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: var(--border) solid var(--hairline);
+    color: var(--on-ground);
+    font-size: var(--step--2);
+    transition: border-color var(--d-base) var(--e-out);
+  }
+
+  .hero__pause:hover,
+  .hero__pause:focus-visible {
+    border-color: var(--on-ground);
+  }
+
+  /* --- media panel (stacked default) --- */
+  .hero__media {
+    grid-area: 1 / 1;
+    display: grid;
+    position: relative;
+    align-items: center;
+    border-inline-start: var(--border) solid transparent;
+    /* No fixed height: the row sizes it, and min-height 0 is what lets a grid
+       item actually shrink. Without it the item's automatic minimum size is
+       its content, and the whole point is lost. */
+    min-height: 0;
+    padding: var(--sp-3) 0;
+    margin-inline: calc(var(--page-margin) * -1);
+  }
+
+  .hero__frame {
+    grid-area: 1 / 1;
+    height: 100%;
+    min-height: 0;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity var(--d-slower) var(--e-out), transform var(--d-slower) var(--e-out);
+  }
+
+  .hero__frame[data-active='true'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero__frame :global(picture),
+  .hero__frame :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Near the top of the frame, not a third of the way down.
+       The media cell is the full height of the hero because the copy is layered
+       into the same cell; the picture only paints its own aspect inside that, so
+       `contain` leaves a large letterbox and 32% of it sat ABOVE the machine —
+       160 px of the 223 px gap between the header and the product on a phone.
+       The copy is anchored to the bottom of the cell and has its own room. */
+    object-position: center 8%;
+  }
+
+  .hero__scrim {
     position: absolute;
     inset: 0;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left center;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgb(220 224 229 / 0.97) 0%,
+      rgb(220 224 229 / 0.86) 32%,
+      rgb(220 224 229 / 0.25) 64%,
+      rgb(220 224 229 / 0) 86%
+    );
   }
 
-  .hero__meter button[aria-selected='true']::after {
-    animation: hero-meter 6500ms linear forwards;
-  }
-
-  /* Paused: the bar shows position rather than progress. */
-  [data-hero-paused='true'] .hero__meter button[aria-selected='true']::after {
-    animation: none;
-    transform: scaleX(1);
-  }
-
-  @keyframes hero-meter {
-    to {
-      transform: scaleX(1);
-    }
-  }
-
-  .hero__kbd {
+  /* --- edge arrows ---
+     Positioned against the ink panel, so they are always paper-coloured and
+     always clear of the copy column. */
+  .hero__edge {
     position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    inset-block-start: 0;
-    inset-inline-start: 0;
+    top: 50%;
+    translate: 0 -50%;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: var(--border) solid var(--ink);
+    background: color-mix(in srgb, var(--paper) 78%, transparent);
+    backdrop-filter: blur(3px);
+    color: var(--ink);
+    font-size: var(--step--1);
+    transition: background-color var(--d-base) var(--e-out), color var(--d-base) var(--e-out);
   }
 
-  .hero__kbd:focus-visible {
-    width: auto;
-    height: auto;
-    clip-path: none;
-    inset: auto auto var(--sp-5) var(--sp-5);
-    padding: var(--sp-3) var(--sp-4);
+  /* Level with the machine, not with the cell. The picture is anchored near the
+     top of a full-height cell, so a 50% (or 32%) offset put the arrows well
+     below the thing they step through. */
+  .hero__edge {
+    top: 22%;
+  }
+
+  .hero__edge--prev { left: var(--sp-3); }
+  .hero__edge--next { right: var(--sp-3); }
+
+  .hero__edge:hover,
+  .hero__edge:focus-visible {
     background: var(--ink);
     color: var(--paper);
-    font-size: var(--step--2);
-    z-index: 3;
   }
 
-  /* --- wide: the machine moves right, the type takes the empty left ---------- */
-  @media (min-width: 900px) {
-    .hero {
-      grid-template-rows: 1fr;
-      min-height: 520px;
-    }
-
-    .hero__media {
-      grid-row: 1;
-      grid-column: 1;
-      /* Width-driven and centred against the type. The renders fill their
-         canvas — on DTF the machine itself reaches the last row of pixels — so
-         the floor would be cut off square at the frame; the image pipeline
-         fades it out instead, and only where it is already semi-transparent, so
-         the machine passes through untouched and the box can float. */
-      height: auto;
-      max-height: 68svh;
-      max-width: none;
-      align-self: center;
-      /* Left edge clears the 40ch copy column; right edge runs to the bleed. */
-      padding: 0 0 0 40%;
-    }
-
-    .hero__inner {
-      grid-row: 1;
-      grid-column: 1;
-      align-content: center;
-      padding-block: var(--sp-8);
-    }
-
-    .hero__copy {
-      max-width: 40ch;
-    }
-
-    .hero__model {
-      font-size: var(--step-4);
-    }
-
-    .hero__body {
-      font-size: var(--step-0);
-    }
-
-    .hero__h1 {
-      font-size: var(--step-0);
-    }
-  }
-
-  /* Landscape phones: the copy alone fills the screen, so the image steps back. */
-  @media (max-height: 620px) and (max-width: 899px) {
-    /* The 400 px floor is there so the hero cannot collapse; on a landscape
-       phone it is taller than the screen, which is the one case it makes worse. */
-    .hero {
-      min-height: 0;
-    }
-
-    .hero__media {
-      max-height: 26svh;
-    }
-
-    .hero__h1 {
+  /* --- the supporting line is the first thing to go on a small screen ------
+     It restates the H1; on a phone that costs 84 px for nothing. */
+  @media (max-width: 639px), (max-height: 620px) {
+    .hero__intro {
       display: none;
     }
 
+    .hero__h1 {
+      font-size: var(--step-0);
+      line-height: 1.25;
+    }
+  }
+
+  /* --- short viewports: landscape phones, and portrait phones on 640-tall
+     screens. Everything that can lose a few pixels does, so the block lands
+     inside the fold instead of being clipped by it. */
+  @media (max-height: 700px) {
+    .hero__copy {
+      gap: var(--sp-3);
+      padding-block: var(--sp-4) var(--sp-5);
+    }
+
+    .hero__media {
+      padding-block: var(--sp-2);
+    }
+
     .hero__body {
-      display: -webkit-box;
       -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+    }
+
+    .hero__slide .btn {
+      min-height: 42px;
+      margin-block-start: 0;
+    }
+
+    .hero__controls {
+      padding-block-start: var(--sp-2);
+    }
+
+    .hero__pause {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* --- landscape phone: 740 × 360 -----------------------------------------
+     The one viewport this layout could not fit. 300 px of room under the
+     header against 354 px of copy, so the section ran 54 px past the fold and
+     `overflow: hidden` clipped its own controls.
+
+     The H1 is what goes. It is a restatement of the page title that the model
+     name below already implies, it costs 43 px plus a gap, and it is the only
+     element here whose removal a reader in this orientation will not miss —
+     the document still has its H1 for assistive tech, hidden rather than
+     dropped. */
+  @media (max-height: 480px) and (min-width: 560px) {
+    .hero__h1 {
+      position: absolute;
+      width: 1px;
+      height: 1px;
       overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .hero__copy {
+      padding-block: var(--sp-3) var(--sp-4);
+    }
+  }
+
+  /* --- two columns: real desktops, and landscape phones ---------------------
+     A 740 x 360 screen is wide but has ~300 px of usable height, so it needs
+     the side-by-side layout far more than a portrait tablet does. */
+  @media (min-width: 1024px), (min-width: 560px) and (max-height: 620px) {
+    .hero {
+      height: auto;
+      min-height: 0;
+    }
+
+    .hero__grid {
+      grid-template-columns: 44fr 56fr;
+      grid-template-rows: auto;
+      align-items: stretch;
+      min-height: min(64vh, 620px);
+    }
+
+    /* Side by side: the copy comes out from under the image. */
+    .hero__copy {
+      grid-area: auto;
+      align-content: center;
+      gap: var(--sp-5);
+    }
+
+    .hero__media {
+      grid-area: auto;
+      /* Paper meets panel on a drawn line, not on a tonal guess. */
+      border-inline-start-color: #c3cad1;
+    }
+
+    .hero__scrim {
+      display: none;
+    }
+
+    .hero__frame :global(img) {
+      object-position: center center;
+    }
+
+    .hero__edge {
+      top: 50%;
+    }
+
+    @media (max-height: 700px) {
+      .hero__grid {
+        min-height: 0;
+      }
+
+      .hero__media {
+        padding-block: var(--sp-3);
+      }
+    }
+
+    .hero__copy {
+      gap: var(--sp-5);
+      padding-block: clamp(var(--sp-5), 5vh, var(--sp-10));
+      padding-inline-end: var(--gutter);
+    }
+
+    .hero__media {
+      order: 0;
+      height: auto;
+      padding: var(--sp-5) 0;
+      /* Runs off the right edge of the page: the machine reads as an object in
+         a room rather than a photograph pasted into a box. */
+      margin-inline: var(--gutter) calc(var(--page-margin) * -1);
+    }
+
+    .hero__slide .btn {
+      justify-self: start;
+      justify-content: flex-start;
+    }
+
+    .hero__edge--next { right: var(--sp-6); }
+  }
+
+  @media (min-width: 1024px) {
+    .hero__model {
+      font-size: var(--step-3);
+    }
+
+    .hero__edge {
+      width: 48px;
+      height: 48px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__frame,
-    .hero__slide {
+    .hero__slide,
+    .hero__frame {
       transition: opacity 200ms linear;
       transform: none;
-    }
-
-    .hero__meter button[aria-selected='true']::after {
-      animation: none;
-      transform: scaleX(1);
     }
   }
 </style>

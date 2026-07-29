@@ -64,18 +64,59 @@ async function walk(dir) {
  * from 1.61 to 2.02, so the row sized itself to the tallest, the shorter ones
  * hung from its top edge, and the machine changed size on every rotation.
  *
- * A shared crop across all four was tried and reverted: it made the machine
- * noticeably bigger but cost the composition the air around it, and the calmer
- * framing reads better. The cutouts keep the canvas Blender composed them on.
+ * Cropping all four sides was tried and reverted: it made the machine bigger but
+ * cost the composition the air around it. The TOP is different. Every render
+ * carries 18–27% of empty sky above its machine, and in the hero that lands as a
+ * band of nothing between the header and the product — 51 px of the 223 px gap
+ * measured on a phone. The sides keep their air; the sky goes.
  */
-async function normalise(file, role) {
+async function normalise(file, role, crop) {
   let img = sharp(file);
   if (role === 'machine') {
     img = sharp(await img.trim({ threshold: 12 }).toBuffer());
   } else if (role === 'stage') {
+    if (crop) img = sharp(await img.extract(crop).toBuffer());
     img = sharp(await fadeFloor(await img.toBuffer()));
   }
   return img;
+}
+
+/** First opaque row of an RGBA image. */
+async function firstOpaqueRow(file) {
+  const { data, info } = await sharp(file).ensureAlpha().raw()
+    .toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (data[(y * width + x) * channels + 3] > 200) return { row: y, width, height };
+    }
+  }
+  return { row: 0, width, height };
+}
+
+/**
+ * How much empty sky every cutout shares, so the same amount comes off each.
+ *
+ * Measured rather than hard-coded: re-render a machine or add one and the crop
+ * follows. Taking the MINIMUM across the set — with a pad — is what keeps the
+ * shared stage: every machine loses the same number of pixels, so their relative
+ * sizes and positions are untouched, and the tallest keeps its clearance.
+ */
+async function skyCrop(files, pad = 0.03) {
+  if (!files.length) return null;
+  const boxes = await Promise.all(files.map(firstOpaqueRow));
+  const { width, height } = boxes[0];
+  if (boxes.some((b) => b.width !== width || b.height !== height)) {
+    console.log('[stage] cutouts differ in size; skipping the shared sky crop');
+    return null;
+  }
+  const top = Math.max(0, Math.min(...boxes.map((b) => b.row)) - Math.round(height * pad));
+  if (top < 8) return null;
+  console.log(
+    `[stage] ${top}px of shared empty sky removed from the top ` +
+    `(${((100 * top) / height).toFixed(1)}% of the canvas)`,
+  );
+  return { left: 0, top, width, height: height - top };
 }
 
 /**
@@ -105,13 +146,13 @@ async function fadeFloor(buffer, band = 0.14, solid = 200) {
   return sharp(data, { raw: { width, height, channels } }).png().toBuffer();
 }
 
-async function build(file, { role = 'machine', dest }) {
+async function build(file, { role = 'machine', dest, crop }) {
   const widths = LADDERS[role] ?? LADDERS.machine;
   const base = dest ?? path.basename(file).replace(/\.[^.]+$/, '');
   const dir = path.join(OUT, path.dirname(dest ?? ''));
   await mkdir(dir, { recursive: true });
 
-  const src = await normalise(file, role);
+  const src = await normalise(file, role, crop);
   const meta = await src.metadata();
   const results = [];
   const emitted = [];
@@ -168,6 +209,13 @@ async function main() {
   if (!jobs.length) {
     console.log('no source images found under assets/renders or assets/photos');
     return;
+  }
+
+  // One sky crop for every cutout, from the shallowest of them.
+  const stage = jobs.filter((j) => j.role === 'stage');
+  if (stage.length) {
+    const crop = await skyCrop(stage.map((j) => j.file));
+    for (const job of stage) job.crop = crop;
   }
 
   const manifest = {};

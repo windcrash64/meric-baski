@@ -2,7 +2,7 @@
   "machines/dtf/cutout/light/dtf-hero": {
     "intrinsic": {
       "w": 2000,
-      "h": 1250
+      "h": 1067
     },
     "widths": [
       480,
@@ -24,7 +24,7 @@
   "machines/eco-solvent/cutout/light/eco-solvent-hero": {
     "intrinsic": {
       "w": 2000,
-      "h": 1250
+      "h": 1067
     },
     "widths": [
       480,
@@ -46,7 +46,7 @@
   "machines/flatbed-uv/cutout/light/flatbed-uv-hero": {
     "intrinsic": {
       "w": 2000,
-      "h": 1250
+      "h": 1067
     },
     "widths": [
       480,
@@ -68,7 +68,7 @@
   "machines/roll-uv/cutout/light/roll-uv-hero": {
     "intrinsic": {
       "w": 2000,
-      "h": 1250
+      "h": 1067
     },
     "widths": [
       480,
