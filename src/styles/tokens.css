@@ -10,6 +10,12 @@
   --ink:        #0b0b0c;   /* near-black; not #000, which flares on OLED. 19.67:1 on paper */
   --paper:      #ffffff;
   --bone:       #f2f1ed;   /* warm off-white alternate ground. 17.41:1 vs ink */
+  --panel:      #dce0e5;   /* cool light studio ground for product imagery.
+                              Deeper than bone on purpose, and deeper again once
+                              the eco-solvent render went on it: that machine has
+                              a white body and a white media roll, and a ground
+                              only a shade off white loses the whole silhouette.
+                              13.31:1 vs ink */
   --graphite:   #16171a;   /* raised panel on dark — 1.10:1 vs ink, ALWAYS needs a rule */
   --rule:       #e3e1dc;
   --rule-dark:  #26272b;
@@ -115,6 +121,13 @@
   --on-ground: var(--ink);
   --on-ground-muted: var(--muted);
   --hairline: #dcdad4;
+}
+
+[data-ground='panel'] {
+  --ground: var(--panel);
+  --on-ground: var(--ink);
+  --on-ground-muted: var(--muted);
+  --hairline: #c3cad1;
 }
 
 [data-ground='ink'] {

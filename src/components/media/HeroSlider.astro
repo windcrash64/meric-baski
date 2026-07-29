@@ -89,7 +89,7 @@ const tr = locale === 'tr';
       </div>
     </div>
 
-    <div class="hero__media" data-ground="ink" aria-hidden="false">
+    <div class="hero__media" data-ground="panel" aria-hidden="false">
       {slides.map((slide, i) => (
         <div class="hero__frame" data-hero-frame data-active={i === 0 ? 'true' : 'false'}>
           <Picture
@@ -182,23 +182,11 @@ const tr = locale === 'tr';
     gap: var(--sp-3);
     align-content: end;
     padding-block: var(--sp-5) var(--sp-6);
-    /* Sitting on the render now, so the semantic colours flip with it. */
-    --on-ground: var(--paper);
-    --on-ground-muted: var(--muted-dark);
-    --hairline: var(--rule-dark);
-    color: var(--paper);
-  }
-
-  /* A black button on a dark render is a button nobody sees. */
-  .hero__slide .btn {
-    background: var(--paper);
-    border-color: var(--paper);
+    /* Sitting on a light render, so it keeps the ink palette. */
+    --on-ground: var(--ink);
+    --on-ground-muted: var(--muted);
+    --hairline: var(--rule);
     color: var(--ink);
-  }
-
-  .hero__slide .btn:hover,
-  .hero__slide .btn:focus-visible {
-    color: var(--paper);
   }
 
   /* The page title is deliberately quiet: the model name is the loud element,
@@ -286,8 +274,15 @@ const tr = locale === 'tr';
     position: relative;
     width: 26px;
     height: 2px;
-    background: var(--hairline);
-    transition: background-color var(--d-base) var(--e-out);
+    /* Mixed from the current ground rather than set to --hairline: a 2 px mark
+       in the hairline tone is invisible on paper, which makes the control read
+       as decoration until it is already active. */
+    background: color-mix(in srgb, var(--on-ground) 26%, transparent);
+    transition: background-color var(--d-base) var(--e-out), height var(--d-base) var(--e-out);
+  }
+
+  .hero__dots button:hover {
+    background: color-mix(in srgb, var(--on-ground) 55%, transparent);
   }
 
   /* 2 px mark, 44 px target. */
@@ -299,6 +294,7 @@ const tr = locale === 'tr';
 
   .hero__dots button[aria-selected='true'] {
     background: var(--accent);
+    height: 3px;
   }
 
   .hero__count {
@@ -329,6 +325,7 @@ const tr = locale === 'tr';
     display: grid;
     position: relative;
     align-items: center;
+    border-inline-start: var(--border) solid transparent;
     /* No fixed height: the row sizes it, and min-height 0 is what lets a grid
        item actually shrink. Without it the item's automatic minimum size is
        its content, and the whole point is lost. */
@@ -367,10 +364,10 @@ const tr = locale === 'tr';
     pointer-events: none;
     background: linear-gradient(
       to top,
-      rgb(11 11 12 / 0.94) 0%,
-      rgb(11 11 12 / 0.74) 30%,
-      rgb(11 11 12 / 0.18) 62%,
-      rgb(11 11 12 / 0) 84%
+      rgb(220 224 229 / 0.97) 0%,
+      rgb(220 224 229 / 0.86) 32%,
+      rgb(220 224 229 / 0.25) 64%,
+      rgb(220 224 229 / 0) 86%
     );
   }
 
@@ -386,9 +383,10 @@ const tr = locale === 'tr';
     height: 44px;
     display: grid;
     place-items: center;
-    border: var(--border) solid var(--paper);
-    background: color-mix(in srgb, var(--ink) 55%, transparent);
-    color: var(--paper);
+    border: var(--border) solid var(--ink);
+    background: color-mix(in srgb, var(--paper) 78%, transparent);
+    backdrop-filter: blur(3px);
+    color: var(--ink);
     font-size: var(--step--1);
     transition: background-color var(--d-base) var(--e-out), color var(--d-base) var(--e-out);
   }
@@ -402,8 +400,8 @@ const tr = locale === 'tr';
 
   .hero__edge:hover,
   .hero__edge:focus-visible {
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
   }
 
   /* --- the supporting line is the first thing to go on a small screen ------
@@ -467,19 +465,17 @@ const tr = locale === 'tr';
       min-height: min(64vh, 620px);
     }
 
-    /* Side by side: the copy is back on paper and out from under the image. */
+    /* Side by side: the copy comes out from under the image. */
     .hero__copy {
       grid-area: auto;
       align-content: center;
       gap: var(--sp-5);
-      color: var(--ink);
-      --on-ground: var(--ink);
-      --on-ground-muted: var(--muted);
-      --hairline: var(--rule);
     }
 
     .hero__media {
       grid-area: auto;
+      /* Paper meets panel on a drawn line, not on a tonal guess. */
+      border-inline-start-color: #c3cad1;
     }
 
     .hero__scrim {
@@ -488,12 +484,6 @@ const tr = locale === 'tr';
 
     .hero__frame :global(img) {
       object-position: center center;
-    }
-
-    .hero__slide .btn {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--paper);
     }
 
     .hero__edge {
