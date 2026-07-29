@@ -68,7 +68,11 @@ function mount(root: HTMLElement) {
   viewer.setAttribute('touch-action', 'pan-y');
   viewer.setAttribute('disable-pan', '');
   viewer.setAttribute('environment-image', 'neutral');
-  viewer.setAttribute('exposure', '1.0');
+  // The machines are painted near-black; the studio renders beside this viewer
+  // read mid-grey only because the Cycles rig throws real light at them. The
+  // `neutral` environment is much dimmer, so at exposure 1 the same machine
+  // turns up as a silhouette and the 3D tab contradicts the photographs.
+  viewer.setAttribute('exposure', '1.45');
   viewer.setAttribute('shadow-intensity', '1');
   viewer.setAttribute('shadow-softness', '0.8');
   viewer.setAttribute('camera-orbit', '35deg 75deg auto');

@@ -35,6 +35,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--preview", action="store_true", help="one fast EEVEE hero frame")
     p.add_argument("--render", action="store_true")
     p.add_argument("--export", action="store_true", help="write the web GLB")
+    p.add_argument("--glb-name", default=None,
+                   help="artefact stem, e.g. mf-2513-r8.v1 — a module is a family "
+                        "archetype, but the page that loads the model is one SKU's")
     p.add_argument("--turntable", type=int, default=0, help="orbit frame count")
     p.add_argument("--shots", default="hero")
     p.add_argument("--engine", default="BLENDER_EEVEE")
@@ -63,7 +66,7 @@ def main() -> None:
     centre = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, (lo.z + hi.z) / 2))
 
     if args.export:
-        glb = OUT_MODEL / f"{spec['key']}.glb"
+        glb = OUT_MODEL / f"{args.glb_name or spec['key']}.glb"
         studio.export_glb(objs, glb, draco=not args.no_draco)
         kb = glb.stat().st_size / 1024
         print(f"[export] {glb.name} {kb:.0f} KB")

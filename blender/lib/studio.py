@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import math
 import os
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Sequence
 
@@ -330,6 +331,51 @@ def render_turntable(cam, target: Vector, frames: int, out_dir: str | Path,
 
 # --- export -----------------------------------------------------------------
 
+#: Sockets whose value comes from a procedural node chain that glTF cannot carry.
+_FLATTEN = ("Roughness", "Metallic", "Normal", "Specular IOR Level")
+
+
+@contextmanager
+def _flattened_materials(objs: Sequence[bpy.types.Object]):
+    """Drop procedural inputs for the duration of an export.
+
+    The materials drive roughness from a noise chain, which is what makes a
+    Cycles frame read as a machined surface rather than a CAD screenshot. glTF
+    has no such node graph, and the exporter will not bake one: a socket that is
+    LINKED exports as its factor default, so every metal in the GLB arrived at
+    roughness 1.0 — fully rough metal catches no highlight, and the whole machine
+    rendered as a black silhouette in <model-viewer>.
+
+    Unlinking restores the scalar the chain was varying around, because `put()`
+    writes it to the socket before the link is made and linking does not erase
+    it. The detail lost is sub-millimetre noise nobody can see in a 570 px
+    viewport; the highlight regained is the entire read of the material.
+    """
+    saved = []
+    seen = set()
+    for obj in objs:
+        for slot in getattr(obj, "material_slots", []):
+            mat = slot.material
+            if mat is None or mat.name in seen or not mat.use_nodes:
+                continue
+            seen.add(mat.name)
+            for node in mat.node_tree.nodes:
+                if node.type != "BSDF_PRINCIPLED":
+                    continue
+                for name in _FLATTEN:
+                    socket = node.inputs.get(name)
+                    if socket is None:
+                        continue
+                    for link in list(socket.links):
+                        saved.append((mat.node_tree, link.from_socket, socket))
+                        mat.node_tree.links.remove(link)
+    try:
+        yield len(saved)
+    finally:
+        for tree, from_socket, to_socket in saved:
+            tree.links.new(from_socket, to_socket)
+
+
 def export_glb(objs: Sequence[bpy.types.Object], path: str | Path,
                draco: bool = True, draco_level: int = 6) -> Path:
     """Web-weight GLB of the machine only — no lights, no floor, no camera."""
@@ -361,16 +407,19 @@ def export_glb(objs: Sequence[bpy.types.Object], path: str | Path,
             export_draco_normal_quantization=10,
             export_draco_texcoord_quantization=12,
         )
-    try:
-        bpy.ops.export_scene.gltf(**kwargs)
-    except TypeError as exc:
-        # Option set drifts between Blender releases; drop the unknown key and retry.
-        bad = str(exc).split("'")[1] if "'" in str(exc) else None
-        if bad and bad in kwargs:
-            kwargs.pop(bad)
+    with _flattened_materials(objs) as dropped:
+        if dropped:
+            print(f"[export] flattened {dropped} procedural material inputs")
+        try:
             bpy.ops.export_scene.gltf(**kwargs)
-        else:
-            raise
+        except TypeError as exc:
+            # Option set drifts between Blender releases; drop the unknown key and retry.
+            bad = str(exc).split("'")[1] if "'" in str(exc) else None
+            if bad and bad in kwargs:
+                kwargs.pop(bad)
+                bpy.ops.export_scene.gltf(**kwargs)
+            else:
+                raise
     return path
 
 
