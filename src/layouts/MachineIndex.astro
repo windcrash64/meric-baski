@@ -19,6 +19,7 @@ import { renderFor } from '../lib/media';
 import Base from './Base.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import Picture from '../components/media/Picture.astro';
+import RailHead from '../components/ui/RailHead.astro';
 
 export interface Props {
   locale: Locale;
@@ -310,7 +311,7 @@ const description = tr
 
     <section class="shell cat__grid-wrap">
       {groups.map((group) => (
-        <div class="fam">
+        <div class="fam" data-rail-group>
           {!family && (
             <div class="fam__head">
               <h2 class="fam__title">
@@ -325,7 +326,9 @@ const description = tr
             </div>
           )}
 
-          <ul class="cards cards--2" role="list" data-stagger>
+          <RailHead locale={locale} />
+
+          <ul class="cards cards--2" role="list" data-stagger data-rail>
             {group.machines.map((m) => {
               const render = renderFor(m.data.sku, true);
               return (

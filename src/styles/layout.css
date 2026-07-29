@@ -197,6 +197,83 @@
 }
 
 /* --------------------------------------------------------------------------
+   Rail navigation — the control line above a rail (see ui/RailHead.astro).
+   Global rather than component-scoped because the buttons style themselves
+   against whatever ground the section sets.
+   -------------------------------------------------------------------------- */
+
+.rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-block: var(--sp-6) var(--sp-3);
+  min-height: 40px;
+}
+
+.rail-hint {
+  font-size: var(--step--2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-ground-muted);
+}
+
+.rail-nav {
+  display: flex;
+  gap: var(--sp-2);
+  margin-inline-start: auto;
+}
+
+.rail-nav[hidden] {
+  display: none;
+}
+
+.rail-btn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: var(--border) solid var(--hairline);
+  color: var(--on-ground);
+  font-size: var(--step--1);
+  transition:
+    border-color var(--d-base) var(--e-out),
+    background-color var(--d-base) var(--e-out),
+    color var(--d-base) var(--e-out),
+    opacity var(--d-base) var(--e-out);
+}
+
+.rail-btn:hover:not(:disabled),
+.rail-btn:focus-visible:not(:disabled) {
+  background: var(--on-ground);
+  color: var(--ground);
+  border-color: var(--on-ground);
+}
+
+.rail-btn:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+/* Where the row is a grid rather than a rail there is nothing to navigate, so
+   the whole control line collapses instead of leaving a band of air between
+   the heading and the cards. */
+.rail-head:has(.rail-nav[hidden]) {
+  min-height: 0;
+  margin-block: var(--sp-6) 0;
+}
+
+.rail-head:has(.rail-nav[hidden]) .rail-hint {
+  display: none;
+}
+
+/* The rail carries its own top spacing from .rail-head. */
+.rail-head + .tiles,
+.rail-head + .cards {
+  margin-block-start: 0;
+}
+
+/* --------------------------------------------------------------------------
    Stacks & clusters
    -------------------------------------------------------------------------- */
 

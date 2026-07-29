@@ -1,0 +1,38 @@
+---
+/**
+ * The control line above a card rail.
+ *
+ * A snapped rail is swipeable, but a swipe is invisible — nothing on the page
+ * says the row continues, and nothing lets a keyboard move it. This says both.
+ *
+ * Both parts are conditional at runtime: enhance.ts hides the button pair
+ * whenever the row is not actually scrollable, so the identical markup serves
+ * the phone rail and the desktop grid, and the whole line collapses on the
+ * grid rather than leaving a band of air under the heading.
+ *
+ * Must sit inside an element carrying `data-rail-group` alongside the
+ * `[data-rail]` row it drives.
+ */
+import type { Locale } from '../../config/site';
+import { t } from '../../i18n/ui';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<div class="rail-head">
+  <p class="rail-hint mono">{locale === 'tr' ? 'Kaydırın' : 'Swipe'}</p>
+  <div class="rail-nav" data-rail-nav hidden>
+    <button type="button" class="rail-btn" data-rail-prev>
+      <span class="visually-hidden">{t('previous', locale)}</span>
+      <span aria-hidden="true">←</span>
+    </button>
+    <button type="button" class="rail-btn" data-rail-next>
+      <span class="visually-hidden">{t('next', locale)}</span>
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</div>
