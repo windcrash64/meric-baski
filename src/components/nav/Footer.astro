@@ -144,19 +144,21 @@ const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
 
 <style>
   .site-footer {
-    padding-block: var(--sp-10) var(--sp-7);
+    padding-block: var(--sp-8) var(--sp-6);
+  }
+
+  @media (min-width: 1024px) {
+    .site-footer {
+      padding-block: var(--sp-10) var(--sp-7);
+    }
   }
 
   .site-footer__grid {
     display: grid;
-    gap: var(--sp-8) var(--gutter);
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 640px) {
-    .site-footer__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    gap: var(--sp-7) var(--gutter);
+    /* Two columns from the smallest screen. Stacked single-file, the four link
+       groups ran to nearly three screens on a phone. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media (min-width: 1024px) {
@@ -167,10 +169,18 @@ const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
   }
 
   .site-footer__brand {
+    grid-column: 1 / -1;
     display: grid;
-    gap: var(--sp-5);
+    gap: var(--sp-4);
     align-content: start;
     color: var(--paper);
+  }
+
+  @media (min-width: 1024px) {
+    .site-footer__brand {
+      grid-column: auto;
+      gap: var(--sp-5);
+    }
   }
 
   .site-footer__brand p {
@@ -192,7 +202,7 @@ const wa = `https://wa.me/${SITE.contact.whatsapp.e164}?text=${
 
   .site-footer__col ul {
     display: grid;
-    gap: var(--sp-3);
+    gap: 0;
     margin: 0;
     padding: 0;
   }

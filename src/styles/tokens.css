@@ -73,7 +73,10 @@
   --sp-5: 24px;  --sp-6: 32px;   --sp-7: 48px;  --sp-8: 64px;
   --sp-9: 96px;  --sp-10: 128px; --sp-11: 160px; --sp-12: 200px;
 
-  --section-pad: clamp(var(--sp-9), 12vh, var(--sp-12));
+  /* Tied to viewport WIDTH, not height. Height was backwards: a tall phone got
+     more padding than a wide desktop, and six sections at 101 px top and bottom
+     added 1200 px of empty scrolling to a page already 9.7 screens long. */
+  --section-pad: clamp(var(--sp-7), 8vw, var(--sp-11));
   --gutter:      clamp(16px, 2vw, 32px);
   --page-margin: clamp(20px, 5vw, 80px);
   --container:   1440px;

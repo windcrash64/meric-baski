@@ -60,7 +60,7 @@
 /* The hanging label column. Below 1024 the label simply stacks above. */
 .section__label {
   grid-column: 1 / -1;
-  margin-block-end: var(--sp-5);
+  margin-block-end: var(--sp-4);
 }
 
 .section__body {

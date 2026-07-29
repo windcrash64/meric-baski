@@ -16,7 +16,7 @@ export interface Props {
   class?: string;
 }
 
-const { name, size = 34, class: className = '' } = Astro.props;
+const { name, size = 30, class: className = '' } = Astro.props;
 
 const PATHS: Record<Props['name'], string> = {
   // Billboard on a post, with a rule of print across it.
