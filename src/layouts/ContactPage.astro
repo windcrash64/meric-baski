@@ -631,9 +631,9 @@ const schema = variant === 'contact'
           <div class="section__body">
             <h2>{tr ? 'Katalogda gezinmeye devam edin.' : 'Carry on through the catalogue.'}</h2>
 
-            <ul class="tiles" role="list">
+            <ul class="famlist" role="list">
               {FAMILY_KEYS.map((family) => (
-                <li class="tile">
+                <li class="famlist__row">
                   <a href={path(FAMILY_ROUTE[family], locale)}>
                     <span>{machineFamilyName(family, locale)}</span>
                     <span class="arrow" aria-hidden="true">→</span>
@@ -668,10 +668,6 @@ const schema = variant === 'contact'
   }
 
   /* --- channel grid --- */
-  .channels {
-    padding: 0;
-  }
-
   @media (min-width: 1024px) {
     .channels {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -907,16 +903,17 @@ const schema = variant === 'contact'
     max-width: 56ch;
   }
 
-  .tiles {
+  /* Rows of type in one or two columns — not the homepage icon grid, whose
+     class name this used to borrow along with its whole layout contract. */
+  .famlist {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
     gap: 0 var(--sp-8);
     margin-block-start: var(--sp-7);
-    padding: 0;
     border-top: var(--border) solid var(--hairline);
   }
 
-  .tile a {
+  .famlist__row a {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -930,8 +927,8 @@ const schema = variant === 'contact'
     transition: padding-inline-start var(--d-base) var(--e-out);
   }
 
-  .tile a:hover,
-  .tile a:focus-visible {
+  .famlist__row a:hover,
+  .famlist__row a:focus-visible {
     padding-inline-start: var(--sp-4);
   }
 
@@ -940,7 +937,6 @@ const schema = variant === 'contact'
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
     gap: var(--sp-3) var(--gutter);
     margin-block-start: var(--sp-7);
-    padding: 0;
     font-size: var(--step--1);
   }
 </style>

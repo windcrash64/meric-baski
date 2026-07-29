@@ -202,7 +202,8 @@ const description = tr
       <Breadcrumb locale={locale} crumbs={[{ label: t('navAbout', locale) }]} />
     </div>
 
-    <header class="shell abt__head">
+    <div class="shell">
+      <header class="abt__head">
       <h1>{tr ? 'Kurumsal' : 'Company'}</h1>
       <p class="lead">
         {tr
@@ -210,6 +211,7 @@ const description = tr
           : `Since ${SITE.brand.foundedYear} we have imported digital printing machines, stocked their inks and serviced them with our own engineers. Fewer companies in this market do all three than you would expect.`}
       </p>
     </header>
+    </div>
   </div>
 
   <!-- 2 — WHAT WE DO --------------------------------------------------------- -->
@@ -359,11 +361,18 @@ const description = tr
     padding-block: var(--sp-5) var(--sp-7);
   }
 
+  /* `max-width` must NOT sit on the same element as `.shell`. The shell centres
+     itself with `margin-inline: auto`, so a narrower max-width on it centres the
+     measure instead of the page: the h1 drifted right as the viewport grew
+     (105px at 1024, 295px at 1440) while every h2 below stayed on the grid.
+     The shell is now the outer box and the measure an inner one. Subtracting the
+     page margin keeps the rendered line length identical — the old value sat on
+     a padded border-box, this one on content. */
   .abt__head {
     display: grid;
     gap: var(--sp-5);
     padding-block-end: var(--section-pad);
-    max-width: 74ch;
+    max-width: calc(74ch - var(--page-margin) * 2);
   }
 
   .abt__head .lead {

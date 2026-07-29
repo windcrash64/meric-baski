@@ -128,8 +128,12 @@ button {
   cursor: pointer;
 }
 
-ul[role='list'],
-ol[role='list'] {
+/* :where() so the reset carries zero specificity. At [role='list'] weight it
+   beat the mobile rail's own `padding-inline: var(--page-margin)` — the rail
+   declares a negative margin and a matching pad so it can bleed to the screen
+   edge while its cards keep the page margin, and losing the pad put the first
+   card hard against x=0 while everything beside it sat at x=20. */
+:where(ul[role='list'], ol[role='list']) {
   list-style: none;
   padding: 0;
 }

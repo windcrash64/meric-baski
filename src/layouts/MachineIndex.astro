@@ -297,7 +297,8 @@ const description = tr
       />
     </div>
 
-    <header class="shell cat__head">
+    <div class="shell">
+      <header class="cat__head">
       <h1>{heading}</h1>
       {intro.map((p) => <p class="lead">{p}</p>)}
       {!family && (
@@ -308,6 +309,7 @@ const description = tr
         </p>
       )}
     </header>
+    </div>
 
     <section class="shell cat__grid-wrap">
       {groups.map((group) => (
@@ -413,11 +415,18 @@ const description = tr
     padding-block: var(--sp-5) var(--sp-7);
   }
 
+  /* `max-width` must NOT sit on the same element as `.shell`. The shell centres
+     itself with `margin-inline: auto`, so a narrower max-width on it centres the
+     measure instead of the page: the h1 drifted right as the viewport grew
+     (105px at 1024, 295px at 1440) while every h2 below stayed on the grid.
+     The shell is now the outer box and the measure an inner one. Subtracting the
+     page margin keeps the rendered line length identical — the old value sat on
+     a padded border-box, this one on content. */
   .cat__head {
     display: grid;
     gap: var(--sp-5);
     padding-block-end: var(--sp-8);
-    max-width: 78ch;
+    max-width: calc(78ch - var(--page-margin) * 2);
   }
 
   .cat__head .lead {

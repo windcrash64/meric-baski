@@ -299,11 +299,13 @@ const schema = app
           />
         </div>
 
-        <header class="shell app__head">
+        <div class="shell">
+          <header class="app__head">
           <p class="eyebrow">{copy!.kicker}</p>
           <h1>{heading}</h1>
           {intro.map((p) => <p class="lead muted">{p}</p>)}
         </header>
+        </div>
       </div>
 
       <!-- SECTOR — 2. MACHINES ---------------------------------------------- -->
@@ -437,10 +439,12 @@ const schema = app
         <div class="shell app__crumbs">
           <Breadcrumb locale={locale} crumbs={[{ label: heading }]} />
         </div>
-        <header class="shell app__head">
+        <div class="shell">
+          <header class="app__head">
           <h1>{heading}</h1>
           <p class="lead muted">{hub.lead}</p>
         </header>
+        </div>
       </div>
 
       <!-- HUB — 2. SECTORS ---------------------------------------------------- -->
@@ -448,15 +452,15 @@ const schema = app
         <div class="shell grid">
           <div class="section__label"><p class="eyebrow">{hub.sectorsLabel}</p></div>
           <div class="section__body">
-            <ul class="tiles" role="list" data-stagger>
+            <ul class="sectors" role="list" data-stagger>
               {apps.map((a) => (
-                <li class="tile">
+                <li class="sectors__row">
                   <a href={path(appRoute(a.data.key), locale)}>
-                    <span class="tile__text">
-                      <span class="tile__label">{a.data.i18n[locale].name}</span>
-                      <span class="tile__kicker muted">{a.data.i18n[locale].kicker}</span>
+                    <span class="sectors__text">
+                      <span class="sectors__label">{a.data.i18n[locale].name}</span>
+                      <span class="sectors__kicker muted">{a.data.i18n[locale].kicker}</span>
                     </span>
-                    <span class="tile__count mono">
+                    <span class="sectors__count mono">
                       {curated(a).length} {hub.machinesWord}
                     </span>
                     <span class="arrow" aria-hidden="true">→</span>
@@ -552,11 +556,17 @@ const schema = app
     padding-block: var(--sp-5) var(--sp-7);
   }
 
+  /* `max-width` must NOT share an element with `.shell` — the shell centres
+     itself, so a narrower measure on it centres the text rather than the page
+     and the h1 walked right as the viewport grew (156px at 1024, 615px at
+     1920) while every heading below stayed on the grid. Subtracting the page
+     margin keeps the rendered line length: the old value sat on a padded
+     border-box, this one on content. */
   .app__head {
     display: grid;
     gap: var(--sp-5);
     padding-block-end: var(--section-pad);
-    max-width: 78ch;
+    max-width: calc(78ch - var(--page-margin) * 2);
   }
 
   .app__head .eyebrow {
@@ -568,15 +578,20 @@ const schema = app
     font-size: var(--step--1);
   }
 
-  /* --- hub tiles: the sector list, typographic --- */
-  .tiles {
+  /* --- the sector list: rows of type, not a grid of tiles ---
+     It used to be called .tiles, which is the homepage's icon grid. Sharing the
+     name dragged it into that contract: on a wide screen the global rule split
+     it into five auto-fill columns and the label ran over the count, and below
+     767 the global rail rule turned a list of rows into a horizontal scroller
+     that overflowed by 80 px. It renders as rows at every width, and it needs a
+     name of its own to keep doing so. */
+  .sectors {
     display: grid;
     gap: 0;
-    padding: 0;
     border-top: var(--border) solid var(--hairline);
   }
 
-  .tile a {
+  .sectors__row a {
     position: relative;
     display: grid;
     grid-template-columns: 1fr auto auto;
@@ -589,39 +604,39 @@ const schema = app
     transition: padding-inline-start var(--d-base) var(--e-out);
   }
 
-  .tile a:hover,
-  .tile a:focus-visible {
+  .sectors__row a:hover,
+  .sectors__row a:focus-visible {
     padding-inline-start: var(--sp-4);
   }
 
-  .tile a:hover .arrow,
-  .tile a:focus-visible .arrow {
+  .sectors__row a:hover .arrow,
+  .sectors__row a:focus-visible .arrow {
     transform: translateX(4px);
   }
 
-  .tile__text {
+  .sectors__text {
     display: grid;
     gap: var(--sp-2);
   }
 
-  .tile__label {
+  .sectors__label {
     font-size: var(--step-2);
     font-weight: 500;
     letter-spacing: -0.015em;
   }
 
-  .tile__kicker {
+  .sectors__kicker {
     font-size: var(--step--1);
   }
 
-  .tile__count {
+  .sectors__count {
     font-size: var(--step--2);
     color: var(--on-ground-muted);
     white-space: nowrap;
   }
 
   /* The accent is a rule, never a word: it draws under the row on hover. */
-  .tile a::after {
+  .sectors__row a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -634,8 +649,8 @@ const schema = app
     transition: transform var(--d-slow) var(--e-out);
   }
 
-  .tile a:hover::after,
-  .tile a:focus-visible::after {
+  .sectors__row a:hover::after,
+  .sectors__row a:focus-visible::after {
     transform: scaleX(1);
     transform-origin: left center;
   }

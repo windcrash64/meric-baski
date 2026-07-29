@@ -216,6 +216,12 @@ function galleries(): Cleanup {
     const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-gallery-dot]')];
     const status = root.querySelector<HTMLElement>('[data-gallery-status]');
 
+    // The component ships the controls `hidden` on the principle that controls
+    // which do nothing are worse than none; revealing them unconditionally broke
+    // that. With one slide the arrows are dead, and with none the readout said
+    // "1 / 0" and the enabled next arrow threw on slides[-1].
+    if (slides.length < 2) return;
+
     root.querySelectorAll<HTMLElement>('[data-gallery-controls]')
       .forEach((c) => c.removeAttribute('hidden'));
 

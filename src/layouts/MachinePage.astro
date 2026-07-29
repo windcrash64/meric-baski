@@ -175,7 +175,7 @@ const productSchema = {
                       aria-selected="false" class="tabs__tab">{t('view3d', locale)}</button>
             </div>
             <div role="tabpanel" id="panel-gallery" aria-labelledby="tab-gallery">
-              <Gallery slides={slides} locale={locale} label={d.model} ratio="card" id={skuSlug} />
+              <Gallery slides={slides} locale={locale} label={d.model} ratio="card" id={skuSlug} emptyMark={d.sku} />
             </div>
             <div role="tabpanel" id="panel-3d" aria-labelledby="tab-3d" hidden>
               <ModelViewer
@@ -195,7 +195,7 @@ const productSchema = {
             </div>
           </div>
         ) : (
-          <Gallery slides={slides} locale={locale} label={d.model} ratio="card" id={skuSlug} />
+          <Gallery slides={slides} locale={locale} label={d.model} ratio="card" id={skuSlug} emptyMark={d.sku} />
         )}
       </div>
 

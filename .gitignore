@@ -23,3 +23,7 @@ public/img/**/*.png
 docs/_smoke/
 .DS_Store
 Thumbs.db
+
+# Scratch space for ad-hoc measurement scripts — never committed.
+.tmp-*/
+.audit-tmp.mjs

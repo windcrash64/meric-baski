@@ -471,10 +471,14 @@ const description = tr
     font-weight: 500;
   }
 
-  /* --- machine cards --- */
+  /* --- machine cards ---
+     No `padding: 0` here. It was undoing the list reset, which now carries no
+     specificity of its own, and as a scoped rule it outranked the mobile rail's
+     own padding — the rail bleeds to the screen edge with a matching pad so its
+     cards stay on the page margin, and killing the pad put the first card at
+     x=0 while every heading beside it sat at x=20. */
   .cards {
     margin-block-start: var(--sp-8);
-    padding: 0;
   }
 
   .card__link {

@@ -28,11 +28,29 @@ export interface Props {
   ratio?: 'card' | 'hero' | 'square' | 'inset';
   graded?: boolean;
   id?: string;
+  /** Shown instead of the rail when there are no slides — the model's SKU. */
+  emptyMark?: string;
 }
 
-const { slides, locale, label, ratio = 'card', graded = false, id = 'gallery' } = Astro.props;
+const {
+  slides, locale, label, ratio = 'card', graded = false, id = 'gallery', emptyMark,
+} = Astro.props;
+const tr = locale === 'tr';
 ---
 
+{slides.length === 0 ? (
+  /* An honest placeholder, in the same language the index cards use. Rendering
+     the rail with nothing in it collapsed the whole media column to 68 px and
+     left the product page's two-column hero with one empty side. */
+  <div class="gallery gallery--empty">
+    <span class="gallery__noimg">
+      {emptyMark && <span class="gallery__noimg-mark code" lang="en">{emptyMark}</span>}
+      <span class="gallery__noimg-note mono">
+        {tr ? 'görsel hazırlanıyor' : 'imagery in production'}
+      </span>
+    </span>
+  </div>
+) : (
 <div
   class="gallery"
   data-gallery
@@ -85,8 +103,35 @@ const { slides, locale, label, ratio = 'card', graded = false, id = 'gallery' } 
     </div>
   </div>
 </div>
+)}
 
 <style>
+  /* Matches .pcard__noimg on the index: same ratio, same ground, same wording.
+     A machine without its own render says so rather than borrowing a
+     family-mate's photograph. */
+  .gallery__noimg {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--sp-3);
+    aspect-ratio: 3 / 2;
+    background: var(--bone);
+    border-bottom: var(--border) solid var(--hairline);
+  }
+
+  .gallery__noimg-mark {
+    font-size: var(--step-2);
+    color: color-mix(in srgb, var(--ink) 24%, transparent);
+    letter-spacing: 0.02em;
+  }
+
+  .gallery__noimg-note {
+    font-size: var(--step--2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-ground-muted);
+  }
+
   .gallery {
     display: grid;
     gap: var(--sp-4);
